@@ -22,21 +22,22 @@ m_connect();
 //     credentials: true 
 // }));
 const allowedOrigins = [
-    'http://145.223.34.195',    
-    'http://localhost:3000',  // Fixed the typo here
+    'http://145.223.34.195',
+    'http://localhost:3000',
 ];
 
 app.use(cors({
-    origin: function (origin, callback) {
-      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-        callback(null, true); // Allow requests from these origins
-      } else {
-        callback(new Error('Not allowed by CORS')); // Reject others
-      }
+    origin: (origin, callback) => {
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true); // Allow requests from these origins
+        } else {
+            callback(new Error('Not allowed by CORS')); // Reject others
+        }
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true // if you're using cookies or authorization headers
+    credentials: true, // Allow credentials (cookies, authorization headers)
 }));
+
 
 app.use(cookieParser());
 
