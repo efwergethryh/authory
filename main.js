@@ -23,20 +23,21 @@ m_connect();
 // }));
 const allowedOrigins = [
     'http://145.223.34.195',    
-    'lhttp://localhost:3000',      
+    'http://localhost:3000',  // Fixed the typo here
+];
 
-  ];
 app.use(cors({
     origin: function (origin, callback) {
       if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-        callback(null, true); // allow requests from these origins
+        callback(null, true); // Allow requests from these origins
       } else {
-        callback(new Error('Not allowed by CORS')); // reject others
+        callback(new Error('Not allowed by CORS')); // Reject others
       }
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true // if you're using cookies or authorization headers
-  }));
+}));
+
 app.use(cookieParser());
 
 app.set('view engine', 'ejs'); // Set EJS as the view engine
