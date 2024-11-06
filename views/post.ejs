@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/css/post.css">
+    <title><%= post.title %></title>
+</head>
+
+<body>
+    <div class="view-post">
+        <input type="text" hidden name="" id="images" value="<%= post.post_image %>">
+        <h1>
+            <%= post.title %>
+        </h1>
+        <div >
+            <%- post.content %>
+        </div>
+    </div>
+    <script src="/js/post.js"></script>
+</body>
+
+</html>

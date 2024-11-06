@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Banned</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f8f8;
+        }
+
+        .banned-container {
+            max-width: 500px;
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .banned-container h1 {
+            font-size: 28px;
+            color: #d9534f;
+            margin-bottom: 20px;
+        }
+
+        .banned-container p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .banned-reason {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .support-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #337ab7;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .support-link:hover {
+            background-color: #286090;
+        }
+    </style>
+</head>
+<body>
+
+<div class="banned-container">
+    <h1>Your Account Has Been Banned</h1>
+    <p>Unfortunately, your account has been banned due to a violation of our terms of service.</p>
+
+    <!-- Dynamic ban reason -->
+    <p class="banned-reason">Reason: <span id="ban-reason">[Violation Reason]</span></p>
+
+    <p>If you believe this is a mistake, please contact our support team.</p>
+    <a href="mailto:support@example.com" class="support-link">Contact Support</a>
+</div>
+
+<script>
+    // Replace '[Violation Reason]' with the actual ban reason from the server
+    const banReason = 'Inappropriate behavior'; // This should be dynamically set from the server data
+    document.getElementById('ban-reason').textContent = banReason;
+</script>
+
+</body>
+</html>

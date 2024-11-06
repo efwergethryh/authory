@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="/css/home.css">
+
+<div class="topBar">
+    <div class="options">
+
+        <ul>
+            <li>
+                <a href="#" id="slidingBar" onclick="toggleSidebar()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-menu">
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </a>
+            </li>   
+            <li id="profile">
+                <p><%= user.email %></p>
+                <a>
+                    <img id="profileImage" src="/profile_images/<%= user.profile_picture ? user.profile_picture : 'non-picture.jpg' %>">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div id="profile-span" class="profile-span">
+        <a id="sign-out">sign out</a>
+        
+        <a id="settings">Settings</a>
+        <a href="/pages/home" <%= (user.user_type === 2 || user.user_type === 3) ? 'style="display: block;"' : 'style="display: none;"' %>>home</a>
+        <a href="/pages/dashboard" <%= (user.user_type === 2 || user.user_type === 3) ? 'style="display: block;"' : 'style="display: none;"' %>>Dashboard</a>
+    </div>
+    <div id="settings-popup" class="settigns">
+        <label for="language">Choose Language:</label>
+        <select name="language" id="language" onchange="loadTranslation(this.value)">
+           <option value="en">English</option>
+           <option value="ar">Arabic</option>
+        </select>
+     
+     </div>
+</div>
+
+
+ 

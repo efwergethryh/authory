@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<head>
+   <link rel="stylesheet" href="/css/home.css">
+   <script src="https://unpkg.com/feather-icons"></script>
+
+   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+<div class="sidebar" id="sidebar">
+   <input id="user-id" hidden value="<%= user._id %>">
+   <div class="circle-button collapsed" onclick="toggleSidebar()">
+      <svg style="position: relative; z-index: 15; right: -16%; bottom: -13%;" xmlns="http://www.w3.org/2000/svg"
+         fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+         class="feather feather-chevron-left " viewBox="0 0 34 34" role="img">
+         <path d="m15 18-6-6 6-6"></path>
+      </svg>
+   </div>
+   <ul>
+      <li>
+         <a id="home" href="#">
+            <i class="fas fa-home"></i>
+            <span class="text-only">Home</span>
+         </a>
+      </li>
+      <li>
+         <a class="toggle-link" id="paper-toggle" href="">
+            <div class="toggle-tab-container">
+               <div id="head" class="header">
+                  <i id="paper" class="fas fa-file"></i>
+                  <span id="text" class="toggle-item">Create paper</span>
+                  <div id="create-newNotification" class="new-notfication"></div>
+                  <span class="tab-icon">
+                     <div class="create-dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                           stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
+                           viewBox="0 0 34 34" role="img">
+                           <path d="m15 18 6 6-6 6"></path>
+                        </svg>
+                     </div>
+                  </span>
+
+               </div>
+               <ul class="sublist">
+                  <li id="start_paper_button">Start a paper</li>
+                  <li id="your-papers-button">Your papers</li>
+               </ul>
+            </div>
+         </a>
+      </li>
+      <li>
+         <a class="toggle-link" id="paper-toggle-2" href="">
+            <div class="toggle-tab-container-2">
+               <div id="head" class="header">
+                  <i id="paper-2" class="fa-solid fa-handshake"></i>
+                  <span id="text" class="toggle-item">Join papers</span>
+                  <div id="join-paperNotification" class="new-notfication"></div>
+
+                  <span class="tab-icon">
+                     <div class="create-dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                           stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
+                           viewBox="0 0 34 34" role="img">
+                           <path d="m15 18 6 6-6 6"></path>
+                        </svg>
+                     </div>
+                  </span>
+               </div>
+               <ul class="sublist-2">
+                  <li id="searchpapers-button">Search </li>
+                  <li id="joined-papers-button">already joined</li>
+               </ul>
+            </div>
+         </a>
+      </li>
+      <li>
+         <a class="toggle-link" id="paper-toggle-4" href="">
+            <div class="toggle-tab-container-4">
+               <div id="head" class="header">
+                  <i id="paper-3" class="fa-solid fa-user-group"></i>
+                  <span id="text" class="toggle-item">friends</span>
+                  <span class="tab-icon">
+                     <div class="create-dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                           stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
+                           viewBox="0 0 34 34" role="img">
+                           <path d="m15 18 6 6-6 6"></path>
+                        </svg>
+                     </div>
+                  </span>
+               </div>
+               <ul class="sublist-4">
+                  <li id="search-friends-button">Search </li>
+                  <li id="your-friends-button">Your friends</li>
+               </ul>
+            </div>
+         </a>
+      </li>
+      <li>
+         <a onclick="show_public_conversation()" href="#" id="chat">
+            <i class="fa-solid fa-comment"></i>
+            <span class="text-only">Public chat</span>
+         </a>
+      </li>
+      <li id="notifications-button">
+         <a href="#">
+            <i class="fa-solid fa-bell"></i>
+            <span class="text-only">Notifications</span>
+            <div id="newNotification" class="new-notfication"></div>
+         </a>
+      </li>
+   </ul>
+</div>
+
+
+<div id="startpaper-popup" class="create-paper">
+   <div class="startpapers-label" id="joined">Start paper</div>
+   <div class="startpaper-popup">
+
+      <i class="fas fa-times"></i>
+      <div id="title" class="input-group">
+
+         <input type="text" name="name" id="paper_title" required placeholder="Write your project title here ">
+      </div>
+      <table border="1" cellpadding="10" cellspacing="0">
+         <tbody>
+            <tr>
+               <td>
+                  <div class="input-group" id="project-branch">
+                     <label for="text">Project branch</label>
+                     <div id="projectbranch-container" class="education-container">
+                        <input type="text" id="project_branch" name="country-innerInput" aria-label="Country"
+                           autocomplete="off" class="styled-input" placeholder="project branch">
+                        <div class="icon-container">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" class="feather feather-chevron-down">
+                              <polyline points="6 9 12 15 18 9"></polyline>
+                           </svg>
+                        </div>
+                        <ul id="projectbranch-list" class="education-dropdown-options">
+                           <li class="level1">A-Medicine</li>
+                           <li class="unselectable">Internal Medicine</li>
+                           <li data-value="Cardiology">Cardiology</li>
+                           <li data-value="Pulmonology">Pulmonology</li>
+                           <li data-value="Gastroenterology">Gastroenterology</li>
+                           <li data-value="Nephrology">Nephrology</li>
+                           <li data-value="Endocrinology">Endocrinology</li>
+                           <li data-value="Neurology">Neurology</li>
+                           <li data-value="Critical Care Medicine">Critical Care Medicine</li>
+
+                           <li class="unselectable">Surgery Medicine</li>
+                           <li data-value="General Surgery">General Surgery</li>
+                           <li data-value="Cardiothoracic Surgery">Cardiothoracic Surgery</li>
+                           <li data-value="Neurosurgery">Neurosurgery</li>
+                           <li data-value="Orthopedic Surgery">Orthopedic Surgery</li>
+                           <li data-value="Plastic Surgery">Plastic Surgery</li>
+                           <li data-value="Urology">Urology</li>
+                           <li data-value="Vascular Surgery">Vascular Surgery</li>
+                           <li data-value="Pediatric Surgery">Pediatric Surgery</li>
+                           <li data-value="Trauma Surgery">Trauma Surgery</li>
+
+                           <li class="unselectable">Gynecology medicine</li>
+                           <li data-value="Trauma Surgery">General gynecology</li>
+                           <li data-value="Trauma Surgery">Obstetrics</li>
+                           <li data-value="Trauma Surgery">Gynecology oncology</li>
+                           <li data-value="Trauma Surgery">Infertility</li>
+                           <li class="unselectable">Pediatric medicine</li>
+                           <li class="unselectable">Pediatric medicine</li>
+
+                           <div class="unselectable">Emergency medicine</div>
+                           <div class="unselectable">Dermatology</div>
+                           <div class="unselectable">Ophthalmology</div>
+                           <div class="unselectable">Otolaryngology (ENT)</div>
+                           <div class="unselectable">Psychology</div>
+                           <div class="unselectable">Hematology</div>
+                           <div class="unselectable">Oncology</div>
+                           <div class="unselectable">Rhumatology</div>
+                           <div class="unselectable">infectious</div>
+                           <div class="unselectable">geriatric medicine</div>
+                           <div class="unselectable">Family medicine</div>
+                           <div class="unselectable">Radiology</div>
+                           <div class="unselectable">Anesthesiology</div>
+                        </ul>
+                     </div>
+                  </div>
+               </td>
+               <td>
+                  <div class="input-group">
+                     <label for="institute">Type of study</label>
+                     <div id="typeofstudy-container" class="institute-container">
+                        <input type="text" id="type_of_study" name="country-innerInput" aria-label="Country"
+                           autocomplete="off" class="styled-input" placeholder="Study type">
+                        <div class="icon-container">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" class="feather feather-chevron-down">
+                              <polyline points="6 9 12 15 18 9"></polyline>
+                           </svg>
+                        </div>
+                        <ul id="typeofstudy-list" class="institute-dropdown-options">
+
+                           <li data-value="Experimental">Experimental </li>
+                           <li data-value="Observational">Observational </li>
+                           <li data-value="Descriptive">Descriptive </li>
+                           <li data-value="Correlational">Correlational </li>
+                           <li data-value="Case study">Case study </li>
+                        </ul>
+                     </div>
+                  </div>
+               </td>
+               <td>
+                  <div class="input-group">
+                     <label for="institute">We need</label>
+                     <div id="weneed-container" class="university-container">
+                        <input type="text" id="we_need" name="country-innerInput" aria-label="Country"
+                           autocomplete="off" class="styled-input" placeholder="we need">
+                        <div class="icon-container">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" class="feather feather-chevron-down">
+                              <polyline points="6 9 12 15 18 9"></polyline>
+                           </svg>
+                        </div>
+                        <ul id="weneed-list" class="university-dropdown-options">
+                           <li data-value="Writer">Writer</li>
+                           <li data-value="Data collector">Data collector</li>
+                           <li data-value="Data Analysis">Data Analysis</li>
+                           <li data-value="Supervisor">Supervisor</li>
+                           <li data-value="Microsoft office Expert">Microsoft office Expert</li>
+                           <li data-value="Puplishing expert">Puplishing expert</li>
+                        </ul>
+                     </div>
+                  </div>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <div class="input-group">
+                     <label for="name">Tags</label>
+                     <div class="input-container">
+                        <div id="tags-overlay" class="tags-overlay"></div>
+                        <input type="text" id="tags" name="name" placeholder="Write tags related to the topic...">
+                     </div>
+                  </div>
+               </td>
+               <td>
+                  <div class="input-group" id="project-branch">
+                     <label for="language">Language</label>
+                     <div id="start-language-container" class="institute-container">
+                        <input type="text" id="start-language-input" name="country-innerInput" aria-label="Country"
+                           autocomplete="off" class="styled-input" placeholder="language">
+                        <div class="icon-container">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" class="feather feather-chevron-down">
+                              <polyline points="6 9 12 15 18 9"></polyline>
+                           </svg>
+                        </div>
+                        <ul id="start-language-list" class="institute-dropdown-options">
+                           <li data-value="Arabic">Arabic </li>
+                           <li data-value="English">English</li>
+                        </ul>
+                     </div>
+                  </div>
+               </td>
+               <td><button id="start_create">create</button></td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
+
+<div id="yourpapers-popup" class="yourpapers-popup">
+   <div class="joined-label" id="joined">Your papers</div>
+   <div id="yourpapers-container" class="yourpapers-container">
+      
+   </div>
+</div>
+
+<div id="searchpapers-popup" class="search-papers">
+   <div class="searchpapers-label" id="search-papers">Search papers</div>
+   <div class="searchpapers-popup">
+      <div class="search-container">
+         <i class="fa-solid fa-magnifying-glass"></i>
+         <input class="search-input" type="text" id="paper-title" placeholder="Search a paper by title"
+            class="search-input">
+      </div>
+      <div id="advanced_button" class="dropdown-icon">
+         <svg style="position: relative; z-index: 15; right: -16%; bottom: -13%;" xmlns="http://www.w3.org/2000/svg"
+            fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            class="feather feather-chevron-left " viewBox="0 0 34 34" role="img">
+            <path d="m15 18-6-6 6-6"></path>
+         </svg>
+      </div>
+      <span id="advanced">Advanced search</span>
+      <div id="" class="advancedsearch-container">
+         <table>
+            <thead>
+
+               <th>
+                  <div class="input-group">
+                     <input type="text" name="name" id="ID" required placeholder="Paper ID">
+                  </div>
+               </th>
+               <th>
+                  <div class="input-group" id="Project-branch">
+                     <div id="paper-projectbranch-container" class="education-container">
+                        <input type="text" id="paper_project_branch" name="country-innerInput" aria-label="Country"
+                           autocomplete="on" class="styled-input" placeholder="branch">
+                        <div class="icon-container">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" class="feather feather-chevron-down">
+                              <polyline points="6 9 12 15 18 9"></polyline>
+                           </svg>
+                        </div>
+                        <ul id="paper-projectbranch-list" class="education-dropdown-options">
+                           <li class="level1">A-Medicine</li>
+                           <li class="unselectable">Internal Medicine</li>
+                           <li data-value="Cardiology">Cardiology</li>
+                           <li data-value="Pulmonology">Pulmonology</li>
+                           <li data-value="Gastroenterology">Gastroenterology</li>
+                           <li data-value="Nephrology">Nephrology</li>
+                           <li data-value="Endocrinology">Endocrinology</li>
+                           <li data-value="Neurology">Neurology</li>
+                           <li data-value="Critical Care Medicine">Critical Care Medicine</li>
+
+                           <li class="unselectable">Surgery Medicine</li>
+                           <li data-value="General Surgery">General Surgery</li>
+                           <li data-value="Cardiothoracic Surgery">Cardiothoracic Surgery</li>
+                           <li data-value="Neurosurgery">Neurosurgery</li>
+                           <li data-value="Orthopedic Surgery">Orthopedic Surgery</li>
+                           <li data-value="Plastic Surgery">Plastic Surgery</li>
+                           <li data-value="Urology">Urology</li>
+                           <li data-value="Vascular Surgery">Vascular Surgery</li>
+                           <li data-value="Pediatric Surgery">Pediatric Surgery</li>
+                           <li data-value="Trauma Surgery">Trauma Surgery</li>
+
+                           <li class="unselectable">Gynecology medicine</li>
+                           <li data-value="Trauma Surgery">General gynecology</li>
+                           <li data-value="Trauma Surgery">Obstetrics</li>
+                           <li data-value="Trauma Surgery">Gynecology oncology</li>
+                           <li data-value="Trauma Surgery">Infertility</li>
+                           <li class="unselectable">Pediatric medicine</li>
+                           <li class="unselectable">Pediatric medicine</li>
+
+                           <div class="unselectable">Emergency medicine</div>
+                           <div class="unselectable">Dermatology</div>
+                           <div class="unselectable">Ophthalmology</div>
+                           <div class="unselectable">Otolaryngology (ENT)</div>
+                           <div class="unselectable">Psychology</div>
+                           <div class="unselectable">Hematology</div>
+                           <div class="unselectable">Oncology</div>
+                           <div class="unselectable">Rhumatology</div>
+                           <div class="unselectable">infectious</div>
+                           <div class="unselectable">geriatric medicine</div>
+                           <div class="unselectable">Family medicine</div>
+                           <div class="unselectable">Radiology</div>
+                           <div class="unselectable">Anesthesiology</div>
+                        </ul>
+                     </div>
+                  </div>
+               </th>
+               <th>
+                  <div class="input-group" id="project-branch">
+                     <div id="language-container" class="institute-container">
+                        <input type="text" id="language-input" name="country-innerInput" aria-label="Country"
+                           autocomplete="off" class="styled-input" placeholder="language">
+                        <div class="icon-container">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" class="feather feather-chevron-down">
+                              <polyline points="6 9 12 15 18 9"></polyline>
+                           </svg>
+                        </div>
+                        <ul id="language-list" class="institute-dropdown-options">
+                           <li data-value="Arabic">Arabic </li>
+                           <li data-value="English">English</li>
+                        </ul>
+                     </div>
+                  </div>
+               </th>
+               <th>
+                  <div class="input-group" id="project-branch">
+                     <div id="paper-weneed-container" class="university-container">
+                        <input type="text" id="paper_we_need" name="country-innerInput" aria-label="Country"
+                           autocomplete="off" class="styled-input" placeholder="We need">
+                        <div class="icon-container">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" class="feather feather-chevron-down">
+                              <polyline points="6 9 12 15 18 9"></polyline>
+                           </svg>
+                        </div>
+                        <ul id="paper-weneed-list" class="university-dropdown-options">
+                           <li data-value="Writer">Writer</li>
+                           <li data-value="Data collector">Data collector</li>
+                           <li data-value="Data Analysis">Data Analysis</li>
+                           <li data-value="Supervisor">Supervisor</li>
+                           <li data-value="Microsoft office Expert">Microsoft office Expert</li>
+                           <li data-value="Puplishing expert">Puplishing expert</li>
+                        </ul>
+                     </div>
+                  </div>
+               </th>
+            </thead>
+            <tbody>
+               <!-- <tr>
+
+               </tr>
+               <tr>
+                  <td>
+
+                  </td>
+                  <td></td>
+               </tr> -->
+            </tbody>
+         </table>
+
+      </div>
+
+      <button id="search">search</button>
+      <div id="paper-result" class="paper-result">
+
+      </div>
+   </div>
+</div>
+
+<div id="joinedpapers-popup" class="joinedpapers-popup">
+   <div class="joined-label" id="joined">Joined papers</div>
+   <div class="joinedpapers-container">
+
+      
+
+   </div>
+</div>
+
+<div id="yourfriends-popup" class="yourfriends-popup">
+   <div class="yourfriends-label" id="joined">Your friends</div>
+   <div class="yourfriends-container">
+
+      
+   </div>
+</div>
+
+<div id="searchfriends-popup" class="search-friends">
+   <div class="searchfriends-label" id="search-friends">Search friends</div>
+   <div class="searchfriends-popup">
+      <div class="search-container">
+         <i class="fa-solid fa-magnifying-glass"></i>
+         <input id="friend-search-input" class="search-input" type="text" placeholder="Friend's id, name, email"
+            class="search-input">
+      </div>
+      <button id="friend-search">search</button>
+      <div id="friend-result" class="friend-result">
+
+      </div>
+   </div>
+</div>
+
+<div id="notifications_popup" class="notifications-popup">
+   <div class="notifications-label" id="joined">Notifications</div>
+   <div id="notifications-container" class="notifications-container">
+   </div>
+</div>

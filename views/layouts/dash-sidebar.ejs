@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+
+<div class="sidebar" id="sidebar">
+
+   <div class="circle-button collapsed" onclick="toggleSidebar()">
+      <svg style="position: relative; z-index: 15; right: -16%; bottom: -13%;" xmlns="http://www.w3.org/2000/svg"
+         fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+         class="feather feather-chevron-left " viewBox="0 0 34 34" role="img">
+         <path d="m15 18-6-6 6-6"></path>
+      </svg>
+   </div>
+   <ul>
+      <% if(userType===3){ %>
+         <li>
+            <a class="toggle-link" id="owner-paper-toggle" href="">
+               <div id="Users" class="toggle-tab-container">
+                  <div id="head" class="header">
+                     <i id="paper" class="fa-solid fa-envelope"></i>
+                     <span id="text" class="toggle-item">Users
+                        emails</span>
+                  </div>
+
+               </div>
+            </a>
+         </li>
+         <li>
+            <a class="toggle-link" id="owner-paper-toggle-2" href="">
+               <div id="admins" class="toggle-tab-container-2">
+                  <div id="head" class="header">
+                     <i id="paper-2" class="fa-solid fa-user-tie"></i>
+                     <span id="text" class="toggle-item">Admins</span>
+                     <div id="join-paperNotification" class="new-notfication"></div>
+                  </div>
+
+               </div>
+            </a>
+         </li>
+         <li>
+            <a class="toggle-link" id="owner-paper-toggle-3" href="">
+               <div id="owner-posts" class="toggle-tab-container-3">
+                  <div id="head" class="header">
+                     <i id="paper-3" class="fa-solid fa-user-group"></i>
+                     <span id="text" class="toggle-item">Posts</span>
+
+                  </div>
+               </div>
+            </a>
+         </li>
+         <%} else{%>
+
+            <li>
+               <a class="toggle-link" id="paper-toggle" href="">
+                  <div class="toggle-tab-container">
+                     <div id="head" class="header">
+                        <i id="paper" class="fa-solid fa-plus"></i>
+                        <span id="text" class="toggle-item">New post</span>
+                     </div>
+
+                  </div>
+               </a>
+            </li>
+            <li>
+               <a class="toggle-link" id="paper-toggle-2" href="">
+                  <div id="posts" class="toggle-tab-container">
+                     <div id="head" class="header">
+                        <i class="fa-solid fa-"></i>
+                        <span id="text" class="toggle-item">Your posts</span>
+                     </div>
+
+                  </div>
+               </a>
+            </li>
+
+            <%}%>
+   </ul>
+
+
+
+</div>
+
+
+<div id="startpost-popup" class="create-post">
+   <div class="startpapers-label" id="joined">Publish a post</div>
+   <div class="startpost-popup">
+      <i class="fas fa-times"></i>
+      <div class="input-group">
+         <input type="text" name="name" id="post-title" required placeholder="Write your project title here ">
+      </div>
+      <table border="1" cellpadding="10" cellspacing="0">
+         <tbody>
+            <tr>
+               <section class="tools">
+
+                  <input id="fontFamily" class="fontFamily" title="Font family" value="Arial, sans-serif">
+                  <div class="fontSize">
+                     <i id="decrease" class="fa-solid fa-minus"></i>
+                     <input id="font-size" value="18"></p>
+                     <i id="increase" class="fa-solid fa-plus"></i>
+                  </div>
+
+                  <input type="color" name="color" id="color-picker" title="font color">
+                  <div class="divider">
+
+                  </div>
+                  <i id="bold" class="fa-solid fa-bold"></i>
+                  <i id="italic" class="fa-solid fa-italic"></i>
+                  <i id="underline" class="fa-solid fa-underline"></i>
+                  <i id="divide" class="fa-solid fa-window-minimize"></i>
+                  <div class="divider"></div>
+
+                  <i id="make-list" class="fa-solid fa-caret-right"></i>
+                  <!-- <i class="fa-solid fa-list-ol"></i> -->
+
+                  <div class="divider"></div>
+
+                  <i id="align-left" class="fa-solid fa-align-left" title="Align Left"></i>
+                  <i id="align-right" class="fa-solid fa-align-right" title="Align Right"></i>
+                  <i id="align-center" class="fa-solid fa-align-center" title="Align Center"></i>
+                  <div class="divider"></div>
+                  <label for="post-image">
+                     <i class="fa-regular fa-image" title="upload image"></i>
+                  </label>
+                  <input type="file" multiple id="post-image" name="post-image" style="display: none;" alt="image/*">
+               </section>
+            </tr>
+            <tr>
+               <div id="post-text" contenteditable="true" class="editable-text">
+                  <span id="placeholder" class="placeholder">Enter your text here...</span>
+               </div>
+            </tr>
+            <tr>
+               <td>
+                  <div class="input-group">
+                     <label for="name">Tags</label>
+                     <div class="input-container">
+                        <div id="tags-overlay" class="tags-overlay"></div>
+                        <input type="text" id="tags" name="name" placeholder="Write tags related to the topic...">
+                     </div>
+                  </div>
+               </td>
+               <td><button onclick="new_post()" id="start_post">publish</button></td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
+
+<div class="yourpostspopup" id="yourposts-popup">
+   <div class="startpapers-label" id="joined">Posts</div>
+   <div class="yourposts-popup" id="Myposts"></div>
+</div>
+<div id="editpost-popup" class="edit-post">
+
+</div>
+<div id="users" class="users">
+
+
+</div>
+
+
+<div id="user-tools" class="user-tools">
+   <a id="ban-user">Ban</a>
+   <a id="set-admin">Set as admin</a>
+</div>
+<div id="admin-tools" class="user-tools">
+   <a id="degrade-admin">Degrade to user</a>
+</div>
+<div id="fonts-list" class="fonts-list">
+   <!-- Arabic Fonts -->
+   <a>Amiri, serif</a>
+   <a>Cairo, sans-serif</a>
+   <a>Droid Arabic Kufi, serif</a>
+   <a>Lateef, serif</a>
+   <a>Almarai, sans-serif</a>
+   <a>Montserrat Arabic, sans-serif</a>
+   <a>Tajawal, sans-serif</a>
+   <a>Rakkas, cursive</a>
+   <a>Markazi Text, serif</a>
+   <a>Sakkal Majalla, sans-serif</a>
+   <a>Harmattan, sans-serif</a>
+   <a>El Messiri, sans-serif</a>
+   <a>Reem Kufi, sans-serif</a>
+   <a>Samim, sans-serif</a>
+   <a>Sofia, sans-serif</a>
+   <a>Ruda, sans-serif</a>
+   <a>Amethyst, serif</a>
+   <a>Janna LT, sans-serif</a>
+   <a>Amiri Quran, serif</a>
+   <!-- English Fonts -->
+   <a>Arial, sans-serif</a>
+   <a>Verdana, sans-serif</a>
+   <a>Helvetica, sans-serif</a>
+   <a>Tahoma, sans-serif</a>
+   <a>Trebuchet MS, sans-serif</a>
+   <a>Times New Roman, serif</a>
+   <a>Georgia, serif</a>
+   <a>Garamond, serif</a>
+   <a>Courier New, monospace</a>
+   <a>Brush Script MT, cursive</a>
+   <a>Sans-Serif</a>
+   <a>Poppins</a>
+   <a>Roboto, sans-serif</a>
+   <a>Montserrat, sans-serif</a>
+   <a>Open Sans, sans-serif</a>
+   <a>Lora, serif</a>
+   <a>Playfair Display, serif</a>
+   <a>Merriweather, serif</a>
+   <a>Lobster, cursive</a>
+   <a>Pacifico, cursive</a>
+   <a>Nunito, sans-serif</a>
+   <a>Mukta, sans-serif</a>
+   <a>Raleway, sans-serif</a>
+   <a>Ubuntu, sans-serif</a>
+</div>
+
+<div id="text-fonts-list" class="text-fonts-list">
+   <!-- Arabic Fonts -->
+   <a>Amiri, serif</a>
+   <a>Cairo, sans-serif</a>
+   <a>Droid Arabic Kufi, serif</a>
+   <a>Lateef, serif</a>
+   <a>Almarai, sans-serif</a>
+   <a>Montserrat Arabic, sans-serif</a>
+   <a>Tajawal, sans-serif</a>
+   <a>Rakkas, cursive</a>
+   <a>Markazi Text, serif</a>
+   <a>Sakkal Majalla, sans-serif</a>
+   <a>Harmattan, sans-serif</a>
+   <a>El Messiri, sans-serif</a>
+   <a>Reem Kufi, sans-serif</a>
+   <a>Samim, sans-serif</a>
+   <a>Sofia, sans-serif</a>
+   <a>Ruda, sans-serif</a>
+   <a>Amethyst, serif</a>
+   <a>Janna LT, sans-serif</a>
+   <a>Amiri Quran, serif</a>
+   <!-- English Fonts -->
+   <a>Arial, sans-serif</a>
+   <a>Verdana, sans-serif</a>
+   <a>Helvetica, sans-serif</a>
+   <a>Tahoma, sans-serif</a>
+   <a>Trebuchet MS, sans-serif</a>
+   <a>Times New Roman, serif</a>
+   <a>Georgia, serif</a>
+   <a>Garamond, serif</a>
+   <a>Courier New, monospace</a>
+   <a>Brush Script MT, cursive</a>
+   <a>Sans-Serif</a>
+   <a>Poppins</a>
+   <a>Roboto, sans-serif</a>
+   <a>Montserrat, sans-serif</a>
+   <a>Open Sans, sans-serif</a>
+   <a>Lora, serif</a>
+   <a>Playfair Display, serif</a>
+   <a>Merriweather, serif</a>
+   <a>Lobster, cursive</a>
+   <a>Pacifico, cursive</a>
+   <a>Nunito, sans-serif</a>
+   <a>Mukta, sans-serif</a>
+   <a>Raleway, sans-serif</a>
+   <a>Ubuntu, sans-serif</a>
+</div>

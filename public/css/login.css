@@ -1,0 +1,205 @@
+:root{
+    --color-background:#EEF2F5
+}
+
+
+body{
+    background-color: var(--color-background);
+}
+
+.navbar {
+    position: relative;
+    height: 100px;
+    width: 100%;
+    top: -10px;
+}
+.navbar img {
+    position: relative;
+    right: -40%;
+    top: -38px;
+    width: 20%;
+    height: 201%;
+}
+
+.popup-message {
+    width: fit-content;
+    font-size: 34%;
+    padding: 0.4%;
+    transition: opacity 0.5s ease-in-out;
+    border-radius: 47px;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    background-color: #00000079;
+    color: white;
+    position: absolute;
+    top: 84%;
+    left: 48%;
+}
+form{
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 25%;
+    height: 75vh;
+    text-align: left;
+    position: relative;
+    right: -35%;
+    bottom: -3vh;
+}
+.input-group {
+    
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+form h2 {
+    color: rgb(26, 28, 28);
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-weight: 700;
+    margin: 0px;
+    margin-bottom: 5%;
+    font-size: 24px;
+    line-height: 1.33333;
+}
+form h1{
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
+    font-weight: 700;
+    color: rgb(96, 117, 133);
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 5%;
+}
+.input-group label {
+    color: rgb(96, 117, 133);
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-weight: 900;
+    margin: 0px;
+    margin-bottom: 5%;
+    font-size: 12px;
+    line-height: 1.33333;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.input-group input {
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    width: 100%;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    color: rgb(26, 28, 28);
+    border-color: rgb(163, 178, 189);
+    background-color: rgb(255, 255, 255);
+}
+form a{
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0px;
+    margin-left: 48%;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    text-decoration-line: underline;
+    color: rgb(4, 122, 136);
+    
+}
+form button{
+    display: inline-block;
+    border: 0px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-transform: none;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.14286;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 16px 32px;
+    background-color: rgb(4, 122, 136);
+    color: rgb(255, 255, 255);
+    width: 100%;
+}
+
+.login-a {
+    display: inline-block;
+    border: 1px solid rgb(163, 178, 189);
+    margin: 0px;
+    text-transform: none;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.14286;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 11px 23px;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(64, 81, 94);
+    width: 30%;
+    height: 20px;
+}
+
+
+form a[id="facebook"]{
+    margin-right: 10%;
+}
+
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+}
+.divider::before {
+    margin-right: 10px;
+}
+.divider::after {
+    margin-left: 10px;
+}
+.divider p {
+    margin: 0;
+    padding: 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+.css-hjd0n6-StyledButton {
+    display: inline-block;
+    border: 0px;
+    margin-left: 20%;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.33333;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 16px;
+    color: rgb(64, 81, 94);
+    background-color: rgba(255, 255, 255, 0);
+    letter-spacing: 0.5px;
+    width: 100%;
+}
+
+

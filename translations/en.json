@@ -1,0 +1,15 @@
+{
+    "topBar":{
+        "signOut":"sign out",
+        "settings":"settings"
+    },
+    "sidebar": {
+      "usersEmails": "User Emails",
+      "admins": "admins",
+      "posts": "posts",
+      "yourPosts": "Posts"
+    },
+    "settingsPpup":{
+        "chooseLanguage":"Choose language"
+    }
+}

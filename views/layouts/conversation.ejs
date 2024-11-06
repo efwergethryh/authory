@@ -1,0 +1,180 @@
+<div class="chat-container">
+    <div class="chats-view">
+        <div class="search-bar-container">
+            <input type="text" class="search-bar" placeholder="Search">
+        </div>
+        <div class="chat">
+            <% conversations.forEach(function(convoGroup) { %>
+                <% convoGroup.conversation.forEach(function(convo) { %>
+                    <div class="conversation-item">
+                        <img src="<%= convo.picture %>" alt="<%= convo.title %>" />
+                        <div class="plus-sign">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <h3>
+                            <%= convo.title %>
+                        </h3>
+                    </div>
+                    <% }); %>
+            <% }); %>
+        </div>
+    </div>
+
+    <div class="chat-body">
+        <div class="message-history">
+
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+
+
+                <div class="message received">
+                    <span class="message-text">Faculty of Information Technology Engineering - Damascus
+                        University</span>
+                    <span class="time">4:32 PM</span>
+                </div>
+            </div>
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+                <div class="message sent">
+                    <span class="message-text">Faculty of Information Technology Engineering - Damascus
+                        University</span>
+                    <span class="time">4:32 PM</span>
+                </div>
+            </div>
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+                <div class="message sent">
+                    <span class="message-text">Faculty of Information Technology Engineering - Damascus
+                        University</span>
+                    <span class="time">4:32 PM</span>
+                </div>
+            </div>
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+
+
+                <div class="message received">
+                    <span class="message-text">Faculty of Information Technology Engineering - Damascus
+                        University</span>
+                    <span class="time">4:32 PM</span>
+                </div>
+            </div>
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+
+
+                <div class="message received">
+                    <span class="message-text">Faculty of Information Technology Engineering - Damascus
+                        University</span>
+                    <span class="time">4:32 PM</span>
+                    <i class="fa-solid fa-check-double"></i>
+                </div>
+            </div>
+
+
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+
+
+                <div class="message received">
+                    <span class="message-text">السلام عليكم</span>
+                    <span class="time">4:32 PM</span>
+                    <i class="fa-solid fa-check-double"></i>
+                </div>
+            </div>
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+
+                <div class="message received">
+                    <span class="message-text">Faculty of Information Technology Engineering - Damascus
+                        University</span>
+                    <span class="time">4:32 PM</span>
+                    <i class="fa-solid fa-check-double"></i>
+                </div>
+            </div>
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+
+
+                <div class="message received">
+                    <span class="message-text">Faculty of Information Technology Engineering - Damascus
+                        University</span>
+                    <span class="time">4:32 PM</span>
+                    <i class="fa-solid fa-check-double"></i>
+                </div>
+            </div>
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+
+
+                <div class="message received">
+                    <span class="message-text">Faculty of Information Technology Engineering - Damascus
+                        University</span>
+                    <span class="time">4:32 PM</span>
+                    <i class="fa-solid fa-check-double"></i>
+                </div>
+            </div>
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+
+
+                <div class="message sent">
+                    <span class="message-text">Faculty of Information Technology Engineering - Damascus
+                        University</span>
+                    <!-- <span class="time">4:32 PM</span> -->
+                </div>
+            </div>
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+
+
+                <div class="message sent">
+                    <span class="message-text">Faculty of Information Technology Engineering - Damascus
+                        University</span>
+                    <span class="time">4:32 PM</span>
+                    <!-- <i class="fa-solid fa-check-double"></i> -->
+                </div>
+            </div>
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+
+
+                <div class="message sent">
+                    <span class="message-text">Faculty of Information Technology Engineering</span>
+                    <span class="time">4:32 PM</span>
+                    <!-- <i class="fa-solid fa-check-double"></i> -->
+                </div>
+            </div>
+            <div class="message-info">
+
+                <img src="images/person.jpeg" alt="Sender Image" class="sender-image" />
+
+
+                <div class="message sent">
+                    <span class="message-text">Send the files</span>
+                    <span class="time">4:32 PM</span>
+                    <!-- <i class="fa-solid fa-check-double"></i> -->
+                </div>
+            </div>
+
+        </div>
+        <div class="messaging-container">
+            <i id="clip" class="fa-solid fa-paperclip"></i>
+            <input type="text" placeholder="write a message">
+            <i id="plane" class="fa-solid fa-paper-plane"></i>
+        </div>
+
+    </div>
+</div>

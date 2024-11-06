@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.min.css">
+</head>
+
+<body>
+    <div class="loading-spinner" id="loading-spinner"></div>
+    <div class="navbar">
+        <img src="images/logo1.png" alt="not found">
+    </div>
+
+    <form action="" id="register" enctype="multipart/form-data">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        <div class="input-group">
+                            <label for="name">NAME</label>
+                            <input type="text" id="name" name="name" required placeholder="NAME">
+                        </div>
+                    </th>
+                    <th>
+                        <div class="input-group">
+                            <label for="name">Project title</label>
+                            <input type="text" id="project_title" name="projet_title" required
+                                placeholder="project title" required>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="input-group">
+                            <label for="scientific_interest">Scientific interest</label>
+                            <input type="text" id="scientific_interest" name="scientific_interest" required>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <label for="username">Email address</label>
+                            <input type="text" id="email" name="email" required placeholder="email@address.com"
+                                required>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <label for="institute">Project branch</label>
+                            <div class="institute-container">
+                                <input type="text" id="project_branch" name="project_branch" aria-label="Country"
+                                    autocomplete="off" class="styled-input" placeholder="Select branch" required>
+                                <div class="icon-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-chevron-down">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                                <ul class="institute-dropdown-options">
+                                    <li class="level1">A-Medicine</li>
+                                    <li class="unselectable">Internal Medicine</li>
+                                    <li data-value="Cardiology">Cardiology</li>
+                                    <li data-value="Pulmonology">Pulmonology</li>
+                                    <li data-value="Gastroenterology">Gastroenterology</li>
+                                    <li data-value="Nephrology">Nephrology</li>
+                                    <li data-value="Endocrinology">Endocrinology</li>
+                                    <li data-value="Neurology">Neurology</li>
+                                    <li data-value="Critical Care Medicine">Critical Care Medicine</li>
+
+                                    <li class="unselectable">Surgery Medicine</li>
+                                    <li data-value="General Surgery">General Surgery</li>
+                                    <li data-value="Cardiothoracic Surgery">Cardiothoracic Surgery</li>
+                                    <li data-value="Neurosurgery">Neurosurgery</li>
+                                    <li data-value="Orthopedic Surgery">Orthopedic Surgery</li>
+                                    <li data-value="Plastic Surgery">Plastic Surgery</li>
+                                    <li data-value="Urology">Urology</li>
+                                    <li data-value="Vascular Surgery">Vascular Surgery</li>
+                                    <li data-value="Pediatric Surgery">Pediatric Surgery</li>
+                                    <li data-value="Trauma Surgery">Trauma Surgery</li>
+
+                                    <li class="unselectable">Gynecology medicine</li>
+                                    <li data-value="Trauma Surgery">General gynecology</li>
+                                    <li data-value="Trauma Surgery">Obstetrics</li>
+                                    <li data-value="Trauma Surgery">Gynecology oncology</li>
+                                    <li data-value="Trauma Surgery">Infertility</li>
+                                    <li class="unselectable">Pediatric medicine</li>
+                                    <li class="unselectable">Pediatric medicine</li>
+
+                                    <div class="unselectable">Emergency medicine</div>
+                                    <div class="unselectable">Dermatology</div>
+                                    <div class="unselectable">Ophthalmology</div>
+                                    <div class="unselectable">Otolaryngology (ENT)</div>
+                                    <div class="unselectable">Psychology</div>
+                                    <div class="unselectable">Hematology</div>
+                                    <div class="unselectable">Oncology</div>
+                                    <div class="unselectable">Rhumatology</div>
+                                    <div class="unselectable">infectious</div>
+                                    <div class="unselectable">geriatric medicine</div>
+                                    <div class="unselectable">Family medicine</div>
+                                    <div class="unselectable">Radiology</div>
+                                    <div class="unselectable">Anesthesiology</div>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <label for="text">Type of study</label>
+                            <div class="education-container">
+                                <input type="text" id="type_of_study" name="type_of_study" aria-label="Country"
+                                    autocomplete="off" class="styled-input" placeholder="type of study" required>
+                                <div class="icon-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-chevron-down">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                                <ul class="education-dropdown-options">
+                                    <li data-value="Experimental">Experimental </li>
+                                    <li data-value="Observational">Observational </li>
+                                    <li data-value="Descriptive">Descriptive </li>
+                                    <li data-value="Correlational">Correlational </li>
+                                    <li data-value="Case study">Case study </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <label for="email">Confirm Email</label>
+                            <input type="text" id="email" name="Confirmemail" required placeholder="email@address.com">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <label for="university">Look for</label>
+                            <div class="university-container">
+                                <input type="text" id="looking_for" name="look_for" aria-label="Country"
+                                    required autocomplete="off" class="styled-input" placeholder="Looking for?">
+                                <div class="icon-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-chevron-down">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                                <ul class="university-dropdown-options">
+                                    <li data-value="Writer">Writer</li>
+                                    <li data-value="Data collector">Data collector</li>
+                                    <li data-value="Data Analysis">Data Analysis</li>
+                                    <li data-value="Supervisor">Supervisor</li>
+                                    <li data-value="Microsoft office Expert">Microsoft office Expert</li>
+                                    <li data-value="Puplishing expert">Puplishing expert</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <label for="text">Country</label>
+                            <div id="count-cont" class="country-container">
+                                <input type="text" id="country" name="country" aria-label="Country"
+                                    autocomplete="off" class="styled-input" placeholder="Country" required>
+                                <div class="icon-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-chevron-down">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                                <ul id="country-drp" class="country-dropdown-options">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required placeholder="password here">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <label for="name">Phone number</label>
+                            <input type="text" id="phone" name="phone_number" required placeholder="Phone number">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="avatar-upload">
+                            <input type="file" id="profile_picture" name="profile_picture" required accept="image/*"
+                                 />
+                            <label for="profile_picture" class="avatar-button" id="avatar-label">
+                                <div id="avatar-preview" class="avatar-preview">
+                                    <i class="fa-solid fa-camera"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <label for="Confirmpassword">Confirm Password</label>
+                            <input type="password" id="Confirmpassword" name="Confirmpassword" required
+                                placeholder="Confirm password">
+                        </div>
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <button id="reg">Register</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <button id="openPopupBtn" style="display: none;">Open Image Popup</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/apis.js"></script>
+    
+    <div id="imagePopup" class="resizing-popup">
+        <div class="popup-content">
+            <span class="close-btn" id="closePopupBtn">&times;</span>
+            <img id="imageToCrop" src="" alt="Selected Picture">
+            <button id="cropImageBtn">Confirm Crop</button> <!-- Confirm Crop Button -->
+        </div>
+    </div>
+</body>
+
+</html>

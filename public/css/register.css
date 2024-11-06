@@ -1,0 +1,339 @@
+:root {
+    --color-background: #EEF2F5;
+    --color-torq: #047a88;
+}
+
+body {
+    background-color: var(--color-background);
+}
+
+.navbar {
+    position: relative;
+    height: 100px;
+    width: 100%;
+    top: -10px;
+}
+
+.navbar img {
+    position: relative;
+    right: -40%;
+    top: -38px;
+    width: 20%;
+    height: 201%;
+}
+
+form {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    height: 70vh;
+    text-align: left;
+    position: relative;
+    right: -25%;
+    bottom: -1vh;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.university-container,
+.institute-container,
+.education-container,
+.country-container {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.styled-input {
+    width: 100%;
+    padding: 8px 40px 8px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.styled-input {
+    background-color: #ffffff;
+    color: #666;
+}
+
+.icon-container {
+    position: absolute;
+    right: 7%;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.icon-container svg {
+    width: 20px;
+    height: 20px;
+    color: #666;
+}
+
+.university-dropdown-options,
+.institute-dropdown-options,
+.education-dropdown-options,
+.country-dropdown-options {
+    position: absolute;
+    top: 100%;
+    /* Appears below the input field */
+    left: 0;
+    width: 100%;
+    /* Matches the width of the container */
+    max-height: 200px;
+    /* Maximum height for the dropdown */
+    overflow-y: auto;
+    /* Adds scroll if content overflows */
+    background-color: white;
+    /* Dropdown background */
+    border: 1px solid #ccc;
+    /* Border around dropdown */
+    border-radius: 4px;
+    /* Rounded corners */
+    list-style: none;
+    /* Remove default list styling */
+    padding: 0;
+    margin: 0;
+    display: none;
+    box-sizing: border-box;
+    z-index: 100;
+}
+
+.university-dropdown-options li,
+.institute-dropdown-options li,
+.education-dropdown-options li,
+.country-dropdown-options li {
+    padding: 10px;
+    cursor: pointer;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+}
+
+.university-dropdown-options li:hover,
+.institute-dropdown-options li:hover,
+.education-dropdown-options li:hover,
+.country-dropdown-options li:hover {
+    background-color: #f0f0f0;
+}
+
+.university-container.open .university-dropdown-options,
+.institute-container.open .institute-dropdown-options,
+.education-container.open .education-dropdown-options,
+.country-container.open .country-dropdown-options {
+    display: block;
+}
+
+.unselectable {
+    pointer-events: none;
+    color: #888;
+    font-style: italic;
+    padding: 10px;
+    user-select: none;
+    background-color: #f7f6f6;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.level1 {
+    pointer-events: none;
+    color: #888;
+    font-style: italic;
+    padding: 10px;
+    user-select: none;
+    background-color: #f0f0f0;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+    width: 100%;
+    text-align: left;
+    background-color: none;
+
+}
+
+.input-group input {
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    width: 100%;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    color: rgb(26, 28, 28);
+    border-color: rgb(163, 178, 189);
+    background-color: rgb(255, 255, 255);
+}
+
+.input-group label {
+    color: rgb(96, 117, 133);
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-weight: 900;
+    margin: 0px;
+    margin-bottom: 1%;
+    margin-top: 5%;
+    font-size: 12px;
+    line-height: 1.33333;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    text-align: left;
+}
+
+button[id="reg"],button[id="create-owner"],button[id="log-in"] {
+    display: inline-block;
+    border: 0px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-transform: none;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.14286;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 16px 32px;
+    background-color: rgb(4, 122, 136);
+    color: rgb(255, 255, 255);
+    width: 80%;
+}
+button[id="create-owner"],button[id="log-in"] {
+    width: 50%;
+}
+.popup-message {
+    width: fit-content;
+    font-size: 34%;
+    padding: 0.4%;
+    border-radius: 47px;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    background-color: #000000a5;
+    color: white;
+    position: absolute;
+    top: 84%;
+    left: 48%;
+    transition: opacity 0.5s ease-in-out;
+}
+.popup-message.show{
+    opacity: 1;
+}
+button#create-owner:hover {
+    background-color: rgb(18 148 163);
+}
+.avatar-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0.5%px;
+    position: relative;
+    margin-top: 2%;
+    left: 8%;
+    align-items: start;
+
+
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.avatar-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    background: url('/images/useravatar.jpg');
+    background-position: 50%;
+    background-size: 120%;
+    border: 2px solid #ccc;
+    overflow: hidden;
+    position: relative;
+}
+
+.avatar-preview {
+    width: 100%;
+    height: 30%;
+    margin-top: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3332324d;
+}
+
+.avatar-preview i {
+    color: #e6e6e6;
+}
+
+.avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Resizing popup */
+
+.resizing-popup {
+    display: none;
+    position: fixed;
+    top: -0%;
+    width: 100%;
+    height: 100%;
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.8);
+
+}
+
+.resizing-popup span {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #e6e6e6;
+}
+
+.cropper-crop-box,
+.cropper-view-box {
+    border-radius: 50%;
+}
+
+.cropper-view-box {
+    box-shadow: 0 0 0 1px #39f;
+    outline: 0;
+}
+
+#cropImageBtn{
+    position: relative;
+    left: 100%;
+    top: -10%;
+}
+
+.cropper-face .cropper-move {
+    display: none;
+}
+
+#imageToCrop {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: 20px auto;
+}

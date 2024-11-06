@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.min.css">
+</head>
+
+<body>
+    <div class="loading-spinner" id="loading-spinner"></div>
+    <div class="navbar">
+        <img src="images/logo1.png" alt="not found">
+    </div>
+    <form id="owner-register" action="">
+        <div class="creds">
+            <div class="input-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required placeholder="Name">
+            </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Owner's email">
+            </div>
+            <div class="input-group">
+                <label for="name">Phone number</label>
+                <input type="text" id="phone" name="phone_number" required placeholder="Phone number">
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Owner's password">
+            </div>
+            <label>
+                <input type="checkbox" name="option" value="Owner"> Owner
+            </label>
+            <label>
+                <input type="checkbox" name="option" value="Admin"> Admin
+            </label>
+        </div>
+        <button type="submit" id="create-owner">Create Owner</button>
+    </form>
+    
+    <script src="/js/apis.js"></script>
+</body>
+
+</html>

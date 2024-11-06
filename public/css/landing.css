@@ -1,0 +1,101 @@
+:root {
+    --color-torq: #047a88
+}
+
+.background {
+    background: url('/images/bgc.jpg');
+    width: 90rem;
+    height: 33rem;
+    background-size: 100%;
+
+    position: relative;
+    left: 0px;
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Distribute space between elements */
+    align-items: center;
+    flex-direction: column; /* Vertically align items */
+    height: 6vw;
+    background-color: white;
+    width: 100%;
+    padding: 0 2vw; /* Add padding to give some space on the left and right */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+    gap: 1vw;
+}
+.navbar img {
+    position: relative;
+    right: 7%;
+    top: 0vw;
+    width: 10%;
+    height: 100%;
+}
+
+.auth-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
+    position: relative;
+    top: 1vw;
+}
+
+.tabBar {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    top: 3%;
+    left: 5%;
+    width: 77%;
+}
+
+.tabBar a {
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+    font-size: 77%;
+    width: 16%;
+    padding-top: 2%;
+    padding-left: 2%;
+}
+
+.tabBar a:hover {
+    background-color: rgb(210, 210, 210);
+}
+
+.navbar button[id="signIn"] {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px 20px;
+    width: auto;
+    min-width: 120px;
+    position: relative;
+    left: 10px;
+    top: 0;
+    font-size: 16px;
+    display: inline-block;
+}
+
+
+.navbar button[id="signUp"] {
+    background-color: var(--color-torq);
+    border: 2px;
+    color: white;
+    /* Example of adding a border */
+    border-radius: 10px;
+    padding: 10px 20px;
+    /* Adjust horizontal padding as needed */
+    width: auto;
+    /* Let the button adjust its width based on content */
+    min-width: 120px;
+    /* Ensures a minimum width for the button */
+    position: relative;
+    left: 20px;
+    top: 0;
+    font-size: 16px;
+    /* Adjust font size as needed */
+    display: inline-block;
+    /* Ensure button doesn't collapse */
+}

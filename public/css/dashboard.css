@@ -1,0 +1,510 @@
+:root {
+    --color-background: #EEF2F5;
+    --elevation-2: 0px 2px 8px 0px #0000001f, 0px .3px 1px 0px #00000003;
+    --color-text-secondary-default: #40515e;
+}
+
+body {
+    background-color: var(--color-background);
+    transition: margin-left 0.5s;
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+
+}
+
+#profile img {
+    vertical-align: middle;
+    width: 50px;
+    border-radius: 50%;
+    position: relative;
+    top: -24px;
+
+}
+
+.topBar {
+    background-color: white;
+    box-shadow: var(--elevation-2);
+    z-index: 8;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100vw;
+    min-width: 310px;
+    height: 56px;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.tools {
+    display: flex;
+    flex-direction: row;
+    gap: 2vw;
+    align-items: center;
+    margin-left: 0.5%;
+    margin-top: 1%;
+    background-color: #dddddd;
+    width: 97%;
+    padding: 1%;
+    border-radius: 10px;
+}
+
+.fontSize,
+.text-fontSize {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+    background-color: #f6f6f8;
+    font-size: medium;
+    padding: 0.8%;
+    border-radius: 10px;
+}
+
+.editable-text {
+    border: none;
+    width: 90%;
+    text-align: start;
+    margin-left: 2%;
+    margin-top: 3%;
+    height: 11vw;
+    font-family: Poppins, sans-serif;
+    font-size: large;
+    color: black;
+    border: none;
+}
+
+.chapters-list {
+    /* list-style-type: disclosure-closed; */
+    list-style: none;
+    height: 10vw;
+    overflow-y: scroll;
+}
+
+.loading-spinner {
+
+    width: 60px;
+    height: 60px;
+
+    display: none;
+    position: absolute;
+    left: 59%;
+    top: 44%;
+    z-index: 50;
+}
+
+.trash-can {
+    color: red;
+}
+
+.pen {
+    color: rgb(40, 119, 184);
+}
+
+.post-tools {
+    display: flex;
+    flex-direction: row;
+    margin-left: 95%;
+    gap: 1vw;
+    position: relative;
+    top: -1vw;
+}
+
+.list-icon {
+    margin-right: 2%;
+    cursor: pointer;
+}
+
+ul li section {
+    display: none;
+    width: 95%;
+    height: 6.5vw;
+    overflow-y: scroll;
+    margin-top: 1vw;
+    margin-left: 3vw;
+}
+
+ul li section.active {
+    display: block;
+}
+
+#placeholder {
+    color: rgb(181, 181, 181);
+}
+
+.post-image {
+    height: 100%;
+    border-radius: 10px;
+}
+
+.editable-text:focus {
+    outline: none;
+    /* Removes default outline */
+    border-color: transparent;
+
+}
+
+.divider {
+    width: 1px;
+    height: 100%;
+    background-color: #ececec;
+}
+
+.fontSize p,
+.fontFamily p {
+    margin: 3px;
+}
+
+.fonts-list,
+.text-fonts-list {
+    background: white;
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    left: 31%;
+    top: 9%;
+    gap: 0;
+    box-shadow: 0px 0px 2px 2px #80808080;
+    height: 22%;
+    overflow-y: scroll;
+}
+
+.text-fonts-list {
+    top: 30%;
+}
+
+.fonts-list a,
+.text-fonts-list a {
+    padding: 1vw;
+    cursor: pointer;
+}
+
+.fonts-list a:hover,
+.text-fonts-list a:hover {
+    background-color: #dddddd;
+}
+
+.fontFamily {
+    background-color: #f6f6f8;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 12px;
+    padding: 0.7%;
+    border: none;
+    width: 7%;
+}
+
+.fontFamily:focus {
+    outline: none;
+    outline-color: transparent;
+}
+
+i.active {
+    color: rgb(205, 205, 205);
+}
+
+#color-picker,
+#text-color-picker {
+    border-radius: 100px;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    border-radius: 100px;
+    height: 30px;
+    width: 30px;
+}
+
+
+#color-picker::-webkit-color-swatch,
+#text-color-picker::-webkit-color-swatch {
+    border-radius: 50%;
+}
+
+#color-picker::-moz-color-swatch,
+#text-color-picker::-moz-color-swatch {
+    border-radius: 50%;
+}
+
+
+#font-size,
+#text-font-size {
+    border: none;
+    background: none;
+    width: 1rem;
+}
+
+#font-size:focus {
+    outline: none;
+    border-color: transparent;
+}
+
+.fontFamily {
+    overflow-y: scroll;
+}
+
+button[id="start_post"],
+button[id="update_post"] {
+    display: inline-block;
+    border: 0px;
+    margin-top: 10%;
+    margin-left: 46%;
+    text-transform: none;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.14286;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 16px 32px;
+    background-color: rgb(4, 122, 136);
+    color: rgb(255, 255, 255);
+    width: 50%;
+}
+
+.toggle-tab-container,
+.toggle-tab-container-2,
+.toggle-tab-container-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 7% 0 7% 20px;
+    color: #a3b2bd;
+    text-decoration: none;
+    font-size: 18px;
+    border: 1px solid transparent;
+    border-left: 4px solid transparent;
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100%;
+    height: fit-content;
+    overflow: hidden;
+    font-family: math;
+}
+
+#profile p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    position: relative;
+    left: -13vw;
+    top: 2vw;
+    font-weight: 600;
+}
+
+
+
+.create-post,
+.yourpostspopup,
+.edit-post,
+.users {
+    display: none;
+    width: 68%;
+    height: 60%;
+    background-color: white;
+    border-radius: 10px;
+    animation: slideDown 0.4s;
+    margin-left: 31%;
+    margin-top: 10%;
+}
+
+.edit-post {
+    margin-top: 0.5%;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vw;
+}
+
+.edit-post table {
+    border: none;
+    width: 100%;
+    /* Ensure table takes full width */
+    position: relative;
+    left: 1%;
+    top: -5%;
+}
+
+.yourposts-popup,
+.users {
+
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 2vw;
+    gap: 1vw;
+}
+
+.post,
+.user {
+    gap: 0.5vw;
+    padding: 1vw;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    box-shadow: 0px 0px 5px 4px #eeeeee;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.user {
+    width: 90%;
+
+}
+
+.post h,
+.user h {
+    font-weight: bold;
+}
+
+.user-tools {
+    display: none;
+    width: 10%;
+    flex-direction: column;
+    background-color: white;
+    position: relative;
+    left: 84%;
+    top: -3vw;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 3px #8080803b;
+}
+.profile-span {
+    display: none;
+    width: 10%;
+    flex-direction: column;
+    background-color: white;
+    position: relative;
+    border-radius: 10px;
+    left: 84%;
+    top: 4vw;
+    box-shadow: 0px 0px 5px 3px #8080803b;
+    z-index: 10;
+}
+.profile-span a{
+    padding: 1vw;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+}
+.settigns {
+    display: none;
+    background-color: white;
+    width: 30%;
+    top: 9vw;
+    height: 23vw;
+    position: absolute;
+    left: 33%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px 3px #8080803b;
+}
+.profile-span a:hover {
+    background-color: #dddddd;
+}
+.settigns {
+    display: none;
+    background-color: white;
+    width: 30%;
+    height: 23vw;
+    position: relative;
+    left: 33%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px 3px #8080803b;
+}
+.settigns select{
+    margin-top: 1vw;
+    border: none;
+    box-shadow: 0px 0px 7px 0px #80808082;
+    width: 42%;
+    padding: 1vw;
+    border-radius: 10px;
+}
+.settigns select:focus{
+    outline: none;
+    outline-color: transparent;
+}
+.settigns label{
+    margin-left: 1vw;
+    margin-top: 1vw;
+    margin-right: 1vw;
+}
+.settigns select option{
+    padding: 0.5vw;
+    
+}
+.settigns select option:hover{
+    background-color: #dddddd;
+}
+#profileImage{
+    cursor: pointer;
+}
+.yourposts-popup{
+    width: 100%;
+}
+.user-tools a {
+    padding: 1vw;
+}
+
+.user-tools a:hover {
+    background-color: #dddddd;
+}
+
+.create-post table {
+    border: none;
+    width: 100%;
+    /* Ensure table takes full width */
+    position: relative;
+    left: 1%;
+    top: -5%;
+}
+
+table {
+    position: relative;
+    top: 20%;
+    left: 10%;
+}
+
+table td {
+
+    margin-right: 10%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.toggle-tab-container.active,
+.toggle-tab-container-2.active,
+.toggle-tab-container-3.active {
+    color: black !important;
+    background-color: #f7f8f9;
+    border: 1px solid #e0e6eb;
+    border-left: 4px solid #a3b2bd;
+    padding-left: 20px;
+}
+
+.topBar ul li[id="profile"] {
+    margin: 0 190vh;
+    margin-top: -1vh;
+    padding: 0;
+}
+
+#paper-toggle,
+#paper-toggle-2,
+#paper-toggle-3,
+#owner-paper-toggle,
+#owner-paper-toggle-2,
+#owner-paper-toggle-3 {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+}

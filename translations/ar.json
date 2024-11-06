@@ -1,0 +1,91 @@
+{
+  "sidebar": {
+    "usersEmails": "البريد الإلكتروني للمستخدمين",
+    "admins": "المشرفون",
+    "posts": "المشاركات",
+    "newPost": "منشور جديد",
+    "yourPosts": "منشوراتك"
+  },
+  "popupLabels": {
+    "publishPost": "نشر منشور",
+    "yourPosts": "منشوراتك",
+    "editPost": "تعديل المنشور",
+    "posts": "المشاركات"
+  },
+  "postForm": {
+    "titlePlaceholder": "اكتب عنوان مشروعك هنا",
+    "fontFamilyTitle": "نوع الخط",
+    "fontSizeTitle": "حجم الخط",
+    "fontColorTitle": "لون الخط",
+    "boldTitle": "غامق",
+    "italicTitle": "مائل",
+    "underlineTitle": "تحته خط",
+    "alignLeftTitle": "محاذاة إلى اليسار",
+    "alignRightTitle": "محاذاة إلى اليمين",
+    "alignCenterTitle": "محاذاة إلى الوسط",
+    "uploadImageTitle": "تحميل صورة",
+    "tagsPlaceholder": "اكتب العلامات المتعلقة بالموضوع...",
+    "publishButton": "نشر"
+  },
+  "userTools": {
+    "banUser": "حظر المستخدم",
+    "setAdmin": "تعيين كمشرف",
+    "degradeAdmin": "إعادة إلى مستخدم"
+  },
+  "fontsList": {
+    "arabicFonts": [
+      "أميري, serif",
+      "القاهرة, sans-serif",
+      "درويد كوفي عربي, serif",
+      "لطيف, serif",
+      "المراعي, sans-serif",
+      "مونتسيرات عربي, sans-serif",
+      "تاجوال, sans-serif",
+      "ركس, cursive",
+      "نص مركزي, serif",
+      "سكل مجلى, sans-serif",
+      "حرمتان, sans-serif",
+      "المسيري, sans-serif",
+      "ريم كوفي, sans-serif",
+      "ساميم, sans-serif",
+      "صوفيا, sans-serif",
+      "رودا, sans-serif",
+      "أميثيست, serif",
+      "جنى لت, sans-serif",
+      "أميري قرآن, serif"
+    ],
+    "englishFonts": [
+      "أريال, sans-serif",
+      "فيردانا, sans-serif",
+      "هيلفيتيكا, sans-serif",
+      "تهوما, sans-serif",
+      "تريبيشيت مس, sans-serif",
+      "تايمز نيو رومان, serif",
+      "جورجيا, serif",
+      "غاراموند, serif",
+      "كورير نيو, monospace",
+      "برش سكريبت مس, cursive",
+      "سانس سيريف",
+      "بوبينز",
+      "روبوتو, sans-serif",
+      "مونتسيرات, sans-serif",
+      "أوبن سانس, sans-serif",
+      "لورا, serif",
+      "بليفير ديسبلي, serif",
+      "ميري ويذر, serif",
+      "لوبيستر, cursive",
+      "باسيفيكو, cursive",
+      "نونيتو, sans-serif",
+      "موكيتا, sans-serif",
+      "رالواي, sans-serif",
+      "أوبونتو, sans-serif"
+    ]
+  },
+  "topBar": {
+    "signOut": "تسجيل خروج",
+    "settings": "الاعدادات"
+  },
+  "settingsPpup": {
+    "chooseLanguage": "اختر اللغة"
+  }
+}
