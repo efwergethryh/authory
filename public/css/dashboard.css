@@ -14,14 +14,14 @@ body {
 
 }
 
-#profile img {
+/* #profile img {
     vertical-align: middle;
     width: 50px;
     border-radius: 50%;
     position: relative;
     top: -24px;
 
-}
+} */
 
 .topBar {
     background-color: white;
@@ -288,14 +288,14 @@ button[id="update_post"] {
     font-family: math;
 }
 
-#profile p {
+/* #profile p {
     margin-top: 0;
     margin-bottom: 1rem;
     position: relative;
     left: -13vw;
     top: 2vw;
     font-weight: 600;
-}
+} */
 
 
 
@@ -402,6 +402,14 @@ button[id="update_post"] {
     border-radius: 20px;
     box-shadow: 0px 0px 5px 3px #8080803b;
 }
+
+/* #profile img {
+    vertical-align: middle;
+    width: 50px;
+    border-radius: 50%;
+    position: relative;
+    top: -.3vw;
+} */
 .profile-span a:hover {
     background-color: #dddddd;
 }
@@ -490,11 +498,11 @@ table td {
     padding-left: 20px;
 }
 
-.topBar ul li[id="profile"] {
+/* .topBar ul li[id="profile"] {
     margin: 0 190vh;
     margin-top: -1vh;
     padding: 0;
-}
+} */
 
 #paper-toggle,
 #paper-toggle-2,
