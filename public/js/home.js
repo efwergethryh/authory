@@ -886,7 +886,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     popup_buttons.forEach((button, index) => {
         button.addEventListener('click', function (event) {
-            clear_convrsation()
+            // clear_convrsation()
             popups.forEach((popup, popupIndex) => {
 
 
