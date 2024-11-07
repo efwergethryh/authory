@@ -80,16 +80,7 @@ p#user-name {
     padding: 0;
 }
 
-.topBar ul li[id="profile"] {
-    margin: 0 190vh;
-    margin-top: -2vh;
-    padding: 0;
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    left: -4%;
-    top: 1.5vw;
-}
+
 
 .topBar ul li a {
     text-decoration: none;
@@ -1327,22 +1318,62 @@ button[id="join"] {
 }
 
 
-#profile img {
-    vertical-align: middle;
+/* .topBar ul li[id="profile"] {
+    margin: 0 190vh;
+    margin-top: -2vh;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    left: -4%;
+    top: 1.5vw;
+} */
+
+/* #profile img {
     width: 50px;
+    height: 50px; 
     border-radius: 50%;
-    position: relative;
-    top: -.3vw;
-    left: 13vw;
+    align-self: flex-end;
 }
+
 #profile p {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    position: relative;
-    top: 0;
     font-weight: 600;
-    align-self: start;
+    margin: 0; 
+    text-align: left; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+} */
+/* Ensure profile list item is a flex container */
+.topBar ul li[id="profile"] {
+    display: flex;               /* Use flexbox for layout */
+    align-items: center;         /* Vertically align items in the center */
+    gap: 10px;                   /* Adjust space between image and text */
+    padding: 0;                  /* Remove default padding */
+    margin: 0;
+    position: relative;
+    left: 84vw;                   /* Remove default margin */
 }
+
+/* Style the profile image */
+#profile img {
+    width: 50px;                 
+    height: 50px;                
+    border-radius: 50%;          
+    object-fit: cover;           
+}
+
+/* Style the profile text */
+#profile p {
+    margin: 0;                   
+    font-weight: 600;            
+    text-align: left;            
+    white-space: nowrap;         
+    overflow: hidden;            
+    text-overflow: ellipsis;     
+    max-width: 200px;            
+}
+
 
 #accept-button {
     display: block;
