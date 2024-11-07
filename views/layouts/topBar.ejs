@@ -16,10 +16,11 @@
                 </a>
             </li>   
             <li id="profile">
+                <p><%= user.email %></p>
                 <a>
                     <img id="profileImage" src="/profile_images/<%= user.profile_picture ? user.profile_picture : 'non-picture.jpg' %>">
                 </a>
-                <p><%= user.email %></p>
+                
                 
             </li>
         </ul>
