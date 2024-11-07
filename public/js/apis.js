@@ -35,14 +35,14 @@ checkboxes.forEach((checkbox) => {
 });
 
 async function post_api(api, formData) {
-    const url = `http://localhost:3000/${api}`;
+    // const url = `http://localhost:3000/${api}`;
 
     try {
         await new Promise(resolve => setTimeout(resolve, 100));
 
         let response;
-        if (api === 'api/auth/register') {
-            response = await fetch(url, {
+        if (api === '/api/auth/register') {
+            response = await fetch(api, {
                 method: 'POST',
                 body: formData,
             });
@@ -52,7 +52,7 @@ async function post_api(api, formData) {
                 jsonFormData[key] = value;
             });
 
-            response = await fetch(url, {
+            response = await fetch(api, {
                 method: 'POST',
                 body: JSON.stringify(jsonFormData),
                 headers: {
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.log(`${key}: ${value}`);
             }
 
-            await post_api('api/auth/login', formData);
+            await post_api('/api/auth/login', formData);
         });
     }
     if (document.getElementById('profile_picture')) {
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             // Submit the form when user clicks 'reg' button
                             document.getElementById('reg').addEventListener('click', async function (event) {
                                 event.preventDefault();  // Prevent default form submission
-                                await post_api('api/auth/register', formData);  // Custom API call
+                                await post_api('/api/auth/register', formData);  // Custom API call
                             });
                         }
                     }, 'image/jpeg');
@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
 
                 // Send the form data via API
-                await post_api('api/create-owner', formData);
+                await post_api('/api/create-owner', formData);
             });
         } catch (error) {
             alert(error);
@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
 
                 // Send the form data via API
-                await post_api('api/auth/login', formData);
+                await post_api('/api/auth/login', formData);
             });
         } catch (error) {
             alert(error);
