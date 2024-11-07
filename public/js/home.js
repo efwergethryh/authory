@@ -894,6 +894,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     popup.style.display = 'none';
                 }
             });
+            const mainContent = document.getElementById('mainContent')
+            mainContent.classList.remove('shifted')
             if (popups[index].style.display === 'block') {
                 popups[index].style.display = 'none';
             } else {
