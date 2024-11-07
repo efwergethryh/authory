@@ -128,4 +128,6 @@ router.delete('/delete-post/:post_id',postController.delete_posts)
 router.use(authMiddleware([3]))
 router.put('/degrade-admin/:adminId',userController.degrade_admin)
 router.put('/set-admin/:userId',userController.set_admin)
+
+
 module.exports = router

@@ -1,4 +1,4 @@
-
+const API_BASE_URL = 'http://145.223.34.195';
 let messages;
 let conversation_type;
 let isreply = false
@@ -39,7 +39,7 @@ const chatContainer = document.querySelector('.chat-container');
 const advancedSearch = document.querySelector('.advancedsearch-container');
 const toggleButton = document.getElementById('advanced_button');
 const search_button = document.getElementById('search')
-const socket = io('http://localhost:3000', {
+const socket = io(API_BASE_URL, {
     query: {
         userId: userId
     }

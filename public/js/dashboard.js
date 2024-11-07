@@ -1,3 +1,4 @@
+const API_BASE_URL = 'http://145.223.34.195';
 const popups = [
     document.getElementById('startpost-popup'),
     document.getElementById('yourposts-popup'),
@@ -297,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.getElementById('admins').addEventListener('click', async function () {
     resetPopups()
     show_spinner()
-    const response = await fetch(`http://localhost:3000/api/users/${2}`, {
+    const response = await fetch(`/api/users/${2}`, {
         method: "GET",
     })
     if (response.ok) {
@@ -371,7 +372,7 @@ function resetPopups() {
 document.getElementById('Users').addEventListener('click', async function () {
     resetPopups()
     show_spinner()
-    const response = await fetch(`http://localhost:3000/api/users/${1}`, {
+    const response = await fetch(`/api/users/${1}`, {
         method: "GET",
     })
     if (response.ok) {
@@ -508,7 +509,7 @@ document.getElementById('posts').addEventListener('click', async function () {
     show_spinner()
     try {
 
-        const response = await fetch('http://localhost:3000/api/posts', {
+        const response = await fetch('/api/posts', {
             method: "GET",
         })
         if (response.ok) {
@@ -974,7 +975,7 @@ function delete_post(id) {
     }
 }
 async function showPost(post_id) {
-    window.location.href = `http://localhost:3000/posts/${post_id}`
+    window.location.href = `0/posts/${post_id}`
 }
 function updateImageSrc(fileInput) {
     // Assuming 'fileInput' is the <input type="file"> element
@@ -1013,7 +1014,7 @@ async function new_post() {
             console.log(`${k} ${v}`);
         }
 
-        const response = await fetch('http://localhost:3000/api/new-post', {
+        const response = await fetch('/api/new-post', {
             method: "POST",
 
             body: formData
