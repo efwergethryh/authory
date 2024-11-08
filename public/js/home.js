@@ -2126,7 +2126,7 @@ async function load_f_conversations() {
 
         // Use for...of loop to await each iteration's async call
         for (const conversation of data.f_conversations) {
-            const userObject = await get_user(conversation.sender);
+            const userObject = await get_user(conversation.receiver);
             const user = userObject.user[0];
 
             Chatcontent += `
