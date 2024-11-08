@@ -46,6 +46,13 @@ async function post_api(api, formData) {
                 method: 'POST',
                 body: formData,
             });
+            // if(jsonFormData.type=="Admin" ||jsonFormData.type=="Owner" ){
+
+            // }else{
+            if (response.pk) {
+                window.location.href = '/pages/home'
+            }
+            // }    
         } else {
             const jsonFormData = {};
             formData.forEach((value, key) => {
@@ -59,14 +66,14 @@ async function post_api(api, formData) {
                     "Content-Type": "application/json"
                 }
             });
-            if(response.ok){
+            if (response.ok) {
 
-                if(jsonFormData.type=="Admin" ||jsonFormData.type=="Owner" ){
-                    window.location.href ='/pages/dashboard'
-                }else{
-                    window.location.href ='/pages/home'
+                if (jsonFormData.type == "Admin" || jsonFormData.type == "Owner") {
+                    window.location.href = '/pages/dashboard'
+                } else {
+                    window.location.href = '/pages/home'
                 }
-            }else{
+            } else {
                 display_Message("Something went wrong")
             }
         }
@@ -75,7 +82,7 @@ async function post_api(api, formData) {
         if (!response.ok) {
             const errorData = await response.json();
             console.log(errorData);
-             // Assuming the server sends JSON errors
+            // Assuming the server sends JSON errors
             display_Message(errorData.message || 'An error occurred'); // Display the error message from the server
             return; // Stop further execution
         }
@@ -85,8 +92,8 @@ async function post_api(api, formData) {
 
         display_Message(responseData.message || 'Request successful');
     } catch (err) {
-        console.log('error',err);
-        
+        console.log('error', err);
+
         display_Message(err.message);
     } finally {
         // Hide the spinner after the request is finished
@@ -138,7 +145,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const loginButton = document.getElementById('login-button');
     const create_owner = document.getElementById('create-owner')
     const log_in = document.getElementById('log-in')
-   
+
     if (loginButton) {
 
         loginButton.addEventListener('click', async function (event) {
@@ -146,7 +153,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const loginForm = document.getElementById('login_form');
             console.log(loginForm);
             const formData = new FormData(loginForm);
-            formData.append('type',"User")
+            formData.append('type', "User")
             // Log form data
             for (const [key, value] of formData.entries()) {
                 console.log(`${key}: ${value}`);
@@ -217,7 +224,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             formData.delete('profile_picture');
                             const file = new File([blob], 'cropped-image.jpg', { type: 'image/jpeg' });
                             formData.append('profile_picture', file);
-                            formData.append('type','User')
+                            formData.append('type', 'User')
 
                             for (const [key, value] of formData.entries()) {
                                 console.log(`${key}: ${value}`);
@@ -251,7 +258,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             create_owner.addEventListener('click', async function (e) {
                 e.preventDefault();
                 const formData = new FormData(registerForm);
-                formData.append('type',user_type)
+                formData.append('type', user_type)
                 // Logging form entries to the console
                 for (const [k, v] of formData.entries()) {
                     console.log(k, ':', v);
@@ -271,8 +278,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             log_in.addEventListener('click', async function (e) {
                 e.preventDefault();
                 const formData = new FormData(log_in_form);
-                
-                formData.append('type',user_type)
+
+                formData.append('type', user_type)
                 for (const [k, v] of formData.entries()) {
                     console.log(k, ':', v);
                 }
