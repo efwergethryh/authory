@@ -1973,33 +1973,7 @@ async function conversation_layout(user_id) {
                 </div>
         </div>
         `;
-        const response = await fetch('/api/get-friendconversations')
-        console.log(response);
-        if (response.ok) {
-            const data = await response.json()
-            const chats = document.getElementById('friendChats')
-            const content = ''
 
-
-            data.f_conversations.forEach(async conversation => {
-                const userObject = await get_user(conversation.sender)
-
-                const user = await userObject.user.user[0]
-                console.log(user);
-
-                content += `
-                <div id="conversationItem" onclick="get_conversation('${conversation._id}')" class="conversation-item">
-                    <img src="/conversation_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
-                    <h3>${user.name}</h3>
-                    <div class="new-notification" id="private-new-${conversation._id}">
-                    </div>  
-                </div>
-                `
-            })
-
-        } else {
-            content`Error loading your conversations`
-        }
 
         return content;
     } catch (error) {
@@ -2068,6 +2042,8 @@ async function show_Single_conversation(user_id) {
 
             content = await conversation_layout(user_id);
             mainContent.innerHTML = content;
+            load_f_conversations()
+
             const text = document.getElementById('message-input');
             const sendButton = document.getElementById('send-message');
             text.addEventListener('input', function () {
@@ -2089,7 +2065,7 @@ async function show_Single_conversation(user_id) {
 
             content = await conversation_layout(user_id);
             mainContent.innerHTML = content;
-            
+            load_f_conversations()
             const text = document.getElementById('message-input');
             const sendButton = document.getElementById('send-message');
             text.addEventListener('input', function () {
@@ -2137,6 +2113,38 @@ async function show_Single_conversation(user_id) {
         console.error('Error fetching conversation:', error);
     } finally {
         hide_spinner(); // Hide spinner after everything is done
+    }
+}
+async function load_f_conversations() {
+    const response = await fetch('/api/get-friendconversations');
+    
+    if (response.ok) {
+        const data = await response.json();
+        const chats = document.getElementById('friendChats');
+        console.log('response is ok');
+        let Chatcontent = '';
+
+        // Use for...of loop to await each iteration's async call
+        for (const conversation of data.f_conversations) {
+            const userObject = await get_user(conversation.sender);
+            const user = userObject.user[0];
+
+            Chatcontent += `
+                <div id="conversationItem" onclick="get_conversation('${conversation._id}')" class="conversation-item">
+                    <img src="/conversation_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
+                    <h3>${user.name}</h3>
+                    <div class="new-notification" id="private-new-${conversation._id}">
+                    </div>  
+                </div>
+                `;
+        }
+
+        // Update innerHTML once all content is ready
+        chats.innerHTML = Chatcontent;
+        console.log(chats);
+
+    } else {
+        document.getElementById('friendChats').innerHTML = `Error loading your conversations`;
     }
 }
 
