@@ -68,7 +68,7 @@ const io = new Server(server, {
     cors: {
         origin:  'http://ictoob.com',
         methods: ["GET", "POST"]
-    }
+    }   
 });
 require('./Sockets/paperConversationSocket')(io);
 require('./Sockets/notificationsSocket')(io);
