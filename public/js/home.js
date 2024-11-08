@@ -1,4 +1,4 @@
-const API_BASE_URL = 'ws://145.223.34.195:3000';
+const API_BASE_URL = 'wss://145.223.34.195:3000';
 let messages;
 let conversation_type;
 let isreply = false
