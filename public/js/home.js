@@ -2117,16 +2117,17 @@ async function show_Single_conversation(user_id) {
 }
 async function load_f_conversations() {
     const response = await fetch('/api/get-friendconversations');
-    
+
     if (response.ok) {
         const data = await response.json();
         const chats = document.getElementById('friendChats');
         console.log('response is ok');
         let Chatcontent = '';
 
-        // Use for...of loop to await each iteration's async call
+
         for (const conversation of data.f_conversations) {
-            const userObject = await get_user(conversation.receiver);
+            const personId = userId === conversation.sender ? conversation.receiver : conversation.sender
+            const userObject = await get_user(personId);
             const user = userObject.user[0];
 
             Chatcontent += `
