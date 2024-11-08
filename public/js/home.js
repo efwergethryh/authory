@@ -40,6 +40,7 @@ const advancedSearch = document.querySelector('.advancedsearch-container');
 const toggleButton = document.getElementById('advanced_button');
 const search_button = document.getElementById('search')
 const socket = io(API_BASE_URL, {
+    transports: ['websocket', 'polling'], 
     query: {
         userId: userId
     }
