@@ -2132,7 +2132,7 @@ async function load_f_conversations() {
 
             Chatcontent += `
                 <div id="conversationItem" onclick="get_conversation('${conversation._id}')" class="conversation-item">
-                    <img src="/conversation_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
+                    <img src="/profile_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
                     <h3>${user.name}</h3>
                     <div class="new-notification" id="private-new-${conversation._id}">
                     </div>  
