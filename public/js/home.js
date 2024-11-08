@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000/socket.io';
+const API_BASE_URL = 'http://localhost:3000';
 let messages;
 let conversation_type;
 let isreply = false
@@ -40,8 +40,7 @@ const advancedSearch = document.querySelector('.advancedsearch-container');
 const toggleButton = document.getElementById('advanced_button');
 const search_button = document.getElementById('search')
 const socket = io(API_BASE_URL, {
-     transports: ['websocket'],
-      wsEngine: 'uws' , 
+    transports: ['polling', 'websocket'],
     query: {
         userId: userId
     }
