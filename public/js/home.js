@@ -1,4 +1,4 @@
-const API_BASE_URL = 'wss://ictoob.com/socket.io';
+const API_BASE_URL = 'http://localhost:3000/socket.io';
 let messages;
 let conversation_type;
 let isreply = false
@@ -40,7 +40,8 @@ const advancedSearch = document.querySelector('.advancedsearch-container');
 const toggleButton = document.getElementById('advanced_button');
 const search_button = document.getElementById('search')
 const socket = io(API_BASE_URL, {
-    transports: ['websocket', 'polling'], 
+     transports: ['websocket'],
+      wsEngine: 'uws' , 
     query: {
         userId: userId
     }
