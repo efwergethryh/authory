@@ -66,7 +66,7 @@ app.use('/api/', apisRouter);
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin:  'http://145.223.34.195',
+        origin:  'http://ictoob.com',
         methods: ["GET", "POST"]
     }
 });
