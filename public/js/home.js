@@ -1,4 +1,5 @@
 const API_BASE_URL = 'http://ictoob.com';
+const localhostAPI = 'http://localhost:3000';
 let messages;
 let conversation_type;
 let isreply = false
@@ -67,9 +68,24 @@ async function buildmessagecontent(message) {
     let messageContent = '';
     console.log('received message', message);
 
-    const dateOptions = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
-    const formattedDate = new Date(message.m.createdAt).toLocaleString('en-US', dateOptions);
-
+    // const dateOptions = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+    // const formattedDate = new Date(message.m.createdAt).toLocaleString('en-US', dateOptions);
+    const dateOptions = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        hour: 'numeric', 
+        minute: 'numeric', 
+        second: 'numeric' 
+    };
+    
+    const createdAt = message.m.createdAt;
+    const date = new Date(createdAt);
+    const formattedDate = isNaN(date.getTime()) 
+    ? "Invalid Date" 
+    : date.toLocaleString('en-US', dateOptions);
+    console.log(message.m.createdAt);
+    
     let replyContent = '';
     let img = '';
     let fileUrl
