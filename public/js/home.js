@@ -1,4 +1,4 @@
-const API_BASE_URL = 'wss://localhost:3000';
+const API_BASE_URL = 'wss://ictoob.com/socket.io';
 let messages;
 let conversation_type;
 let isreply = false
