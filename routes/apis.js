@@ -102,6 +102,8 @@ router.post('/accept-request/:paper_id', requestController.accept_request)
 
 //get routes
 router.get('/get-friendconversation/:id', friendsConversationController.getFriendConversation);
+router.get('/get-friendconversations', friendsConversationController.getFriendConversations);
+
 router.get('/papers',paperController.get_papers)
 router.get('/paper/:paper_id', (req, res) => paperController.get_paper(null, req, res));
 router.get('/messages/:id', conversationController.get_message);

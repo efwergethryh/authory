@@ -73,9 +73,28 @@ const getFriendConversation = async (req, res) => {
         console.log(error);
     }
 }
+const getFriendConversations = async (req, res) => {
+    try {
 
+
+        const myId = res.locals.user._id
+
+        const f_conversations = await FriendsConversation.find({
+            $or: [
+                { receiver: myId },
+                { sender: myId }
+            ],
+        })
+        console.log('f_conversations',f_conversations);
+        
+        res.json({ f_conversations })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
 module.exports = {
     sendMessageTofriend,
-
+    getFriendConversations,
     getFriendConversation
 }

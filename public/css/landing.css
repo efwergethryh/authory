@@ -1,5 +1,47 @@
 :root {
     --color-torq: #047a88
+    --nutral--black: black;
+    --sm: 12px;
+    --grey--dark03: #293b47;
+    --brand--regular: var(--brand--dark01);
+    --text-grey: #536776;
+    --space--xxs: 8px;
+    --tag-bg: #ceedf1;
+    --space--xs: 16px;
+    --brand--dark01: #067c89;
+    --brand--light03: #e7f6f8;
+    --space--xxxs: 4px;
+    --button-primary-bg: #047a88;
+    --brand--dark02: #054f57;
+    --neutral--white: white;
+    --button-secondary-border: #bdc9d1;
+    --grey--dark02: #40515e;
+    --grey--light04: #f5f7f9;
+    --space--m: 32px;
+    --space--s: 24px;
+    --space--xxxl: 64px;
+    --space--l: 40px;
+    --orange--light01: #f6c66f;
+    --brand--light02: #bfedf2;
+    --space--xxxxl: 96px;
+    --space--xl: 48px;
+    --grey--light03: #eef2f5;
+    --green--light03: #e8f8f4;
+    --grey--light02: #e0e6eb;
+    --grey--regular: #607585;
+    --grey--light01: #a3b2bd;
+    --white: white;
+    --orange--light02: #fceaca;
+    --orange--light03: #fef3e1;
+    --tag-brand: #015a64;
+    --space--xxl: 56px;
+    --orange--utility-orange-200: #f4cb81;
+    --brand--light01: #ceedf1;
+    --color: white;
+    --black: black;
+    --red: #f97066;
+    --red-500: #d93c3a;
+    --color-3: white;
 }
 
 .background {
@@ -46,11 +88,12 @@
     flex-direction: row;
     position: relative;
     top: 3%;
-    left: 5%;
+    left: 1%;
     width: 77%;
+    gap: 3vw;
 }
 
-.tabBar a {
+/* .tabBar a {
     text-decoration: none;
     color: black;
     font-weight: 700;
@@ -58,10 +101,21 @@
     width: 16%;
     padding-top: 2%;
     padding-left: 2%;
+} */
+.tabBar a{
+    padding: var(--space--xxs) 0px 8px;
+    grid-column-gap: var(--space--xxs);
+    grid-row-gap: var(--space--xxs);
+    color: var(--text-grey);
+    align-self: center;
+    text-decoration: none;
+    display: flex;
+    transform: none;
+    padding-top: 2%;
+    padding-left: 2%;
 }
-
 .tabBar a:hover {
-    background-color: rgb(210, 210, 210);
+    color: var(--grey--dark02);
 }
 
 .navbar button[id="signIn"] {
@@ -78,9 +132,15 @@
     display: inline-block;
 }
 
-
+#pricing-toggle {
+    color: black;
+    font-size: small;
+    top: -0.2vw;
+    position: relative;
+    transform: rotate(180deg);
+}
 .navbar button[id="signUp"] {
-    background-color: var(--color-torq);
+    background-color: #047a88   ;
     border: 2px;
     color: white;
     /* Example of adding a border */

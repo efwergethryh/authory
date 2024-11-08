@@ -179,28 +179,28 @@ function showProfile(user) {
 document.addEventListener('DOMContentLoaded', function () {
     const profileImage = document.getElementById('profileImage')
     const settings = document.getElementById('settings')
-    const settings_popup =document.getElementById('settings-popup')
+    const settings_popup = document.getElementById('settings-popup')
     const profileSpan = document.getElementById('profile-span')
     console.log(profileImage);
 
     profileImage.addEventListener('click', function (e) {
         e.stopPropagation()
-        
+
         profileSpan.style.display = 'flex'
     })
-    settings.addEventListener('click',function (e){
+    settings.addEventListener('click', function (e) {
         // loadTranslation('ar')
         e.stopPropagation()
-        settings_popup.style.display='block'
+        settings_popup.style.display = 'block'
     })
-    document.addEventListener('click',function (event){
-        
+    document.addEventListener('click', function (event) {
+
         if (profileSpan && profileSpan.style.display === 'flex' && !profileSpan.contains(event.target)) {
-            profileSpan.style.display = 'none';  
+            profileSpan.style.display = 'none';
         }
-    
+
         if (settings_popup && settings_popup.style.display === 'block' && !settings_popup.contains(event.target)) {
-            settings_popup.style.display = 'none';  
+            settings_popup.style.display = 'none';
         }
     })
     socket.on('connection', () => {
@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     socket.emit('register', userId)
-    
+
 });
 
 
@@ -878,7 +878,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 });
 
-
+function closeConversation() {
+    const mainContent = document.getElementById('maincontent')
+    if (mainContent.style.display === 'block') {
+        mainContent.style.display = 'none' // Clear conversation content if needed
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -886,7 +891,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     popup_buttons.forEach((button, index) => {
         button.addEventListener('click', function (event) {
-            // clear_convrsation()
+            const mainContent = document.getElementById('maincontent')
+            mainContent.style.display = 'none'
             popups.forEach((popup, popupIndex) => {
 
 
@@ -894,8 +900,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     popup.style.display = 'none';
                 }
             });
-            const mainContent = document.getElementById('mainContent')
-            mainContent.classList.remove('shifted')
+
             if (popups[index].style.display === 'block') {
                 popups[index].style.display = 'none';
             } else {
@@ -945,7 +950,8 @@ async function send_message(type) {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        type
+                        type,
+                        paper_id: ''
                     })
                 }).then(res => res.json()).then(data => {
 
@@ -1496,6 +1502,8 @@ async function get_conversation(id, type) {
         }
 
         const data = await res.json(); // Await the JSON parsing
+        console.log(data);
+
         messages = data.messages;
         const message_history = document.getElementById('message-history');
         const chat_body = document.getElementById('chat-body');
@@ -1717,7 +1725,10 @@ async function show_conversation(paper_id) {
 
     show_spinner()
     const mainContent = document.getElementById('maincontent');
-
+    mainContent.style.display = 'block'
+    popups.forEach(popup => {
+        popup.style.display = 'none';
+    });
     try {
         const paperResponse = await fetch(`/api/paper/${paper_id}`);
         const paperData = await paperResponse.json();
@@ -1850,6 +1861,7 @@ function openImage(url) {
 
 async function buildMessageContent(messages, userId) {
     let message_content = '';
+    console.log('messages', messages);
 
     for (const message of messages) {
         const sender = await get_user(message.sender);  // Get sender info
@@ -1904,7 +1916,7 @@ async function buildMessageContent(messages, userId) {
 
         message_content += `
             <div id="message-info-${message._id}" class="message-info">
-                <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender.user[0]).replace(/"/g, '&quot;')}')"  src="/profile_images/${sender.user[0].profile_picture ? sender.user[0].profile_picture : 'non-picture.jpg'}"  class="sender-image" />
+                <img onclick="event.stopPropagation();  showProfile('${JSON.stringify(sender.user[0]).replace(/"/g, '&quot;')}')"  src="/profile_images/${sender.user[0].profile_picture ? sender.user[0].profile_picture : 'non-picture.jpg'}"  class="sender-image" />
                 <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.sender === userId ? 'sent' : 'received'}" >
                     ${img}
                     ${replyContent} 
@@ -1935,6 +1947,7 @@ async function conversation_layout(user_id) {
         let content = '';
         const rec_name = user.user[0].name;
         const rec_img = user.user[0].profile_picture;
+
         content += `
         <div class="chat-container">
                 <div class="userinfo">
@@ -1944,7 +1957,9 @@ async function conversation_layout(user_id) {
                     <img src="/profile_images/${rec_img}" alt="Profile Picture">
                 </div>
                 <div id="chats-view" style="top:-10%" class="chats-view">    
-                    <div class="chat"></div>
+                    <div id="friendChats" class="chat">
+                        
+                    </div>
                 </div>
                 <div id="chat-body" class="chat-body">
                     <div id="message-history" class="message-history"></div>
@@ -1958,7 +1973,33 @@ async function conversation_layout(user_id) {
                 </div>
         </div>
         `;
+        const response = await fetch('/api/get-friendconversations')
+        console.log(response);
+        if (response.ok) {
+            const data = await response.json()
+            const chats = document.getElementById('friendChats')
+            const content = ''
 
+
+            data.f_conversations.forEach(async conversation => {
+                const userObject = await get_user(conversation.sender)
+
+                const user = await userObject.user.user[0]
+                console.log(user);
+
+                content += `
+                <div id="conversationItem" onclick="get_conversation('${conversation._id}')" class="conversation-item">
+                    <img src="/conversation_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
+                    <h3>${user.name}</h3>
+                    <div class="new-notification" id="private-new-${conversation._id}">
+                    </div>  
+                </div>
+                `
+            })
+
+        } else {
+            content`Error loading your conversations`
+        }
 
         return content;
     } catch (error) {
@@ -2017,7 +2058,7 @@ async function show_Single_conversation(user_id) {
         const mainContent = document.getElementById('maincontent');
         isreply = false;
         replyTo = null;
-
+        mainContent.style.display = 'block'
         const response = await fetch(`/api/get-friendconversation/${user_id}`, { method: 'GET' });
         const data = await response.json();
 
@@ -2027,6 +2068,17 @@ async function show_Single_conversation(user_id) {
 
             content = await conversation_layout(user_id);
             mainContent.innerHTML = content;
+            const text = document.getElementById('message-input');
+            const sendButton = document.getElementById('send-message');
+            text.addEventListener('input', function () {
+                if (text.value.trim() !== "") {
+                    sendButton.classList.add('active');
+                    sendButton.style.pointerEvents = 'auto'; // Enable clicking
+                } else {
+                    sendButton.classList.remove('active');
+                    sendButton.style.pointerEvents = 'none'; // Disable clicking
+                }
+            });
         } else {
             conversation_Id = data.f_conversation._id;
 
@@ -2037,10 +2089,9 @@ async function show_Single_conversation(user_id) {
 
             content = await conversation_layout(user_id);
             mainContent.innerHTML = content;
-
+            
             const text = document.getElementById('message-input');
             const sendButton = document.getElementById('send-message');
-
             text.addEventListener('input', function () {
                 if (text.value.trim() !== "") {
                     sendButton.classList.add('active');
@@ -2173,6 +2224,7 @@ function clear_convrsation() {
 
 function show_public_conversation() {
 
+
     popups.forEach(popup => {
         popup.style.display = 'none';
     });
@@ -2196,9 +2248,26 @@ function show_public_conversation() {
         `;
 
     mainContent.innerHTML = content
+
+    mainContent.style.display = 'block'
+    const text = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-message');
+    text.addEventListener('input', function () {
+        if (text.value.trim() !== "") {
+            sendButton.classList.add('active');
+            sendButton.style.pointerEvents = 'auto'; // Enable clicking
+        } else {
+            sendButton.classList.remove('active');
+            sendButton.style.pointerEvents = 'none'; // Disable clicking
+        }
+    });
     const messagingContainer = document.getElementById('messaging-container');
     const chatHistory = document.getElementById('message-history')
     const input = document.getElementById('message-input')
+    const options_popup = document.getElementById('options-popup')
+    const userProfile = document.getElementById('userProfile')
+    options_popup.style.left = '1%'
+    userProfile.style.left = '36%'
     messagingContainer.style.width = "100%"
     messagingContainer.style.left = "0%"
     chatHistory.style.left = '-40%'

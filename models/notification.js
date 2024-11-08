@@ -5,7 +5,7 @@ const notificationSchema = new mongoose.Schema(
         user_id:{type:String,ref:"users"},
         sender:{type:String,ref:"users"},
         paper_id:{type: String,
-            ref: 'papers', required: true},
+            ref: 'papers'},
         type:{
             type:String,
             required:true
