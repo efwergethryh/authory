@@ -233,7 +233,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     socket.on('receive-message', async (message) => {
 
-        console.log('message', message);
 
         if (message) {
             let chatHistory = document.getElementById('message-history');
