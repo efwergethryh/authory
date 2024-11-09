@@ -195,7 +195,10 @@ table {
     text-align: left;
 }
 
-button[id="reg"],button[id="create-owner"],button[id="log-in"] {
+button[id="reg"],
+button[id="create-owner"],
+button[id="log-in"],
+button[id="cropImageBtn"] {
     display: inline-block;
     border: 0px;
     margin-top: 5%;
@@ -213,9 +216,21 @@ button[id="reg"],button[id="create-owner"],button[id="log-in"] {
     color: rgb(255, 255, 255);
     width: 80%;
 }
-button[id="create-owner"],button[id="log-in"] {
+
+button[id="create-owner"],
+button[id="log-in"] {
     width: 50%;
 }
+
+@media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    button[id="cropImageBtn"] {
+        width: 34%; /* Adjust width as needed */
+        left: 90%; /* Adjust left position */
+        top: -40%; /* Adjust top position */
+        position: relative;
+    }
+}
+
 .popup-message {
     width: fit-content;
     font-size: 34%;
@@ -229,12 +244,15 @@ button[id="create-owner"],button[id="log-in"] {
     left: 48%;
     transition: opacity 0.5s ease-in-out;
 }
-.popup-message.show{
+
+.popup-message.show {
     opacity: 1;
 }
+
 button#create-owner:hover {
     background-color: rgb(18 148 163);
 }
+
 .avatar-upload {
     display: flex;
     flex-direction: column;
@@ -321,11 +339,7 @@ input[type="file"] {
     outline: 0;
 }
 
-#cropImageBtn{
-    position: relative;
-    left: 100%;
-    top: -10%;
-}
+
 
 .cropper-face .cropper-move {
     display: none;
