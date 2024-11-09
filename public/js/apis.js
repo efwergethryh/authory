@@ -49,6 +49,8 @@ async function post_api(api, formData) {
             // if(jsonFormData.type=="Admin" ||jsonFormData.type=="Owner" ){
 
             // }else{
+            
+            
             if (response.ok) {
                 window.location.href = '/pages/home'
             }
