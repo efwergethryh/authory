@@ -95,10 +95,9 @@ const register = async (req, res) => {
             type_of_study: body.type_of_study,
             scientific_interest: body.scientific_interest,
             project_title: body.project_title,
-            profile_picture: file.filename,
+            profile_picture: file?file.filename:'non-picture.jpg',
             user_type: body.type === "Owner" ? 3 : body.type === "Admin" ? 2  : body.type === "User" ? 1:''
         });
-        // newUser._id = 
         await newUser.save();
         
         const accessToken = generateToken(newUser, 'access');

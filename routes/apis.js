@@ -57,8 +57,7 @@ const uploadFile =multer({
 })
 const post_storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        console.log('request body',req.body,'request file',req.file);
-        console.log('File ',file);
+        
         cb(null, 'public/post_images/');
     },
     filename: function (req, file, cb) {

@@ -224,9 +224,9 @@ button[id="log-in"] {
 
 @media only screen and (min-width: 1024px) and (max-width: 1366px) {
     button[id="cropImageBtn"] {
-        width: 34%; /* Adjust width as needed */
-        left: 90%; /* Adjust left position */
-        top: -40%; /* Adjust top position */
+        width: 40%;
+        left: 90%; 
+        top: -40%; 
         position: relative;
     }
 }

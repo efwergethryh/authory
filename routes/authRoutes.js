@@ -17,10 +17,17 @@ const storage = multer.diskStorage({
     },
     // Define how to name the uploaded files
     filename: function (req, file, cb) {
-        // Use the original file name with a timestamp prefix to ensure uniqueness
-        const timestamp = Date.now(); // Get the current timestamp
-        const filename = `${timestamp}-${file.originalname}`; 
-        cb(null, filename);
+        
+        if (file) {
+            console.log('file ',file);
+            
+            const filename = `${file.originalname}`;
+            cb(null, filename);
+        } else {
+            console.log('no file found');
+            
+            cb(null, false); 
+        }
     }
 });
 
