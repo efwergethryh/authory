@@ -42,13 +42,14 @@ passport.use(new GoogleStrategy({
     passReqToCallback: true,
     scope: ['profile', 'email', 'name'] // Specify the necessary scopes
 }, async (req, profile, done) => {
+    console.log(profile);
     const { sub,  email, picture,name, given_name, family_name } = profile._json;
     const userId = await generateUserId()
 
     try {
         // Check if the user already exists in the database
         const existingUser = await User.findOne({ email: email });
-        console.log(profile);
+        
 
         if (existingUser) {
             const accessToken = generateToken(existingUser, 'access', 1);
