@@ -70,7 +70,7 @@ passport.use(new GoogleStrategy({
         } else {
             const firstName = profile.given_name;
             const lastName = profile.family_name;
-            const name = profile.name
+            const name = `${firstName} ${lastName}`; 
             const hashedPassword = await bcrypt.hash('google-auth', 10);  // No password needed, but still hash for security reasons
             const newUser = new User({
                 name,
