@@ -44,20 +44,22 @@ passport.use(new GoogleStrategy({
 }, async (req, accessToken, refreshToken, profile, done) => {
     const { sub, name, email, picture } = profile._json;
     const userId = await generateUserId()
+    const firstName = profile.given_name; 
+    const lastName = profile.family_name;
     try {
         // Check if the user already exists in the database
-        const existingUser = await User.findOne({ email:email });
-        console.log();
-        
+        const existingUser = await User.findOne({ email: email });
+        console.log(profile);
+
         if (existingUser) {
-            const accessToken = generateToken(existingUser, 'access',1);
+            const accessToken = generateToken(existingUser, 'access', 1);
             const refreshToken = generateToken(existingUser, 'refresh', 1);
             const refreshTokenRecord = new RefreshToken({
                 userId: existingUser._id,
                 token: refreshToken,
                 expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
             });
-    
+
             await refreshTokenRecord.save();
             req.res.cookie('accessToken', accessToken, {
                 httpOnly: false,
@@ -70,28 +72,29 @@ passport.use(new GoogleStrategy({
             // User doesn't exist, create a new user
             const hashedPassword = await bcrypt.hash('google-auth', 10);  // No password needed, but still hash for security reasons
             const newUser = new User({
-                name: name,
+                firstName,
+                lastName,
                 password: hashedPassword, // Default password value for Google OAuth users
                 email: email,
                 profile_picture: picture, // Google profile picture
                 // Generate username from email
-                _id:userId,
-                user_type:1,
+                _id: userId,
+                user_type: 1,
                 googleId: sub
-            }); 
+            });
 
             // Save new user to the database
             await newUser.save();
 
             // Generate a token for the new user and set it as a cookie
-            const accessToken = generateToken(newUser, 'access',  1);
-            const refreshToken = generateToken(existingUser, 'refresh',1);
+            const accessToken = generateToken(newUser, 'access', 1);
+            const refreshToken = generateToken(existingUser, 'refresh', 1);
             const refreshTokenRecord = new RefreshToken({
                 userId: newUser._id,
                 token: refreshToken,
                 expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
             });
-            
+
             await refreshTokenRecord.save();
             req.res.cookie('accessToken', accessToken, {
                 httpOnly: false,

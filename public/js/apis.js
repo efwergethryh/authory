@@ -80,7 +80,6 @@ async function post_api(api, formData) {
             }
         }
 
-        // Check if the response is not ok (status not in the range 200–299)
         if (!response.ok) {
             const errorData = await response.json();
             console.log(errorData);
@@ -152,9 +151,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         loginButton.addEventListener('click', async function (event) {
             event.preventDefault();
-            const loginForm = document.getElementById('login_form');
+            
             console.log(loginForm);
-            const formData = new FormData(loginForm);
+            const formData = new FormData();
+            formData.append('email',document.getElementsByName('email'))
+            formData.append('password',document.getElementsByName('password'))
             formData.append('type', "User")
             // Log form data
             for (const [key, value] of formData.entries()) {
