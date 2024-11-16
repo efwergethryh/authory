@@ -44,8 +44,7 @@ passport.use(new GoogleStrategy({
 }, async (req, accessToken, refreshToken, profile, done) => {
     const { sub, name, email, picture } = profile._json;
     const userId = await generateUserId()
-    const firstName = profile.given_name; 
-    const lastName = profile.family_name;
+
     try {
         // Check if the user already exists in the database
         const existingUser = await User.findOne({ email: email });
@@ -69,15 +68,15 @@ passport.use(new GoogleStrategy({
 
             done(null, existingUser);
         } else {
-            // User doesn't exist, create a new user
+            const firstName = profile.given_name;
+            const lastName = profile.family_name;
             const hashedPassword = await bcrypt.hash('google-auth', 10);  // No password needed, but still hash for security reasons
             const newUser = new User({
                 firstName,
                 lastName,
-                password: hashedPassword, // Default password value for Google OAuth users
+                password: hashedPassword,
                 email: email,
-                profile_picture: picture, // Google profile picture
-                // Generate username from email
+                profile_picture: picture,
                 _id: userId,
                 user_type: 1,
                 googleId: sub
