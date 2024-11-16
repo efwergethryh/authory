@@ -42,7 +42,7 @@ passport.use(new GoogleStrategy({
     passReqToCallback: true,
     scope: ['profile', 'email', 'name'] // Specify the necessary scopes
 }, async (req, profile, done) => {
-    console.log(profile);
+    console.log('profile',profile._json);
     const { sub,  email, picture,name, given_name, family_name } = profile._json;
     const userId = await generateUserId()
 
