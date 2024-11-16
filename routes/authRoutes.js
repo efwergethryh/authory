@@ -38,20 +38,7 @@ const upload = multer({
 router.post('/register',registerationMiddleware, apiRouter.register)
 router.post('/login', apiRouter.login)
 router.post('/set-cookie',authController.setCookie);
-// router.get('/auth/google', (req, res) => {
-//     console.log("Redirecting to Google OAuth...");
-//     passport.authenticate('google',{
-//         scope: ['profile', 'email'], 
-//      })
-// });
 
-// router.get('/auth/google/callback', passport.authenticate("google", {
-//     successRedirect: '/pages/home',
-//     failureRedirect: '/pages/login'
-// }))
-
-// router.get('/login/failed',authController.loginFailed)
-// router.post('/refresh_token',validateRefreshToken, authController.refresh_token);
 module.exports = router
 
 

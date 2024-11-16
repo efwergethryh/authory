@@ -64,13 +64,14 @@ const loginFailed = (re, res) => {
 }
 const login = async (req, res) => {
     const { email, password, type } = req.body;
-    console.log(type);
-
+    
     try {
         const user = await User.findOne({
             user_type: type === "Owner" ? 3 : type === "Admin" ? 2 : type === "User" ? 1 : '',
             email: email
         });
+        console.log(user);
+        
         if (!user) {
             return res.status(404).json({ message: 'Account not found' });
         }
@@ -109,7 +110,8 @@ const register = async (req, res) => {
     try {
         const email = res.locals.email
         const password = res.locals.password
-
+        console.log(email,password);
+        
         if (!email || !password) {
             return res.status(400).json({ message: 'Missing email or password' });
         }
@@ -121,8 +123,10 @@ const register = async (req, res) => {
             return res.status(400).json({ message: 'email already taken' });
         }
         const hashedPassword = await hashpassword(password)
+        const name = `${body.firstName} ${body.lastName}`
         const newUser = new User({
             _id: body.phone_number,
+            name,
             firstName: body.firstName,
             lastName: body.lastName,
             email: email,

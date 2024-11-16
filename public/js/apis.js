@@ -152,16 +152,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         loginButton.addEventListener('click', async function (event) {
             event.preventDefault();
             
-            console.log(loginForm);
+            console.log(document.getElementsByName('email'));
+            console.log(document.getElementsByName('password'));
             const formData = new FormData();
-            formData.append('email',document.getElementsByName('email'))
-            formData.append('password',document.getElementsByName('password'))
+            formData.append('email',document.getElementsByName('email')[0].value)
+            formData.append('password',document.getElementsByName('password')[0].value)
             formData.append('type', "User")
             // Log form data
             for (const [key, value] of formData.entries()) {
                 console.log(`${key}: ${value}`);
             }
-
+            
             await post_api('/api/auth/login', formData);
         });
     }

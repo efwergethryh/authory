@@ -1179,7 +1179,7 @@
                                                                                                                             aria-label="Password"
                                                                                                                             autocomplete="on"
                                                                                                                             class="css-13h4v91-StyledPasswordInput ecgpf3y2"
-                                                                                                                            value=""><button
+                                                                                                                            ><button
                                                                                                                             aria-label="password visibility icon"
                                                                                                                             type="button"
                                                                                                                             class="css-fw9vqi-StyledIconBtn ecgpf3y1">
@@ -1244,7 +1244,7 @@
                                                                                     <div data-ds-id="Column"
                                                                                         class="css-xl953a-Column e1ostpc10">
                                                                                         <a data-ds-id="Button"
-                                                                                            href="https://www.amboss.com/us/auth-sso/oauth/facebook"
+                                                                                            href="/auth/facebook/"
                                                                                             target="_self"
                                                                                             class=" css-73tk2c-StyledButton e7wzybw0">
                                                                                             <div
@@ -1281,7 +1281,7 @@
                                                                                         class="css-xl953a-Column e1ostpc10">
                                                                                         <a data-ds-id="Button"
                                                                                             class=" css-73tk2c-StyledButton e7wzybw0"
-                                                                                            href="https://www.amboss.com/us/auth-sso/oauth/google"
+                                                                                            href="/auth/google/"
                                                                                             target="_self">
                                                                                             <div
                                                                                                 class="css-19pexw4-StyledInner e7wzybw1">
@@ -1336,7 +1336,7 @@
                                                                 data-e2e-test-id="register-link" data-ds-id="Link"
                                                                 color="accent" weight="bold"
                                                                 class="css-cardb5-StyledLink ewxmrja0"
-                                                                href="/us/registration">Create an account </a></p>
+                                                                href="/pages/register">Create an account </a></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1454,97 +1454,3 @@
 </body>
 
 
-<!-- <body>
-    <div class="loading-spinner" id="loading-spinner"></div>
-    <div class="navbar">
-        <img src="/images/ictoob.png" alt="not found">
-    </div>
-
-
-    <form id="login_form">
-        <h2>
-            Welcome back
-        </h2>
-        <h1>
-            Log in with your account
-        </h1>
-        <div class="input-group">
-            <label for="email">Email address</label>
-            <input type="text" id="email" name="email" placeholder="email@address.com" required>
-        </div>
-        <div class="input-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <a href="">Forgot your password?</a>
-        <button id="login-button">Log In</button>
-        <div class="row">
-            <a data-ds-id="Button" class=" login-a" href="/auth/facebook">
-                <div loading="0" class="css-1kvz93h-StyledInner e1ikndgi1">
-                    <div data-ds-id="Inline" class="css-1mzq32r-InlineContainer e1rgc4na0">
-                        <div data-e2e-test-id="facebook" data-testid="facebook" data-ds-id="Icon" data-variant="inherit"
-                            color="inherit" class="css-7tpa0d-StyledIcon esvztbe0"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
-                                viewBox="0 0 16 16">
-                                <path fill="#1877f2"
-                                    d="M16 8a8 8 0 10-9.25 7.903v-5.59H4.719V8H6.75V6.238c0-2.006 1.194-3.113 3.022-3.113.875 0 1.79.156 1.79.156V5.25h-1.008c-.994 0-1.304.617-1.304 1.25V8h2.219l-.355 2.313H9.25v5.59A8.002 8.002 0 0016 8z">
-                                </path>
-                                <path fill="#fff"
-                                    d="M11.114 10.313L11.47 8H9.25V6.5c0-.633.31-1.25 1.304-1.25h1.009V3.281s-.916-.156-1.791-.156c-1.828 0-3.022 1.107-3.022 3.112V8H4.719v2.313H6.75v5.59c.828.13 1.672.13 2.5 0v-5.59z">
-                                </path>
-                            </svg></div>
-                        <div style="position: relative; left:30%; top: -3vh;">Facebook</div>
-                    </div>
-                </div>
-            </a>
-            <a data-ds-id="Button" class=" login-a" href="/auth/google">
-                <div loading="0" class="css-1kvz93h-StyledInner e1ikndgi1">
-                    <div data-ds-id="Inline" class="css-1mzq32r-InlineContainer e1rgc4na0">
-                        <div class="css-5omd5s-InlineItem e1rgc4na1">
-                            <div data-e2e-test-id="google" data-testid="google" data-ds-id="Icon" data-variant="inherit"
-                                color="inherit" class="css-1u37vas-StyledIcon e1b4dmk50">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
-                                    viewBox="0 0 16 16">
-                                    <path fill="#ea4335"
-                                        d="M8 3.093c1.502 0 2.516.65 3.093 1.191l2.258-2.204C11.964.791 10.161 0 8.001 0A7.994 7.994 0 00.852 4.409L3.44 6.418C4.09 4.488 5.885 3.093 8 3.093z">
-                                    </path>
-                                    <path fill="#4285f4"
-                                        d="M15.68 8.178c0-.658-.053-1.138-.169-1.636H8v2.97h4.409c-.089.737-.569 1.848-1.636 2.595l2.525 1.955c1.51-1.395 2.382-3.449 2.382-5.884z">
-                                    </path>
-                                    <path fill="#fbbc05"
-                                        d="M3.449 9.582A4.925 4.925 0 013.182 8c0-.551.098-1.084.258-1.582L.853 4.408C.311 5.494 0 6.712 0 8s.311 2.507.853 3.591z">
-                                    </path>
-                                    <path fill="#34a853"
-                                        d="M8 16c2.16 0 3.973-.711 5.298-1.938l-2.525-1.955c-.675.47-1.582.8-2.773.8-2.116 0-3.911-1.396-4.551-3.325l-2.587 2.01C2.178 14.204 4.872 16 8 16z">
-                                    </path>
-                                </svg>
-                            </div>
-                        </div>
-                        <div style="position: relative; left:30%; top: -3vh;">Google</div>
-                    </div>
-                </div>
-            </a>
-        </div>
-   
-        <div class="divider">
-            <p>or</p>
-        </div>
-
-        <a data-ds-id="Button" class="css-hjd0n6-StyledButton e1ikndgi0" href="/register">
-            <div loading="0" class="css-1kvz93h-StyledInner e1ikndgi1">
-                <div data-ds-id="Inline" class="css-1mzq32r-InlineContainer e1rgc4na0">
-                    <div class="css-5omd5s-InlineItem e1rgc4na1">Create a new account</div>
-                </div>
-            </div>
-        </a>
-
-
-        </div>
-    </form>
-    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
-
-    <script type="module" src="/js/apis.js"></script>
-
-
-
-</body> -->
