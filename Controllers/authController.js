@@ -3,6 +3,9 @@ const RefreshToken = require('../models/refreshtoken');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose')
+const passport = require('passport')
+require('../models/auth')
+require('../models/facebookauth')
 const ObjectId = mongoose.Types.ObjectId;
 const generateToken = (user, type, user_type) => {
     if (type === 'access') {
@@ -13,6 +16,21 @@ const generateToken = (user, type, user_type) => {
         throw new Error('Invalid token type');
     }
 };
+const setCookie = (req,res)=>{
+    const { email, password } = req.body
+
+    res.cookie('email', email, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'Strict', // Protects against CSRF by limiting cross-site requests
+    });
+    res.cookie('password', password, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'Strict', // Protects against CSRF by limiting cross-site requests
+    });
+    res.send('Cookie set successfully!');
+}
 const hashpassword = async (password) => {
 
     const salt = await bcrypt.genSalt(10);
@@ -22,15 +40,35 @@ const hashpassword = async (password) => {
 };
 
 
-
-
+const checkUser = (req, res) => {
+    if (req.user) {
+        res.status(200).json({
+            error: false,
+            message: "logged in successfully",
+            user: req.user
+        })
+    } else {
+        res.status(403).json({
+            error: true,
+            message: "Not authorized",
+            user: req.user
+        })
+    }
+}
+const loginFailed = (re, res) => {
+    res.status(403).json({
+        error: true,
+        message: "Login failed",
+        user: req.user
+    })
+}
 const login = async (req, res) => {
     const { email, password, type } = req.body;
     console.log(type);
-    
+
     try {
         const user = await User.findOne({
-            user_type: type === "Owner" ? 3 : type === "Admin" ? 2 :type === "User" ?1:'',
+            user_type: type === "Owner" ? 3 : type === "Admin" ? 2 : type === "User" ? 1 : '',
             email: email
         });
         if (!user) {
@@ -66,18 +104,17 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
+
+    
     try {
-        const body = req.body
-        const { email, password } = body;
-        console.log(body);
+        const email = res.locals.email
+        const password = res.locals.password
 
-        const file = req.file;
-        console.log(file);
-
-        if (!file) {
-
-            return res.status(500).json('No image was found');
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Missing email or password' });
         }
+        
+        const body = req.body
 
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -85,21 +122,24 @@ const register = async (req, res) => {
         }
         const hashedPassword = await hashpassword(password)
         const newUser = new User({
-            _id:body.phone_number,
-            name: body.name,
-            email: body.email,
+            _id: body.phone_number,
+            firstName: body.firstName,
+            lastName: body.lastName,
+            email: email,
             country: body.country,
+            university:body.university,
+            profession:body.profession,
             password: hashedPassword,
             looking_for: body.looking_for,
             project_branch: body.project_branch,
             type_of_study: body.type_of_study,
             scientific_interest: body.scientific_interest,
             project_title: body.project_title,
-            profile_picture: file?file.filename:'non-picture.jpg',
-            user_type: body.type === "Owner" ? 3 : body.type === "Admin" ? 2  : body.type === "User" ? 1:''
-        });
+            profile_picture: 'non-picture.jpg',
+            user_type: body.type === "Owner" ? 3 : body.type === "Admin" ? 2 : body.type === "User" ? 1 : ''
+        }); 
         await newUser.save();
-        
+
         const accessToken = generateToken(newUser, 'access');
         const refreshToken = generateToken(newUser, 'refresh');
 
@@ -158,9 +198,21 @@ const refresh_token = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+passport.serializeUser((user, done) => {
+    done(null, user.id);  // Storing only the user ID in session (you can store more if needed)
+});
 
+passport.deserializeUser(async (id, done) => {
+    try {
+        const user = await User.findById(id);  // Find user by ID
+        done(null, user);  // Attach user object to the request
+    } catch (error) {
+        done(error, null);
+    }
+});
 module.exports = {
     login,
     register,
-    refresh_token
+    refresh_token, loginFailed, checkUser,
+    setCookie
 };

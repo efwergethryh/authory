@@ -1,5 +1,6 @@
 :root {
     --color-background: #EEF2F5;
+    --eee:#eeeeee;
     --elevation-2: 0px 2px 8px 0px #0000001f, 0px .3px 1px 0px #00000003;
     --color-text-secondary-default: #40515e;
 }
@@ -110,19 +111,44 @@ p#user-name {
 
 .sidebar {
     width: 30%;
-    height: 100%;
+    height: 95%;
     background-color: #ffffff;
     position: fixed;
     top: 9vh;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     left: -30%;
     transition: left 0.3s ease;
-    overflow: visible;
+    overflow: auto;
 }
 
+/* Define the size and style of the scrollbar */
 ::-webkit-scrollbar {
-    display: none;
+    width: 11px; /* Width of the scrollbar */
 }
+
+/* Define the style of the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+
+    background-color: rgb(194, 194, 194);
+    border-radius: 10px; /* Round the corners */
+
+}
+
+/* Define the style of the scrollbar track (background of the scrollbar) */
+::-webkit-scrollbar-track {
+    background-color: transparent; /* Make track transparent */
+}
+
+/* Optional: Add styles for when hovering over the thumb */
+::-webkit-scrollbar-thumb:hover {
+
+}
+
+/* Optional: You can also style the scrollbar's corner */
+::-webkit-scrollbar-corner {
+    background-color: transparent; /* Set background for the corner */
+}
+
 
 .sidebar ul {
     /* list-style-type: none; */
@@ -131,6 +157,7 @@ p#user-name {
     flex-direction: column;
     gap: 0;
     list-style: none;
+
 }
 
 .sidebar ul li {
@@ -232,11 +259,11 @@ p#user-name {
 }
 
 .sidebar.open {
-    left: 0;
+    left: 0%;
 }
 
 .sidebar.closed {
-    left: -30vh;
+    left: -30%;
 }
 
 
@@ -314,7 +341,7 @@ i[id="icon"] {
     transform: rotate(-90deg);
 }
 
-.circle-button {
+/* .circle-button {
     width: 30px;
     height: 30px;
     background-color: #F5F7FA;
@@ -329,9 +356,36 @@ i[id="icon"] {
     top: 10px;
     right: -3.4%;
     z-index: 40;
+} */
+.circle-button {
+    width: 30px;
+    height: 30px;
+    background-color: #F5F7FA;
+    border: 1px solid #D3D8DE;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    position: absolute;
+    top: 10%;
+    z-index: 40;
+    left: 28.9vw;
+    transition: left 0.3s ease;
 }
 
+.circle-button.collapsed {
+    transform: rotate(-180deg);
+    transition: transform 0.3s ease;
+    left: -1.1vw;
+}
 
+.circle-button.toggled {
+    transform: rotate(1deg);
+    transition: transform 0.3s ease;
+    /* left: 28.9vw; */
+}
 .circle-button:hover {
     background-color: #E2E8F0;
     /* Slightly darker on hover */
@@ -353,17 +407,7 @@ i[id="icon"] {
     z-index: 20;
 }
 
-.circle-button.collapsed {
-    transform: rotate(180deg);
-    transition: transform 0.3s ease;
 
-}
-
-.circle-button.toggled {
-    transform: rotate(-180deg);
-    transition: transform 0.3s ease;
-
-}
 
 .feather-chevron-left {
     transition: transform 0.3s ease;
@@ -1456,7 +1500,7 @@ button[id="send_message"] {
     height: 100%;
     /* background-color: #0e1621;
      */
-    background: url('/images/wallpaper.jpg');
+    background: url('/images/Background.svg');
     position: relative;
     top: 1.6vh;
     left: 0;
@@ -1804,7 +1848,6 @@ p#file-frame {
     position: relative;
     left: 10%;
     margin-top: 1%;
-    overflow-x: hidden;
     width: 60%;
     word-wrap: break-word;
 }
@@ -1949,10 +1992,111 @@ p#file-frame {
     background-color: #e2ede5;
     position: fixed;
     bottom: 0;
-    left: 31%;
-
+    left: 31.2%;
+    
 }
-
+.post{
+    gap: 0.5vw;
+    padding: 1vw;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    box-shadow: 0px 0px 5px 4px #eeeeee;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: white;
+}
+.post hr{
+    background-color: var(--eee);
+    border: none;
+    width: 100%;
+    height: 3px;
+}
+.css-1fcsbsk-StyledDivider {
+    border-bottom: 1px solid rgb(224, 230, 235);
+    flex: 1 1 0%;
+}
+.css-o1sld0-InlineContainer {
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    gap: 16px;
+}
+.css-o1sld0-InlineContainer {
+    display: flex;
+    flex-flow: wrap;
+}
+.css-1m1fu2w-StyledDiv > :first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+.css-1k7990c-StyledButton:hover {
+    border-color: rgb(96, 117, 133);
+    background-color: rgba(96, 117, 133, 0.05);
+}
+.css-1k7990c-StyledButton {
+    display: inline-block;
+    border: 1px solid rgb(163, 178, 189);
+    margin: 0px;
+    text-transform: none;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.14286;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 11px 23px;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(64, 81, 94);
+    position: relative;
+    left: -12%;
+}
+.css-sh7anr-StyledBox {
+    padding: 12px;
+    text-align: left;
+}
+.css-sh7anr-StyledBox {
+    padding-left: 24px;
+}
+.css-16b0bx-StyledBox {
+    padding: 0;
+    text-align: left;
+    width: 65%;
+    background-color: white;
+    border-radius: 10px;
+    position: relative;
+    left: 1%;
+    top: 7%;
+    box-shadow: 0px 0px 3px 2px #8080803b;
+}
+.css-1fu2yzn-StyledBox {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+.css-14p1ltg-StyledText {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
+    font-weight: 400;
+    color: rgb(96, 117, 133);
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-wrap: normal;
+    position: relative;
+    left: 22%;
+}
+.css-gkrxgl-StyledText {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
+    font-weight: 600;
+    color: rgb(26, 28, 28);
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-wrap: normal;
+}
 .reply-content {
     display: flex;
     flex-direction: row;
@@ -1990,7 +2134,7 @@ p#file-frame {
     /* Adjust width for the input field */
     background-color: white;
     border: none;
-    caret-color: rgb(0, 0, 0);
+    -color: rgb(0, 0, 0);
     border-radius: 30px;
     color: rgb(0, 0, 0);
     padding: 10px;
@@ -2018,15 +2162,11 @@ p#file-frame {
 }
 
 .message-history {
-    width: 100%;
+    width: 134%;
     height: 120%;
-    /* Adjust based on header and footer sizes */
     overflow-y: scroll;
-    /* Corrected overflow */
     padding: 1%;
-    /* Add padding to message history */
     margin-bottom: 0.5%;
-    /* To accommodate the messaging container */
     position: absolute;
     top: -40%;
 }

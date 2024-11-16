@@ -140,6 +140,7 @@ ul li section.active {
     border-radius: 10px;
 }
 
+
 .editable-text:focus {
     outline: none;
     /* Removes default outline */

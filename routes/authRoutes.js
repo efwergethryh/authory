@@ -5,41 +5,53 @@ const path = require('path')
 const fs = require('fs')
 const router = express.Router()
 const uploadDir = path.join('public/profile_images/');
+const passport = require('passport')
 const authController = require('../Controllers/authController')
-const validateRefreshToken = require('../Middlewares/refreshTokenMiddleware')
+const registerationMiddleware = require('../Middlewares/registerationMiddleware')
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true }); // Create the directory if it does not exist
 }
 const storage = multer.diskStorage({
     // Define where to store the uploaded files
     destination: function (req, file, cb) {
-        cb(null, 'public/profile_images/'); 
+        cb(null, 'public/profile_images/');
     },
-    // Define how to name the uploaded files
+
     filename: function (req, file, cb) {
-        
+
         if (file) {
-            console.log('file ',file);
-            
+            console.log('file ', file);
+
             const filename = `${file.originalname}`;
             cb(null, filename);
         } else {
             console.log('no file found');
-            
-            cb(null, false); 
+
+            cb(null, false);
         }
     }
 });
 
 const upload = multer({
     storage: storage,
-
 });
-router.post('/register',  upload.single('profile_picture'), apiRouter.register)
+router.post('/register',registerationMiddleware, apiRouter.register)
 router.post('/login', apiRouter.login)
+router.post('/set-cookie',authController.setCookie);
+// router.get('/auth/google', (req, res) => {
+//     console.log("Redirecting to Google OAuth...");
+//     passport.authenticate('google',{
+//         scope: ['profile', 'email'], 
+//      })
+// });
 
+// router.get('/auth/google/callback', passport.authenticate("google", {
+//     successRedirect: '/pages/home',
+//     failureRedirect: '/pages/login'
+// }))
 
-router.post('/refresh_token',validateRefreshToken, authController.refresh_token);
+// router.get('/login/failed',authController.loginFailed)
+// router.post('/refresh_token',validateRefreshToken, authController.refresh_token);
 module.exports = router
 
 

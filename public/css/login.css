@@ -20,7 +20,17 @@ body{
     width: 20%;
     height: 170%;
 }
+.row{
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
+    margin-left: 1vw;
 
+}
+.facebook-button{
+    display: flex;
+    flex-direction: row;
+}
 .popup-message {
     width: fit-content;
     font-size: 34%;
@@ -75,7 +85,7 @@ form h1{
 .input-group label {
     color: rgb(96, 117, 133);
     font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
-    font-weight: 900;
+    font-weight: 700;
     margin: 0px;
     margin-bottom: 5%;
     font-size: 12px;
@@ -83,7 +93,7 @@ form h1{
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
-
+    
 .input-group input {
     font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
     font-size: 16px;
@@ -110,8 +120,16 @@ form a{
     font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
     text-decoration-line: underline;
     color: rgb(4, 122, 136);
-    
+    display: flex;
+    flex-direction: row;
 }
+.css-dnxz5w-Columns {
+    align-items: flex-start;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    margin-right: -16px;
+    margin-bottom: -16px;
+}   
 form button{
     display: inline-block;
     border: 0px;

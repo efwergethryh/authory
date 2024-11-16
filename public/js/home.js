@@ -61,8 +61,69 @@ async function applyPendingNotifications(conversation_id) {
     }
 
 }
+window.onload = loadPosts
 socket.emit('join-public-room')
+async function loadPosts() {
+    try {
+{/* <div onclick="showPost('${post._id}')" class="post" id="post-${post._id}">
+                        <h>${post.title}</h>
+                        <hr>
+                        
+                        
+                    </div> */}
+        const response = await fetch('/api/posts', {
+            method: "GET",
+        })
+        if (response.ok) {
 
+            const data = await response.json()
+
+            let content = ``
+            document.getElementById('home').classList.add('active')
+            // document.getElementById('maincontent').classList.add('shifted')
+            for (const post of data.posts) {
+                // const User = await get_user(post.user_id);
+                // const user =await  User.user[0];
+                // console.log(user);
+                
+                content += `
+    <div data-ds-id="Box" class="css-16b0bx-StyledBox erlpbss0">
+        <div data-e2e-test-id="last-read-widget" data-ds-id="Container" elevation="1"
+            class="css-uxowku-StyledContainer e1evskne0">
+            <div class="css-1m1fu2w-StyledDiv e1evskne1">
+                <div data-ds-id="Box" class="css-sh7anr-StyledBox erlpbss0">
+                    <p color="primary" data-ds-id="Text" class="css-gkrxgl-StyledText e1im9r3t0">${post.title}</p>
+                </div>
+                <div data-ds-id="Divider" class="css-1fcsbsk-StyledDivider e1xue2o81"></div>
+                <div data-ds-id="Box" class="css-1fu2yzn-StyledBox erlpbss0">
+                    <div data-ds-id="Inline" class="css-o1sld0-InlineContainer e1hzytjg0">
+                        <div>
+                            <p color="tertiary" data-ds-id="Text" class="css-14p1ltg-StyledText e1im9r3t0">${post.content}</p>
+                        </div>
+                        <div><a data-ds-id="Button" class="css-1k7990c-StyledButton e7wzybw0" href="/posts/${post._id}">
+                                <div class="css-19pexw4-StyledInner e7wzybw1">  
+                                    <div data-ds-id="Inline" class="css-alg3yb-InlineContainer e1hzytjg0">
+                                        <div>Go to post</div>
+                                    </div>
+                                </div>
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                    `;
+            }
+            document.getElementById('maincontent').innerHTML += content
+            
+            
+            hide_spinner()
+        }
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
 async function buildmessagecontent(message) {
     const sender = await get_user(message.m.sender);
     let messageContent = '';
@@ -70,22 +131,22 @@ async function buildmessagecontent(message) {
 
     // const dateOptions = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
     // const formattedDate = new Date(message.m.createdAt).toLocaleString('en-US', dateOptions);
-    const dateOptions = { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric', 
-        hour: 'numeric', 
-        minute: 'numeric', 
-        second: 'numeric' 
+    const dateOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
     };
-    
+
     const createdAt = message.m.createdAt;
     const date = new Date(createdAt);
-    const formattedDate = isNaN(date.getTime()) 
-    ? "Invalid Date" 
-    : date.toLocaleString('en-US', dateOptions);
+    const formattedDate = isNaN(date.getTime())
+        ? "Invalid Date"
+        : date.toLocaleString('en-US', dateOptions);
     console.log(message.m.createdAt);
-    
+
     let replyContent = '';
     let img = '';
     let fileUrl
@@ -239,6 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let content = await buildmessagecontent(message)
             chatHistory.innerHTML += content
+            scrollToBottom()
         } else {
             console.error('Invalid message data received:', message);
         }
@@ -908,10 +970,10 @@ document.addEventListener('DOMContentLoaded', function () {
     popup_buttons.forEach((button, index) => {
         button.addEventListener('click', function (event) {
             const mainContent = document.getElementById('maincontent')
-            mainContent.style.display = 'none'
+            // mainContent.style.display = 'none'
             popups.forEach((popup, popupIndex) => {
-
-
+                mainContent.innerHTML = ''
+                mainContent.innerHTML = popup.innerHTML
                 if (popupIndex !== index && popup.style.display === 'block') {
                     popup.style.display = 'none';
                 }
@@ -924,6 +986,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+    document.getElementById('home').addEventListener('click',loadPosts)
 });
 
 
@@ -1504,6 +1567,7 @@ async function delete_paper() {
         });
 
 }
+
 async function get_conversation(id, type) {
     conv_id = id;
     show_spinner();
@@ -1542,19 +1606,21 @@ async function get_conversation(id, type) {
                     </div>
                 </div>
             `;
+            control_sendButton()
         }
 
-        const text = document.getElementById('message-input');
-        const sendButton = document.getElementById('send-message');
-        text.addEventListener('input', function () {
-            if (text.value.trim() !== "") {
-                sendButton.classList.add('active');
-                sendButton.style.pointerEvents = 'auto'; // Enable clicking
-            } else {
-                sendButton.classList.remove('active');
-                sendButton.style.pointerEvents = 'none'; // Disable clicking
-            }
-        });
+        // const text = document.getElementById('message-input');
+        // const sendButton = document.getElementById('send-message');
+        // text.addEventListener('input', function () {
+        //     if (text.value.trim() !== "") {
+        //         sendButton.classList.add('active');
+        //         sendButton.style.pointerEvents = 'auto'; // Enable clicking
+        //     } else {
+        //         sendButton.classList.remove('active');
+        //         sendButton.style.pointerEvents = 'none'; // Disable clicking
+        //     }
+        // });
+        
     } catch (error) {
         console.error('Error fetching conversation:', error);
         // Optionally display an error message to the user
@@ -2059,18 +2125,8 @@ async function show_Single_conversation(user_id) {
             content = await conversation_layout(user_id);
             mainContent.innerHTML = content;
             load_f_conversations()
-
-            const text = document.getElementById('message-input');
-            const sendButton = document.getElementById('send-message');
-            text.addEventListener('input', function () {
-                if (text.value.trim() !== "") {
-                    sendButton.classList.add('active');
-                    sendButton.style.pointerEvents = 'auto'; // Enable clicking
-                } else {
-                    sendButton.classList.remove('active');
-                    sendButton.style.pointerEvents = 'none'; // Disable clicking
-                }
-            });
+            control_sendButton()
+            
         } else {
             conversation_Id = data.f_conversation._id;
 
@@ -2082,18 +2138,8 @@ async function show_Single_conversation(user_id) {
             content = await conversation_layout(user_id);
             mainContent.innerHTML = content;
             load_f_conversations()
-            const text = document.getElementById('message-input');
-            const sendButton = document.getElementById('send-message');
-            text.addEventListener('input', function () {
-                if (text.value.trim() !== "") {
-                    sendButton.classList.add('active');
-                    sendButton.style.pointerEvents = 'auto'; // Enable clicking
-                } else {
-                    sendButton.classList.remove('active');
-                    sendButton.style.pointerEvents = 'none'; // Disable clicking
-                }
-            });
-
+            control_sendButton()
+            
             const message_history = document.getElementById('message-history');
             if (messagesData.messages.length === 0) {
                 message_history.innerHTML = `
@@ -2131,6 +2177,19 @@ async function show_Single_conversation(user_id) {
         hide_spinner(); // Hide spinner after everything is done
     }
 }
+function control_sendButton() {
+    const text = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-message');
+    text.addEventListener('input', function () {
+        if (text.value.trim() !== "") {
+            sendButton.classList.add('active');
+            sendButton.style.pointerEvents = 'auto'; // Enable clicking
+        } else {
+            sendButton.classList.remove('active');
+            sendButton.style.pointerEvents = 'none'; // Disable clicking
+        }
+    });
+}
 async function load_f_conversations() {
     const response = await fetch('/api/get-friendconversations');
 
@@ -2165,23 +2224,47 @@ async function load_f_conversations() {
     }
 }
 
+// function toggleSidebar() {
+//     const circleButton = document.querySelector('.circle-button');
+//     const sidebar = document.getElementById('sidebar');
+//     const maincontent = document.getElementById('maincontent')
+
+//     if (sidebar.style.left === '0px') {
+//         sidebar.style.left = '-30%';
+//         circleButton.classList.toggle('collapsed');
+//         maincontent.classList.remove('shifted');
+
+//     } else {
+
+//         sidebar.style.left = '0px';
+//         circleButton.classList.toggle('toggled');
+//         maincontent.classList.add('shifted');
+//     }
+// }
 function toggleSidebar() {
     const circleButton = document.querySelector('.circle-button');
     const sidebar = document.getElementById('sidebar');
-    const maincontent = document.getElementById('maincontent')
+    const mainContent = document.getElementById('maincontent');
 
-    if (sidebar.style.left === '0px') {
-        sidebar.style.left = '-30%';
-        circleButton.classList.toggle('collapsed');
-        maincontent.classList.remove('shifted');
-
+    // Check if the sidebar is closed and toggle accordingly
+    if (sidebar.classList.contains('closed')) {
+        // Sidebar is closed, open it
+        sidebar.classList.remove('closed');
+        sidebar.classList.add('open');
+        mainContent.classList.add('shifted');
+        // Shift main content to make space for the sidebar
+        circleButton.classList.remove('collapsed');
+        circleButton.classList.add('toggled'); // Rotate the button
     } else {
-
-        sidebar.style.left = '0px';
-        circleButton.classList.toggle('toggled');
-        maincontent.classList.add('shifted');
+        // Sidebar is open, close it
+        sidebar.classList.remove('open');
+        sidebar.classList.add('closed');
+        mainContent.classList.remove('shifted'); // Revert main content position
+        circleButton.classList.remove('toggled');
+        circleButton.classList.add('collapsed');  // Reset button rotation
     }
 }
+
 function join_paper(paper_id) {
     try {
 
@@ -2247,7 +2330,7 @@ function clear_convrsation() {
         })
 }
 
-function show_public_conversation() {
+async function show_public_conversation() {
 
 
     popups.forEach(popup => {
@@ -2275,17 +2358,7 @@ function show_public_conversation() {
     mainContent.innerHTML = content
 
     mainContent.style.display = 'block'
-    const text = document.getElementById('message-input');
-    const sendButton = document.getElementById('send-message');
-    text.addEventListener('input', function () {
-        if (text.value.trim() !== "") {
-            sendButton.classList.add('active');
-            sendButton.style.pointerEvents = 'auto'; // Enable clicking
-        } else {
-            sendButton.classList.remove('active');
-            sendButton.style.pointerEvents = 'none'; // Disable clicking
-        }
-    });
+    control_sendButton()
     const messagingContainer = document.getElementById('messaging-container');
     const chatHistory = document.getElementById('message-history')
     const input = document.getElementById('message-input')
@@ -2298,11 +2371,18 @@ function show_public_conversation() {
     chatHistory.style.left = '-40%'
     chatHistory.style.top = '105%'
     input.style.width = '94%'
-    get_conversation(conv_id, 'public')
+    await get_conversation(conv_id, 'public')
     toggleSidebar()
+    scrollToBottom()
 
 }
+function scrollToBottom() {
+    
+    const messageContainer = document.getElementById('message-history');
+    console.log('message history',messageContainer);
 
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+}
 console.log(chatContainer);
 
 function initializeConversationItems() {

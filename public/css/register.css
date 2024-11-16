@@ -1,212 +1,598 @@
-:root {
+/* :root {
     --color-background: #EEF2F5;
     --color-torq: #047a88;
 }
 
 body {
     background-color: var(--color-background);
+} */
+
+
+/*! CSS Used from: https://next.amboss.com/us/static/assets/auth~11048b4b.f2670c593ff0b651.css */
+.-dc0a1b4b9d53c-pageTemplate {
+    background-color: #eef2f5;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    max-height: 100%;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, segoe ui, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    display: flex;
+    overflow: scroll;
 }
 
-.navbar {
-    position: relative;
-    height: 100px;
-    width: 100%;
-    top: -10px;
+.-dc0a1b4b9d53c-contentWrapper {
+    flex-direction: column;
+    flex-grow: 1;
+    width: 408px;
+    max-width: calc(100% - 16px);
+    display: flex;
 }
 
-.navbar img {
-    position: relative;
-    right: -40%;
-    top: -13px;
-    width: 20%;
-    height: 150%;
+.-dc0a1b4b9d53c-centerContent {
+    justify-content: center;
 }
 
-form {
-    background-color: white;
-    padding: 20px 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+.-dc0a1b4b9d53c-experimentalColumn {
+    background-color: #ceedf1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 50%;
-    height: 70vh;
-    text-align: left;
-    position: relative;
-    right: -25%;
-    bottom: -1vh;
+    height: 100vh;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, segoe ui, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    display: flex;
+    position: fixed;
+    overflow: hidden;
 }
 
-.input-group label {
-    margin-bottom: 5px;
-    font-weight: bold;
+.-dc0a1b4b9d53c-experimentalContentWrapper {
+    width: 320px;
+    max-width: calc(100% - 16px);
 }
 
-.university-container,
-.institute-container,
-.education-container,
-.country-container {
-    position: relative;
-    width: 100%;
+@media (min-width:1720px) {
+    .-dc0a1b4b9d53c-experimentalContentWrapper {
+        margin-bottom: 121px;
+    }
+}
+
+.-dc0a1b4b9d53c-experimentalCentricColumn {
+    height: 100vh;
+    overflow: hidden;
+}
+
+@media (max-width:768px) {
+    .-dc0a1b4b9d53c-experimentalCentricColumn {
+        display: none;
+    }
+
+    .-dc0a1b4b9d53c-experimentalFormColumn {
+        width: 100% !important;
+    }
+}
+
+@media (min-width:1720px) {
+    .-dc0a1b4b9d53c-footer {
+        margin-top: auto;
+    }
+
+    .-dc0a1b4b9d53c-experimentalColumn {
+        flex: 1;
+    }
+
+    .-dc0a1b4b9d53c-experimentalColumns {
+        height: 100vh;
+        display: flex;
+    }
+}
+
+/*! CSS Used from: Embedded */
+button,
+input {
+    overflow: visible;
+}
+
+* {
     box-sizing: border-box;
 }
 
-.styled-input {
-    width: 100%;
-    padding: 8px 40px 8px 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    box-sizing: border-box;
-    cursor: pointer;
+body {
+    min-height: 100%;
 }
 
-.styled-input {
-    background-color: #ffffff;
-    color: #666;
-}
-
-.icon-container {
-    position: absolute;
-    right: 7%;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-}
-
-.icon-container svg {
-    width: 20px;
-    height: 20px;
-    color: #666;
-}
-
-.university-dropdown-options,
-.institute-dropdown-options,
-.education-dropdown-options,
-.country-dropdown-options {
-    position: absolute;
-    top: 100%;
-    /* Appears below the input field */
-    left: 0;
-    width: 100%;
-    /* Matches the width of the container */
-    max-height: 200px;
-    /* Maximum height for the dropdown */
-    overflow-y: auto;
-    /* Adds scroll if content overflows */
-    background-color: white;
-    /* Dropdown background */
-    border: 1px solid #ccc;
-    /* Border around dropdown */
-    border-radius: 4px;
-    /* Rounded corners */
-    list-style: none;
-    /* Remove default list styling */
-    padding: 0;
+body,
+button,
+input {
     margin: 0;
-    display: none;
-    box-sizing: border-box;
-    z-index: 100;
 }
 
-.university-dropdown-options li,
-.institute-dropdown-options li,
-.education-dropdown-options li,
-.country-dropdown-options li {
-    padding: 10px;
-    cursor: pointer;
-    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+a {
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
 }
 
-.university-dropdown-options li:hover,
-.institute-dropdown-options li:hover,
-.education-dropdown-options li:hover,
-.country-dropdown-options li:hover {
-    background-color: #f0f0f0;
+h1 {
+    font-size: 1.953em;
+    margin: .67em 0;
 }
 
-.university-container.open .university-dropdown-options,
-.institute-container.open .institute-dropdown-options,
-.education-container.open .education-dropdown-options,
-.country-container.open .country-dropdown-options {
+img {
+    border-style: none;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+button {
+    text-transform: none;
+}
+
+button {
+    font-family: inherit;
+    -webkit-font-feature-settings: inherit;
+    font-feature-settings: inherit;
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    text-rendering: inherit;
+}
+
+button,
+html [type=button] {
+    -webkit-appearance: button;
+}
+
+/*! CSS Used from: Embedded */
+.go2933276541 {
+    position: fixed;
     display: block;
-}
-
-.unselectable {
+    width: 100%;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+    overflow: visible;
+    transform-style: preserve-3d;
+    background: transparent;
+    backface-visibility: hidden;
     pointer-events: none;
-    color: #888;
-    font-style: italic;
-    padding: 10px;
-    user-select: none;
-    background-color: #f7f6f6;
-    overflow-y: auto;
-    text-align: center;
+    left: 0px;
+    z-index: 9998;
 }
 
-.level1 {
+.go2369186930 {
+    top: 0px;
+    z-index: 9999;
+    height: 100%;
+    width: 100%;
+}
+
+.go1348078617 {
+    bottom: 0px;
+}
+
+.go2417249464 {
+    position: fixed;
+    z-index: 9989;
+}
+
+.go3921366393 {
+    left: 0;
+    bottom: 0;
+}
+
+.go3967842156 {
+    right: 0;
+    bottom: 0;
+}
+
+.go613305155 {
+    left: 0;
+    top: 0;
+}
+
+.go471583506 {
+    right: 0;
+    top: 0;
+}
+
+.go3670563033 {
+    position: relative;
+    overflow: hidden;
+    display: none;
+}
+
+.go1632949049 {
+    position: absolute;
     pointer-events: none;
-    color: #888;
-    font-style: italic;
-    padding: 10px;
-    user-select: none;
-    background-color: #f0f0f0;
+    width: 101vw;
+    height: 101vh;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    z-index: -1;
 }
 
-.input-group {
+/*! CSS Used from: Embedded */
+.css-1g7tp0f-Columns {
+    width: auto;
+    display: flex;
+    place-items: stretch;
+    justify-content: stretch;
+    -webkit-box-align: stretch;
+    flex-flow: wrap;
+}
+
+@media screen {
+    .css-1g7tp0f-Columns {
+        align-items: flex-start;
+        -webkit-box-pack: start;
+        justify-content: flex-start;
+        margin-right: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+@media screen {
+    .css-1g7tp0f-Columns>.e1ostpc10 {
+        margin-bottom: 0px;
+        padding-right: 0px;
+    }
+}
+
+.css-15tvki3-StyledBox {
+    box-sizing: border-box;
+}
+
+@media screen {
+    .css-15tvki3-StyledBox {
+        padding: 0px;
+        text-align: center;
+    }
+}
+
+@media screen {
+    .css-15tvki3-StyledBox {
+        padding-top: 32px;
+        padding-bottom: 16px;
+    }
+}
+
+.css-o5o0n7-StyledLogoElement {
+    color: rgb(26, 28, 28);
+}
+
+.css-1ff2k4x-StackContainer {
     display: flex;
     flex-direction: column;
-    margin-right: 15px;
-    width: 100%;
-    text-align: left;
-    background-color: none;
-
 }
 
-.input-group input {
-    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    border-radius: 4px;
-    border-width: 1px;
-    border-style: solid;
-    width: 100%;
-    padding: 8px 12px;
-    box-sizing: border-box;
-    color: rgb(26, 28, 28);
-    border-color: rgb(163, 178, 189);
+@media screen {
+    .css-92xiq-StackItem {
+        margin-top: 32px;
+    }
+}
+
+.css-92xiq-StackItem:first-of-type {
+    margin-top: 0px;
+}
+
+.css-92xiq-StackItem:empty {
+    margin-top: 0px;
+}
+
+@media screen {
+    .css-kwblxc-StackItem {
+        margin-top: 16px;
+    }
+}
+
+.css-kwblxc-StackItem:first-of-type {
+    margin-top: 0px;
+}
+
+.css-kwblxc-StackItem:empty {
+    margin-top: 0px;
+}
+
+.css-1trjn7t-StyledContainer {
+    position: relative;
     background-color: rgb(255, 255, 255);
 }
 
-.input-group label {
-    color: rgb(96, 117, 133);
-    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+@media screen {
+    .css-1trjn7t-StyledContainer {
+        border-radius: 12px;
+    }
+}
+
+.css-1trjn7t-StyledContainer::after {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border-radius: inherit;
+    box-shadow: rgba(0, 0, 0, 0.004) 0px 0.3px 0.6px, rgba(0, 0, 0, 0.07) 0px 2px 5px;
+}
+
+.css-1m1fu2w-StyledDiv {
+    border-radius: inherit;
+    height: 100%;
+}
+
+.css-1m1fu2w-StyledDiv> :last-child {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
+
+.css-1m1fu2w-StyledDiv> :first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+
+@media screen {
+    .css-1pg9ptm-StackItem {
+        margin-top: 24px;
+    }
+}
+
+.css-1pg9ptm-StackItem:first-of-type {
+    margin-top: 0px;
+}
+
+.css-1pg9ptm-StackItem:empty {
+    margin-top: 0px;
+}
+
+.css-1ozvgu-H2 {
+    color: rgb(26, 28, 28);
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
     font-weight: 900;
     margin: 0px;
-    margin-bottom: 1%;
-    margin-top: 5%;
+    overflow-wrap: normal;
+    hyphens: none;
+    font-size: 24px;
+    line-height: 1.33333;
+}
+
+.css-hto57-StyledText {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
+    font-weight: 700;
+    color: rgb(96, 117, 133);
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-wrap: normal;
+}
+
+@media screen {
+    .css-hto57-StyledText {
+        hyphens: none;
+    }
+}
+
+.css-14p1ltg-StyledText {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
+    font-weight: 400;
+    color: rgb(96, 117, 133);
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-wrap: normal;
+}
+
+@media screen {
+    .css-14p1ltg-StyledText {
+        hyphens: none;
+    }
+}
+
+.css-qzl379-StyledDiv {
+    visibility: visible;
+}
+
+@media screen {
+    .css-tn47vl-StackItem {
+        margin-top: 8px;
+    }
+}
+
+.css-tn47vl-StackItem:first-of-type {
+    margin-top: 0px;
+}
+
+.css-tn47vl-StackItem:empty {
+    margin-top: 0px;
+}
+
+@media screen {
+    .css-1c20xzu-StackItem {
+        margin-top: 4px;
+    }
+}
+
+.css-1c20xzu-StackItem:first-of-type {
+    margin-top: 0px;
+}
+
+.css-1c20xzu-StackItem:empty {
+    margin-top: 0px;
+}
+
+.css-15cms52-InlineContainer {
+    display: flex;
+    flex-flow: wrap;
+}
+
+@media screen {
+    .css-15cms52-InlineContainer {
+        align-items: flex-end;
+        -webkit-box-pack: start;
+        justify-content: flex-start;
+        gap: 4px;
+    }
+}
+
+.css-bfvjxm-H6 {
+    color: rgb(96, 117, 133);
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-weight: 900;
+    margin: 0px;
+    overflow-wrap: normal;
+    hyphens: none;
     font-size: 12px;
     line-height: 1.33333;
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
 
-table {
+.css-1axba1z-StyledContainer {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 16px;
-    text-align: left;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: row;
+    position: relative;
+    z-index: 1;
 }
 
-button[id="reg"],
-button[id="create-owner"],
-button[id="log-in"],
-button[id="cropImageBtn"] {
+.css-58i4y6-StyledInput {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    width: 100%;
+    padding: calc(7px) 12px;
+    box-sizing: border-box;
+    color: rgb(26, 28, 28);
+    border-color: rgb(163, 178, 189);
+    background-color: rgb(255, 255, 255);
+}
+
+.css-58i4y6-StyledInput::placeholder {
+    font-style: italic;
+    color: rgb(96, 117, 133);
+    opacity: 1;
+}
+
+.css-1eo534h-StyledContainer {
+    width: 100%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: row;
+    position: relative;
+    z-index: 1;
+}
+
+.css-13h4v91-StyledPasswordInput {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    width: 100%;
+    padding: calc(7px) 48px calc(7px) 12px;
+    box-sizing: border-box;
+    color: rgb(64, 81, 94);
+    border-color: rgb(163, 178, 189);
+    background-color: rgb(255, 255, 255);
+}
+
+.css-13h4v91-StyledPasswordInput::placeholder {
+    font-style: italic;
+    color: rgb(96, 117, 133);
+    opacity: 1;
+}
+
+.css-fw9vqi-StyledIconBtn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 2;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: transparent transparent transparent rgb(163, 178, 189);
+    padding: 12px;
+    border-radius: 0px 4px 4px 0px;
+    color: rgb(64, 81, 94);
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.css-fw9vqi-StyledIconBtn[type="button"] {
+    appearance: none;
+}
+
+.css-fw9vqi-StyledIconBtn:hover {
+    background-color: rgba(96, 117, 133, 0.05);
+    border-color: rgb(163, 178, 189);
+}
+
+.css-fw9vqi-StyledIconBtn:active {
+    color: rgb(26, 28, 28);
+    background-color: rgba(96, 117, 133, 0.05);
+    border-color: rgb(64, 81, 94);
+}
+
+.css-fw9vqi-StyledIconBtn:disabled {
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(163, 178, 189, 0.3);
+    pointer-events: none;
+}
+
+.css-fw9vqi-StyledIconBtn svg {
+    pointer-events: none;
+}
+
+.css-1g6lhus-StyledIcon {
+    width: 16px;
+    height: 16px;
+    color: rgb(96, 117, 133);
+}
+
+.css-1g6lhus-StyledIcon>svg {
+    width: 16px;
+    height: 16px;
+}
+
+.css-cardb5-StyledLink {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    text-decoration-line: underline;
+    color: rgb(4, 122, 136);
+}
+
+.css-cardb5-StyledLink:hover {
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.125em;
+}
+
+.css-w2u6g0-StyledButton {
     display: inline-block;
     border: 0px;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    margin: 0px;
     text-transform: none;
     text-decoration: none;
     border-radius: 4px;
-    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
     font-size: 14px;
     line-height: 1.14286;
     font-weight: 700;
@@ -214,140 +600,440 @@ button[id="cropImageBtn"] {
     padding: 16px 32px;
     background-color: rgb(4, 122, 136);
     color: rgb(255, 255, 255);
-    width: 80%;
+    width: 100%;
 }
 
-button[id="create-owner"],
-button[id="log-in"] {
-    width: 50%;
+.css-w2u6g0-StyledButton[type="button"] {
+    appearance: none;
 }
 
-@media only screen and (min-width: 1024px) and (max-width: 1366px) {
-    button[id="cropImageBtn"] {
-        width: 40%;
-        left: 90%; 
-        top: -40%; 
-        position: relative;
+.css-w2u6g0-StyledButton:hover {
+    background-color: rgb(5, 79, 87);
+}
+
+.css-w2u6g0-StyledButton:active {
+    background-color: rgb(5, 79, 87);
+}
+
+.css-alg3yb-InlineContainer {
+    display: flex;
+    flex-flow: row;
+}
+
+@media screen {
+    .css-alg3yb-InlineContainer {
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        gap: 4px;
     }
 }
 
-.popup-message {
-    width: fit-content;
-    font-size: 34%;
-    padding: 0.4%;
-    border-radius: 47px;
-    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
-    background-color: #000000a5;
-    color: white;
-    position: absolute;
-    top: 84%;
-    left: 48%;
-    transition: opacity 0.5s ease-in-out;
+.css-7tpa0d-StyledIcon {
+    width: 16px;
+    height: 16px;
+    color: inherit;
 }
 
-.popup-message.show {
-    opacity: 1;
+.css-7tpa0d-StyledIcon>svg {
+    width: 16px;
+    height: 16px;
 }
 
-button#create-owner:hover {
-    background-color: rgb(18 148 163);
-}
-
-.avatar-upload {
+.css-17g2cji-StyledContainer {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 0.5%px;
-    position: relative;
-    margin-top: 2%;
-    left: 8%;
-    align-items: start;
-
-
-}
-
-input[type="file"] {
-    display: none;
-}
-
-.avatar-button {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+    -webkit-box-pack: center;
     justify-content: center;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    background: url('/images/useravatar.jpg');
-    background-position: 50%;
-    background-size: 120%;
-    border: 2px solid #ccc;
-    overflow: hidden;
-    position: relative;
-}
-
-.avatar-preview {
-    width: 100%;
-    height: 30%;
-    margin-top: 70%;
-    display: flex;
+    -webkit-box-align: center;
     align-items: center;
-    justify-content: center;
-    background-color: #3332324d;
 }
 
-.avatar-preview i {
-    color: #e6e6e6;
+.css-1fcsbsk-StyledDivider {
+    border-bottom: 1px solid rgb(224, 230, 235);
+    flex: 1 1 0%;
 }
 
-.avatar-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.css-p0fqnc-StyledContent {
+    max-width: 50%;
 }
 
-/* Resizing popup */
-
-.resizing-popup {
-    display: none;
-    position: fixed;
-    top: -0%;
-    width: 100%;
-    height: 100%;
-    left: 0;
-
-    background-color: rgba(0, 0, 0, 0.8);
-
+.css-3h5fib-StyledBox {
+    box-sizing: border-box;
 }
 
-.resizing-popup span {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 24px;
+@media screen {
+    .css-3h5fib-StyledBox {
+        padding: 48px;
+        text-align: left;
+    }
+}
+
+@media screen {
+    .css-3h5fib-StyledBox {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+}
+
+.css-1p0ph22-StyledBox {
+    box-sizing: border-box;
+}
+
+@media screen {
+    .css-1p0ph22-StyledBox {
+        padding: 16px;
+        text-align: left;
+    }
+}
+
+.css-cy4sjh-StyledText {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: center;
+    font-weight: 400;
+    color: rgb(96, 117, 133);
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-wrap: normal;
+}
+
+@media screen {
+    .css-cy4sjh-StyledText {
+        hyphens: none;
+    }
+}
+
+.css-k36ksl-StyledBox {
+    box-sizing: border-box;
+}
+
+@media screen {
+    .css-k36ksl-StyledBox {
+        padding: 24px;
+        text-align: left;
+    }
+}
+
+.css-osqs1k-InlineContainer {
+    display: flex;
+    flex-flow: wrap;
+}
+
+@media screen {
+    .css-osqs1k-InlineContainer {
+        align-items: flex-start;
+        -webkit-box-pack: start;
+        justify-content: flex-start;
+        gap: 32px;
+    }
+}
+
+.css-ecqu1n-StyledLink {
     cursor: pointer;
-    color: #e6e6e6;
+    background: none;
+    border: none;
+    padding: 0px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    text-decoration-line: none;
+    color: rgb(96, 117, 133);
+    text-decoration-color: rgb(163, 178, 189);
 }
 
-.cropper-crop-box,
-.cropper-view-box {
-    border-radius: 50%;
+.css-ecqu1n-StyledLink:hover {
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.125em;
+    text-decoration-color: rgb(96, 117, 133);
+    color: rgb(26, 28, 28);
 }
 
-.cropper-view-box {
-    box-shadow: 0 0 0 1px #39f;
-    outline: 0;
+.css-1d770jw-Column {
+    box-sizing: border-box;
 }
 
-
-
-.cropper-face .cropper-move {
-    display: none;
+@media screen {
+    .css-1d770jw-Column {
+        width: 50%;
+        align-self: auto;
+    }
 }
 
-#imageToCrop {
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-    margin: 20px auto;
+.css-1d770jw-Column:empty {
+    width: 0px;
+    flex: 0 0 auto;
+}
+
+@media screen {
+    .css-1um4aax-StackItem {
+        margin-top: 0px;
+    }
+}
+
+.css-1um4aax-StackItem:first-of-type {
+    margin-top: 0px;
+}
+
+.css-1um4aax-StackItem:empty {
+    margin-top: 0px;
+}
+
+.css-4tgtrq-H1 {
+    color: rgb(26, 28, 28);
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-weight: 900;
+    margin: 0px;
+    overflow-wrap: normal;
+    hyphens: none;
+    font-size: 26px;
+    line-height: 1.25;
+}
+
+.css-gkrxgl-StyledText {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
+    font-weight: 700;
+    color: rgb(26, 28, 28);
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-wrap: normal;
+}
+
+@media screen {
+    .css-gkrxgl-StyledText {
+        hyphens: none;
+    }
+}
+
+.css-1r00mrw-InlineContainer {
+    display: flex;
+    flex-flow: row;
+}
+
+@media screen {
+    .css-1r00mrw-InlineContainer {
+        align-items: flex-start;
+        -webkit-box-pack: start;
+        justify-content: flex-start;
+        gap: 12px;
+    }
+}
+
+.css-16vt20s-StyledIcon {
+    width: 24px;
+    height: 24px;
+    color: rgb(4, 122, 136);
+}
+
+.css-16vt20s-StyledIcon>svg {
+    width: 24px;
+    height: 24px;
+}
+
+.css-1umk414-StyledText {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
+    font-weight: 400;
+    color: rgb(26, 28, 28);
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-wrap: normal;
+}
+
+@media screen {
+    .css-1umk414-StyledText {
+        hyphens: none;
+    }
+}
+
+.css-1nhv2hm-Column {
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .css-1nhv2hm-Column {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1280px) {
+    .css-1nhv2hm-Column {
+        width: 50%;
+    }
+}
+
+@media (min-width: 1280px) {
+    .css-1nhv2hm-Column {
+        width: 50%;
+    }
+}
+
+@media screen {
+    .css-1nhv2hm-Column {
+        align-self: auto;
+    }
+}
+
+.css-1nhv2hm-Column:empty {
+    width: 0px;
+    flex: 0 0 auto;
+}
+
+.css-1nv0jx9-StyledBox {
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .css-1nv0jx9-StyledBox {
+        padding: 24px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1280px) {
+    .css-1nv0jx9-StyledBox {
+        padding: 24px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .css-1nv0jx9-StyledBox {
+        padding: 48px;
+    }
+}
+
+@media screen {
+    .css-1nv0jx9-StyledBox {
+        text-align: left;
+    }
+}
+
+.css-153adb6-StyledButton {
+    display: inline-block;
+    border: 1px solid rgb(163, 178, 189);
+    margin: 0px;
+    text-transform: none;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.14286;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 15px 31px;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(64, 81, 94);
+    width: 100%;
+}
+
+.css-153adb6-StyledButton:hover {
+    border-color: rgb(96, 117, 133);
+    background-color: rgba(96, 117, 133, 0.05);
+}
+
+.css-153adb6-StyledButton:active {
+    background-color: rgba(255, 255, 255, 0);
+    border-color: rgb(64, 81, 94);
+}
+
+.css-o2qfki-StyledText {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
+    font-weight: 400;
+    color: rgb(96, 117, 133);
+    font-size: 14px;
+    line-height: 1.42857;
+    overflow-wrap: normal;
+}
+
+@media screen {
+    .css-o2qfki-StyledText {
+        hyphens: none;
+    }
+}
+
+.css-yck13u-StyledText {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
+    font-weight: 400;
+    color: rgb(96, 117, 133);
+    font-size: 12px;
+    line-height: 1.33333;
+    overflow-wrap: normal;
+}
+
+@media screen {
+    .css-yck13u-StyledText {
+        hyphens: none;
+    }
+}
+.css-15tvki3-StyledBox img{
+    width: 50%;
+}
+.css-1wf6akm-StyledLink {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    text-decoration-line: underline;
+    color: rgb(4, 122, 136);
+}
+
+.css-1wf6akm-StyledLink:hover {
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.125em;
+}
+
+/*! CSS Used fontfaces */
+@font-face {
+    font-family: Lato;
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff");
+}
+
+@font-face {
+    font-family: Lato;
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+    src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff");
+}
+
+@font-face {
+    font-family: Lato;
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff");
+}
+
+@font-face {
+    font-family: Lato;
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+    src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff");
+}
+
+@font-face {
+    font-family: Lato;
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+    src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff");
 }

@@ -7,7 +7,18 @@ const UserSchema = new mongoose.Schema({
     _id:{
         type:String,
     },
-    name: {
+    firstName: {
+        type: String,
+        required: true
+    },
+    university:{
+        type: String,
+    },
+    profession:{
+        type: String,
+        rquired:true
+    },
+    lastName: {
         type: String,
         required: true
     },
@@ -56,7 +67,16 @@ const UserSchema = new mongoose.Schema({
     banned:{
         type:Boolean,
         default:false
-    }
+    },
+    googleId: {
+        type: String,  // Store the Google ID as a string
+        
+        unique: true    // Make sure it's unique to prevent duplicate users
+    },
+    facebookId: {
+        type: String,  // Store the Google ID as a strin
+        unique: true    // Make sure it's unique to prevent duplicate users
+    },
 });
 
 const User = mongoose.model('User', UserSchema);

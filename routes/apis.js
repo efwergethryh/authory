@@ -111,6 +111,8 @@ router.get('/notifications', notificationController.get_notifications)
 router.get('/joinedPapers',(req,res)=> paperController.get_joined_paper(null,req,res));
 router.get('/get-request', requestController.get_requests);
 router.get('/get-joined-users/:paper_id',paperController.joined_papers_users);
+router.get('/posts',postController.get_posts)
+router.get('/posts/:post_id',postController.get_post)
 // Delete Routes
 router.delete('/delete-paper/:paper_id',paperController.delete_paper);
 router.delete('/delete-user-from-paper/:paper_id',paperController.delete_user_from_paper);
@@ -120,8 +122,8 @@ router.put('/update-paper/:id',paperController.update_paper)
 
 router.use(authMiddleware([2,3]))
 router.post('/new-post',upload_post.array('post-image'),postController.create_post)
-router.get('/posts',postController.get_posts)
-router.get('/posts/:post_id',postController.get_post)
+
+
 router.put('/update-post/:post_id',upload_post.array('post-image'),postController.update_post)
 router.put('/ban-user/:userId',userController.ban_user)
 router.delete('/delete-post/:post_id',postController.delete_posts)

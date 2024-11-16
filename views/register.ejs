@@ -10,236 +10,1897 @@
     <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.min.css">
 </head>
 
-<body>
+<!-- <body>
     <div class="loading-spinner" id="loading-spinner"></div>
-    <div class="navbar">
-        <img src="/images/ictoob.png" alt="not found">
-        
-    </div>
-
-    <form action="" id="register" enctype="multipart/form-data">
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        <div class="input-group">
-                            <label for="name">NAME</label>
-                            <input type="text" id="name" name="name" required placeholder="NAME">
+    <div class="-dc0a1b4b9d53c-experimentalColumn">
+        <div class="-dc0a1b4b9d53c-experimentalContentWrapper">
+            <div data-ds-id="Stack" class="css-1ff2k4x-StackContainer eexjih90">
+                <div class="css-1pg9ptm-StackItem eexjih91">
+                    <div data-ds-id="Stack" class="css-1ff2k4x-StackContainer eexjih90">
+                        <div class="css-1um4aax-StackItem eexjih91">
+                            <h1 color="primary" data-ds-id="H1" class="css-4tgtrq-H1 emoqs3o0">Try ICTOOB for free</h1>
                         </div>
-                    </th>
-                    <th>
-                        <div class="input-group">
-                            <label for="name">Project title</label>
-                            <input type="text" id="project_title" name="projet_title" required
-                                placeholder="project title" required>
+                        <div class="css-1um4aax-StackItem eexjih91">
+                            <p color="primary" data-ds-id="Text" class="css-gkrxgl-StyledText e1im9r3t0">Unlock a world
+                                of medical content and more</p>
                         </div>
-                    </th>
-                    <th>
-                        <div class="input-group">
-                            <label for="scientific_interest">Scientific interest</label>
-                            <input type="text" id="scientific_interest" name="scientific_interest" required>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="input-group">
-                            <label for="username">Email address</label>
-                            <input type="text" id="email" name="email" required placeholder="email@address.com"
-                                required>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <label for="institute">Project branch</label>
-                            <div class="institute-container">
-                                <input type="text" id="project_branch" name="project_branch" aria-label="Country"
-                                    autocomplete="off" class="styled-input" placeholder="Select branch" required>
-                                <div class="icon-container">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-chevron-down">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
+                    </div>
+                </div>
+                <div class="css-1pg9ptm-StackItem eexjih91">
+                    <div data-ds-id="Stack" class="css-1ff2k4x-StackContainer eexjih90">
+                        <div class="css-kwblxc-StackItem eexjih91">
+                            <div data-ds-id="Inline" class="css-1r00mrw-InlineContainer e1hzytjg0">
+                                <div>
+                                    <div data-ds-id="Icon" data-variant="accent" color="accent"
+                                        class="css-16vt20s-StyledIcon esvztbe0"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-check">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg></div>
                                 </div>
-                                <ul class="institute-dropdown-options">
-                                    <li class="level1">A-Medicine</li>
-                                    <li class="unselectable">Internal Medicine</li>
-                                    <li data-value="Cardiology">Cardiology</li>
-                                    <li data-value="Pulmonology">Pulmonology</li>
-                                    <li data-value="Gastroenterology">Gastroenterology</li>
-                                    <li data-value="Nephrology">Nephrology</li>
-                                    <li data-value="Endocrinology">Endocrinology</li>
-                                    <li data-value="Neurology">Neurology</li>
-                                    <li data-value="Critical Care Medicine">Critical Care Medicine</li>
-
-                                    <li class="unselectable">Surgery Medicine</li>
-                                    <li data-value="General Surgery">General Surgery</li>
-                                    <li data-value="Cardiothoracic Surgery">Cardiothoracic Surgery</li>
-                                    <li data-value="Neurosurgery">Neurosurgery</li>
-                                    <li data-value="Orthopedic Surgery">Orthopedic Surgery</li>
-                                    <li data-value="Plastic Surgery">Plastic Surgery</li>
-                                    <li data-value="Urology">Urology</li>
-                                    <li data-value="Vascular Surgery">Vascular Surgery</li>
-                                    <li data-value="Pediatric Surgery">Pediatric Surgery</li>
-                                    <li data-value="Trauma Surgery">Trauma Surgery</li>
-
-                                    <li class="unselectable">Gynecology medicine</li>
-                                    <li data-value="Trauma Surgery">General gynecology</li>
-                                    <li data-value="Trauma Surgery">Obstetrics</li>
-                                    <li data-value="Trauma Surgery">Gynecology oncology</li>
-                                    <li data-value="Trauma Surgery">Infertility</li>
-                                    <li class="unselectable">Pediatric medicine</li>
-                                    <li class="unselectable">Pediatric medicine</li>
-
-                                    <div class="unselectable">Emergency medicine</div>
-                                    <div class="unselectable">Dermatology</div>
-                                    <div class="unselectable">Ophthalmology</div>
-                                    <div class="unselectable">Otolaryngology (ENT)</div>
-                                    <div class="unselectable">Psychology</div>
-                                    <div class="unselectable">Hematology</div>
-                                    <div class="unselectable">Oncology</div>
-                                    <div class="unselectable">Rhumatology</div>
-                                    <div class="unselectable">infectious</div>
-                                    <div class="unselectable">geriatric medicine</div>
-                                    <div class="unselectable">Family medicine</div>
-                                    <div class="unselectable">Radiology</div>
-                                    <div class="unselectable">Anesthesiology</div>
-                                </ul>
+                                <div>
+                                    <p color="primary" data-ds-id="Text" class="css-1umk414-StyledText e1im9r3t0">1,200+
+                                        articles covering conditions &amp; procedures</p>
+                                </div>
                             </div>
                         </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <label for="text">Type of study</label>
-                            <div class="education-container">
-                                <input type="text" id="type_of_study" name="type_of_study" aria-label="Country"
-                                    autocomplete="off" class="styled-input" placeholder="type of study" required>
-                                <div class="icon-container">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-chevron-down">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
+                        <div class="css-kwblxc-StackItem eexjih91">
+                            <div data-ds-id="Inline" class="css-1r00mrw-InlineContainer e1hzytjg0">
+                                <div>
+                                    <div data-ds-id="Icon" data-variant="accent" color="accent"
+                                        class="css-16vt20s-StyledIcon esvztbe0"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-check">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg></div>
                                 </div>
-                                <ul class="education-dropdown-options">
-                                    <li data-value="Experimental">Experimental </li>
-                                    <li data-value="Observational">Observational </li>
-                                    <li data-value="Descriptive">Descriptive </li>
-                                    <li data-value="Correlational">Correlational </li>
-                                    <li data-value="Case study">Case study </li>
-                                </ul>
+                                <div>
+                                    <p color="primary" data-ds-id="Text" class="css-1umk414-StyledText e1im9r3t0">
+                                        Clinical tools incl. checklists, drug dosages, &amp; more</p>
+                                </div>
                             </div>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="input-group">
-                            <label for="email">Confirm Email</label>
-                            <input type="text" id="email" name="Confirmemail" required placeholder="email@address.com">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <label for="university">Look for</label>
-                            <div class="university-container">
-                                <input type="text" id="looking_for" name="look_for" aria-label="Country"
-                                    required autocomplete="off" class="styled-input" placeholder="Looking for?">
-                                <div class="icon-container">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-chevron-down">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
+                        <div class="css-kwblxc-StackItem eexjih91">
+                            <div data-ds-id="Inline" class="css-1r00mrw-InlineContainer e1hzytjg0">
+                                <div>
+                                    <div data-ds-id="Icon" data-variant="accent" color="accent"
+                                        class="css-16vt20s-StyledIcon esvztbe0"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-check">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg></div>
                                 </div>
-                                <ul class="university-dropdown-options">
-                                    <li data-value="Writer">Writer</li>
-                                    <li data-value="Data collector">Data collector</li>
-                                    <li data-value="Data Analysis">Data Analysis</li>
-                                    <li data-value="Supervisor">Supervisor</li>
-                                    <li data-value="Microsoft office Expert">Microsoft office Expert</li>
-                                    <li data-value="Puplishing expert">Puplishing expert</li>
-                                </ul>
+                                <div>
+                                    <p color="primary" data-ds-id="Text" class="css-1umk414-StyledText e1im9r3t0">9,000+
+                                        questions for USMLE® Step &amp; Shelf exams</p>
+                                </div>
                             </div>
                         </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <label for="text">Country</label>
-                            <div id="count-cont" class="country-container">
-                                <input type="text" id="country" name="country" aria-label="Country"
-                                    autocomplete="off" class="styled-input" placeholder="Country" required>
-                                <div class="icon-container">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-chevron-down">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
+                        <div class="css-kwblxc-StackItem eexjih91">
+                            <div data-ds-id="Inline" class="css-1r00mrw-InlineContainer e1hzytjg0">
+                                <div>
+                                    <div data-ds-id="Icon" data-variant="accent" color="accent"
+                                        class="css-16vt20s-StyledIcon esvztbe0"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-check">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg></div>
                                 </div>
-                                <ul id="country-drp" class="country-dropdown-options">
-
-                                </ul>
+                                <div>
+                                    <p color="primary" data-ds-id="Text" class="css-1umk414-StyledText e1im9r3t0">Free
+                                        mobile apps and add-ons (Anki, Chrome extension)</p>
+                                </div>
                             </div>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="input-group">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="password" required placeholder="password here">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <label for="name">Phone number</label>
-                            <input type="text" id="phone" name="phone_number" required placeholder="Phone number">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="avatar-upload">
-                            <input type="file" id="profile_picture" name="profile_picture"   accept="image/*"
-                                 />
-                            <label for="profile_picture" class="avatar-button" id="avatar-label">
-                                <div id="avatar-preview" class="avatar-preview">
-                                    <i class="fa-solid fa-camera"></i>
+                        <div class="css-kwblxc-StackItem eexjih91">
+                            <div data-ds-id="Inline" class="css-1r00mrw-InlineContainer e1hzytjg0">
+                                <div>
+                                    <div data-ds-id="Icon" data-variant="accent" color="accent"
+                                        class="css-16vt20s-StyledIcon esvztbe0"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-check">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg></div>
                                 </div>
-                            </label>
+                                <div>
+                                    <p color="primary" data-ds-id="Text" class="css-1umk414-StyledText e1im9r3t0">
+                                        High-yield study plans for exam prep</p>
+                                </div>
+                            </div>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="input-group">
-                            <label for="Confirmpassword">Confirm Password</label>
-                            <input type="password" id="Confirmpassword" name="Confirmpassword" required
-                                placeholder="Confirm password">
-                        </div>
-                    </td>
-                    <td>
-                        
-                    </td>
-                    <td>
-                        <button id="reg">Register</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </form>
-    <button id="openPopupBtn" style="display: none;">Open Image Popup</button>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/apis.js"></script>
-    
-    <div id="imagePopup" class="resizing-popup">
-        <div class="popup-content">
-            <span class="close-btn" id="closePopupBtn">&times;</span>
-            <img id="imageToCrop" src="" alt="Selected Picture">
-            <button id="cropImageBtn">Confirm Crop</button> <!-- Confirm Crop Button -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    
+    <div class="navbar">
+        <img src="/images/ictoob.png" alt="not found">
+    </div>
+    <form id="Signup_form">
+        <h2>
+            Create an account
+        </h2>
+        <h1>
+            How would you like to signup?
+        </h1>
+        <div class="column">
+
+            <a data-ds-id="Button" class=" login-a" href="/auth/google">
+                <div loading="0" class="css-1kvz93h-StyledInner e1ikndgi1">
+                    <div data-ds-id="Inline" class="css-1mzq32r-InlineContainer e1rgc4na0">
+                        <div class="css-5omd5s-InlineItem e1rgc4na1">
+                            <div data-e2e-test-id="google" data-testid="google" data-ds-id="Icon" data-variant="inherit"
+                                color="inherit" class="css-1u37vas-StyledIcon e1b4dmk50">
+                                <svg id="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                    viewBox="0 0 16 16">
+                                    <path fill="#ea4335"
+                                        d="M8 3.093c1.502 0 2.516.65 3.093 1.191l2.258-2.204C11.964.791 10.161 0 8.001 0A7.994 7.994 0 00.852 4.409L3.44 6.418C4.09 4.488 5.885 3.093 8 3.093z">
+                                    </path>
+                                    <path fill="#4285f4"
+                                        d="M15.68 8.178c0-.658-.053-1.138-.169-1.636H8v2.97h4.409c-.089.737-.569 1.848-1.636 2.595l2.525 1.955c1.51-1.395 2.382-3.449 2.382-5.884z">
+                                    </path>
+                                    <path fill="#fbbc05"
+                                        d="M3.449 9.582A4.925 4.925 0 013.182 8c0-.551.098-1.084.258-1.582L.853 4.408C.311 5.494 0 6.712 0 8s.311 2.507.853 3.591z">
+                                    </path>
+                                    <path fill="#34a853"
+                                        d="M8 16c2.16 0 3.973-.711 5.298-1.938l-2.525-1.955c-.675.47-1.582.8-2.773.8-2.116 0-3.911-1.396-4.551-3.325l-2.587 2.01C2.178 14.204 4.872 16 8 16z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div style="position: relative; left:38%; top: -3vh;">Google</div>
+                    </div>
+                </div>
+            </a>
+            <a data-ds-id="Button" class=" login-a" href="/auth/facebook">
+                <div loading="0" class="css-1kvz93h-StyledInner e1ikndgi1">
+                    <div data-ds-id="Inline" class="css-1mzq32r-InlineContainer e1rgc4na0">
+                        <div data-e2e-test-id="facebook" data-testid="facebook" data-ds-id="Icon" data-variant="inherit"
+                            color="inherit" class="css-7tpa0d-StyledIcon esvztbe0">
+                            <svg id="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                viewBox="0 0 16 16">
+                                <path fill="#1877f2"
+                                    d="M16 8a8 8 0 10-9.25 7.903v-5.59H4.719V8H6.75V6.238c0-2.006 1.194-3.113 3.022-3.113.875 0 1.79.156 1.79.156V5.25h-1.008c-.994 0-1.304.617-1.304 1.25V8h2.219l-.355 2.313H9.25v5.59A8.002 8.002 0 0016 8z">
+                                </path>
+                                <path fill="#fff"
+                                    d="M11.114 10.313L11.47 8H9.25V6.5c0-.633.31-1.25 1.304-1.25h1.009V3.281s-.916-.156-1.791-.156c-1.828 0-3.022 1.107-3.022 3.112V8H4.719v2.313H6.75v5.59c.828.13 1.672.13 2.5 0v-5.59z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div style="position: relative; left:38%; top: -3vh;">Facebook</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="divider">
+            <p>or</p>
+        </div>
+        <div class="input-group">
+            <label for="email">Email address</label>
+            <input type="text" id="email" name="email" placeholder="email@address.com" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            <button aria-label="password visibility icon" type="button" class="css-fw9vqi-StyledIconBtn ecgpf3y1">
+                <div data-ds-id="Icon" data-variant="tertiary" color="tertiary" class="css-1g6lhus-StyledIcon esvztbe0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+                        <path fill="currentColor" fill-rule="evenodd"
+                            d="M12.3 12.57l2.286 2.344L16 13.5 2.914.086 1.5 1.5l2.013 2.063c-.537.396-1.007.827-1.407 1.246a13.327 13.327 0 00-1.65 2.135 2 2 0 000 2.112c.053.084.111.176.176.275.332.505.826 1.18 1.474 1.86C3.387 12.531 5.381 14 8 14c1.707 0 3.148-.623 4.3-1.43zm-1.42-1.455l-.868-.89a3 3 0 01-4.187-4.292l-.899-.92c-.509.345-.968.753-1.373 1.177A11.328 11.328 0 002.155 8c.044.07.093.148.148.232.284.432.705 1.007 1.25 1.577C4.66 10.97 6.165 12 8 12c1.078 0 2.043-.355 2.88-.884zM7.225 7.368A1 1 0 008.613 8.79zm-.016-5.323l2.146 2.146c1.231.35 2.271 1.14 3.092 2A11.335 11.335 0 0113.845 8a10.71 10.71 0 01-.269.412l1.435 1.435a13.598 13.598 0 00.533-.791 2 2 0 000-2.112 13.314 13.314 0 00-1.65-2.135C12.613 3.467 10.619 2 8 2c-.27 0-.534.017-.79.046z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+            </button>
+            <button aria-label="password visibility icon" type="button" class="css-fw9vqi-StyledIconBtn ecgpf3y1">
+                <div data-ds-id="Icon" data-variant="tertiary" color="tertiary" class="css-1g6lhus-StyledIcon esvztbe0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+                        <path fill="currentColor" fill-rule="evenodd"
+                            d="M12.3 12.57l2.286 2.344L16 13.5 2.914.086 1.5 1.5l2.013 2.063c-.537.396-1.007.827-1.407 1.246a13.327 13.327 0 00-1.65 2.135 2 2 0 000 2.112c.053.084.111.176.176.275.332.505.826 1.18 1.474 1.86C3.387 12.531 5.381 14 8 14c1.707 0 3.148-.623 4.3-1.43zm-1.42-1.455l-.868-.89a3 3 0 01-4.187-4.292l-.899-.92c-.509.345-.968.753-1.373 1.177A11.328 11.328 0 002.155 8c.044.07.093.148.148.232.284.432.705 1.007 1.25 1.577C4.66 10.97 6.165 12 8 12c1.078 0 2.043-.355 2.88-.884zM7.225 7.368A1 1 0 008.613 8.79zm-.016-5.323l2.146 2.146c1.231.35 2.271 1.14 3.092 2A11.335 11.335 0 0113.845 8a10.71 10.71 0 01-.269.412l1.435 1.435a13.598 13.598 0 00.533-.791 2 2 0 000-2.112 13.314 13.314 0 00-1.65-2.135C12.613 3.467 10.619 2 8 2c-.27 0-.534.017-.79.046z"
+                            clip-rule="evenodd"></path>
+                    </svg></div>
+            </button>
+        </div>
+        <p color="tertiary" data-ds-id="Text" class="css-o2qfki-StyledText e1im9r3t0">Minimum 8 characters</p>
+        <button id="signup-button">Sign up</button>
+
+        <p color="tertiary" data-ds-id="Text" class="css-yck13u-StyledText e1im9r3t0">By creating an account, you agree
+            to the
+            <a data-ds-id="Link" color="accent" target="_blank" rel="noreferrer" href=""
+                class="css-1wf6akm-StyledLink ewxmrja0">Terms of Service</a>.<br>For
+            more information see our <a data-ds-id="Link" color="accent" target="_blank" rel="noreferrer"
+                href="https://www.amboss.com/us/privacy" class="css-1wf6akm-StyledLink ewxmrja0"> Privacy
+                Policy</a>.<br><br>
+        </p>
+
+        <p color="tertiary" data-ds-id="Text" class="css-yck13u-StyledText e1im9r3t0">We will send you information about
+            our products and services to the email address registered to your account. You can decline this use of your
+            email address free of charge at any time by writing an email to <a data-ds-id="Link" color="accent"
+                href="mailto:hello@amboss.com" class="css-1wf6akm-StyledLink ewxmrja0">hello@amboss.com</a> or by
+            clicking the unsubscribe link in our emails. </p>
+        </div>
+    </form>
+    <p color="tertiary" data-ds-id="Text" class="css-cy4sjh-StyledText e1im9r3t0">Already have an account? <a
+            data-e2e-test-id="login-link" data-ds-id="Link" color="accent" weight="bold"
+            class="css-cardb5-StyledLink ewxmrja0" href="/us/login">Log in </a></p>
+    <div data-ds-id="Box" class="css-16b0bx-StyledBox erlpbss0">
+        <div data-e2e-test-id="last-read-widget" data-ds-id="Container" elevation="1"
+            class="css-uxowku-StyledContainer e1evskne0">
+            <div class="css-1m1fu2w-StyledDiv e1evskne1">
+                <div data-ds-id="Box" class="css-sh7anr-StyledBox erlpbss0">
+                    <p color="primary" data-ds-id="Text" class="css-gkrxgl-StyledText e1im9r3t0">Recently viewed
+                        articles</p>
+                </div>
+                <div data-ds-id="Divider" class="css-1fcsbsk-StyledDivider e1xue2o81"></div>
+                <div data-ds-id="Box" class="css-1fu2yzn-StyledBox erlpbss0">
+                    <div data-ds-id="Inline" class="css-o1sld0-InlineContainer e1hzytjg0">
+                        <div>
+                            <p color="tertiary" data-ds-id="Text" class="css-14p1ltg-StyledText e1im9r3t0">Your recent
+                                viewed articles will appear here.</p>
+                        </div>
+                        <div><a data-ds-id="Button" class="css-1k7990c-StyledButton e7wzybw0" href="/us/library">
+                                <div class="css-19pexw4-StyledInner e7wzybw1">
+                                    <div data-ds-id="Inline" class="css-alg3yb-InlineContainer e1hzytjg0">
+                                        <div>Go to library</div>
+                                    </div>
+                                </div>
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    
+</body> -->
+
+<body>
+    <div id="hs-web-interactives-top-push-anchor" class="go3670563033"></div>
+    <div id="auth-app">
+        <div class="-dc0a1b4b9d53c-experimentalColumns css-1g7tp0f-Columns e1ostpc11" data-ds-id="Columns">
+            <div size="6" class="-dc0a1b4b9d53c-experimentalCentricColumn css-1d770jw-Column e1ostpc10"
+                data-ds-id="Column">
+                <div class="-dc0a1b4b9d53c-experimentalColumn">
+                    <div class="-dc0a1b4b9d53c-experimentalContentWrapper">
+                        <div data-ds-id="Stack" class="css-1ff2k4x-StackContainer eexjih90">
+                            <div class="css-1pg9ptm-StackItem eexjih91">
+                                <div data-ds-id="Stack" class="css-1ff2k4x-StackContainer eexjih90">
+                                    <div class="css-1um4aax-StackItem eexjih91">
+                                        <h1 color="primary" data-ds-id="H1" class="css-4tgtrq-H1 emoqs3o0">Try ICTOOB
+                                            for free</h1>
+                                    </div>
+                                    <div class="css-1um4aax-StackItem eexjih91">
+                                        <p color="primary" data-ds-id="Text" class="css-gkrxgl-StyledText e1im9r3t0">
+                                            Unlock a world of medical content and more</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="css-1pg9ptm-StackItem eexjih91">
+                                <div data-ds-id="Stack" class="css-1ff2k4x-StackContainer eexjih90">
+                                    <div class="css-kwblxc-StackItem eexjih91">
+                                        <div data-ds-id="Inline" class="css-1r00mrw-InlineContainer e1hzytjg0">
+                                            <div>
+                                                <div data-ds-id="Icon" data-variant="accent" color="accent"
+                                                    class="css-16vt20s-StyledIcon esvztbe0"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-check">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg></div>
+                                            </div>
+                                            <div>
+                                                <p color="primary" data-ds-id="Text"
+                                                    class="css-1umk414-StyledText e1im9r3t0">1,200+ articles covering
+                                                    conditions &amp; procedures</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="css-kwblxc-StackItem eexjih91">
+                                        <div data-ds-id="Inline" class="css-1r00mrw-InlineContainer e1hzytjg0">
+                                            <div>
+                                                <div data-ds-id="Icon" data-variant="accent" color="accent"
+                                                    class="css-16vt20s-StyledIcon esvztbe0"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-check">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg></div>
+                                            </div>
+                                            <div>
+                                                <p color="primary" data-ds-id="Text"
+                                                    class="css-1umk414-StyledText e1im9r3t0">Clinical tools incl.
+                                                    checklists, drug dosages, &amp; more</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="css-kwblxc-StackItem eexjih91">
+                                        <div data-ds-id="Inline" class="css-1r00mrw-InlineContainer e1hzytjg0">
+                                            <div>
+                                                <div data-ds-id="Icon" data-variant="accent" color="accent"
+                                                    class="css-16vt20s-StyledIcon esvztbe0"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-check">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg></div>
+                                            </div>
+                                            <div>
+                                                <p color="primary" data-ds-id="Text"
+                                                    class="css-1umk414-StyledText e1im9r3t0">9,000+ questions for USMLE®
+                                                    Step &amp; Shelf exams</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="css-kwblxc-StackItem eexjih91">
+                                        <div data-ds-id="Inline" class="css-1r00mrw-InlineContainer e1hzytjg0">
+                                            <div>
+                                                <div data-ds-id="Icon" data-variant="accent" color="accent"
+                                                    class="css-16vt20s-StyledIcon esvztbe0"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-check">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg></div>
+                                            </div>
+                                            <div>
+                                                <p color="primary" data-ds-id="Text"
+                                                    class="css-1umk414-StyledText e1im9r3t0">Free mobile apps and
+                                                    add-ons (Anki, Chrome extension)</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="css-kwblxc-StackItem eexjih91">
+                                        <div data-ds-id="Inline" class="css-1r00mrw-InlineContainer e1hzytjg0">
+                                            <div>
+                                                <div data-ds-id="Icon" data-variant="accent" color="accent"
+                                                    class="css-16vt20s-StyledIcon esvztbe0"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-check">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg></div>
+                                            </div>
+                                            <div>
+                                                <p color="primary" data-ds-id="Text"
+                                                    class="css-1umk414-StyledText e1im9r3t0">High-yield study plans for
+                                                    exam prep</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="-dc0a1b4b9d53c-experimentalFormColumn css-1nhv2hm-Column e1ostpc10" data-ds-id="Column">
+                <div class="-dc0a1b4b9d53c-pageTemplate">
+                    <div class="-dc0a1b4b9d53c-contentWrapper -dc0a1b4b9d53c-centerContent">
+                        <div data-ds-id="Box" class="css-15tvki3-StyledBox erlpbss0"><a href="https://www.amboss.com/us"
+                                aria-label="Main" role="navigation" data-ds-id="Logo"
+                                class="css-o5o0n7-StyledLogoElement e9etsuz0">
+                                <img src="/images/ictoob.png" alt="not found">
+                                </a></div>
+                        <div data-ds-id="Stack" class="css-1ff2k4x-StackContainer eexjih90">
+                            <div class="css-92xiq-StackItem eexjih91">
+                                <div data-ds-id="Stack" class="css-1ff2k4x-StackContainer eexjih90">
+                                    <div class="css-kwblxc-StackItem eexjih91">
+                                        <style>
+                                            @keyframes animatedBoxAnimation_1731607828724 {
+
+                                                0% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0;
+
+                                                }
+
+                                                1% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.015707317311820675;
+
+                                                }
+
+                                                2% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.03141075907812829;
+
+                                                }
+
+                                                3% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.04710645070964266;
+
+                                                }
+
+                                                4% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.06279051952931337;
+
+                                                }
+
+                                                5% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.07845909572784494;
+
+                                                }
+
+                                                6% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.09410831331851431;
+
+                                                }
+
+                                                7% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.10973431109104528;
+
+                                                }
+
+                                                8% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.12533323356430426;
+
+                                                }
+
+                                                9% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.14090123193758267;
+
+                                                }
+
+                                                10% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.15643446504023087;
+
+                                                }
+
+                                                11% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.17192910027940952;
+
+                                                }
+
+                                                12% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.1873813145857246;
+
+                                                }
+
+                                                13% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.2027872953565125;
+
+                                                }
+
+                                                14% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.21814324139654256;
+
+                                                }
+
+                                                15% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.2334453638559054;
+
+                                                }
+
+                                                16% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.2486898871648548;
+
+                                                }
+
+                                                17% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.2638730499653729;
+
+                                                }
+
+                                                18% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.2789911060392293;
+
+                                                }
+
+                                                19% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.29404032523230395;
+
+                                                }
+
+                                                20% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.3090169943749474;
+
+                                                }
+
+                                                21% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.3239174181981494;
+
+                                                }
+
+                                                22% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.33873792024529137;
+
+                                                }
+
+                                                23% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.35347484377925714;
+
+                                                }
+
+                                                24% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.3681245526846779;
+
+                                                }
+
+                                                25% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.3826834323650898;
+
+                                                }
+
+                                                26% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.3971478906347806;
+
+                                                }
+
+                                                27% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.4115143586051088;
+
+                                                }
+
+                                                28% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.4257792915650727;
+
+                                                }
+
+                                                29% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.4399391698559151;
+
+                                                }
+
+                                                30% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.45399049973954675;
+
+                                                }
+
+                                                31% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.4679298142605734;
+
+                                                }
+
+                                                32% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.4817536741017153;
+
+                                                }
+
+                                                33% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.4954586684324076;
+
+                                                }
+
+                                                34% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.5090414157503713;
+
+                                                }
+
+                                                35% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.5224985647159488;
+
+                                                }
+
+                                                36% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.5358267949789967;
+
+                                                }
+
+                                                37% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.5490228179981318;
+
+                                                }
+
+                                                38% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.5620833778521306;
+
+                                                }
+
+                                                39% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.5750052520432786;
+
+                                                }
+
+                                                40% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.5877852522924731;
+
+                                                }
+
+                                                41% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.6004202253258839;
+
+                                                }
+
+                                                42% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.6129070536529764;
+
+                                                }
+
+                                                43% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.6252426563357051;
+
+                                                }
+
+                                                44% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.6374239897486896;
+
+                                                }
+
+                                                45% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.6494480483301837;
+
+                                                }
+
+                                                46% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.6613118653236518;
+
+                                                }
+
+                                                47% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.6730125135097733;
+
+                                                }
+
+                                                48% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.6845471059286886;
+
+                                                }
+
+                                                49% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.6959127965923143;
+
+                                                }
+
+                                                50% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.7071067811865475;
+
+                                                }
+
+                                                51% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.7181262977631888;
+
+                                                }
+
+                                                52% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.7289686274214116;
+
+                                                }
+
+                                                53% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.7396310949786097;
+
+                                                }
+
+                                                54% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.7501110696304596;
+
+                                                }
+
+                                                55% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.760405965600031;
+
+                                                }
+
+                                                56% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.7705132427757893;
+
+                                                }
+
+                                                57% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.7804304073383297;
+
+                                                }
+
+                                                58% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.7901550123756903;
+
+                                                }
+
+                                                59% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.7996846584870905;
+
+                                                }
+
+                                                60% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.8090169943749475;
+
+                                                }
+
+                                                61% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.8181497174250234;
+
+                                                }
+
+                                                62% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.8270805742745618;
+
+                                                }
+
+                                                63% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.8358073613682702;
+
+                                                }
+
+                                                64% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.8443279255020151;
+
+                                                }
+
+                                                65% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.8526401643540922;
+
+                                                }
+
+                                                66% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.8607420270039436;
+
+                                                }
+
+                                                67% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.8686315144381912;
+
+                                                }
+
+                                                68% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.8763066800438637;
+
+                                                }
+
+                                                69% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.8837656300886934;
+
+                                                }
+
+                                                70% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.8910065241883678;
+
+                                                }
+
+                                                71% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.8980275757606155;
+
+                                                }
+
+                                                72% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9048270524660196;
+
+                                                }
+
+                                                73% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9114032766354452;
+
+                                                }
+
+                                                74% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9177546256839811;
+
+                                                }
+
+                                                75% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9238795325112867;
+
+                                                }
+
+                                                76% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9297764858882513;
+
+                                                }
+
+                                                77% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9354440308298674;
+
+                                                }
+
+                                                78% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9408807689542255;
+
+                                                }
+
+                                                79% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9460853588275453;
+
+                                                }
+
+                                                80% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9510565162951535;
+
+                                                }
+
+                                                81% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9557930147983301;
+
+                                                }
+
+                                                82% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.960293685676943;
+
+                                                }
+
+                                                83% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9645574184577981;
+
+                                                }
+
+                                                84% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9685831611286311;
+
+                                                }
+
+                                                85% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9723699203976766;
+
+                                                }
+
+                                                86% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9759167619387473;
+
+                                                }
+
+                                                87% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9792228106217657;
+
+                                                }
+
+                                                88% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9822872507286886;
+
+                                                }
+
+                                                89% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.985109326154774;
+
+                                                }
+
+                                                90% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9876883405951378;
+
+                                                }
+
+                                                91% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9900236577165575;
+
+                                                }
+
+                                                92% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9921147013144779;
+
+                                                }
+
+                                                93% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9939609554551797;
+
+                                                }
+
+                                                94% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.99556196460308;
+
+                                                }
+
+                                                95% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.996917333733128;
+
+                                                }
+
+                                                96% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9980267284282716;
+
+                                                }
+
+                                                97% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.99888987496197;
+
+                                                }
+
+                                                98% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9995065603657316;
+
+                                                }
+
+                                                99% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 0.9998766324816606;
+
+                                                }
+
+                                                100% {
+                                                    transform: translate(0px, 0px) scale(1, 1);
+                                                    opacity: 1;
+
+                                                }
+
+                                            }
+
+
+                                            @keyframes animatedBoxAnimation_1731607828724_inner {
+
+                                                0% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                1% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                2% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                3% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                4% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                5% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                6% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                7% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                8% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                9% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                10% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                11% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                12% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                13% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                14% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                15% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                16% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                17% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                18% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                19% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                20% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                21% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                22% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                23% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                24% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                25% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                26% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                27% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                28% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                29% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                30% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                31% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                32% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                33% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                34% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                35% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                36% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                37% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                38% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                39% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                40% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                41% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                42% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                43% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                44% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                45% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                46% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                47% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                48% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                49% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                50% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                51% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                52% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                53% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                54% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                55% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                56% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                57% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                58% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                59% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                60% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                61% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                62% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                63% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                64% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                65% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                66% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                67% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                68% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                69% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                70% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                71% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                72% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                73% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                74% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                75% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                76% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                77% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                78% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                79% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                80% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                81% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                82% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                83% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                84% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                85% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                86% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                87% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                88% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                89% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                90% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                91% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                92% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                93% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                94% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                95% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                96% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                97% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                98% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                99% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                                100% {
+                                                    transform: scale(1, 1);
+                                                }
+
+                                            }
+                                        </style>
+                                        <div
+                                            style="transform-origin: left top; transform: translateZ(0px) scale(1, 1); animation: 0.4s linear 0s 1 normal none running animatedBoxAnimation_1731607828724;">
+                                            <div
+                                                style="transform-origin: left top; transform: translateZ(0px) scale(1, 1); animation: 0.4s linear 0s 1 normal none running animatedBoxAnimation_1731607828724_inner;">
+                                                <div data-animated-box-content="true"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="css-kwblxc-StackItem eexjih91">
+                                        <style></style>
+                                        <div
+                                            style="transform-origin: left top; transform: translateZ(0px) scale(1, 1); animation: 0.4s linear 0s 1 normal none running animatedBoxAnimation_1731607832739;">
+                                            <div
+                                                style="transform-origin: left top; transform: translateZ(0px) scale(1, 1); animation: 0.4s linear 0s 1 normal none running animatedBoxAnimation_1731607832739_inner;">
+                                                <div data-animated-box-content="true">
+                                                    <div data-ds-id="Container" elevation="1"
+                                                        class="css-1trjn7t-StyledContainer e1evskne0">
+                                                        <div class="css-1m1fu2w-StyledDiv e1evskne1">
+                                                            <div data-ds-id="Box"
+                                                                class="css-1nv0jx9-StyledBox erlpbss0">
+                                                                <div data-ds-id="Stack"
+                                                                    class="css-1ff2k4x-StackContainer eexjih90">
+                                                                    <div class="css-1pg9ptm-StackItem eexjih91">
+                                                                        <div data-ds-id="Stack"
+                                                                            class="css-1ff2k4x-StackContainer eexjih90">
+                                                                            <div class="css-kwblxc-StackItem eexjih91">
+                                                                                <h2 data-ds-id="H2"
+                                                                                    class="css-1ozvgu-H2 emoqs3o1">
+                                                                                    Create an account</h2>
+                                                                            </div>
+                                                                            <div class="css-kwblxc-StackItem eexjih91">
+                                                                                <div>
+                                                                                    <p color="tertiary"
+                                                                                        data-ds-id="Text"
+                                                                                        class="css-hto57-StyledText e1im9r3t0">
+                                                                                        How would you like to sign up?
+                                                                                    </p>
+                                                                                    <p color="tertiary"
+                                                                                        data-ds-id="Text"
+                                                                                        class="css-14p1ltg-StyledText e1im9r3t0">
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="css-1pg9ptm-StackItem eexjih91">
+                                                                        <div data-ds-id="Stack"
+                                                                            class="css-1ff2k4x-StackContainer eexjih90">
+                                                                            <div class="css-kwblxc-StackItem eexjih91">
+                                                                                <a data-ds-id="Button"
+                                                                                    href="/auth/google" target="_self"
+                                                                                    class="css-153adb6-StyledButton e7wzybw0">
+                                                                                    <div
+                                                                                        class="css-19pexw4-StyledInner e7wzybw1">
+                                                                                        <div data-ds-id="Inline"
+                                                                                            class="css-alg3yb-InlineContainer e1hzytjg0">
+                                                                                            <div>
+                                                                                                <div data-e2e-test-id="google"
+                                                                                                    data-testid="google"
+                                                                                                    data-ds-id="Icon"
+                                                                                                    data-variant="inherit"
+                                                                                                    color="inherit"
+                                                                                                    class="css-7tpa0d-StyledIcon esvztbe0">
+                                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                        width="16"
+                                                                                                        height="16"
+                                                                                                        fill="none"
+                                                                                                        viewBox="0 0 16 16">
+                                                                                                        <path
+                                                                                                            fill="#ea4335"
+                                                                                                            d="M8 3.093c1.502 0 2.516.65 3.093 1.191l2.258-2.204C11.964.791 10.161 0 8.001 0A7.994 7.994 0 00.852 4.409L3.44 6.418C4.09 4.488 5.885 3.093 8 3.093z">
+                                                                                                        </path>
+                                                                                                        <path
+                                                                                                            fill="#4285f4"
+                                                                                                            d="M15.68 8.178c0-.658-.053-1.138-.169-1.636H8v2.97h4.409c-.089.737-.569 1.848-1.636 2.595l2.525 1.955c1.51-1.395 2.382-3.449 2.382-5.884z">
+                                                                                                        </path>
+                                                                                                        <path
+                                                                                                            fill="#fbbc05"
+                                                                                                            d="M3.449 9.582A4.925 4.925 0 013.182 8c0-.551.098-1.084.258-1.582L.853 4.408C.311 5.494 0 6.712 0 8s.311 2.507.853 3.591z">
+                                                                                                        </path>
+                                                                                                        <path
+                                                                                                            fill="#34a853"
+                                                                                                            d="M8 16c2.16 0 3.973-.711 5.298-1.938l-2.525-1.955c-.675.47-1.582.8-2.773.8-2.116 0-3.911-1.396-4.551-3.325l-2.587 2.01C2.178 14.204 4.872 16 8 16z">
+                                                                                                        </path>
+                                                                                                    </svg></div>
+                                                                                            </div>
+                                                                                            <div>Sign up with Google
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </a></div>
+                                                                            <div class="css-kwblxc-StackItem eexjih91">
+                                                                                <a data-ds-id="Button"
+                                                                                    href="/auth/facebook"
+                                                                                    target="_self"
+                                                                                    class="css-153adb6-StyledButton e7wzybw0">
+                                                                                    <div
+                                                                                        class="css-19pexw4-StyledInner e7wzybw1">
+                                                                                        <div data-ds-id="Inline"
+                                                                                            class="css-alg3yb-InlineContainer e1hzytjg0">
+                                                                                            <div>
+                                                                                                <div data-e2e-test-id="facebook"
+                                                                                                    data-testid="facebook"
+                                                                                                    data-ds-id="Icon"
+                                                                                                    data-variant="inherit"
+                                                                                                    color="inherit"
+                                                                                                    class="css-7tpa0d-StyledIcon esvztbe0">
+                                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                        width="16"
+                                                                                                        height="16"
+                                                                                                        fill="none"
+                                                                                                        viewBox="0 0 16 16">
+                                                                                                        <path
+                                                                                                            fill="#1877f2"
+                                                                                                            d="M16 8a8 8 0 10-9.25 7.903v-5.59H4.719V8H6.75V6.238c0-2.006 1.194-3.113 3.022-3.113.875 0 1.79.156 1.79.156V5.25h-1.008c-.994 0-1.304.617-1.304 1.25V8h2.219l-.355 2.313H9.25v5.59A8.002 8.002 0 0016 8z">
+                                                                                                        </path>
+                                                                                                        <path
+                                                                                                            fill="#fff"
+                                                                                                            d="M11.114 10.313L11.47 8H9.25V6.5c0-.633.31-1.25 1.304-1.25h1.009V3.281s-.916-.156-1.791-.156c-1.828 0-3.022 1.107-3.022 3.112V8H4.719v2.313H6.75v5.59c.828.13 1.672.13 2.5 0v-5.59z">
+                                                                                                        </path>
+                                                                                                    </svg></div>
+                                                                                            </div>
+                                                                                            <div>Sign up with Facebook
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                            
+                                                                            <div class="css-kwblxc-StackItem eexjih91">
+                                                                                <div
+                                                                                    class="css-17g2cji-StyledContainer e1xue2o80">
+                                                                                    <div
+                                                                                        class="css-1fcsbsk-StyledDivider e1xue2o81">
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="css-p0fqnc-StyledContent e1xue2o82">
+                                                                                        <div data-ds-id="Box"
+                                                                                            class="css-3h5fib-StyledBox erlpbss0">
+                                                                                            <p color="tertiary"
+                                                                                                data-ds-id="Text"
+                                                                                                class="css-14p1ltg-StyledText e1im9r3t0">
+                                                                                                or</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="css-1fcsbsk-StyledDivider e1xue2o81">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="css-kwblxc-StackItem eexjih91">
+                                                                                <div data-ds-id="FormFieldGroup"
+                                                                                    class="css-qzl379-StyledDiv e1b8mhr30">
+                                                                                    <div data-ds-id="Stack"
+                                                                                        class="css-1ff2k4x-StackContainer eexjih90">
+                                                                                        <div
+                                                                                            class="css-tn47vl-StackItem eexjih91">
+                                                                                            <div data-ds-id="Input"
+                                                                                                class="css-iadjan-StyledFormField etbad390">
+                                                                                                <div data-ds-id="Stack"
+                                                                                                    class="css-1ff2k4x-StackContainer eexjih90">
+                                                                                                    <div
+                                                                                                        class="css-1c20xzu-StackItem eexjih91">
+                                                                                                        <label>
+                                                                                                            <div data-ds-id="Stack"
+                                                                                                                class="css-1ff2k4x-StackContainer eexjih90">
+                                                                                                                <div
+                                                                                                                    class="css-tn47vl-StackItem eexjih91">
+                                                                                                                    <div data-ds-id="FormLabelText"
+                                                                                                                        class="css-15cms52-InlineContainer e1hzytjg0">
+                                                                                                                        <div>
+                                                                                                                            <h6 data-ds-id="H6"
+                                                                                                                                class="css-bfvjxm-H6 emoqs3o5">
+                                                                                                                                Email
+                                                                                                                                address
+                                                                                                                            </h6>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div
+                                                                                                                    class="css-tn47vl-StackItem eexjih91">
+                                                                                                                    <div
+                                                                                                                        class="css-1axba1z-StyledContainer e1k6y6ej0">
+                                                                                                                        <input
+                                                                                                                            type="text"
+                                                                                                                            placeholder="email@address.com"
+                                                                                                                            name="email"
+                                                                                                                            aria-label="Email address"
+                                                                                                                            autocomplete="on"
+                                                                                                                            id="email"
+                                                                                                                            class="css-58i4y6-StyledInput e1k6y6ej2"
+                                                                                                                            >
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </label></div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="css-tn47vl-StackItem eexjih91">
+                                                                                            <div data-ds-id="PasswordInput"
+                                                                                                class="css-iadjan-StyledFormField etbad390">
+                                                                                                <div data-ds-id="Stack"
+                                                                                                    class="css-1ff2k4x-StackContainer eexjih90">
+                                                                                                    <div
+                                                                                                        class="css-1c20xzu-StackItem eexjih91">
+                                                                                                        <label>
+                                                                                                            <div data-ds-id="Stack"
+                                                                                                                class="css-1ff2k4x-StackContainer eexjih90">
+                                                                                                                <div
+                                                                                                                    class="css-tn47vl-StackItem eexjih91">
+                                                                                                                    <div data-ds-id="FormLabelText"
+                                                                                                                        class="css-15cms52-InlineContainer e1hzytjg0">
+                                                                                                                        <div>
+                                                                                                                            <h6 data-ds-id="H6"
+                                                                                                                                class="css-bfvjxm-H6 emoqs3o5">
+                                                                                                                                Password
+                                                                                                                            </h6>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div
+                                                                                                                    class="css-tn47vl-StackItem eexjih91">
+                                                                                                                    <div
+                                                                                                                        class="css-1eo534h-StyledContainer ecgpf3y0">
+                                                                                                                        <input
+                                                                                                                            type="password"
+                                                                                                                            placeholder="Set a password"
+                                                                                                                            name="password"
+                                                                                                                            aria-label="Password"
+                                                                                                                            autocomplete="on"
+                                                                                                                            id="password"
+                                                                                                                            class="css-13h4v91-StyledPasswordInput ecgpf3y2"
+                                                                                                                            ><button
+                                                                                                                            aria-label="password visibility icon"
+                                                                                                                            type="button"
+                                                                                                                            class="css-fw9vqi-StyledIconBtn ecgpf3y1">
+                                                                                                                            <div data-ds-id="Icon"
+                                                                                                                                data-variant="tertiary"
+                                                                                                                                color="tertiary"
+                                                                                                                                class="css-1g6lhus-StyledIcon esvztbe0">
+                                                                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                                                    width="16"
+                                                                                                                                    height="16"
+                                                                                                                                    fill="none"
+                                                                                                                                    viewBox="0 0 16 16">
+                                                                                                                                    <path
+                                                                                                                                        fill="currentColor"
+                                                                                                                                        fill-rule="evenodd"
+                                                                                                                                        d="M12.3 12.57l2.286 2.344L16 13.5 2.914.086 1.5 1.5l2.013 2.063c-.537.396-1.007.827-1.407 1.246a13.327 13.327 0 00-1.65 2.135 2 2 0 000 2.112c.053.084.111.176.176.275.332.505.826 1.18 1.474 1.86C3.387 12.531 5.381 14 8 14c1.707 0 3.148-.623 4.3-1.43zm-1.42-1.455l-.868-.89a3 3 0 01-4.187-4.292l-.899-.92c-.509.345-.968.753-1.373 1.177A11.328 11.328 0 002.155 8c.044.07.093.148.148.232.284.432.705 1.007 1.25 1.577C4.66 10.97 6.165 12 8 12c1.078 0 2.043-.355 2.88-.884zM7.225 7.368A1 1 0 008.613 8.79zm-.016-5.323l2.146 2.146c1.231.35 2.271 1.14 3.092 2A11.335 11.335 0 0113.845 8a10.71 10.71 0 01-.269.412l1.435 1.435a13.598 13.598 0 00.533-.791 2 2 0 000-2.112 13.314 13.314 0 00-1.65-2.135C12.613 3.467 10.619 2 8 2c-.27 0-.534.017-.79.046z"
+                                                                                                                                        clip-rule="evenodd">
+                                                                                                                                    </path>
+                                                                                                                                </svg>
+                                                                                                                            </div>
+                                                                                                                        </button>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </label></div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="css-kwblxc-StackItem eexjih91">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="css-1pg9ptm-StackItem eexjih91"><button
+                                                                        id="signup-button"
+                                                                            data-ds-id="Button" type="button"
+                                                                            class="css-w2u6g0-StyledButton e7wzybw0">
+                                                                            <div
+                                                                                class="css-19pexw4-StyledInner e7wzybw1">
+                                                                                <div data-ds-id="Inline"
+                                                                                    class="css-alg3yb-InlineContainer e1hzytjg0">
+                                                                                    <div>Sign up</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </button></div>
+                                                                    <div class="css-1pg9ptm-StackItem eexjih91">
+                                                                        <div data-ds-id="Stack"
+                                                                            class="css-1ff2k4x-StackContainer eexjih90">
+                                                                            <div class="css-kwblxc-StackItem eexjih91">
+                                                                                <p color="tertiary" data-ds-id="Text"
+                                                                                    class="css-yck13u-StyledText e1im9r3t0">
+                                                                                    By creating an account, you agree to
+                                                                                    the <a data-ds-id="Link"
+                                                                                        color="accent" target="_blank"
+                                                                                        rel="noreferrer"
+                                                                                        href="https://www.amboss.com/us/terms"
+                                                                                        class="css-1wf6akm-StyledLink ewxmrja0">Terms
+                                                                                        of Service</a>. For more
+                                                                                    information see our <a
+                                                                                        data-ds-id="Link" color="accent"
+                                                                                        target="_blank" rel="noreferrer"
+                                                                                        href="https://www.amboss.com/us/privacy"
+                                                                                        class="css-1wf6akm-StyledLink ewxmrja0">
+                                                                                        Privacy Policy</a>.</p>
+                                                                            </div>
+                                                                            <div class="css-kwblxc-StackItem eexjih91">
+                                                                                <p color="tertiary" data-ds-id="Text"
+                                                                                    class="css-yck13u-StyledText e1im9r3t0">
+                                                                                    We will send you information about
+                                                                                    our products and services to the
+                                                                                    email address registered to your
+                                                                                    account. You can decline this use of
+                                                                                    your email address free of charge at
+                                                                                    any time by writing an email to <a
+                                                                                        data-ds-id="Link" color="accent"
+                                                                                        href="mailto:hello@amboss.com"
+                                                                                        class="css-1wf6akm-StyledLink ewxmrja0">hello@amboss.com</a>
+                                                                                    or by clicking the unsubscribe link
+                                                                                    in our emails. </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div data-ds-id="Box" class="css-1p0ph22-StyledBox erlpbss0">
+                                                        <p color="tertiary" data-ds-id="Text"
+                                                            class="css-cy4sjh-StyledText e1im9r3t0">Already have an
+                                                            account? <a data-e2e-test-id="login-link" data-ds-id="Link"
+                                                                color="accent" weight="bold"
+                                                                class="css-cardb5-StyledLink ewxmrja0"
+                                                                href="/us/login?nextLink=%2Faccount%2Fpersonalization">Log
+                                                                in </a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="-dc0a1b4b9d53c-footer">
+                        <div data-ds-id="Box" class="css-k36ksl-StyledBox erlpbss0">
+                            <div data-ds-id="Box" class="css-k36ksl-StyledBox erlpbss0">
+                                <div data-ds-id="Divider" class="css-1fcsbsk-StyledDivider e1xue2o81"></div>
+                            </div>
+                            <div data-ds-id="Inline" class="css-osqs1k-InlineContainer e1hzytjg0">
+                                <div><a data-ds-id="Link" color="tertiary" target="_blank" rel="noopener noreferrer"
+                                        href="https://support.amboss.com/hc/us"
+                                        class="css-ecqu1n-StyledLink ewxmrja0">Help Center</a></div>
+                                <div><a data-ds-id="Link" color="tertiary"
+                                        class="css-ecqu1n-StyledLink ewxmrja0">Privacy Settings</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>window.__AMBOSS_CONFIG__ = { "STATSIG_DNS_PROXY_URL": "https://amboss.amboss.workers.dev/v1", "REBRANDLY_API_KEY": "011b521532d643bda0045d5d5307e90b", "GRAPHQL_API_INTERNAL_URL": "http://graphql-gateway.web-services-production.svc.cluster.local./graphql", "URL_LOCALE_PREFIX": "us", "LEGAL_PAGE_DISCLAIMER_URL": "https://www.amboss.com/us/disclaimer", "GRAPHQL_API_HOST": "nextapius.amboss.com", "ASSETS_PATH": "https://next.amboss.com/us/static/assets/", "SENTRY_ENVIRONMENT": "production", "SEGMENT_ANALYTICS_WRITE_KEY_AUTH": "L5ohl3S9d7OPt1YHmKW22ImAIGH3SGaV", "OAUTH_FACEBOOK_URL_US": "https://www.amboss.com/us/auth-sso/oauth/facebook", "SEGMENT_ANALYTICS_WRITE_KEY": "Blw9JtSqDecdRHdx2TBvnNPVIMKSnJC6", "SMOUGH_API_URL": "https://smough.de.production.amboss.com", "LEGAL_PAGE_NOTICE_URL": "https://www.amboss.com/us/legal/imprint", "SENTRY_CLIENT_DSN": "https://3f2433232d3847b5b617b01f2beb08f2@sentry.io/1795653", "ZENDESK_WEB_PHARMA_TICKET_FORM_ID": "360000665972", "PORT": "3003", "GRAPHQL_API_URL_GATEWAY": "https://www.amboss.com/us/api/graphql", "NODE_ENV": "production", "AUTH_COOKIE_NAME": "next_auth_amboss_us", "ZENDESK_ENDPOINT": "https://amboss.zendesk.com/api/v2/requests.json", "OAUTH_GOOGLE_URL_US": "https://www.amboss.com/us/auth-sso/oauth/google", "COMPRESS": "true", "STATSIG_DNS_PROXY_HOST": "https://amboss.amboss.workers.dev", "SUPPORT_IOS_SUBSCRIPTION_URL_US": "https://support.amboss.com/hc/en-us/articles/360037508011-Canceling-iOS-Subscription", "CHARGEBEE_SITE": "medicuja", "LEGAL_PAGE_PRIVACY_URL": "https://www.amboss.com/us/privacy", "CHARGEBEE_PUBLIC_KEY": "live_95A4Bhcubv0A1HfHdvdTjNAJ9k7yjF15X", "ALTERNATIVE_SUPPORT_URI": "https://support.amboss.com/hc/us", "ZENDESK_PHARMA_CARD_FIELD_ID": "360027329431", "AMBOSS_WEBSITE_URL": "https://www.amboss.com/us", "ADYEN_CLIENT_ENV": "live", "SQUARESPACE_URL": "https://www.amboss.com/us/store", "GROWTHBOOK_CLIENT_KEY": "sdk-g3Faro0kxxQfdcPN", "MEDICOACH_API_URL": "https://medicoach-api.us.production.amboss.com", "FROALA_KEY": "wFE7nG5D4F4E3A9D9eMRPYf1h1REb1BGQOQIc2CDBREJImA11C8D6B5B1G4D3F2H3A10==", "SUPPORT_URI": "https://support.amboss.com/hc/us", "SENTRY_SERVER_DSN": "https://8aa6b7733c344c5aae0e917eb0b0adf3@sentry.io/1795649", "ZENDESK_EN_GROUP_ID": "360004610331", "LEGACY_URL": "https://www.amboss.com/us/", "GOOGLE_API_KEY": "AIzaSyDr0gD_kN52wpc9nE79e-nBzZJgt8sFcXw", "HTTPS_ONLY": "true", "ENABLE_FEATURE_FLAGS": "true", "LEGAL_PAGE_TERMS_URL": "https://www.amboss.com/us/terms", "MAINTENANCE_DOWNTIME_ACTIVE": "false", "GROWTHBOOK_PROXY_URL": "https://www.amboss.com/us/gb/", "STATSIG_CLIENT_SDK_KEY": "client-2mcaHELKvBcxa3BAfvMz3RDhZAhLHkQjEhYZrgDbo7p", "GRAPHQL_API_URL": "https://nextapius.amboss.com/", "SELF_ASSESSMENT_S3_BUCKET": "sa-results.amboss.com", "RELEASE": "ui-amboss@99232d51bf62b9ebfe6fadb31776d950d20f04be", "ENVIRONMENT_TIER": "production", "ADYEN_CLIENT_KEY": "live_ZZ73DOYIVNBJVJ62I3DFYRGUUEYZRQTO", "ZENDESK_LOCALE_FIELD_ID": "360027060391", "GRAPHQL_API_HOST_GATEWAY": "www.amboss.com" }</script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~05a0f434.1c29ba4ced774ff3.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/runtime~auth.b0e38334a278330f.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~0.9433974235202c73.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~ddeeb9cf.fb33c6e21212a818.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~2.49ef9b4a49bc1da9.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~3.efd8c66121c7d42a.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~4.d8704d9a9a52a71c.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~5.a05f401c15698226.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~6.500a5eab4c596fa5.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~7.9bd25677ee1950ba.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~8.8140c497c96c3551.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~9.5a90e18170b3256e.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~7df5fecf.9410f30d4d0a6941.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~11.dd558560b7d04fac.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~12.0c815b1e8e5f6fc7.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~13.c1a4bb00fdec062e.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~14.3594be30608813ec.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~15.66fd87c93b30035b.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~16.a3435dc1d440164f.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~17.c2fbee2986a0eaf5.js"></script>
+    <script type="text/javascript" async="" charset="utf-8"
+        src="https://next.amboss.com/us/static/assets/auth~11048b4b.b9577dd7895685a9.js"></script>
+
+    <iframe id="_hjSafeContext_38082505" title="_hjSafeContext" tabindex="-1" aria-hidden="true" src="about:blank"
+        style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;"></iframe>
+    <div class="go2933276541 go2369186930" id="hs-web-interactives-top-anchor">
+        <div id="hs-interactives-modal-overlay" class="go1632949049"></div>
+    </div>
+    <div class="go2933276541 go1348078617" id="hs-web-interactives-bottom-anchor"></div>
+    <div id="hs-web-interactives-floating-container">
+        <div id="hs-web-interactives-floating-top-left-anchor" class="go2417249464 go613305155">
+        </div>
+        <div id="hs-web-interactives-floating-top-right-anchor" class="go2417249464 go471583506">
+        </div>
+        <div id="hs-web-interactives-floating-bottom-left-anchor" class="go2417249464 go3921366393">
+        </div>
+        <div id="hs-web-interactives-floating-bottom-right-anchor" class="go2417249464 go3967842156">
+        </div>
+    </div><iframe allow="join-ad-interest-group" data-tagging-id="AW-874051731" data-load-time="1731607826118"
+        height="0" width="0"
+        src="https://td.doubleclick.net/td/rul/874051731?random=1731607826110&amp;cv=11&amp;fst=1731607826110&amp;fmt=3&amp;bg=ffffff&amp;guid=ON&amp;async=1&amp;gtm=45be4bc0v888568306za200&amp;gcd=13t3t3t3t5l1&amp;dma=0&amp;tag_exp=101925629~102067554~102077855&amp;u_w=1366&amp;u_h=768&amp;url=https%3A%2F%2Fnext.amboss.com%2Fus%2Flogin%3FnextLink%3D%252Faccount%252Fpersonalization&amp;hn=www.googleadservices.com&amp;frm=0&amp;tiba=Log%20in%20to%20your%20AMBOSS%20account&amp;npa=0&amp;pscdl=noapi&amp;auid=1141660716.1731607826&amp;fledge=1&amp;data=event%3Dgtag.config"
+        style="display: none; visibility: hidden;"></iframe><iframe height="0" width="0"
+        style="display: none; visibility: hidden;"></iframe>
+    <div id="batBeacon783792072141" style="width: 0px; height: 0px; display: none; visibility: hidden;"><img
+            id="batBeacon369609618911" width="0" height="0" alt=""
+            src="https://bat.bing.com/action/0?ti=355019500&amp;Ver=2&amp;mid=8d7e93fa-9b6e-4a64-afc9-6123c2f137ed&amp;bo=1&amp;sid=a8629b40a2b311ef984e09bbd263e79b&amp;vid=be989670a04011efb0432fd52e258d83&amp;vids=0&amp;msclkid=N&amp;uach=pv%3D10.0.0&amp;pi=918639831&amp;lg=en-US&amp;sw=1366&amp;sh=768&amp;sc=24&amp;tl=Log%20in%20to%20your%20AMBOSS%20account&amp;p=https%3A%2F%2Fnext.amboss.com%2Fus%2Flogin%3FnextLink%3D%252Faccount%252Fpersonalization&amp;r=&amp;lt=3155&amp;evt=pageLoad&amp;sv=1&amp;cdb=ARoR&amp;rn=177710"
+            style="width: 0px; height: 0px; display: none; visibility: hidden;"><img id="batBeacon60326988468" width="0"
+            height="0" alt=""
+            src="https://bat.bing.com/action/0?ti=355019500&amp;Ver=2&amp;mid=8d7e93fa-9b6e-4a64-afc9-6123c2f137ed&amp;bo=2&amp;sid=a8629b40a2b311ef984e09bbd263e79b&amp;vid=be989670a04011efb0432fd52e258d83&amp;vids=0&amp;msclkid=N&amp;ea=track&amp;el=login_email_field_value_changed&amp;p=https%3A%2F%2Fnext.amboss.com%2Fus%2Flogin&amp;sw=1366&amp;sh=768&amp;sc=24&amp;evt=custom&amp;cdb=ARoR&amp;rn=563023"
+            style="width: 0px; height: 0px; display: none; visibility: hidden;"><img id="batBeacon244583594147"
+            width="0" height="0" alt=""
+            src="https://bat.bing.com/action/0?ti=355019500&amp;Ver=2&amp;mid=8d7e93fa-9b6e-4a64-afc9-6123c2f137ed&amp;bo=3&amp;sid=a8629b40a2b311ef984e09bbd263e79b&amp;vid=be989670a04011efb0432fd52e258d83&amp;vids=0&amp;msclkid=N&amp;ea=track&amp;el=login_email_field_focused&amp;p=https%3A%2F%2Fnext.amboss.com%2Fus%2Flogin&amp;sw=1366&amp;sh=768&amp;sc=24&amp;evt=custom&amp;cdb=ARoR&amp;rn=872262"
+            style="width: 0px; height: 0px; display: none; visibility: hidden;"><img id="batBeacon726801694406"
+            width="0" height="0" alt=""
+            src="https://bat.bing.com/action/0?ti=355019500&amp;Ver=2&amp;mid=8d7e93fa-9b6e-4a64-afc9-6123c2f137ed&amp;bo=4&amp;sid=a8629b40a2b311ef984e09bbd263e79b&amp;vid=be989670a04011efb0432fd52e258d83&amp;vids=0&amp;msclkid=N&amp;ea=track&amp;el=register_email_field_focused&amp;p=https%3A%2F%2Fnext.amboss.com%2Fus%2Fregistration&amp;sw=1366&amp;sh=768&amp;sc=24&amp;evt=custom&amp;cdb=ARoR&amp;rn=646915"
+            style="width: 0px; height: 0px; display: none; visibility: hidden;"><img id="batBeacon669423663084"
+            width="0" height="0" alt=""
+            src="https://bat.bing.com/action/0?ti=355019500&amp;Ver=2&amp;mid=8d7e93fa-9b6e-4a64-afc9-6123c2f137ed&amp;bo=5&amp;sid=a8629b40a2b311ef984e09bbd263e79b&amp;vid=be989670a04011efb0432fd52e258d83&amp;vids=0&amp;msclkid=N&amp;ea=track&amp;el=register_email_field_focused&amp;p=https%3A%2F%2Fnext.amboss.com%2Fus%2Fregistration&amp;sw=577&amp;sh=909&amp;sc=24&amp;evt=custom&amp;cdb=ARoR&amp;rn=137930"
+            style="width: 0px; height: 0px; display: none; visibility: hidden;"><img id="batBeacon97363016897" width="0"
+            height="0" alt=""
+            src="https://bat.bing.com/action/0?ti=355019500&amp;Ver=2&amp;mid=8d7e93fa-9b6e-4a64-afc9-6123c2f137ed&amp;bo=6&amp;sid=a8629b40a2b311ef984e09bbd263e79b&amp;vid=be989670a04011efb0432fd52e258d83&amp;vids=0&amp;msclkid=N&amp;ea=track&amp;el=register_email_field_focused&amp;p=https%3A%2F%2Fnext.amboss.com%2Fus%2Fregistration&amp;sw=410&amp;sh=909&amp;sc=24&amp;evt=custom&amp;cdb=ARoR&amp;rn=239655"
+            style="width: 0px; height: 0px; display: none; visibility: hidden;"><img id="batBeacon525988483887"
+            width="0" height="0" alt=""
+            src="https://bat.bing.com/action/0?ti=355019500&amp;Ver=2&amp;mid=8d7e93fa-9b6e-4a64-afc9-6123c2f137ed&amp;bo=7&amp;sid=a8629b40a2b311ef984e09bbd263e79b&amp;vid=be989670a04011efb0432fd52e258d83&amp;vids=0&amp;msclkid=N&amp;ea=track&amp;el=register_email_field_focused&amp;p=https%3A%2F%2Fnext.amboss.com%2Fus%2Fregistration&amp;sw=410&amp;sh=909&amp;sc=24&amp;evt=custom&amp;cdb=ARoR&amp;rn=773005"
+            style="width: 0px; height: 0px; display: none; visibility: hidden;"><img id="batBeacon217165271457"
+            width="0" height="0" alt=""
+            src="https://bat.bing.com/action/0?ti=355019500&amp;Ver=2&amp;mid=8d7e93fa-9b6e-4a64-afc9-6123c2f137ed&amp;bo=8&amp;sid=a8629b40a2b311ef984e09bbd263e79b&amp;vid=be989670a04011efb0432fd52e258d83&amp;vids=0&amp;msclkid=N&amp;ea=track&amp;el=register_email_field_focused&amp;p=https%3A%2F%2Fnext.amboss.com%2Fus%2Fregistration&amp;sw=1366&amp;sh=768&amp;sc=24&amp;evt=custom&amp;cdb=ARoR&amp;rn=476575"
+            style="width: 0px; height: 0px; display: none; visibility: hidden;"></div><img
+        src="https://t.co/i/adsct?bci=3&amp;dv=Asia%2FBaghdad%26en-US%2Cen%26Google%20Inc.%26Win32%26255%261366%26768%268%2624%261366%26728%260%26na&amp;eci=2&amp;event_id=18104b49-624a-45eb-86d7-cc5a5d39aa2d&amp;events=%5B%5B%22pageview%22%2C%7B%7D%5D%5D&amp;integration=advertiser&amp;p_id=Twitter&amp;p_user_id=0&amp;pl_id=408d5888-d4ef-4199-9eae-0f8300eb229f&amp;tw_document_href=https%3A%2F%2Fnext.amboss.com%2Fus%2Flogin%3FnextLink%3D%252Faccount%252Fpersonalization&amp;tw_iframe_status=0&amp;tw_order_quantity=0&amp;tw_sale_amount=0&amp;txn_id=o6en3&amp;type=javascript&amp;version=2.3.31"
+        height="1" width="1" style="display: none;"><img
+        src="https://analytics.twitter.com/i/adsct?bci=3&amp;dv=Asia%2FBaghdad%26en-US%2Cen%26Google%20Inc.%26Win32%26255%261366%26768%268%2624%261366%26728%260%26na&amp;eci=2&amp;event_id=18104b49-624a-45eb-86d7-cc5a5d39aa2d&amp;events=%5B%5B%22pageview%22%2C%7B%7D%5D%5D&amp;integration=advertiser&amp;p_id=Twitter&amp;p_user_id=0&amp;pl_id=408d5888-d4ef-4199-9eae-0f8300eb229f&amp;tw_document_href=https%3A%2F%2Fnext.amboss.com%2Fus%2Flogin%3FnextLink%3D%252Faccount%252Fpersonalization&amp;tw_iframe_status=0&amp;tw_order_quantity=0&amp;tw_sale_amount=0&amp;txn_id=o6en3&amp;type=javascript&amp;version=2.3.31"
+        height="1" width="1" style="display: none;"><img
+        src="https://t.co/i/adsct?bci=3&amp;dv=Asia%2FBaghdad%26en-US%2Cen%26Google%20Inc.%26Win32%26255%261366%26768%268%2624%261366%26728%260%26na&amp;eci=2&amp;event_id=57cd0a5e-0935-4352-960e-c71b1693d09a&amp;events=%5B%5B%22pageview%22%2C%7B%7D%5D%5D&amp;integration=advertiser&amp;p_id=Twitter&amp;p_user_id=0&amp;pl_id=408d5888-d4ef-4199-9eae-0f8300eb229f&amp;tw_document_href=https%3A%2F%2Fnext.amboss.com%2Fus%2Fregistration%3FnextLink%3D%252Faccount%252Fpersonalization&amp;tw_iframe_status=0&amp;tw_order_quantity=0&amp;tw_sale_amount=0&amp;txn_id=o6en3&amp;type=javascript&amp;version=2.3.31"
+        height="1" width="1" style="display: none;"><img
+        src="https://analytics.twitter.com/i/adsct?bci=3&amp;dv=Asia%2FBaghdad%26en-US%2Cen%26Google%20Inc.%26Win32%26255%261366%26768%268%2624%261366%26728%260%26na&amp;eci=2&amp;event_id=57cd0a5e-0935-4352-960e-c71b1693d09a&amp;events=%5B%5B%22pageview%22%2C%7B%7D%5D%5D&amp;integration=advertiser&amp;p_id=Twitter&amp;p_user_id=0&amp;pl_id=408d5888-d4ef-4199-9eae-0f8300eb229f&amp;tw_document_href=https%3A%2F%2Fnext.amboss.com%2Fus%2Fregistration%3FnextLink%3D%252Faccount%252Fpersonalization&amp;tw_iframe_status=0&amp;tw_order_quantity=0&amp;tw_sale_amount=0&amp;txn_id=o6en3&amp;type=javascript&amp;version=2.3.31"
+        height="1" width="1" style="display: none;">
 </body>
 
+<script src="/js/apis.js"></script>
+<script>
+    
+    const signupButton = document.getElementById('signup-button')
+    signupButton.addEventListener('click',async function (e) {
+        e.preventDefault(); 
+        const email = document.getElementById('email')
+        const password= document.getElementById('password')
+        const response = await fetch('/api/auth/set-cookie',{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                "email":email.value,
+                "password":password.value
+            })  
+        })
+        if(response.ok) window.location.href = '/pages/personalization';
+
+        
+    });
+</script>
 </html>
+

@@ -35,7 +35,7 @@ checkboxes.forEach((checkbox) => {
 });
 
 async function post_api(api, formData) {
-    // const url = `http://localhost:3000/${api}`;
+
 
     try {
         await new Promise(resolve => setTimeout(resolve, 100));
@@ -202,9 +202,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 cropper.destroy();
             }
         });
-
-
-
         document.getElementById('cropImageBtn').addEventListener('click', function () {
             if (cropper) {
                 const croppedCanvas = cropper.getCroppedCanvas();

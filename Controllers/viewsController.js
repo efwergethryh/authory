@@ -6,7 +6,7 @@ const fs = require('fs');
 const { ownerOrAdminMiddleware, authMiddleware } = require('../Middlewares/authMiddleware');
 const Post = require('../models/Post');
 const checkBanStatus = require('../Middlewares/banMiddleware');
-
+const registerationMiddleware = require('../Middlewares/registerationMiddleware');
 const landing = (req, res) => {
     res.render('landing_page');
 };
@@ -72,8 +72,17 @@ const render_page = async (req, res, next) => {
                 });
                 return; // Prevent further execution
             }
+            if (page === 'personalization') {
+                // Run `authMiddleware` and `checkBanStatus` in sequence
+                await registerationMiddleware(req, res, async (authErr) => {
+                    if (authErr) return next(authErr); // Pass error if auth fails
 
-            // Render the page if it does not require authentication
+                    
+                    renderPageIfExists(filePath, req, res);
+                });
+                return; 
+            }
+
             renderPageIfExists(filePath, req, res);
         } else {
             return res.render('notFound');

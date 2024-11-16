@@ -1,0 +1,3070 @@
+ :root {
+     --color-badge-background: #fff;
+     --color-badge-background-green: #e8f8f4;
+     --color-badge-background-blue: #e7effe;
+     --color-badge-background-yellow: #fef3e1;
+     --color-badge-background-brand: #e7f6f8;
+     --color-badge-background-purple: #f2effb;
+     --color-badge-background-red: #fde8e8;
+     --color-badge-background-gray: #eef2f5;
+     --color-badge-text: #1a1c1c;
+     --color-background: #EEF2F5;
+     --eee: #eeeeee;
+     --elevation-2: 0px 2px 8px 0px #0000001f, 0px .3px 1px 0px #00000003;
+     --color-text-secondary-default: #40515e;
+     --color-badge-text-green: #0b8363;
+     --color-badge-text-blue: #295dae;
+     --color-badge-text-yellow: #9a6304;
+     --color-badge-text-brand: #047a88;
+     --color-badge-text-purple: #5d44ab;
+     --color-badge-text-red: #c02725;
+     --color-badge-text-gray: #607585;
+     --color-badge-border: #e0e6eb;
+     --color-badge-border-green: #d0f1e8;
+     --color-badge-border-blue: #d2e2f9;
+     --color-badge-border-yellow: #fceaca;
+     --color-badge-border-brand: #ceedf1;
+     --color-badge-border-purple: #d8d0f3;
+     --color-badge-border-red: #fad1d1;
+     --color-badge-border-gray: #e0e6eb;
+     --color-canvas: #eef2f5;
+     --color-background-primary: #fff;
+     --color-background-secondary: #f5f7f9;
+     --color-background-secondary-hover: #eef2f5;
+     --color-background-secondary-active: #f5f7f9;
+     --color-background-accent: #047a88;
+     --color-background-accent-hover: #054f57;
+     --color-background-accent-active: #054f57;
+     --color-background-accent-disabled: rgba(4, 122, 136, .3);
+     --color-background-elevated: #fff;
+     --color-background-onAccent: #fff;
+     --color-background-onAccent-hover: #fff;
+     --color-background-onAccent-active: #fff;
+     --color-background-onAccent-disabled: rgba(255, 255, 255, .6);
+     --color-background-error: #dc4847;
+     --color-background-error-hover: #c02725;
+     --color-background-error-active: #c02725;
+     --color-background-error-disabled: rgba(238, 97, 96, .3);
+     --color-background-success: #0b8363;
+     --color-background-info: #295dae;
+     --color-background-warning: #df9411;
+     --color-background-accentSubtle: #e7f6f8;
+     --color-background-errorSubtle: #fde8e8;
+     --color-background-successSubtle: #e8f8f4;
+     --color-background-infoSubtle: #e7effe;
+     --color-background-warningSubtle: #fef3e1;
+     --color-background-textHighlight-primary: #f3eb75;
+     --color-background-textHighlight-secondary: #faf5b8;
+     --color-background-textHighlight-find: #f6bc56;
+     --color-background-textHighlight-learningRadar: rgba(238, 97, 96, .3);
+     --color-background-textHighlight-qbankKeyInfo: #df9411;
+     --color-background-textHighlight-relevancePrimary: #8adcc6;
+     --color-background-textHighlight-relevanceSecondary: #d0f1e8;
+     --color-background-textHighlight-customBlue: #99e6ff;
+     --color-background-contrast: #314554;
+     --color-background-transparent: rgba(255, 255, 255, 0);
+     --color-background-transparent-selected: #607585;
+     --color-background-transparent-hover: rgba(96, 117, 133, .05);
+     --color-background-transparent-active: rgba(96, 117, 133, .05);
+     --color-background-transparent-selectedHover: #40515e;
+     --color-background-placeholder: #e0e6eb;
+     --color-background-backdrop: rgba(0, 0, 0, .6);
+     --color-text-primary: #1a1c1c;
+     --color-text-primary-hover: #1a1c1c;
+     --color-text-secondary: #40515e;
+     --color-text-secondary-hover: #1a1c1c;
+     --color-text-tertiary: #607585;
+     --color-text-tertiary-disabled: rgba(64, 81, 94, .3);
+     --color-text-tertiary-hover: #1a1c1c;
+     --color-text-quaternary: #a3b2bd;
+     --color-text-accent: #047a88;
+     --color-text-accent-hover: #054f57;
+     --color-text-onAccent: #fff;
+     --color-text-onAccent-disabled: rgba(255, 255, 255, .6);
+     --color-text-onAccentSubtle: rgba(255, 255, 255, .6);
+     --color-text-info: #1c427d;
+     --color-text-error: #c02725;
+     --color-text-error-disabled: rgba(192, 39, 37, .3);
+     --color-text-warning: #314554;
+     --color-text-success: #0a5c45;
+     --color-text-underline: #a3b2bd;
+     --color-text-underline-hover: #607585;
+     --color-text-dottedUnderline: #607585;
+     --color-text-dottedUnderline-hover: #40515e;
+     --color-icon-primary: #1a1c1c;
+     --color-icon-primary-hover: #1a1c1c;
+     --color-icon-secondary: #40515e;
+     --color-icon-secondary-hover: #314554;
+     --color-icon-tertiary: #607585;
+     --color-icon-tertiary-hover: #40515e;
+     --color-icon-quaternary: #a3b2bd;
+     --color-icon-quaternary-hover: #607585;
+     --color-icon-accent: #047a88;
+     --color-icon-accent-hover: #054f57;
+     --color-icon-onAccent: #fff;
+     --color-icon-onAccent-hover: #fff;
+     --color-icon-onAccentSubtle: rgba(255, 255, 255, .6);
+     --color-icon-onAccentSubtle-hover: rgba(255, 255, 255, .8);
+     --color-icon-info: #295dae;
+     --color-icon-info-hover: #1c427d;
+     --color-icon-error: #dc4847;
+     --color-icon-error-hover: #c02725;
+     --color-icon-warning: #df9411;
+     --color-icon-warning-hover: #9a6304;
+     --color-icon-success: #0b8363;
+     --color-icon-success-hover: #0a5c45;
+     --color-icon-brand: #0aa6b8;
+     --color-icon-brand-hover: #047a88;
+     --color-border-primary: #a3b2bd;
+     --color-border-primary-hover: #607585;
+     --color-border-primary-active: #40515e;
+     --color-border-primary-disabled: rgba(163, 178, 189, .3);
+     --color-border-secondary: rgba(163, 178, 189, .3);
+     --color-border-accent: #047a88;
+     --color-border-onAccent: #fff;
+     --color-border-accentSubtle: #85d3dc;
+     --color-border-error: #dc4847;
+     --color-border-success: #0b8363;
+     --color-divider-primary: #e0e6eb;
+     --color-divider-secondary: rgba(163, 178, 189, .3);
+     --color-divider-secondarySolid: #eef2f5;
+     --color-segmented-progress-bar-monochrome: #607585;
+     --color-segmented-progress-bar-success: #39d6ac;
+     --color-segmented-progress-bar-warning: #f1d56b;
+     --color-segmented-progress-bar-alert: #f07575;
+     --color-segmented-progress-bar-in-progress: #e0e6eb;
+     --color-qbank-answer-background-title-correct-default: #d0f1e8;
+     --color-qbank-answer-background-title-correct-hover: rgba(138, 220, 198, .6);
+     --color-qbank-answer-background-title-correct-with-hint-default: #fceaca;
+     --color-qbank-answer-background-title-correct-with-hint-hover: rgba(246, 198, 111, .6);
+     --color-qbank-answer-background-title-incorrect-default: #fad1d1;
+     --color-qbank-answer-background-title-incorrect-hover: rgba(240, 117, 117, .45);
+     --color-qbank-answer-background-explanation-correct-default: #e8f8f4;
+     --color-qbank-answer-background-explanation-correct-with-hint-default: #fef3e1;
+     --color-qbank-answer-background-explanation-incorrect-default: #fde8e8;
+     --color-qbank-answer-border-correct-default: #8adcc6;
+     --color-qbank-answer-border-correct-with-hint-default: #f6c66f;
+     --color-qbank-answer-border-incorrect-default: #f07575;
+     --color-chart-border: #a3b2bd;
+     --color-chart-grid-primary-default: rgba(163, 178, 189, .3);
+     --color-chart-grid-secondary-default: rgba(163, 178, 189, .3);
+     --color-chart-background: #fff;
+     --color-chart-background-inverted: #1a1c1c;
+     --color-chart-text-positive-default: #0b8363;
+     --color-chart-text-negative-default: #dc4847;
+     --color-chart-text-warning-default: #df9411;
+     --color-chart-neutral: #a3b2bd;
+     --color-chart-neutral-subtle: #eef2f5;
+     --color-chart-neutral-bold: #607585;
+     --color-chart-positive: #0b8363;
+     --color-chart-positive-subtle: #e8f8f4;
+     --color-chart-positive-bold: #0a5c45;
+     --color-chart-warning: #f6bc56;
+     --color-chart-warning-subtle: #fef3e1;
+     --color-chart-warning-bold: #f6c66f;
+     --color-chart-negative: #f07575;
+     --color-chart-negative-subtle: #fde8e8;
+     --color-chart-negative-bold: #dc4847;
+     --color-chart-info: #6e95cf;
+     --color-chart-info-subtle: #e7effe;
+     --color-chart-info-bold: #295dae;
+     --color-chart-accent: #0aa6b8;
+     --color-chart-accent-subtle: #e7f6f8;
+     --color-chart-accent-bold: #047a88;
+     --elevation-1: 0px .3px .6px rgba(0, 0, 0, .004), 0px 2px 5px rgba(0, 0, 0, .07);
+     --elevation-2: 0px 2px 8px 0px rgba(0, 0, 0, .12), 0px .3px 1px 0px rgba(0, 0, 0, .01);
+     --elevation-3: 0px .5px 2.5px rgba(0, 0, 0, .16), 0px 4px 20px rgba(0, 0, 0, .2);
+     --elevation-4: 0px 4px 14px rgba(0, 0, 0, .12), 0px 32px 112px rgba(0, 0, 0, .24);
+ }
+
+ .css-o2qfki-StyledText {
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     margin: 0px;
+     text-transform: none;
+     text-align: left;
+     font-weight: 400;
+     color: rgb(96, 117, 133);
+     font-size: 14px;
+     line-height: 1.42857;
+     overflow-wrap: normal;
+ }
+
+ @media screen {
+     .css-o2qfki-StyledText {
+         hyphens: none;
+     }
+ }
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~56d133a9.144f90cda209be5a.css */
+ div:focus {
+     outline: 0;
+ }
+
+ .amboss-ds-portal {
+     z-index: 9;
+     position: relative;
+ }
+
+ .select-in-deprecated-modal-portal {
+     z-index: 10;
+     position: relative;
+ }
+
+ .ds-popover {
+     z-index: 9;
+     position: relative;
+ }
+
+ .ds-tutorial-popover {
+     z-index: 10;
+     position: relative;
+ }
+
+ body {
+     color: var(--color-text-primary);
+     font-feature-settings: "lnum" 1, "pnum" 1, "kern" 1, "liga" 1, "clig" 1;
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+     text-rendering: optimizeLegibility, geometricPrecision;
+     font-family: Lato, -apple-system, BlinkMacSystemFont, segoe ui, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-size: 16px;
+     font-weight: 400;
+     line-height: 24px;
+     background-color: var(--color-background);
+ }
+
+ .ds-phrasionary-popover {
+     pointer-events: none;
+     z-index: 10;
+     position: absolute;
+     top: 0;
+     bottom: 0;
+     left: 0;
+     right: 0;
+ }
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~73435ce4.c8cb000c36c2c305.css */
+ .-dcdf778472f912e-contentContainer {
+     position: absolute;
+     top: 0;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     overflow: hidden;
+ }
+
+ .-d03e7f0e2eb62303-connectionStatusContainer {
+     color: var(--color-text-onAccent);
+     align-items: center;
+     height: 56px;
+     display: block;
+     transform: translateY(-56px);
+ }
+
+ @media screen and (min-width:1280px) {
+     .-d03e7f0e2eb62303-connectionStatusContainer {
+         height: 40px;
+         transform: translateY(-40px);
+     }
+ }
+
+ .-d03e7f0e2eb62303-statusContainer {
+     width: 100%;
+     height: 100%;
+     display: flex;
+     position: absolute;
+ }
+
+ .-d03e7f0e2eb62303-onlineBackground {
+     background-image: linear-gradient(90deg, #0dbf8f, #39d6ac);
+ }
+
+ .-d03e7f0e2eb62303-offlineBackground {
+     opacity: 1;
+     background-image: linear-gradient(90deg, #f17d7c, #ff9c81);
+     transition: opacity;
+ }
+
+ .-d03e7f0e2eb62303-transparent {
+     opacity: 0;
+     transition: opacity .6s;
+ }
+
+ .-d03e7f0e2eb62303-contents {
+     opacity: 1;
+     align-items: center;
+     padding: 8px;
+     transition: opacity .4s;
+     display: flex;
+ }
+
+ .-d03e7f0e2eb62303-contents span {
+     padding-left: 16px;
+     font-size: 16px;
+     font-weight: 700;
+     line-height: 24px;
+ }
+
+ .-d03e7f0e2eb62303-invisibleContents {
+     opacity: 0;
+     transition-delay: 1s;
+ }
+
+ .-d03e7f0e2eb62303-bodyConnectionStatus {
+     transition: transform .4s 1s;
+     transform: translateY(0);
+ }
+
+ .-bcbbcd631fd4bc-container {
+
+     z-index: 3;
+     background-color: #fff;
+     align-items: center;
+     width: 100vw;
+     min-width: 310px;
+     height: 56px;
+     padding-right: 16px;
+     display: flex;
+     position: fixed;
+     top: 0;
+     left: 0;
+     box-shadow: 0 3px 8px rgba(61, 74, 84, .1), 0 3px 12px rgba(61, 74, 84, .06);
+ }
+
+ .-bcbbcd631fd4bc-logoContainer {
+     background-image: url('/images/ictoob.png');
+     background-size: contain;
+     cursor: pointer;
+     justify-content: center;
+     align-items: center;
+     margin-left: 72px;
+     display: flex;
+ }
+
+
+
+ @media (max-width:425px) {
+     .-bcbbcd631fd4bc-logoContainer {
+         margin-left: 16px;
+     }
+ }
+
+ .--page {
+     background-color: var(--color-canvas);
+     height: 100%;
+     min-height: 100%;
+     overflow: auto;
+ }
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~eb0697cb.0aa3df63d073cfe4.css */
+ .-cc202be248f557-main {
+     flex-direction: column;
+     height: 100%;
+     display: flex;
+ }
+
+ .-cc202be248f557-base {
+     height: 100%;
+ }
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~276143cb.a384b843b906b9eb.css */
+ .-eb1c4a28c8c5a44-focus {
+     -webkit-overflow-scrolling: touch;
+     flex-direction: column;
+     height: 100%;
+     transition: all .2s;
+     display: flex;
+     position: absolute;
+     top: 0;
+ }
+
+ .-eb1c4a28c8c5a44-focusNavIsClosed {
+     width: 100%;
+     left: 0;
+ }
+
+ .-eb1c4a28c8c5a44-notifications {
+     flex: none;
+ }
+
+ .-eb1c4a28c8c5a44-body {
+     flex: 100%;
+     position: relative;
+     overflow: auto;
+ }
+
+ @media (max-width:768px) {
+     .-ced2048ba01e93d-scrim {
+         opacity: 0;
+         pointer-events: auto;
+         z-index: -1;
+         background-color: rgba(0, 0, 0, .5);
+         width: 100vw;
+         height: 100vh;
+         transition: opacity .2s;
+         position: fixed;
+         top: 0;
+         right: 0;
+     }
+
+     .-ced2048ba01e93d-show {
+         opacity: 1;
+         pointer-events: none;
+         z-index: 3;
+     }
+ }
+
+ .-cb2cf8f3c994e7f-logo {
+     height: 24px;
+ }
+
+ .-b339bbf8eb2ed8c-container {
+     max-width: 944px;
+     margin: 0 auto;
+ }
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~a1a4dbbe.3e89483b25f0a0ad.css */
+ .-b30f786c180b77-clickDisabler {
+     height: 100dvh;
+ }
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~01332752.23396d2755955fcb.css */
+ .-c27ac1ec985aef-topNavigationOffset {
+     padding-top: 56px;
+ }
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~349c65c1.4459289dc4baef7d.css */
+ .-fd1d21dfc5a5e5ab-target {
+     width: 100%;
+     position: relative;
+ }
+
+ body {
+     top: 0 !important;
+ }
+
+ /*! CSS Used from: Embedded */
+ button,
+ input {
+     overflow: visible;
+ }
+
+ * {
+     box-sizing: border-box;
+ }
+
+ body {
+     min-height: 100%;
+ }
+
+ body,
+ button,
+ input,
+ select {
+     margin: 0;
+ }
+
+ main {
+     display: block;
+ }
+
+ h1 {
+     font-size: 1.953em;
+     margin: .67em 0;
+ }
+
+ img {
+     border-style: none;
+ }
+
+ svg:not(:root) {
+     overflow: hidden;
+ }
+
+ button,
+ select {
+     text-transform: none;
+ }
+
+ button {
+     font-family: inherit;
+     -webkit-font-feature-settings: inherit;
+     font-feature-settings: inherit;
+     -webkit-font-smoothing: inherit;
+     -moz-osx-font-smoothing: inherit;
+     text-rendering: inherit;
+ }
+
+ button,
+ html [type=button] {
+     -webkit-appearance: button;
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box !important;
+ }
+
+ body {
+     overflow: hidden !important;
+     height: 100% !important;
+ }
+
+ #app {
+     height: 100% !important;
+ }
+
+ ::selection {
+     text-shadow: none !important;
+     background-color: #dae0e6 !important;
+ }
+
+ /*! CSS Used from: Embedded */
+ .css-o2p6ar-StyledIcon {
+     width: 24px;
+     height: 24px;
+     color: inherit;
+ }
+
+ .css-o2p6ar-StyledIcon>svg {
+     /* display: none; */
+     width: 24px;
+     height: 24px;
+ }
+ .css-7tpa0d-StyledIcon>svg{
+    display: block;
+ }
+ .css-alg3yb-InlineContainer {
+     display: flex;
+     flex-flow: row;
+ }
+
+ .selection-dropdown {
+     position: relative;
+     top: 0.5vw;
+     flex-direction: column;
+     /* Appears below the input field */
+     
+     left: 0;
+     width: 100%;
+     /* Matches the width of the container */
+     max-height: 200px;
+     /* Maximum height for the dropdown */
+     overflow-y: auto;
+     /* Adds scroll if content overflows */
+     background-color: white;
+     /* Dropdown background */
+     border: 1px solid #ccc;
+     /* Border around dropdown */
+     border-radius: 4px;
+     /* Rounded corners */
+     list-style: none;
+     /* Remove default list styling */
+     padding: 0;
+     margin: 0;
+     display: none;
+     box-sizing: border-box;
+     z-index: 100;
+     box-shadow: rgba(0, 0, 0, 0.004) 0px 0.3px 0.6px, rgba(0, 0, 0, 0.07) 0px 2px 5px;
+
+
+ }
+
+ .selection-dropdown li {
+     padding: 10px;
+     cursor: pointer;
+     font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+ }
+
+ .selection-dropdown li:hover {
+     background-color: var(--color-background);
+ }
+
+ @media screen {
+     .css-alg3yb-InlineContainer {
+         -webkit-box-align: center;
+         align-items: center;
+         -webkit-box-pack: center;
+         justify-content: center;
+         gap: 4px;
+     }
+ }
+
+ .css-cgabep-StyledBox {
+     box-sizing: border-box;
+ }
+
+ @media screen {
+     .css-cgabep-StyledBox {
+         padding: 0px;
+         text-align: left;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .css-cgabep-StyledBox {
+         padding-left: 0px;
+         padding-right: 0px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-cgabep-StyledBox {
+         padding-left: 0px;
+         padding-right: 0px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-cgabep-StyledBox {
+         padding-left: 0px;
+         padding-right: 0px;
+     }
+ }
+
+ @media screen {
+     .css-cgabep-StyledBox {
+         padding-bottom: 24px;
+     }
+ }
+
+ .css-1ff2k4x-StackContainer {
+     display: flex;
+     flex-direction: column;
+ }
+
+ @media screen {
+     .css-tn47vl-StackItem {
+         margin-top: 8px;
+     }
+ }
+
+ .css-tn47vl-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-tn47vl-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ .css-6kd9ye-InlineContainer {
+     display: flex;
+     flex-flow: wrap;
+ }
+
+ @media (max-width: 768px) {
+     .css-6kd9ye-InlineContainer {
+         -webkit-box-pack: start;
+         justify-content: flex-start;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-6kd9ye-InlineContainer {
+         -webkit-box-pack: justify;
+         justify-content: space-between;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-6kd9ye-InlineContainer {
+         -webkit-box-pack: justify;
+         justify-content: space-between;
+     }
+ }
+
+ @media screen {
+     .css-6kd9ye-InlineContainer {
+         align-items: flex-start;
+         gap: 4px;
+     }
+ }
+
+ @media screen {
+     .css-1c20xzu-StackItem {
+         margin-top: 4px;
+     }
+ }
+
+ .css-1c20xzu-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-1c20xzu-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ .css-4tgtrq-H1 {
+     color: rgb(26, 28, 28);
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-weight: 900;
+     margin: 0px;
+     overflow-wrap: normal;
+     hyphens: none;
+     font-size: 26px;
+     line-height: 1.25;
+ }
+
+ .css-1trjn7t-StyledContainer {
+     position: relative;
+     background-color: rgb(255, 255, 255);
+ }
+
+ @media screen {
+     .css-1trjn7t-StyledContainer {
+         border-radius: 12px;
+     }
+ }
+
+ .css-1trjn7t-StyledContainer::after {
+     content: " ";
+     position: absolute;
+     top: 0px;
+     left: 0px;
+     width: 100%;
+     height: 100%;
+     pointer-events: none;
+     border-radius: inherit;
+     box-shadow: rgba(0, 0, 0, 0.004) 0px 0.3px 0.6px, rgba(0, 0, 0, 0.07) 0px 2px 5px;
+ }
+
+ .css-1nhv2hm-Column {
+     box-sizing: border-box;
+ }
+
+ @media (max-width: 768px) {
+     .css-1nhv2hm-Column {
+         width: 100%;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-1nhv2hm-Column {
+         width: 50%;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-1nhv2hm-Column {
+         width: 50%;
+     }
+ }
+
+ @media screen {
+     .css-1nhv2hm-Column {
+         align-self: auto;
+     }
+ }
+
+ .css-1nhv2hm-Column:empty {
+     width: 0px;
+     flex: 0 0 auto;
+ }
+
+ .css-1eefu93-StyledBox {
+     box-sizing: border-box;
+ }
+
+ @media (max-width: 768px) {
+     .css-1eefu93-StyledBox {
+         padding: 16px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-1eefu93-StyledBox {
+         padding: 32px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-1eefu93-StyledBox {
+         padding: 32px;
+     }
+ }
+
+ @media screen {
+     .css-1eefu93-StyledBox {
+         text-align: left;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .css-1eefu93-StyledBox {
+         padding-top: 24px;
+         padding-bottom: 24px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-1eefu93-StyledBox {
+         padding-top: 32px;
+         padding-bottom: 32px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-1eefu93-StyledBox {
+         padding-top: 48px;
+         padding-bottom: 48px;
+     }
+ }
+
+ .css-os80wo-StyledDiv {
+     border-radius: inherit;
+     overflow: visible;
+     height: 100%;
+ }
+
+ .css-os80wo-StyledDiv> :last-child {
+     border-bottom-left-radius: inherit;
+     border-bottom-right-radius: inherit;
+ }
+
+ .css-os80wo-StyledDiv> :first-child {
+     border-top-left-radius: inherit;
+     border-top-right-radius: inherit;
+ }
+
+ .css-1agsh0x-StyledBox {
+     box-sizing: border-box;
+ }
+
+ @media (max-width: 768px) {
+     .css-1agsh0x-StyledBox {
+         padding: 16px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-1agsh0x-StyledBox {
+         padding: 24px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-1agsh0x-StyledBox {
+         padding: 32px;
+     }
+ }
+
+ @media screen {
+     .css-1agsh0x-StyledBox {
+         text-align: left;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .css-1agsh0x-StyledBox {
+         padding-top: 16px;
+         padding-bottom: 16px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-1agsh0x-StyledBox {
+         padding-top: 24px;
+         padding-bottom: 24px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-1agsh0x-StyledBox {
+         padding-top: 32px;
+         padding-bottom: 32px;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .css-1burvbs-StackItem {
+         margin-top: 24px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-1burvbs-StackItem {
+         margin-top: 32px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-1burvbs-StackItem {
+         margin-top: 48px;
+     }
+ }
+
+ .css-1burvbs-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-1burvbs-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ .css-yugcle-Columns {
+     width: auto;
+     display: flex;
+     place-items: stretch;
+     justify-content: stretch;
+     -webkit-box-align: stretch;
+     flex-flow: wrap;
+ }
+
+ @media (max-width: 768px) {
+     .css-yugcle-Columns {
+         margin-right: -12px;
+         margin-bottom: -12px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-yugcle-Columns {
+         margin-right: -16px;
+         margin-bottom: -16px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-yugcle-Columns {
+         margin-right: -24px;
+         margin-bottom: -24px;
+     }
+ }
+
+ @media screen {
+     .css-yugcle-Columns {
+         align-items: flex-start;
+         -webkit-box-pack: start;
+         justify-content: flex-start;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .css-yugcle-Columns>.e1ostpc10 {
+         margin-bottom: 12px;
+         padding-right: 12px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-yugcle-Columns>.e1ostpc10 {
+         margin-bottom: 16px;
+         padding-right: 16px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-yugcle-Columns>.e1ostpc10 {
+         margin-bottom: 24px;
+         padding-right: 24px;
+     }
+ }
+
+ .css-qxlca9-Column {
+     box-sizing: border-box;
+ }
+
+ #role,
+ #personalization-form,
+ #study-info,
+ #personal-information,
+ #finishing-up {
+     display: none;
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box;
+ }
+
+ h1 {
+     font-size: 1.953em;
+     margin: .67em 0;
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box !important;
+ }
+
+ ::selection {
+     text-shadow: none !important;
+     background-color: #dae0e6 !important;
+ }
+
+ /*! CSS Used from: Embedded */
+ .css-4tgtrq-H1 {
+     color: rgb(26, 28, 28);
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-weight: 900;
+     margin: 0px;
+     overflow-wrap: normal;
+     hyphens: none;
+     font-size: 26px;
+     line-height: 1.25;
+ }
+
+ /*! CSS Used fontfaces */
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 900;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff");
+ }
+
+ @media screen {
+     .css-qxlca9-Column {
+         width: 100%;
+         align-self: auto;
+     }
+ }
+
+ .css-qxlca9-Column:empty {
+     width: 0px;
+     flex: 0 0 auto;
+ }
+
+ .css-102gu82-Columns {
+     width: auto;
+     display: flex;
+     place-items: stretch;
+     justify-content: stretch;
+     -webkit-box-align: stretch;
+     flex-flow: wrap;
+ }
+
+ @media screen {
+     .css-102gu82-Columns {
+         align-items: flex-start;
+         -webkit-box-pack: center;
+         justify-content: center;
+         margin-right: 0px;
+         margin-bottom: 0px;
+     }
+ }
+
+ @media screen {
+     .css-102gu82-Columns>.e1ostpc10 {
+         margin-bottom: 0px;
+         padding-right: 0px;
+     }
+ }
+
+ .css-15cms52-InlineContainer {
+     display: flex;
+     flex-flow: wrap;
+ }
+
+ @media screen {
+     .css-15cms52-InlineContainer {
+         align-items: flex-end;
+         -webkit-box-pack: start;
+         justify-content: flex-start;
+         gap: 4px;
+     }
+ }
+
+ .css-bfvjxm-H6 {
+     color: rgb(96, 117, 133);
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-weight: 900;
+     margin: 0px;
+     overflow-wrap: normal;
+     hyphens: none;
+     font-size: 12px;
+     line-height: 1.33333;
+     letter-spacing: 0.5px;
+     text-transform: uppercase;
+ }
+
+ .css-1him6kl-StyledContainer {
+     position: relative;
+ }
+
+ .css-1axba1z-StyledContainer {
+     width: 100%;
+     display: flex;
+     -webkit-box-align: center;
+     align-items: center;
+     flex-direction: row;
+     position: relative;
+    
+ }
+
+ .css-4bfi5u-StyledInput {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    width: 100%;
+    padding: calc(7px) calc(36px) calc(7px) 12px;
+    box-sizing: border-box;
+    color: rgb(26, 28, 28);
+    border-color: #a3b2bd;
+    background-color: rgba(255, 255, 255, 0);
+    margin-top: 1vw ;
+}
+
+ .css-4bfi5u-StyledInput::placeholder {
+     font-style: italic;
+     color: rgb(96, 117, 133);
+     opacity: 1;
+ }
+
+ .css-6jn8th-StyledIconContainer {
+     position: absolute;
+     right: 8px;
+ }
+
+ .css-14p1ltg-StyledText {
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     margin: 0px;
+     text-transform: none;
+     text-align: left;
+     font-weight: 400;
+     color: rgb(96, 117, 133);
+     font-size: 16px;
+     line-height: 1.5;
+     overflow-wrap: normal;
+ }
+
+ @media screen {
+     .css-14p1ltg-StyledText {
+         hyphens: none;
+     }
+ }
+
+ .css-183co0w-StyledInputWrap {
+     z-index: 0;
+     position: absolute;
+     pointer-events: none;
+     width: 100%;
+     bottom: 0px;
+     left: 0px;
+ }
+
+ .css-lxfedv-StyledInput {
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-size: 16px;
+     line-height: 1.5;
+     border-radius: 4px;
+     border-width: 1px;
+     border-style: solid;
+     width: 100%;
+     padding: calc(7px) calc(36px) calc(7px) 12px;
+     box-sizing: border-box;
+     color: rgb(26, 28, 28);
+     border-color: rgb(163, 178, 189);
+     background-color: rgb(255, 255, 255);
+ }
+
+ .css-lxfedv-StyledInput::placeholder {
+     font-style: italic;
+     color: rgb(96, 117, 133);
+     opacity: 1;
+ }
+
+ .css-1toof9x-HiddenSelectInput {
+     display: none;
+ }
+
+ .css-o2qfki-StyledText {
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     margin: 0px;
+     text-transform: none;
+     text-align: left;
+     font-weight: 400;
+     color: rgb(96, 117, 133);
+     font-size: 14px;
+     line-height: 1.42857;
+     overflow-wrap: normal;
+ }
+
+ @media screen {
+     .css-o2qfki-StyledText {
+         hyphens: none;
+     }
+ }
+
+ .css-1rqfvkk-InlineContainer {
+     display: flex;
+     flex-flow: wrap;
+ }
+
+ @media screen {
+     .css-1rqfvkk-InlineContainer {
+         align-items: flex-start;
+         -webkit-box-pack: end;
+         justify-content: flex-end;
+         gap: 8px;
+     }
+ }
+
+ .css-1tsw76i-StyledButton {
+     display: inline-block;
+     border: 0px;
+     margin: 0px;
+     text-transform: none;
+     text-decoration: none;
+     border-radius: 4px;
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-size: 14px;
+     line-height: 1.14286;
+     font-weight: 700;
+     cursor: pointer;
+     padding: 12px 24px;
+     background-color: rgb(4, 122, 136);
+     color: rgb(255, 255, 255);
+ }
+ 
+ #next-button[type="button"] {
+     appearance: none;
+ }
+
+ #next-button:hover {
+     background-color: rgb(5, 79, 87);
+ }
+
+ #next-button:active {
+     background-color: rgb(5, 79, 87);
+ }
+
+ .go2933276541 {
+     position: fixed;
+     display: block;
+     width: 100%;
+     height: 0px;
+     margin: 0px;
+     padding: 0px;
+     overflow: visible;
+     transform-style: preserve-3d;
+     background: transparent;
+     backface-visibility: hidden;
+     pointer-events: none;
+     left: 0px;
+     z-index: 9998;
+ }
+
+ .go2369186930 {
+     top: 0px;
+     z-index: 9999;
+     height: 100%;
+     width: 100%;
+ }
+
+ .go1348078617 {
+     bottom: 0px;
+ }
+
+ .go2417249464 {
+     position: fixed;
+     z-index: 9989;
+ }
+
+ .go3921366393 {
+     left: 0;
+     bottom: 0;
+ }
+
+ .go3967842156 {
+     right: 0;
+     bottom: 0;
+ }
+
+ .go613305155 {
+     left: 0;
+     top: 0;
+ }
+
+ .go471583506 {
+     right: 0;
+     top: 0;
+ }
+
+ .go3670563033 {
+     position: relative;
+     overflow: hidden;
+     display: none;
+ }
+
+ .go1632949049 {
+     position: absolute;
+     pointer-events: none;
+     width: 101vw;
+     height: 101vh;
+     background: rgba(0, 0, 0, 0.7);
+     opacity: 0;
+     z-index: -1;
+ }
+
+ #next-button {
+     pointer-events: auto !important;
+ }
+
+ /*! CSS Used fontfaces */
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 900;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff");
+ }
+
+
+ /* Choices */
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~56d133a9.144f90cda209be5a.css */
+ div:focus {
+     outline: 0;
+ }
+
+ /*! CSS Used from: Embedded */
+ input {
+     overflow: visible;
+ }
+
+ [type=radio] {
+     box-sizing: border-box;
+     padding: 0;
+ }
+
+ * {
+     box-sizing: border-box;
+ }
+
+ input {
+     margin: 0;
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box !important;
+ }
+
+ ::selection {
+     text-shadow: none !important;
+     background-color: #dae0e6 !important;
+ }
+
+ /*! CSS Used from: Embedded */
+ .css-1ff2k4x-StackContainer {
+     display: flex;
+     flex-direction: column;
+ }
+
+ @media screen {
+     .css-tn47vl-StackItem {
+         margin-top: 8px;
+     }
+ }
+
+ .css-tn47vl-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-tn47vl-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ @media screen {
+     .css-1c20xzu-StackItem {
+         margin-top: 4px;
+     }
+ }
+
+ .css-1c20xzu-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-1c20xzu-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ .css-uqwrwi-StyledContainer {
+     user-select: none;
+     display: block;
+     position: relative;
+     width: 100%;
+     box-sizing: border-box;
+ }
+
+ .css-x2gqfn-StyledRealInput {
+     opacity: 0;
+     cursor: pointer;
+     height: 0px;
+     width: 0px;
+     position: absolute;
+ }
+
+ .css-ttz7y2-StyledFakeInput {
+     cursor: pointer;
+     text-transform: none;
+     text-decoration: none;
+     border-radius: 4px;
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-size: 14px;
+     font-weight: 700;
+     line-height: 1.14286;
+     padding: 12px 24px;
+ }
+
+ input:not(:checked)+.css-ttz7y2-StyledFakeInput {
+     border: 1px solid rgba(163, 178, 189, 0.3);
+     background-color: rgb(255, 255, 255);
+     color: rgb(64, 81, 94);
+ }
+
+ input:not(:checked)+.css-ttz7y2-StyledFakeInput:hover {
+     background-color: rgb(245, 247, 249);
+ }
+
+ input:checked+.css-ttz7y2-StyledFakeInput {
+     border: 1px solid rgb(133, 211, 220);
+     background-color: rgb(231, 246, 248);
+     color: rgb(4, 122, 136);
+ }
+
+ .css-1t3gg0w-InlineContainer {
+     display: flex;
+     flex-flow: row;
+ }
+
+ @media screen {
+     .css-1t3gg0w-InlineContainer {
+         -webkit-box-align: center;
+         align-items: center;
+         -webkit-box-pack: justify;
+         justify-content: space-between;
+         gap: 8px;
+     }
+ }
+
+ /*! CSS Used fontfaces */
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 900;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff");
+ }
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~56d133a9.144f90cda209be5a.css */
+ div:focus {
+     outline: 0;
+ }
+
+ /*! CSS Used from: Embedded */
+ button {
+     overflow: visible;
+ }
+
+ * {
+     box-sizing: border-box;
+ }
+
+ button {
+     margin: 0;
+ }
+
+ button {
+     text-transform: none;
+ }
+
+ button {
+     font-family: inherit;
+     -webkit-font-feature-settings: inherit;
+     font-feature-settings: inherit;
+     -webkit-font-smoothing: inherit;
+     -moz-osx-font-smoothing: inherit;
+     text-rendering: inherit;
+ }
+
+ [type=submit],
+ button {
+     -webkit-appearance: button;
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box !important;
+ }
+
+ ::selection {
+     text-shadow: none !important;
+     background-color: #dae0e6 !important;
+ }
+
+ /*! CSS Used from: Embedded */
+ .css-alg3yb-InlineContainer {
+     display: flex;
+     flex-flow: row;
+ }
+
+ @media screen {
+     .css-alg3yb-InlineContainer {
+         -webkit-box-align: center;
+         align-items: center;
+         -webkit-box-pack: center;
+         justify-content: center;
+         gap: 4px;
+     }
+ }
+
+ .css-13s0akn-StyledButton {
+     display: inline-block;
+     border: 0px;
+     margin: 0px;
+     text-transform: none;
+     text-decoration: none;
+     border-radius: 4px;
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-size: 14px;
+     line-height: 1.14286;
+     font-weight: 700;
+     cursor: not-allowed;
+     opacity: 0.3;
+     padding: 12px 24px;
+     background-color: rgb(4, 122, 136);
+     color: rgb(255, 255, 255);
+ }
+
+ /*! CSS Used fontfaces */
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 900;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff");
+ }
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~56d133a9.144f90cda209be5a.css */
+ div:focus {
+     outline: 0;
+ }
+
+ /*! CSS Used from: Embedded */
+ button {
+     overflow: visible;
+ }
+
+ * {
+     box-sizing: border-box;
+ }
+
+ button {
+     margin: 0;
+ }
+
+ button {
+     text-transform: none;
+ }
+
+ button {
+     font-family: inherit;
+     -webkit-font-feature-settings: inherit;
+     font-feature-settings: inherit;
+     -webkit-font-smoothing: inherit;
+     -moz-osx-font-smoothing: inherit;
+     text-rendering: inherit;
+ }
+
+ [type=submit],
+ button {
+     -webkit-appearance: button;
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box !important;
+ }
+
+ ::selection {
+     text-shadow: none !important;
+     background-color: #dae0e6 !important;
+ }
+
+ /*! CSS Used from: Embedded */
+ .css-alg3yb-InlineContainer {
+     display: flex;
+     flex-flow: row;
+ }
+
+ @media screen {
+     .css-alg3yb-InlineContainer {
+         -webkit-box-align: center;
+         align-items: center;
+         -webkit-box-pack: center;
+         justify-content: center;
+         gap: 4px;
+     }
+ }
+
+ #next-button,
+ #studyInfo-button,
+ #physician-button {
+     display: inline-block;
+     border: 0px;
+     margin: 0px;
+     text-transform: none;
+     text-decoration: none;
+     border-radius: 4px;
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-size: 14px;
+     line-height: 1.14286;
+     font-weight: 700;
+     cursor: pointer;
+     padding: 12px 24px;
+     background-color: rgb(4, 122, 136);
+     color: rgb(255, 255, 255);
+     opacity: 1;
+ }
+
+ #next-button:disabled,
+ #studyInfo-button:disabled {
+     opacity: 0.5;
+     cursor: auto;
+     pointer-events: none;
+
+ }
+
+ #next-button:hover,
+ #studyInfo-button:hover,
+ #physician-button:hover {
+     background-color: rgb(5, 79, 87);
+ }
+
+ #next-button:active,
+ #studyInfo-button:active {
+     background-color: rgb(5, 79, 87);
+ }
+
+ .css-1vfbu0j-InlineContainer {
+     display: flex;
+     flex-flow: wrap;
+ }
+#finish-setup-error{
+    display: none;
+}
+#terms-container{
+    display: flex;
+    flex-direction: row ;
+}
+#terms-error{
+    display: none;
+    flex-direction: row;
+    gap: 8px;
+}
+
+button[type=checkbox] {
+    display: block;
+}
+#terms-text{
+    width: 63vw;
+   
+}
+.css-1axba1z-StyledContainer{
+    display: block  ;
+}
+ @media screen {
+     .css-1vfbu0j-InlineContainer {
+         -webkit-box-align: center;
+         align-items: center;
+         -webkit-box-pack: end;
+         justify-content: flex-end;
+         gap: 12px;
+     }
+ }
+
+ /*! CSS Used fontfaces */
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 900;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff");
+ }
+
+
+
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~56d133a9.144f90cda209be5a.css */
+ div:focus {
+     outline: 0;
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box;
+ }
+
+ h1 {
+     font-size: 1.953em;
+     margin: .67em 0;
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box !important;
+ }
+
+ ::selection {
+     text-shadow: none !important;
+     background-color: #dae0e6 !important;
+ }
+
+ /*! CSS Used from: Embedded */
+ .css-cgabep-StyledBox {
+     box-sizing: border-box;
+ }
+
+ @media screen {
+     .css-cgabep-StyledBox {
+         padding: 0px;
+         text-align: left;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .css-cgabep-StyledBox {
+         padding-left: 0px;
+         padding-right: 0px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-cgabep-StyledBox {
+         padding-left: 0px;
+         padding-right: 0px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-cgabep-StyledBox {
+         padding-left: 0px;
+         padding-right: 0px;
+     }
+ }
+
+ @media screen {
+     .css-cgabep-StyledBox {
+         padding-bottom: 24px;
+     }
+ }
+
+ .css-1ff2k4x-StackContainer {
+     display: flex;
+     flex-direction: column;
+ }
+
+ @media screen {
+     .css-tn47vl-StackItem {
+         margin-top: 8px;
+     }
+ }
+
+ .css-tn47vl-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-tn47vl-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ .css-6kd9ye-InlineContainer {
+     display: flex;
+     flex-flow: wrap;
+ }
+
+ @media (max-width: 768px) {
+     .css-6kd9ye-InlineContainer {
+         -webkit-box-pack: start;
+         justify-content: flex-start;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-6kd9ye-InlineContainer {
+         -webkit-box-pack: justify;
+         justify-content: space-between;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-6kd9ye-InlineContainer {
+         -webkit-box-pack: justify;
+         justify-content: space-between;
+     }
+ }
+
+ @media screen {
+     .css-6kd9ye-InlineContainer {
+         align-items: flex-start;
+         gap: 4px;
+     }
+ }
+
+ @media screen {
+     .css-1c20xzu-StackItem {
+         margin-top: 4px;
+     }
+ }
+
+ .css-1c20xzu-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-1c20xzu-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ .css-4tgtrq-H1 {
+     color: rgb(26, 28, 28);
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-weight: 900;
+     margin: 0px;
+     overflow-wrap: normal;
+     hyphens: none;
+     font-size: 26px;
+     line-height: 1.25;
+     margin-bottom: 1vw
+ }
+
+ /*! CSS Used fontfaces */
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 900;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff");
+ }
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~56d133a9.383e707778232955.css */
+ div:focus {
+     outline: 0;
+ }
+
+ /*! CSS Used from: Embedded */
+ button,
+ input {
+     overflow: visible;
+ }
+
+ [type=checkbox] {
+     box-sizing: border-box;
+     padding: 0;
+ }
+
+ * {
+     box-sizing: border-box;
+ }
+
+ button,
+ input,
+ select {
+     margin: 0;
+ }
+
+ a {
+     text-decoration: none;
+     background-color: transparent;
+     -webkit-text-decoration-skip: objects;
+ }
+
+ svg:not(:root) {
+     overflow: hidden;
+ }
+
+ button,
+ select {
+     text-transform: none;
+ }
+
+ button {
+     font-family: inherit;
+     -webkit-font-feature-settings: inherit;
+     font-feature-settings: inherit;
+     -webkit-font-smoothing: inherit;
+     -moz-osx-font-smoothing: inherit;
+     text-rendering: inherit;
+ }
+
+ [type=submit],
+ button {
+     -webkit-appearance: button;
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box !important;
+ }
+
+ ::selection {
+     text-shadow: none !important;
+     background-color: #dae0e6 !important;
+ }
+
+ /*! CSS Used from: Embedded */
+ .css-o2p6ar-StyledIcon {
+     display: none;
+     width: 24px;
+     height: 24px;
+     color: inherit;
+ }
+
+ .css-o2p6ar-StyledIcon>svg {
+     width: 24px;
+     height: 24px;
+ }
+
+ .css-1ff2k4x-StackContainer {
+     display: flex;
+     flex-direction: column;
+ }
+
+ @media screen {
+     .css-tn47vl-StackItem {
+         margin-top: 8px;
+     }
+ }
+
+ .css-tn47vl-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-tn47vl-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ @media screen {
+     .css-1c20xzu-StackItem {
+         margin-top: 4px;
+     }
+ }
+
+ .css-1c20xzu-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-1c20xzu-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ @media (max-width: 768px) {
+     .css-1cctb9e-StackItem {
+         margin-top: 16px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-1cctb9e-StackItem {
+         margin-top: 24px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-1cctb9e-StackItem {
+         margin-top: 32px;
+     }
+ }
+
+ .css-1cctb9e-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-1cctb9e-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ .css-1trjn7t-StyledContainer {
+     position: relative;
+     background-color: rgb(255, 255, 255);
+ }
+
+ @media screen {
+     .css-1trjn7t-StyledContainer {
+         border-radius: 12px;
+     }
+ }
+
+ .css-1trjn7t-StyledContainer::after {
+     content: " ";
+     position: absolute;
+     top: 0px;
+     left: 0px;
+     width: 100%;
+     height: 100%;
+     pointer-events: none;
+     border-radius: inherit;
+     box-shadow: rgba(0, 0, 0, 0.004) 0px 0.3px 0.6px, rgba(0, 0, 0, 0.07) 0px 2px 5px;
+ }
+
+ .css-os80wo-StyledDiv {
+     border-radius: inherit;
+     overflow: visible;
+     height: 100%;
+ }
+
+ .css-os80wo-StyledDiv> :last-child {
+     border-bottom-left-radius: inherit;
+     border-bottom-right-radius: inherit;
+ }
+
+ .css-os80wo-StyledDiv> :first-child {
+     border-top-left-radius: inherit;
+     border-top-right-radius: inherit;
+ }
+
+ .css-1agsh0x-StyledBox {
+     box-sizing: border-box;
+ }
+
+ @media (max-width: 768px) {
+     .css-1agsh0x-StyledBox {
+         padding: 16px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-1agsh0x-StyledBox {
+         padding: 24px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-1agsh0x-StyledBox {
+         padding: 32px;
+     }
+ }
+
+ @media screen {
+     .css-1agsh0x-StyledBox {
+         text-align: left;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .css-1agsh0x-StyledBox {
+         padding-top: 16px;
+         padding-bottom: 16px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-1agsh0x-StyledBox {
+         padding-top: 24px;
+         padding-bottom: 24px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-1agsh0x-StyledBox {
+         padding-top: 32px;
+         padding-bottom: 32px;
+     }
+ }
+
+ .css-yugcle-Columns {
+     width: auto;
+     display: flex;
+     place-items: stretch;
+     justify-content: stretch;
+     -webkit-box-align: stretch;
+     flex-flow: wrap;
+ }
+
+ @media (max-width: 768px) {
+     .css-yugcle-Columns {
+         margin-right: -12px;
+         margin-bottom: -12px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-yugcle-Columns {
+         margin-right: -16px;
+         margin-bottom: -16px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-yugcle-Columns {
+         margin-right: -24px;
+         margin-bottom: -24px;
+     }
+ }
+
+ @media screen {
+     .css-yugcle-Columns {
+         align-items: flex-start;
+         -webkit-box-pack: start;
+         justify-content: flex-start;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .css-yugcle-Columns>.e1ostpc10 {
+         margin-bottom: 12px;
+         padding-right: 12px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-yugcle-Columns>.e1ostpc10 {
+         margin-bottom: 16px;
+         padding-right: 16px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-yugcle-Columns>.e1ostpc10 {
+         margin-bottom: 24px;
+         padding-right: 24px;
+     }
+ }
+
+ .css-qxlca9-Column {
+     box-sizing: border-box;
+ }
+
+ @media screen {
+     .css-qxlca9-Column {
+         width: 100%;
+         align-self: auto;
+     }
+ }
+
+ .css-qxlca9-Column:empty {
+     width: 0px;
+     flex: 0 0 auto;
+ }
+
+ .css-bfvjxm-H6 {
+     color: rgb(96, 117, 133);
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-weight: 900;
+     margin: 0px;
+     overflow-wrap: normal;
+     hyphens: none;
+     font-size: 12px;
+     line-height: 1.33333;
+     letter-spacing: 0.5px;
+     text-transform: uppercase;
+ }
+
+ .css-kgxkr3-H3 {
+     color: rgb(26, 28, 28);
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-weight: 900;
+     margin: 0px;
+     overflow-wrap: normal;
+     hyphens: none;
+     font-size: 20px;
+     line-height: 1.33333;
+ }
+
+ .css-vfcekc-StyledLink {
+     cursor: pointer;
+     background: none;
+     border: none;
+     padding: 0px;
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     text-decoration-line: none;
+     color: rgb(96, 117, 133);
+     text-decoration-color: rgb(163, 178, 189);
+ }
+
+ .css-vfcekc-StyledLink:hover {
+     text-decoration-line: underline;
+     text-decoration-thickness: 0.125em;
+     text-decoration-color: rgb(96, 117, 133);
+     color: rgb(26, 28, 28);
+ }
+
+ .css-1ytihik-StyledFormField {
+     cursor: not-allowed;
+     opacity: 0.3;
+ }
+
+ .css-1ytihik-StyledFormField>* {
+     pointer-events: none;
+ }
+
+ .css-15cms52-InlineContainer {
+     display: flex;
+     flex-flow: wrap;
+ }
+
+ @media screen {
+     .css-15cms52-InlineContainer {
+         align-items: flex-end;
+         -webkit-box-pack: start;
+         justify-content: flex-start;
+         gap: 4px;
+     }
+ }
+
+ .css-1him6kl-StyledContainer {
+     position: relative;
+ }
+
+
+
+
+
+ .css-4bfi5u-StyledInput::placeholder {
+     font-style: italic;
+     color: rgb(96, 117, 133);
+     opacity: 1;
+ }
+ .css-4bfi5u-StyledInput:focus,.css-58i4y6-StyledInput:focus{
+    outline: 2px solid #94b3e4;
+ }
+ .css-6jn8th-StyledIconContainer {
+     position: absolute;
+     right: 8px;
+ }
+
+ .css-14p1ltg-StyledText {
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     margin: 0px;
+     text-transform: none;
+     text-align: left;
+     font-weight: 400;
+     color: rgb(96, 117, 133);
+     font-size: 16px;
+     line-height: 1.5;
+     overflow-wrap: normal;
+ }
+
+ @media screen {
+     .css-14p1ltg-StyledText {
+         hyphens: none;
+     }
+ }
+
+ .css-183co0w-StyledInputWrap {
+     z-index: 0;
+     position: absolute;
+     pointer-events: none;
+     width: 100%;
+     bottom: 0px;
+     left: 0px;
+ }
+
+ .css-lxfedv-StyledInput {
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-size: 16px;
+     line-height: 1.5;
+     border-radius: 4px;
+     border-width: 1px;
+     border-style: solid;
+     width: 100%;
+     padding: calc(7px) calc(36px) calc(7px) 12px;
+     box-sizing: border-box;
+     color: rgb(26, 28, 28);
+     border-color: rgb(163, 178, 189);
+     background-color: rgb(255, 255, 255);
+ }
+
+ .css-lxfedv-StyledInput::placeholder {
+     font-style: italic;
+     color: rgb(96, 117, 133);
+     opacity: 1;
+ }
+
+ .css-1toof9x-HiddenSelectInput {
+     display: none;
+ }
+
+ .css-o2qfki-StyledText {
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     margin: 0px;
+     text-transform: none;
+     text-align: left;
+     font-weight: 400;
+     color: rgb(96, 117, 133);
+     font-size: 14px;
+     line-height: 1.42857;
+     overflow-wrap: normal;
+ }
+
+ @media screen {
+     .css-o2qfki-StyledText {
+         hyphens: none;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .css-13egy6p-StackItem {
+         margin-top: 12px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-13egy6p-StackItem {
+         margin-top: 16px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-13egy6p-StackItem {
+         margin-top: 24px;
+     }
+ }
+
+ .css-13egy6p-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-13egy6p-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ .css-1qxxtqf-H5 {
+     color: rgb(26, 28, 28);
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-weight: 900;
+     margin: 0px;
+     overflow-wrap: normal;
+     hyphens: none;
+     font-size: 16px;
+     line-height: 1.5;
+ }
+
+ .css-1nhv2hm-Column {
+     box-sizing: border-box;
+ }
+
+ @media (max-width: 768px) {
+     .css-1nhv2hm-Column {
+         width: 100%;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-1nhv2hm-Column {
+         width: 50%;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-1nhv2hm-Column {
+         width: 50%;
+     }
+ }
+
+ @media screen {
+     .css-1nhv2hm-Column {
+         align-self: auto;
+     }
+ }
+
+ .css-1nhv2hm-Column:empty {
+     width: 0px;
+     flex: 0 0 auto;
+ }
+
+ .css-qzl379-StyledDiv {
+     visibility: visible;
+ }
+
+ .css-ef5oxn-StyledContainer:hover {
+     cursor: pointer;
+ }
+
+ .css-ef5oxn-StyledContainer:hover input:checked+.e2csv9t2 {
+     background: rgb(5, 79, 87);
+ }
+
+ .css-ef5oxn-StyledContainer:hover .e2csv9t2 {
+     border-color: rgb(96, 117, 133);
+ }
+
+ .css-kejeg8-InlineContainer {
+     display: none;
+     flex-flow: row;
+ }
+#terms_container{
+
+     flex-flow: row;
+    display: flex;
+}
+ @media screen {
+     .css-kejeg8-InlineContainer {
+         align-items: flex-start;
+         -webkit-box-pack: start;
+         justify-content: flex-start;
+         gap: 8px;
+     }
+ }
+ input:checked + .css-zpri0d-StyledFakeInput, input:indeterminate + .css-zpri0d-StyledFakeInput {
+    border: 0px;
+    background: rgb(4, 122, 136);
+}
+.css-zpri0d-StyledFakeInput {
+    box-sizing: border-box;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    border: 2px solid rgb(163, 178, 189);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    cursor: pointer;
+    background: rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+    line-height: 0;
+}
+ .css-1n11zyc-StyledInputContainer {
+     user-select: none;
+     display: block;
+     position: relative;
+     width: 24px;
+     height: 24px;
+     box-sizing: border-box;
+ }
+
+ .css-o6hub4-StyledRealInput {
+     opacity: 0;
+     cursor: pointer;
+     height: 0px;
+     width: 0px;
+     position: absolute;
+ }
+ .css-o6hub4-StyledRealInput>svg
+ .css-zpri0d-StyledFakeInputcss-zpri0d-StyledFakeInput {
+     box-sizing: border-box;
+     width: 24px;
+     height: 24px;
+     border-radius: 4px;
+     border: 2px solid rgb(163, 178, 189);
+     position: absolute;
+     top: 0px;
+     left: 0px;
+     display: flex;
+     -webkit-box-align: center;
+     align-items: center;
+     -webkit-box-pack: center;
+     justify-content: center;
+     cursor: pointer;
+     background: rgb(255, 255, 255);
+     color: rgb(255, 255, 255);
+     line-height: 0;
+ }
+
+ .css-zpri0d-StyledFakeInput svg {
+     opacity: 0;
+ }
+
+ input:checked+.css-zpri0d-StyledFakeInput {
+     border: 0px;
+     background: rgb(4, 122, 136);
+ }
+
+ input:checked+.css-zpri0d-StyledFakeInput svg {
+     opacity: 1;
+ }
+
+ input:disabled+.css-zpri0d-StyledFakeInput {
+     pointer-events: none;
+ }
+
+ .css-7tpa0d-StyledIcon {
+     width: 16px;
+     height: 16px;
+     color: inherit;
+ }
+
+ .css-7tpa0d-StyledIcon>svg {
+     width: 16px;
+     height: 16px;
+ }
+
+ .css-1umk414-StyledText {
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     margin: 0px;
+     text-transform: none;
+     text-align: left;
+     font-weight: 400;
+     color: rgb(26, 28, 28);
+     font-size: 16px;
+     line-height: 1.5;
+     overflow-wrap: normal;
+ }
+
+ @media screen {
+     .css-1umk414-StyledText {
+         hyphens: none;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .css-1burvbs-StackItem {
+         margin-top: 24px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-1burvbs-StackItem {
+         margin-top: 32px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-1burvbs-StackItem {
+         margin-top: 48px;
+     }
+ }
+
+ .css-1burvbs-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-1burvbs-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ .css-58i4y6-StyledInput {
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-size: 16px;
+     line-height: 1.5;
+     border-radius: 4px;
+     border-width: 1px;
+     border-style: solid;
+     width: 100%;
+     padding: calc(7px) 12px;
+     box-sizing: border-box;
+     color: rgb(26, 28, 28);
+     border-color: rgb(163, 178, 189);
+     background-color: rgb(255, 255, 255);
+ }
+
+ .css-58i4y6-StyledInput::placeholder {
+     font-style: italic;
+     color: rgb(96, 117, 133);
+     opacity: 1;
+ }
+
+ .css-bvoutv-StyledLink {
+     cursor: pointer;
+     background: none;
+     border: none;
+     padding: 0px;
+     font-size: 16px;
+     font-weight: 400;
+     line-height: 1.5;
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     text-decoration-line: underline;
+     color: rgb(26, 28, 28);
+     text-decoration-color: rgb(163, 178, 189);
+ }
+
+ .css-bvoutv-StyledLink:hover {
+     text-decoration-line: underline;
+     text-decoration-thickness: 0.125em;
+     text-decoration-color: rgb(96, 117, 133);
+     color: rgb(26, 28, 28);
+ }
+
+ .css-myllwd-StyledBox {
+     box-sizing: border-box;
+ }
+
+ @media screen {
+     .css-myllwd-StyledBox {
+         padding: 32px;
+         text-align: left;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .css-myllwd-StyledBox {
+         padding-bottom: 12px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-myllwd-StyledBox {
+         padding-bottom: 16px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-myllwd-StyledBox {
+         padding-bottom: 24px;
+     }
+ }
+
+ @media screen {
+     .css-myllwd-StyledBox {
+         padding-left: 0px;
+         padding-right: 0px;
+         padding-top: 0px;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .css-1lkt67q-StackItem {
+         margin-top: 8px;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1280px) {
+     .css-1lkt67q-StackItem {
+         margin-top: 12px;
+     }
+ }
+
+ @media (min-width: 1280px) {
+     .css-1lkt67q-StackItem {
+         margin-top: 16px;
+     }
+ }
+
+ .css-1lkt67q-StackItem:first-of-type {
+     margin-top: 0px;
+ }
+
+ .css-1lkt67q-StackItem:empty {
+     margin-top: 0px;
+ }
+
+ .css-hrjkhq-StyledLabelHint {
+     color: rgb(96, 117, 133);
+     text-transform: uppercase;
+     font-weight: 400;
+
+ }
+
+
+
+ .css-1tsw76i-StyledButton {
+     display: inline-block;
+     border: 0px;
+     margin: 0px;
+     text-transform: none;
+     text-decoration: none;
+     border-radius: 4px;
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     font-size: 14px;
+     line-height: 1.14286;
+     font-weight: 700;
+     cursor: pointer;
+     padding: 12px 24px;
+     background-color: rgb(4, 122, 136);
+     color: rgb(255, 255, 255);
+ }
+
+ .css-1tsw76i-StyledButton:hover {
+     background-color: rgb(5, 79, 87);
+ }
+
+ .css-1tsw76i-StyledButton:active {
+     background-color: rgb(5, 79, 87);
+ }
+
+ .css-alg3yb-InlineContainer {
+     display: flex;
+     flex-flow: row;
+ }
+
+ @media screen {
+     .css-alg3yb-InlineContainer {
+         -webkit-box-align: center;
+         align-items: center;
+         -webkit-box-pack: center;
+         justify-content: center;
+         gap: 4px;
+     }
+ }
+
+ .css-1jlbg0g-StyledBox {
+     box-sizing: border-box;
+ }
+
+ @media screen {
+     .css-1jlbg0g-StyledBox {
+         padding: 32px;
+         text-align: left;
+     }
+ }
+
+ @media screen {
+     .css-1jlbg0g-StyledBox {
+         padding-top: 24px;
+         padding-bottom: 24px;
+     }
+ }
+
+ /*! CSS Used fontfaces */
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff");
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box;
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box !important;
+ }
+
+ ::selection {
+     text-shadow: none !important;
+     background-color: #dae0e6 !important;
+ }
+
+ /*! CSS Used from: Embedded */
+ .css-vzlz6x-StyledText {
+     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+     margin: 0px;
+     text-transform: none;
+     text-align: left;
+     font-weight: 400;
+     color: rgb(192, 39, 37);
+     font-size: 14px;
+     line-height: 1.42857;
+     overflow-wrap: normal;
+ }
+
+ @media screen {
+     .css-vzlz6x-StyledText {
+         hyphens: none;
+     }
+ }
+
+ /*! CSS Used fontfaces */
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 400;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 900;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff");
+ }
+
+ /*! CSS Used from: https://next.amboss.com/us/static/assets/app~56d133a9.383e707778232955.css */
+ div:focus {
+     outline: 0;
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box;
+ }
+
+ svg:not(:root) {
+     overflow: hidden;
+ }
+
+ /*! CSS Used from: Embedded */
+ * {
+     box-sizing: border-box !important;
+ }
+
+ ::selection {
+     text-shadow: none !important;
+     background-color: #dae0e6 !important;
+ }
+
+ /*! CSS Used from: Embedded */
+ .css-1we3tsc-StyledBox {
+     box-sizing: border-box;
+     display: flex;
+     flex-direction: row;
+     gap: 8px;
+ }
+
+ @media screen {
+     .css-1we3tsc-StyledBox {
+         padding: 0px;
+         text-align: left;
+     }
+ }
+
+ @media screen {
+     .css-1we3tsc-StyledBox {
+         padding-top: 2px;
+     }
+ }
+
+ .css-1dfwkvt-StyledIcon {
+     width: 16px;
+     height: 16px;
+     color: rgb(220, 72, 71);
+ }
+
+ .css-1dfwkvt-StyledIcon>svg {
+
+     width: 16px;
+     height: 16px;
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 700;
+     font-style: italic;
+     font-display: swap;
+     src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff");
+ }
+
+ @font-face {
+     font-family: Lato;
+     font-weight: 900;
+     font-style: normal;
+     font-display: swap;
+     src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff");
+ }

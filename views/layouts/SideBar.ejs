@@ -8,15 +8,16 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 </head>
-<div class="sidebar" id="sidebar">
+<div class="circle-button toggled" onclick="toggleSidebar()">
+   <svg style="position: relative; z-index: 15; right: -16%; bottom: -13%;" xmlns="http://www.w3.org/2000/svg"
+      fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      class="feather feather-chevron-left " viewBox="0 0 34 34" role="img">
+      <path d="m15 18-6-6 6-6"></path>
+   </svg>
+</div>
+<div class="sidebar open" id="sidebar">
    <input id="user-id" hidden value="<%= user._id %>">
-   <div class="circle-button collapsed" onclick="toggleSidebar()">
-      <svg style="position: relative; z-index: 15; right: -16%; bottom: -13%;" xmlns="http://www.w3.org/2000/svg"
-         fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-         class="feather feather-chevron-left " viewBox="0 0 34 34" role="img">
-         <path d="m15 18-6-6 6-6"></path>
-      </svg>
-   </div>
+   
    <ul>
       <li>
          <a id="home" href="#">
@@ -140,7 +141,7 @@
                            </svg>
                         </div>
                         <ul id="projectbranch-list" class="education-dropdown-options">
-                           <li class="level1">A-Medicine</li>
+                           <!-- <li class="level1">A-Medicine</li> -->
                            <li class="unselectable">Internal Medicine</li>
                            <li data-value="Cardiology">Cardiology</li>
                            <li data-value="Pulmonology">Pulmonology</li>

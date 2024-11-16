@@ -1,7 +1,7 @@
 // middlewares/authMiddleware.js
 const jwt = require('jsonwebtoken');
 const User = require('../models/User'); // Adjust the path as necessary
-const checkBanStatus = require('./banMiddleware');
+
 require('dotenv').config()
 // Middleware function to verify JWT
 const authMiddleware =(allowedRoles)=> async (req, res, next) => {
