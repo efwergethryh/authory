@@ -41,8 +41,8 @@ passport.use(new GoogleStrategy({
     callbackURL: 'http://ictoob.com/auth/google/callback',
     passReqToCallback: true,
     scope: ['profile', 'email', 'name'] // Specify the necessary scopes
-}, async (req, accessToken, refreshToken, profile, done) => {
-    const { sub, name, email, picture } = profile._json;
+}, async (req, profile, done) => {
+    const { sub,  email, picture,name, given_name, family_name } = profile._json;
     const userId = await generateUserId()
 
     try {
@@ -68,16 +68,13 @@ passport.use(new GoogleStrategy({
 
             done(null, existingUser);
         } else {
-            const firstName = profile.given_name;
-            const lastName = profile.family_name;
-            const name = `${firstName} ${lastName}`; 
-            console.log(firstName, lastName, name);
+            
             
             const hashedPassword = await bcrypt.hash('google-auth', 10);  // No password needed, but still hash for security reasons
             const newUser = new User({
                 name,
-                firstName,
-                lastName,
+                firstName:given_name,
+                lastName:family_name,
                 password: hashedPassword,
                 email: email,
                 profile_picture: picture,
