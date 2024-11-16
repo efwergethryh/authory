@@ -87,7 +87,7 @@ passport.use(new FacebookStrategy({
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     callbackURL: "https://ictoob.com/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'emails', 'photos'],
-    scope: ['email'], // Specify required fields
+    scope: ['email'], 
     passReqToCallback: true
   },
   async (req, accessToken, refreshToken, profile, done) => { 

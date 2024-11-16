@@ -1505,6 +1505,7 @@ button[id="send_message"] {
     top: 1.6vh;
     left: 0;
     /* z-index: -1; */
+    background-size:contain
 }
 
 .avatar-upload {
