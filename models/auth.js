@@ -89,7 +89,7 @@ passport.use(new GoogleStrategy({
 
             // Generate a token for the new user and set it as a cookie
             const accessToken = generateToken(newUser, 'access', 1);
-            const refreshToken = generateToken(existingUser, 'refresh', 1);
+            const refreshToken = generateToken(newUser, 'refresh', 1);
             const refreshTokenRecord = new RefreshToken({
                 userId: newUser._id,
                 token: refreshToken,
