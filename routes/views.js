@@ -1,5 +1,7 @@
 const express = require('express')
 const viewsRouter = require('../Controllers/viewsController')
+const userController = require('../Controllers/userController')
+
 const router = express.Router()
 const passport = require('passport')
 
@@ -33,4 +35,5 @@ router.get('/conversation-layout', viewsRouter.conv_layout)
 // router.get('/custom-register',authMiddleware.authMiddleware([1,2,3]),)
 router.get('/posts/:postId', viewsRouter.view_post)
 router.get('/pages/:page', viewsRouter.render_page)
+router.get('/api/universities/:value', userController.fetchUniversities);
 module.exports = router

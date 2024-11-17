@@ -77,12 +77,12 @@ const post_storage = multer.diskStorage({
 const upload_post = multer({
     storage:post_storage
 })
-//,upload_post.single('post-image')
 const router = express.Router();
+//,upload_post.single('post-image')
+
+
 router.post('/get-user', userController.get_user);
 router.post('/create-owner',userController.createOwner)
-
-
 
 
 router.use(authMiddleware([1,2,3]));

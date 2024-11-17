@@ -1,6 +1,7 @@
 
 const User = require('../models/User');
 const mongoose = require('mongoose');
+const axios = require('axios')
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 const get_user = async (req, res) => {
@@ -8,15 +9,15 @@ const get_user = async (req, res) => {
         let searchCriteria = []
         const { query } = req.body
         console.log(query);
-        
+
         // if (mongoose.Types.ObjectId.isValid(query)) {
         //     searchCriteria.push({  });
         // }
-        searchCriteria.push({_id: query},{ email: query }, { name: query });
+        searchCriteria.push({ _id: query }, { email: query }, { name: query });
 
         const user = await User.find({ $or: searchCriteria }).select('-password');
-        console.log("User",user);
-        
+        console.log("User", user);
+
         res.status(200).json({ user })
     } catch (error) {
         console.log(error);
@@ -29,15 +30,15 @@ const get_users = async (req, res) => {
         let users;
         const { user_type } = req.params
         console.log(user_type);
-        
+
         if (!res) {
             users = await User.find();
             return users
         }
         console.log(user_type);
-        
+
         const id = res.locals.user._id
-        users = await User.find({ _id: { $ne: id },user_type}).select('-password')
+        users = await User.find({ _id: { $ne: id }, user_type }).select('-password')
         res.status(200).json({ users })
     }
     catch (error) {
@@ -52,6 +53,15 @@ const hashpassword = async (password) => {
 
     return hashedPassword
 };
+let fetch;
+
+async function loadFetch() {
+    fetch = (await import('node-fetch')).default; // Fetch is now assigned globally
+}
+
+// Call loadFetch only once when your app starts up
+loadFetch()
+
 let creationStatus = process.env.ALLOWED === 'true';
 const createOwner = async (req, res) => {
     try {
@@ -64,7 +74,7 @@ const createOwner = async (req, res) => {
             } else {
                 const hashedPassword = await hashpassword(body.password);
                 const Admin = new User({
-                    _id:body.phone_number,
+                    _id: body.phone_number,
                     name: body.name,
                     email: body.email,
                     password: hashedPassword,
@@ -86,7 +96,7 @@ const createOwner = async (req, res) => {
 
                     const hashedPassword = await hashpassword(body.password);
                     const Owner = new User({
-                        _id:body.phone_number,
+                        _id: body.phone_number,
                         name: body.name,
                         email: body.email,
                         password: hashedPassword,
@@ -121,7 +131,7 @@ const ban_user = async (req, res) => {
     } catch (error) {
         res.json({ error })
     }
-}   
+}
 const degrade_admin = async (req, res) => {
     const { adminId } = req.params
     try {
@@ -158,7 +168,28 @@ const set_admin = async (req, res) => {
 
     }
 }
+const fetchUniversities = async (req, res) => {
+    const { value } = req.params; // Get the country value from the URL params
+
+    
+
+    try {
+        // Make the GET request using Axios
+        const apiResponse = await axios.get(`http://universities.hipolabs.com/search?country=${value}`);
+
+        // Axios automatically parses the response as JSON, so no need for .json()
+        const data = apiResponse.data; // Extract the data from the response
+
+        // Log the data for debugging
+
+        // Send the data back in the response
+        res.json(data);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        res.status(500).json({ error: 'Failed to fetch data' }); // Handle errors
+    }
+}
 module.exports = {
     get_user, get_users,
-    createOwner, ban_user, degrade_admin,set_admin
+    createOwner, ban_user, degrade_admin, set_admin, fetchUniversities
 }

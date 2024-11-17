@@ -7,6 +7,7 @@ const router = express.Router()
 const uploadDir = path.join('public/profile_images/');
 const passport = require('passport')
 const authController = require('../Controllers/authController')
+
 const registerationMiddleware = require('../Middlewares/registerationMiddleware')
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true }); // Create the directory if it does not exist

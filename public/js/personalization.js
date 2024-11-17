@@ -53,36 +53,37 @@ document.addEventListener('DOMContentLoaded', function () {
             const phoneNumber = document.getElementsByName('phone_number')[0]
 
 
-            
+
 
             uni_selection.addEventListener('focus', async function () {
                 unidropdown.innerHTML = ''
                 let url = ''
-                url = `http://universities.hipolabs.com/search?country=${searchInput.value}`;
+                url = `http://localhost:3000/api/universities/${searchInput.value}`;
 
-                await fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-
-
-                        if (data.length === 0) unidropdown.innerHTML = 'No resutlts'
-                        data.forEach(uni => {
-                            const uniName = uni.name;
-                            if (uniName) {
-                                const li = document.createElement('li');
-                                li.textContent = uniName;
-                                li.dataset.name = uniName;
-                                unidropdown.appendChild(li);
-                            } else {
-                                console.warn('Country name is not available:', country);
-                            }
-                        });
-                        unidropdown.style.display = 'flex'
-                        setupDropdownSearch(uni_selection, unidropdown)
-
-                    })
+                const response = await fetch(url)
+                console.log(response);
+                
+                if (response.ok) {
+                    const data = await response.json()
+                    console.log('data',data);
+                    
+                    if (data.length === 0) unidropdown.innerHTML = 'No resutlts'
+                    data.forEach(uni => {
+                        const uniName = uni.name;
+                        if (uniName) {
+                            const li = document.createElement('li');
+                            li.textContent = uniName;
+                            li.dataset.name = uniName;
+                            unidropdown.appendChild(li);
+                        } else {
+                            console.warn('Country name is not available:', country);
+                        }
+                    });
+                    unidropdown.style.display = 'flex'
+                    setupDropdownSearch(uni_selection, unidropdown)
+                }
             })
-            setupDropdownSearch(project_selection,project_dropdown)
+            setupDropdownSearch(project_selection, project_dropdown)
             lastName.addEventListener('blur', function () {
                 if (lastName.value === '') lastNameE.querySelector('.css-kejeg8-InlineContainer').style.display = 'flex'
             })
@@ -136,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 }
             })
-            
+
         })
 
         const selections = document.querySelectorAll('.css-ttz7y2-StyledFakeInput')
