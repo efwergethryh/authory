@@ -973,6 +973,10 @@
     position: relative;
     left: -25%;
 }
+.error{
+    display: none;
+    color: red;
+}
  /*! CSS Used from: Embedded */
  * {
      box-sizing: border-box;

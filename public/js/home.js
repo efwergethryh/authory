@@ -2262,13 +2262,16 @@ function toggleSidebar() {
     const circleButton = document.querySelector('.circle-button');
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('maincontent');
-
+    const label = document.getElementById('joined')
+    console.log(label);
+    
     // Check if the sidebar is closed and toggle accordingly
     if (sidebar.classList.contains('closed')) {
         // Sidebar is closed, open it
         sidebar.classList.remove('closed');
         sidebar.classList.add('open');
         mainContent.classList.add('shifted');
+        label.classList.add('shifted');
         // Shift main content to make space for the sidebar
         circleButton.classList.remove('collapsed');
         circleButton.classList.add('toggled'); // Rotate the button
@@ -2276,7 +2279,8 @@ function toggleSidebar() {
         // Sidebar is open, close it
         sidebar.classList.remove('open');
         sidebar.classList.add('closed');
-        mainContent.classList.remove('shifted'); // Revert main content position
+        mainContent.classList.remove('shifted');
+        label.classList.remove('shifted'); // Revert main content position
         circleButton.classList.remove('toggled');
         circleButton.classList.add('collapsed');  // Reset button rotation
     }

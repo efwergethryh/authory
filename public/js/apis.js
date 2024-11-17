@@ -142,11 +142,43 @@ function display_Message(message) {
     }
 }
 
-
-
 document.addEventListener('DOMContentLoaded', async () => {
 
     let cropper;
+
+    const togglePassword = document.getElementById('passowrd-Toggle');
+    const passwordInput = document.getElementById('password')
+
+    togglePassword.addEventListener('click', function () {
+        // Toggle password visibility
+        const type = passwordInput.type === 'password' ? 'text' : 'password';
+        passwordInput.type = type;
+
+        const closedEyeSVG = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+            <path fill="currentColor" fill-rule="evenodd" d="M12.3 12.57l2.286 2.344L16 13.5 2.914.086 1.5 1.5l2.013 2.063c-.537.396-1.007.827-1.407 1.246a13.327 13.327 0 00-1.65 2.135 2 2 0 000 2.112c.053.084.111.176.176.275.332.505.826 1.18 1.474 1.86C3.387 12.531 5.381 14 8 14c1.707 0 3.148-.623 4.3-1.43zm-1.42-1.455l-.868-.89a3 3 0 01-4.187-4.292l-.899-.92c-.509.345-.968.753-1.373 1.177A11.328 11.328 0 002.155 8c.044.07.093.148.148.232.284.432.705 1.007 1.25 1.577C4.66 10.97 6.165 12 8 12c1.078 0 2.043-.355 2.88-.884zM7.225 7.368A1 1 0 008.613 8.79zm-.016-5.323l2.146 2.146c1.231.35 2.271 1.14 3.092 2A11.335 11.335 0 0113.845 8a10.71 10.71 0 01-.269.412l1.435 1.435a13.598 13.598 0 00.533-.791 2 2 0 000-2.112 13.314 13.314 0 00-1.65-2.135C12.613 3.467 10.619 2 8 2c-.27 0-.534.017-.79.046z" clip-rule="evenodd"></path>
+            </svg>
+            `;
+
+        const openEyeSVG = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+            <g fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" clip-rule="evenodd">
+                <path d="M1 8s2.545-5 7-5 7 5 7 5-2.546 5-7 5c-4.455 0-7-5-7-5z"></path>
+                <path d="M8 10a2 2 0 100-4 2 2 0 000 4z"></path>
+            </g>
+            </svg>
+        `;
+
+        // Get current icon
+        const currentIcon = this.innerHTML.trim();
+
+        // Toggle the icon
+        if (currentIcon.includes("M12.3 12.57")) {
+            this.innerHTML = openEyeSVG; // Switch to open eye
+        } else {
+            this.innerHTML = closedEyeSVG; // Switch to closed eye
+        }
+    });
 
     const loginButton = document.getElementById('login-button');
     const create_owner = document.getElementById('create-owner')

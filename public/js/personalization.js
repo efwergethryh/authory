@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function () {
-
+    const phoneInputMask = new Inputmask("(999) 999-9999");
     const button = document.getElementById('next-button')
     const countryProffession_dropdown = document.getElementById('country-proffession-dropdown')
     const countryProffession_selection = document.getElementById('country-proffession-selection')
@@ -51,22 +51,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const phoneNumberE = document.querySelector('[data-e2e-test-id="phone-number-input"]');
             const phoneNumber = document.getElementsByName('phone_number')[0]
+
             getUniversities()
 
 
-            searchInput.addEventListener('focus',getUniversities)
+            searchInput.addEventListener('focus', getUniversities)
             async function getUniversities() {
                 unidropdown.innerHTML = ''
                 let url = ''
                 url = `http://localhost:3000/api/universities/${searchInput.value}`;
 
                 const response = await fetch(url)
-               
-                
+
+
                 if (response.ok) {
                     const data = await response.json()
-                    console.log('data',data);
-                    
+                    console.log('data', data);
+
                     if (data.length === 0) unidropdown.innerHTML = 'No resutlts'
                     data.forEach(uni => {
                         const uniName = uni.name;
@@ -79,14 +80,14 @@ document.addEventListener('DOMContentLoaded', function () {
                             console.warn('Country name is not available:', country);
                         }
                     });
-                    
-                    
+
+
                 }
             }
 
 
             uni_selection.addEventListener('focus', async function () {
-                
+
                 setupDropdownSearch(uni_selection, unidropdown)
             })
             setupDropdownSearch(project_selection, project_dropdown)
@@ -99,6 +100,18 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             phoneNumber.addEventListener('blur', function () {
                 if (phoneNumber.value === '') phoneNumberE.querySelector('.css-kejeg8-InlineContainer').style.display = 'flex'
+                
+                phoneInputMask.mask(this);
+                if (phoneInputMask.isValid(this.value)) {
+                    
+                    if(error.style.display = 'block'){
+                        error.style.display = 'none'
+                    }
+                } else {
+                    const error= document.getElementById('error')
+                    error.textContent = 'enter a valid number'
+                    error.style.display = 'block'
+                }
             })
 
             setupDropdownSearch(marketingSource_selection, marketingSource_dropdown)

@@ -348,22 +348,6 @@ i[id="icon"] {
     transform: rotate(-90deg);
 }
 
-/* .circle-button {
-    width: 30px;
-    height: 30px;
-    background-color: #F5F7FA;
-    border: 1px solid #D3D8DE;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: -3.4%;
-    z-index: 40;
-} */
 .circle-button {
     width: 30px;
     height: 30px;
@@ -384,15 +368,11 @@ i[id="icon"] {
 
 .circle-button.collapsed {
     transform: rotate(-180deg);
-    transition: transform 0.3s ease;
+    transition: left 0.3s ease;
     left: -1.1vw;
 }
 
-.circle-button.toggled {
-    transform: rotate(1deg);
-    transition: transform 0.3s ease;
-    /* left: 28.9vw; */
-}
+
 
 .circle-button:hover {
     background-color: #E2E8F0;
@@ -561,7 +541,7 @@ i[id="icon"] {
     z-index: 20;
     left: 0;
     top: 0;
-    width: 68%;
+    width: 98%;
     height: 60%;
     background-color: white;
     border-radius: 10px;
@@ -633,10 +613,10 @@ i[id="icon"] {
 
 }
 
-.startpaper-popup,
-.edit-paper {
+.startpaper-popup, .edit-paper {
     height: 50%;
     z-index: 10;
+    top: 18%;
 }
 
 .searchpapers-popup,
@@ -648,9 +628,9 @@ i[id="icon"] {
     background-color: white;
     border-radius: 10px;
     height: fit-content;
-    width: 100%;
+    width: 98%;
     padding-top: 1%;
-    left: -.5%;
+    left: 0;
 }
 
 .joinedpapers-popup,
@@ -1515,12 +1495,12 @@ button[id="send_message"] {
 }
 
 .mainContent {
-    width: 220vh;
+    width: 98%;
     height: 91vh;
-    /* background-color:#17212b; */
+    /* background-color: #17212b; */
     position: absolute;
-    top: 48px;
-    left: 0px;
+    top: 7%;
+    left: 1.5%;
     transition: transform 0.3s ease;
     display: block;
     z-index: -1;
@@ -1529,6 +1509,8 @@ button[id="send_message"] {
 .mainContent.shifted {
     transform: translateX(29%);
     transition: transform 0.3s ease;
+    width: 69%;
+    left: 11%;
 }
 
 .chat-container {
@@ -1922,7 +1904,7 @@ p#file-frame {
 .startpapers-label,
 .searchfriends-label,
 .yourfriends-label,
-.notifications-label {
+.notifications-label, .joined-label, .searchpapers-label {
     color: var(--color-text-secondary-default);
     white-space: normal;
     flex: none;
@@ -1931,10 +1913,13 @@ p#file-frame {
     font-size: 25px;
     font-weight: 700;
     line-height: 32px;
-    position: fixed;
-    top: 10%;
+    position: absolute;
+    top: 3%;
 }
-
+#joined.shifted
+{
+    top: 3%;
+}
 .joined-label {
     color: var(--color-text-secondary-default);
     white-space: normal;
@@ -1955,11 +1940,11 @@ p#file-frame {
     flex: none;
     margin-top: 0;
     margin-left: 3%;
-    top: 1%;
+    top: 3%;
     font-size: 25px;
     font-weight: 700;
     line-height: 32px;
-    position: fixed;
+    position: absolute;
 }
 
 /* Chat search bar*/
@@ -2118,11 +2103,12 @@ p#file-frame {
 .css-16b0bx-StyledBox {
     padding: 0;
     text-align: left;
-    width: 65%;
+    width: 100%;
+    left: -.7%;
     background-color: white;
     border-radius: 10px;
     position: relative;
-    left: 1%;
+    
     top: 7%;
     box-shadow: 0px 0px 3px 2px #8080803b;
 }
