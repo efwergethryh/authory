@@ -16,9 +16,11 @@ const generateToken = (user, type, user_type) => {
         throw new Error('Invalid token type');
     }
 };
-const setCookie = (req,res)=>{
+const setCookie =async (req,res)=>{
     const { email, password } = req.body
-    const exist = User.findOne({email})
+    const exist =await User.findOne({email})
+    console.log(exist);
+    
     if(exist){
         res.status(500).json({message:"email already exists"})
     }
