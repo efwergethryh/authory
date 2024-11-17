@@ -51,17 +51,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const phoneNumberE = document.querySelector('[data-e2e-test-id="phone-number-input"]');
             const phoneNumber = document.getElementsByName('phone_number')[0]
+            getUniversities()
 
 
-
-
-            uni_selection.addEventListener('focus', async function () {
+            searchInput.addEventListener('focus',getUniversities)
+            async function getUniversities() {
                 unidropdown.innerHTML = ''
                 let url = ''
                 url = `http://localhost:3000/api/universities/${searchInput.value}`;
 
                 const response = await fetch(url)
-                console.log(response);
+               
                 
                 if (response.ok) {
                     const data = await response.json()
@@ -79,9 +79,15 @@ document.addEventListener('DOMContentLoaded', function () {
                             console.warn('Country name is not available:', country);
                         }
                     });
-                    unidropdown.style.display = 'flex'
-                    setupDropdownSearch(uni_selection, unidropdown)
+                    
+                    
                 }
+            }
+
+
+            uni_selection.addEventListener('focus', async function () {
+                
+                setupDropdownSearch(uni_selection, unidropdown)
             })
             setupDropdownSearch(project_selection, project_dropdown)
             lastName.addEventListener('blur', function () {
