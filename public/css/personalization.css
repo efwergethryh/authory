@@ -965,13 +965,14 @@
  }
 
  #role,
- #personalization-form,
- #study-info,
- #personal-information,
- #finishing-up {
+ #personalization-form
+ {
      display: none;
  }
-
+#finish-setup{
+    position: relative;
+    left: -25%;
+}
  /*! CSS Used from: Embedded */
  * {
      box-sizing: border-box;

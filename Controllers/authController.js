@@ -18,18 +18,23 @@ const generateToken = (user, type, user_type) => {
 };
 const setCookie = (req,res)=>{
     const { email, password } = req.body
-
-    res.cookie('email', email, {
-        httpOnly: false,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Strict', // Protects against CSRF by limiting cross-site requests
-    });
-    res.cookie('password', password, {
-        httpOnly: false,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Strict', // Protects against CSRF by limiting cross-site requests
-    });
-    res.send('Cookie set successfully!');
+    const exist = User.findOne({email})
+    if(exist){
+        res.status(500).json({message:"email already exists"})
+    }
+    else{
+        res.cookie('email', email, {
+            httpOnly: false,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Strict', // Protects against CSRF by limiting cross-site requests
+        });
+        res.cookie('password', password, {
+            httpOnly: false,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Strict', // Protects against CSRF by limiting cross-site requests
+        });
+        res.send('Cookie set successfully!');
+    }
 }
 const hashpassword = async (password) => {
 

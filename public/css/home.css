@@ -1,6 +1,6 @@
 :root {
     --color-background: #EEF2F5;
-    --eee:#eeeeee;
+    --eee: #eeeeee;
     --elevation-2: 0px 2px 8px 0px #0000001f, 0px .3px 1px 0px #00000003;
     --color-text-secondary-default: #40515e;
 }
@@ -12,6 +12,7 @@ body {
     padding: 0;
     overflow-y: scroll;
 }
+
 .userProfile {
     display: none;
     width: 26%;
@@ -27,10 +28,11 @@ body {
 
 }
 
-.userProfile label{
+.userProfile label {
     font-weight: bold
 }
-#profile_image{
+
+#profile_image {
     width: 75px;
     height: 75px;
     border-radius: 50%;
@@ -39,10 +41,12 @@ body {
     margin-bottom: 0%;
     cursor: pointer;
 }
-.userProfile p{
+
+.userProfile p {
     background-color: #ddf5f7;
     border-radius: 10px;
 }
+
 p#user-name {
     align-self: center;
     font-size: larger;
@@ -50,6 +54,7 @@ p#user-name {
     margin-top: 4.3%;
     background-color: transparent;
 }
+
 .topBar {
     background-color: white;
     box-shadow: var(--elevation-2);
@@ -91,7 +96,7 @@ p#user-name {
     position: relative;
 
 
-    
+
 }
 
 .topBar ul li a svg {
@@ -123,30 +128,32 @@ p#user-name {
 
 /* Define the size and style of the scrollbar */
 ::-webkit-scrollbar {
-    width: 11px; /* Width of the scrollbar */
+    width: 11px;
+    /* Width of the scrollbar */
 }
 
 /* Define the style of the scrollbar thumb (the draggable part) */
 ::-webkit-scrollbar-thumb {
 
     background-color: rgb(194, 194, 194);
-    border-radius: 10px; /* Round the corners */
+    border-radius: 10px;
+    /* Round the corners */
 
 }
 
 /* Define the style of the scrollbar track (background of the scrollbar) */
 ::-webkit-scrollbar-track {
-    background-color: transparent; /* Make track transparent */
+    background-color: transparent;
+    /* Make track transparent */
 }
 
 /* Optional: Add styles for when hovering over the thumb */
-::-webkit-scrollbar-thumb:hover {
-
-}
+::-webkit-scrollbar-thumb:hover {}
 
 /* Optional: You can also style the scrollbar's corner */
 ::-webkit-scrollbar-corner {
-    background-color: transparent; /* Set background for the corner */
+    background-color: transparent;
+    /* Set background for the corner */
 }
 
 
@@ -370,7 +377,7 @@ i[id="icon"] {
     cursor: pointer;
     position: absolute;
     top: 10%;
-    z-index: 40;
+    z-index: 1;
     left: 28.9vw;
     transition: left 0.3s ease;
 }
@@ -386,6 +393,7 @@ i[id="icon"] {
     transition: transform 0.3s ease;
     /* left: 28.9vw; */
 }
+
 .circle-button:hover {
     background-color: #E2E8F0;
     /* Slightly darker on hover */
@@ -573,6 +581,7 @@ i[id="icon"] {
     height: 60%;
     box-shadow: 0px 0px 5px #0000004a;
 }
+
 .friend-info {
     display: flex;
     flex-direction: row;
@@ -624,7 +633,8 @@ i[id="icon"] {
 
 }
 
-.startpaper-popup, .edit-paper {
+.startpaper-popup,
+.edit-paper {
     height: 50%;
     z-index: 10;
 }
@@ -633,13 +643,14 @@ i[id="icon"] {
 .searchfriends-popup {
     display: block;
     position: relative;
-    left: 0%;
-    top: -1%;
+    left: 0;
+    top: 13%;
     background-color: white;
-    padding: 20px;
     border-radius: 10px;
     height: fit-content;
-
+    width: 100%;
+    padding-top: 1%;
+    left: -.5%;
 }
 
 .joinedpapers-popup,
@@ -648,7 +659,7 @@ i[id="icon"] {
 .notifications-popup {
     display: none;
     left: 30%;
-    top: 10%;
+    top: 0%;
     height: 70%;
     width: 50%;
     background-color: transparent;
@@ -767,6 +778,7 @@ i[id="icon"] {
     background-color: white;
     box-shadow: 0px 0px 5px 0px #00000024;
 }
+
 .paper-settings a {
     display: flex;
     flex-direction: row;
@@ -777,7 +789,7 @@ i[id="icon"] {
     padding-top: .5vw;
 }
 
-.paper-settings a i{
+.paper-settings a i {
     position: relative;
     top: 0.3vw;
 }
@@ -794,16 +806,19 @@ i[id="icon"] {
     left: 42%;
     top: 19vw;
 }
-.confirm-delete p{
+
+.confirm-delete p {
     font-weight: 600;
     font-family: sans-serif;
-    
+
 }
-.buttons{
+
+.buttons {
     display: flex;
     flex-direction: row;
     gap: 56%;
 }
+
 a#confirm {
     padding: 4%;
     border-radius: 7px;
@@ -811,9 +826,11 @@ a#confirm {
     color: white;
     cursor: pointer;
 }
-.edit-paper{
+
+.edit-paper {
     display: none;
 }
+
 a#cancel {
     background-color: #00000036;
     padding: 4%;
@@ -821,6 +838,7 @@ a#cancel {
     cursor: pointer;
 
 }
+
 .paper-settings ul {
     margin: 0;
     display: flex;
@@ -828,9 +846,11 @@ a#cancel {
     margin-left: 0;
     padding: 0;
 }
-.paper-settings a:hover{
+
+.paper-settings a:hover {
     background-color: rgb(213, 213, 213);
 }
+
 .yourpapers-popup {
     background-color: transparent;
     width: 50%;
@@ -912,7 +932,8 @@ a#cancel {
     /* Match input's font size */
 }
 
-#tags , #update-tags{   
+#tags,
+#update-tags {
     background: transparent;
     /* Make input transparent */
     position: relative;
@@ -928,9 +949,11 @@ a#cancel {
     color: #3078D8;
     cursor: pointer;
 }
-#filter{
+
+#filter {
     margin-left: 95%;
 }
+
 .paper-title,
 .paper-study,
 .paper-we-need,
@@ -1049,7 +1072,8 @@ a#cancel {
     z-index: 40;
     transform: rotate(-180deg);
 }
-.dropdown-icon.toggled{
+
+.dropdown-icon.toggled {
     transform: rotate(-90deg);
 }
 
@@ -1070,10 +1094,11 @@ a#cancel {
 .advancedsearch-container {
     max-height: 0;
     opacity: 0;
-   
+
     transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
 
 }
+
 .button-container {
     display: flex;
     flex-direction: row;
@@ -1083,6 +1108,7 @@ a#cancel {
     border-radius: 16px;
     gap: 1vw;
 }
+
 .advancedsearch-container table {
     position: relative;
     left: -0%;
@@ -1180,7 +1206,8 @@ table td {
     text-transform: uppercase;
 }
 
-.startpaper-popup table, .edit-paper table {
+.startpaper-popup table,
+.edit-paper table {
     border: none;
     width: 100%;
     /* Ensure table takes full width */
@@ -1232,7 +1259,9 @@ table td {
 }
 
 button[id="reg"],
-button[id="start_create"], button[id="update_paper"],button[id="delete-user-from-paper"] {
+button[id="start_create"],
+button[id="update_paper"],
+button[id="delete-user-from-paper"] {
     display: inline-block;
     border: 0px;
     margin-top: 10%;
@@ -1250,12 +1279,14 @@ button[id="start_create"], button[id="update_paper"],button[id="delete-user-from
     color: rgb(255, 255, 255);
     width: 90%;
 }
+
 .divider {
     width: 1px;
     z-index: 20;
     height: 3vw;
     background-color: white;
 }
+
 a#enter {
     display: inline-block;
     border: 0px;
@@ -1277,9 +1308,12 @@ a#enter {
     top: 0;
     left: 0px;
 }
-a#enter:hover,#gear:hover{
+
+a#enter:hover,
+#gear:hover {
     color: gainsboro;
 }
+
 button[id="search"],
 button[id="friend-search"] {
     display: inline-block;
@@ -1436,9 +1470,11 @@ button[id="join"] {
     color: white;
 
 }
+
 .popup-message.show {
     opacity: 1;
 }
+
 .popup-message {
     width: fit-content;
     font-size: 34%;
@@ -1505,7 +1541,7 @@ button[id="send_message"] {
     top: 1.6vh;
     left: 0;
     /* z-index: -1; */
-    background-size:contain
+    background-size: contain
 }
 
 .avatar-upload {
@@ -1698,6 +1734,7 @@ p#file-frame {
     font-size: small;
     text-wrap: nowrap;
 }
+
 .users-to-delete {
     display: none;
     flex-direction: column;
@@ -1709,6 +1746,7 @@ p#file-frame {
     top: 39%;
     z-index: 15;
 }
+
 .options-popup-content {
     display: flex;
     flex-direction: column;
@@ -1721,24 +1759,30 @@ p#file-frame {
     margin-left: 0;
     padding: 0;
 }
+
 .loading-spinner {
-    
- 
+
+
     width: 60px;
     height: 60px;
-    
+
     display: none;
     position: absolute;
     left: 59%;
     top: 44%;
     z-index: 50;
 }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .options-popup-content ul a {
     display: flex;
     flex-direction: row;
@@ -1904,13 +1948,14 @@ p#file-frame {
     position: fixed;
 }
 
-.searchpapers-label {
+.searchpapers-label,
+.searchfriends-label {
     color: var(--color-text-secondary-default);
     white-space: normal;
     flex: none;
     margin-top: 0;
     margin-left: 3%;
-    top: 10%;
+    top: 1%;
     font-size: 25px;
     font-weight: 700;
     line-height: 32px;
@@ -1994,9 +2039,10 @@ p#file-frame {
     position: fixed;
     bottom: 0;
     left: 31.2%;
-    
+
 }
-.post{
+
+.post {
     gap: 0.5vw;
     padding: 1vw;
     font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
@@ -2005,16 +2051,19 @@ p#file-frame {
     border-radius: 10px;
     background-color: white;
 }
-.post hr{
+
+.post hr {
     background-color: var(--eee);
     border: none;
     width: 100%;
     height: 3px;
 }
+
 .css-1fcsbsk-StyledDivider {
     border-bottom: 1px solid rgb(224, 230, 235);
     flex: 1 1 0%;
 }
+
 .css-o1sld0-InlineContainer {
     -webkit-box-align: center;
     align-items: center;
@@ -2022,18 +2071,22 @@ p#file-frame {
     justify-content: space-between;
     gap: 16px;
 }
+
 .css-o1sld0-InlineContainer {
     display: flex;
     flex-flow: wrap;
 }
-.css-1m1fu2w-StyledDiv > :first-child {
+
+.css-1m1fu2w-StyledDiv> :first-child {
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
 }
+
 .css-1k7990c-StyledButton:hover {
     border-color: rgb(96, 117, 133);
     background-color: rgba(96, 117, 133, 0.05);
 }
+
 .css-1k7990c-StyledButton {
     display: inline-block;
     border: 1px solid rgb(163, 178, 189);
@@ -2052,13 +2105,16 @@ p#file-frame {
     position: relative;
     left: -12%;
 }
+
 .css-sh7anr-StyledBox {
     padding: 12px;
     text-align: left;
 }
+
 .css-sh7anr-StyledBox {
     padding-left: 24px;
 }
+
 .css-16b0bx-StyledBox {
     padding: 0;
     text-align: left;
@@ -2070,10 +2126,12 @@ p#file-frame {
     top: 7%;
     box-shadow: 0px 0px 3px 2px #8080803b;
 }
+
 .css-1fu2yzn-StyledBox {
     padding-top: 16px;
     padding-bottom: 16px;
 }
+
 .css-14p1ltg-StyledText {
     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
     margin: 0px;
@@ -2087,6 +2145,7 @@ p#file-frame {
     position: relative;
     left: 22%;
 }
+
 .css-gkrxgl-StyledText {
     font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
     margin: 0px;
@@ -2098,6 +2157,7 @@ p#file-frame {
     line-height: 1.5;
     overflow-wrap: normal;
 }
+
 .reply-content {
     display: flex;
     flex-direction: row;
@@ -2388,9 +2448,8 @@ p#message_content {
 
 #paper-projectbranch-container.open .education-dropdown-options,
 #language-container.open .institute-dropdown-options,
-#paper-weneed-container.open .university-dropdown-options
-{
-    display: block; 
+#paper-weneed-container.open .university-dropdown-options {
+    display: block;
 }
 
 /* Dropdown Option Styling */
@@ -2464,15 +2523,18 @@ p#message_content {
     box-shadow: 0px 0px 5px 3px #8080803b;
     z-index: 10;
 }
-.profile-span a{
+
+.profile-span a {
     padding: 1vw;
     cursor: pointer;
     color: black;
     text-decoration: none;
 }
+
 .profile-span a:hover {
     background-color: #dddddd;
 }
+
 .settigns {
     display: none;
     background-color: white;
@@ -2484,7 +2546,8 @@ p#message_content {
     border-radius: 20px;
     box-shadow: 0px 0px 5px 3px #8080803b;
 }
-.settigns select{
+
+.settigns select {
     margin-top: 1vw;
     border: none;
     box-shadow: 0px 0px 7px 0px #80808082;
@@ -2492,15 +2555,386 @@ p#message_content {
     padding: 1vw;
     border-radius: 10px;
 }
-.settigns select:focus{
+
+.settigns select:focus {
     outline: none;
     outline-color: transparent;
 }
-.settigns label{
+
+.settigns label {
     margin-left: 1vw;
     margin-top: 1vw;
     margin-right: 1vw;
 }
-#profileImage{
+
+#profileImage {
     cursor: pointer;
 }
+
+/* Welcoming popup */
+div:focus {
+    outline: 0;
+}
+
+.-c455136b78fefae-link {
+    color: inherit;
+}
+
+.-c455136b78fefae-anchor {
+    color: var(--color-text-tertiary);
+}
+
+.-c455136b78fefae-underline {
+    text-decoration: underline;
+}
+
+.-e0b73ddffb195-container {
+    z-index: 9;
+    display:none;
+    background-color: rgba(47, 51, 65, .8);
+    flex-direction: column;
+    flex: 1 0 auto;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100%;
+    padding: 40px 16px;
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+}
+
+@media screen and (min-width:768px) {
+    .-e0b73ddffb195-container {
+        padding: 96px 40px;
+    }
+}
+
+.-e0b73ddffb195-modalContent {
+    background-color: #fff;
+    flex-direction: column;
+    flex-shrink: 0;
+    height: auto;
+    max-height: none;
+    padding: 24px;
+    display: flex;
+    position: relative;
+    overflow: visible;
+}
+
+.-e0b73ddffb195-isAutoWidth {
+    border-radius: 8px;
+    width: auto;
+    max-width: 100vw;
+    height: auto;
+}
+
+.-e56e301b82e175d6-container {
+    color: var(--color-text-secondary);
+    flex-direction: column;
+    display: flex;
+}
+
+@media (min-width:768px) {
+    .-e56e301b82e175d6-container {
+        flex-direction: row;
+        padding: 24px;
+    }
+}
+
+.-e56e301b82e175d6-container>.-e56e301b82e175d6-column:first-child {
+    padding-left: 0;
+}
+
+.-e56e301b82e175d6-container .-e56e301b82e175d6-column {
+    flex-direction: column;
+    justify-content: space-between;
+    display: flex;
+}
+
+@media (min-width:768px) {
+    .-e56e301b82e175d6-container .-e56e301b82e175d6-column {
+        width: 372px;
+        padding-left: 25px;
+    }
+}
+
+.-e56e301b82e175d6-container .-e56e301b82e175d6-modalImage {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+@media (min-width:768px) {
+    .-e56e301b82e175d6-container .-e56e301b82e175d6-modalImage {
+        margin-bottom: 0;
+    }
+}
+
+.-e56e301b82e175d6-container .-e56e301b82e175d6-title {
+    color: var(--color-text-primary);
+    margin: 0 0 16px;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.-e56e301b82e175d6-container .-e56e301b82e175d6-subtitle {
+    color: var(--color-text-secondary);
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.-e56e301b82e175d6-container .-e56e301b82e175d6-listItem {
+    padding-bottom: 16px;
+    list-style: none;
+}
+
+.-e56e301b82e175d6-container .-e56e301b82e175d6-listItem>div {
+    font-size: 12px;
+    line-height: 20px;
+    overflow: hidden;
+}
+
+.-e56e301b82e175d6-container .-e56e301b82e175d6-listItem>div h4 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.-e56e301b82e175d6-container .-e56e301b82e175d6-icon {
+    color: var(--color-icon-tertiary);
+    float: left;
+    width: 24px;
+    height: 24px;
+    margin: 4px 15px 0 0;
+}
+
+.-e56e301b82e175d6-container .-e56e301b82e175d6-link {
+    color: var(--color-text-accent);
+}
+
+.-e56e301b82e175d6-container .-e56e301b82e175d6-link:hover {
+    color: var(--color-text-accent-hover);
+}
+
+.-e56e301b82e175d6-container .-e56e301b82e175d6-creditCardNotRequired {
+    text-align: center;
+    padding-top: 2px;
+    font-size: 12px;
+}
+
+.-e56e301b82e175d6-container .-e56e301b82e175d6-orActivate {
+    padding-top: 22px;
+}
+
+@media (min-width:768px) {
+    .-e56e301b82e175d6-container .-e56e301b82e175d6-orActivate {
+        padding-top: 28px;
+    }
+}
+
+/*! CSS Used from: Embedded */
+button {
+    overflow: visible;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+button {
+    margin: 0;
+}
+
+ul,
+li {
+    margin: 0;
+    padding: 0;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    -webkit-padding-start: 0;
+}
+
+a {
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+
+img {
+    border-style: none;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+button {
+    text-transform: none;
+}
+
+button {
+    font-family: inherit;
+    -webkit-font-feature-settings: inherit;
+    font-feature-settings: inherit;
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    text-rendering: inherit;
+}
+
+button,
+html [type=button] {
+    -webkit-appearance: button;
+}
+
+/*! CSS Used from: Embedded */
+* {
+    box-sizing: border-box !important;
+}
+
+::selection {
+    text-shadow: none !important;
+    background-color: #dae0e6 !important;
+}
+
+/*! CSS Used from: Embedded */
+.css-alg3yb-InlineContainer {
+    display: flex;
+    flex-flow: row;
+}
+
+@media screen {
+    .css-alg3yb-InlineContainer {
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        gap: 4px;
+    }
+}
+
+.css-1ff2k4x-StackContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen {
+    .css-tn47vl-StackItem {
+        margin-top: 8px;
+    }
+}
+
+.css-tn47vl-StackItem:first-of-type {
+    margin-top: 0px;
+}
+
+.css-tn47vl-StackItem:empty {
+    margin-top: 0px;
+}
+
+.css-1ho5u8i-StyledButton {
+    display: inline-block;
+    border: 0px;
+    margin: 0px;
+    text-transform: none;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.14286;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 12px 24px;
+    background-color: rgb(4, 122, 136);
+    color: rgb(255, 255, 255);
+    width: 100%;
+}
+
+.css-1ho5u8i-StyledButton[type="button"] {
+    appearance: none;
+}
+
+.css-1ho5u8i-StyledButton:hover {
+    background-color: rgb(5, 79, 87);
+}
+
+.css-1ho5u8i-StyledButton:active {
+    background-color: rgb(5, 79, 87);
+}
+
+.css-73tk2c-StyledButton {
+    display: inline-block;
+    border: 1px solid rgb(163, 178, 189);
+    margin: 0px;
+    text-transform: none;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.14286;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 11px 23px;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(64, 81, 94);
+    width: 100%;
+}
+
+.css-73tk2c-StyledButton[type="button"] {
+    appearance: none;
+}
+
+.css-73tk2c-StyledButton:hover {
+    border-color: rgb(96, 117, 133);
+    background-color: rgba(96, 117, 133, 0.05);
+}
+
+.css-73tk2c-StyledButton:active {
+    background-color: rgba(255, 255, 255, 0);
+    border-color: rgb(64, 81, 94);
+}
+
+/*! CSS Used fontfaces */
+@font-face {
+    font-family: Lato;
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff");
+}
+
+@font-face {
+    font-family: Lato;
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+    src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff");
+}
+
+@font-face {
+    font-family: Lato;
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff");
+}
+
+@font-face {
+    font-family: Lato;
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+    src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff");
+}
+
+@font-face {
+    font-family: Lato;
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+    src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff");
+}
+
+/* End Welcoming popup */

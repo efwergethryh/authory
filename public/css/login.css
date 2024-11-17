@@ -1116,6 +1116,10 @@ html [type=button] {
 .css-15tvki3-StyledBox img{
     width: 50%;
 }
+.error{
+    display: none;
+    color: red;
+}
 @font-face {
     font-family: Lato;
     font-weight: 900;

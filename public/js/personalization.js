@@ -36,149 +36,107 @@ document.addEventListener('DOMContentLoaded', function () {
         this.addEventListener('click', function () {
             document.getElementById('country-profession').style.display = 'none'
             document.getElementById('personalization-form').style.display = 'block'
-            const phsyicianButton = document.getElementById('physician-button')
-            const dropdown = document.getElementById('country-dropdown');
-            const searchInput = document.getElementById('country-selection');
-            fetch('https://restcountries.com/v3.1/all')
-                .then(response => response.json())
-                .then(data => {
 
-                    data.forEach(country => {
-                        const countryName = country.name?.common;
-                        if (countryName) {
-                            const li = document.createElement('li');
-                            li.textContent = countryName;
-                            li.dataset.name = countryName;
-                            dropdown.appendChild(li);
-                        } else {
-                            console.warn('Country name is not available:', country);
+            const searchInput = document.getElementById('country-proffession-selection');
+            let unidropdown = document.getElementById('university-dropdown');
+            const uni_selection = document.getElementById('university-selection');
+            const project_dropdown = document.getElementById('projectBranch-dropdown')
+            const project_selection = document.getElementById('project-branch-selection')
+            const marketingSource_dropdown = document.getElementById('marketingSource-dropdown');
+            const marketingSource_selection = document.getElementById('marketingSource-selection')
+            const firstNameE = document.querySelector('[data-e2e-test-id="first-name-input"]');
+            const firstName = document.getElementsByName('firstName')[0]
+            const lastNameE = document.querySelector('[data-e2e-test-id="last-name-input"]');
+            const lastName = document.getElementsByName('lastName')[0]
+
+            const phoneNumberE = document.querySelector('[data-e2e-test-id="phone-number-input"]');
+            const phoneNumber = document.getElementsByName('phone_number')[0]
+
+
+            
+
+            uni_selection.addEventListener('focus', async function () {
+                unidropdown.innerHTML = ''
+                let url = ''
+                url = `http://universities.hipolabs.com/search?country=${searchInput.value}`;
+
+                await fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+
+
+                        if (data.length === 0) unidropdown.innerHTML = 'No resutlts'
+                        data.forEach(uni => {
+                            const uniName = uni.name;
+                            if (uniName) {
+                                const li = document.createElement('li');
+                                li.textContent = uniName;
+                                li.dataset.name = uniName;
+                                unidropdown.appendChild(li);
+                            } else {
+                                console.warn('Country name is not available:', country);
+                            }
+                        });
+                        unidropdown.style.display = 'flex'
+                        setupDropdownSearch(uni_selection, unidropdown)
+
+                    })
+            })
+            setupDropdownSearch(project_selection,project_dropdown)
+            lastName.addEventListener('blur', function () {
+                if (lastName.value === '') lastNameE.querySelector('.css-kejeg8-InlineContainer').style.display = 'flex'
+            })
+
+            firstName.addEventListener('blur', function () {
+                if (firstName.value === '') firstNameE.querySelector('.css-kejeg8-InlineContainer').style.display = 'flex'
+            })
+            phoneNumber.addEventListener('blur', function () {
+                if (phoneNumber.value === '') phoneNumberE.querySelector('.css-kejeg8-InlineContainer').style.display = 'flex'
+            })
+
+            setupDropdownSearch(marketingSource_selection, marketingSource_dropdown)
+            document.getElementById('finish-setup').addEventListener('click', async function (e) {
+                e.preventDefault()
+
+                const error = error_validation()
+                if (error) {
+                    document.getElementById('finish-setup-error').style.display = 'block'
+                }
+
+                else {
+                    const countryProffession = document.getElementById('country-profession')
+                    const personalization = document.getElementById('personalization-form')
+                    const countryForm = new FormData(countryProffession)
+                    const personalizationForm = new FormData(personalization)
+                    const finalForm = new FormData()
+                    for (const [k, v] of countryForm.entries()) {
+                        finalForm.append(k, v)
+                    }
+                    for (const [k, v] of personalizationForm.entries()) {
+                        finalForm.append(k, v)
+                    }
+
+                    finalForm.append('type', 'User')
+                    const formDataObject = Object.fromEntries(finalForm.entries());
+                    const jsonString = JSON.stringify(formDataObject);
+                    const response = await fetch('/api/auth/register', {
+                        method: 'POST',
+                        body: jsonString,
+                        headers: {
+                            "Content-Type": "application/json"
                         }
                     });
 
 
-                    setupDropdownSearch(searchInput, dropdown)
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
-            phsyicianButton.addEventListener('click', async function (e) {
-                const studyInfoButton = document.getElementById('studyInfo-button')
-                let unidropdown = document.getElementById('university-dropdown');
+                    if (response.ok) {
+                        window.location.href = '/pages/home'; console.log('status', response);
+                    } else {
+                        console.log('status', response);
+                    }
 
-                const uni_selection = document.getElementById('university-selection');
-                const project_dropdown = document.getElementById('projectBranch-dropdown')
-                const project_selection = document.getElementById('project-branch-selection')
-                if (!dropdown || !searchInput) {
-                    console.error('Dropdown or search input element not found');
-                    return;
                 }
-
-                e.preventDefault()
-                document.getElementById('study-info').style.display = 'block'
-
-                uni_selection.addEventListener('focus', async function () {
-                    unidropdown.innerHTML = ''
-                    let url = ''
-                    url = `http://universities.hipolabs.com/search?country=${searchInput.value}`;
-
-
-                    await fetch(url)
-                        .then(response => response.json())
-                        .then(data => {
-
-
-                            if (data.length === 0) unidropdown.innerHTML = 'No resutlts'
-                            data.forEach(uni => {
-                                const uniName = uni.name;
-                                if (uniName) {
-                                    const li = document.createElement('li');
-                                    li.textContent = uniName;
-                                    li.dataset.name = uniName;
-                                    unidropdown.appendChild(li);
-                                } else {
-                                    console.warn('Country name is not available:', country);
-                                }
-                            });
-                            unidropdown.style.display = 'flex'
-                            setupDropdownSearch(uni_selection, unidropdown)
-
-                        })
-                })
-
-                setupDropdownSearch(project_selection, project_dropdown)                // setupDropdownSearch(project_selection, project_dropdown)
-                studyInfoButton.addEventListener('click', function (e) {
-                    e.preventDefault()
-                    const personalInformation = document.getElementById('personal-information')
-                    const finishSetup = document.getElementById('finishing-up');
-                    const marketingSource_dropdown = document.getElementById('marketingSource-dropdown');
-                    const marketingSource_selection = document.getElementById('marketingSource-selection')
-                    const firstNameE = document.querySelector('[data-e2e-test-id="first-name-input"]');
-                    const firstName = document.getElementsByName('firstName')[0]
-                    const lastNameE = document.querySelector('[data-e2e-test-id="last-name-input"]');
-                    const lastName = document.getElementsByName('lastName')[0]
-
-                    const phoneNumberE = document.querySelector('[data-e2e-test-id="phone-number-input"]');
-                    const phoneNumber = document.getElementsByName('phone_number')[0]
-
-                    lastName.addEventListener('blur', function () {
-                        if (lastName.value === '') lastNameE.querySelector('.css-kejeg8-InlineContainer').style.display = 'flex'
-                    })
-
-                    firstName.addEventListener('blur', function () {
-                        if (firstName.value === '') firstNameE.querySelector('.css-kejeg8-InlineContainer').style.display = 'flex'
-                    })
-                    phoneNumber.addEventListener('blur', function () {
-                        if (phoneNumber.value === '') phoneNumberE.querySelector('.css-kejeg8-InlineContainer').style.display = 'flex'
-                    })
-
-
-                    personalInformation.style.display = 'block'
-                    finishSetup.style.display = 'block'
-
-                    setupDropdownSearch(marketingSource_selection, marketingSource_dropdown)
-                    document.getElementById('finish-setup').addEventListener('click', async function (e) {
-                        e.preventDefault()
-                        
-                        const error = error_validation()
-                        if (error) {
-                            document.getElementById('finish-setup-error').style.display = 'block'
-                        }
-
-                        else {
-                            const countryProffession = document.getElementById('country-profession')
-                            const personalization = document.getElementById('personalization-form')
-                            const countryForm = new FormData(countryProffession)
-                            const personalizationForm = new FormData(personalization)
-                            const finalForm = new FormData()
-                            for (const [k, v] of countryForm.entries()) {
-                                finalForm.append(k, v)
-                            }
-                            for (const [k, v] of personalizationForm.entries()) {
-                                finalForm.append(k, v)
-                            }
-                            
-                            finalForm.append('type', 'User')
-                            const formDataObject = Object.fromEntries(finalForm.entries());
-                            const jsonString = JSON.stringify(formDataObject);
-                            const response = await fetch('/api/auth/register', {
-                                method: 'POST',
-                                body: jsonString,
-                                headers: {
-                                    "Content-Type": "application/json"
-                                }
-                            });
-
-                            
-                            if (response.ok){
-                                window.location.href = '/pages/home'; console.log('status', response);
-                            }else{
-                                 console.log('status', response);
-                            }
-
-                        }
-                    })
-                })
             })
+            
         })
 
         const selections = document.querySelectorAll('.css-ttz7y2-StyledFakeInput')
@@ -192,12 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     })
 })
-const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-    return null;
-};
+
 function error_validation() {
     let error = false;
 
@@ -221,7 +174,7 @@ function error_validation() {
     const lastNameE = document.querySelector('[data-e2e-test-id="last-name-input"]');
     const firstNameE = document.querySelector('[data-e2e-test-id="first-name-input"]');
     const phoneNumberE = document.querySelector('[data-e2e-test-id="phone-number-input"]');
-    const universityE = document.querySelector('[data-e2e-test-id="terms-check"]');
+    const universityE = document.querySelector('[data-e2e-test-id="university-input"]');
     const projectBranchE = document.querySelector('[data-e2e-test-id="project-input"]');
 
     const termsButton = document.querySelector('#terms');

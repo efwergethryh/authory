@@ -33,6 +33,7 @@ const popup_buttons = [
     document.getElementById('your-friends-button'),
     document.getElementById('notifications-button')
 ];
+let mainContent =  document.getElementById('maincontent')
 const friend_search = document.getElementById('friend-search')
 let notificationQueue = [];
 let conversationsLoaded = false;
@@ -61,16 +62,13 @@ async function applyPendingNotifications(conversation_id) {
     }
 
 }
-window.onload = loadPosts
 socket.emit('join-public-room')
+window.onload = loadPosts
+
 async function loadPosts() {
     try {
-{/* <div onclick="showPost('${post._id}')" class="post" id="post-${post._id}">
-                        <h>${post.title}</h>
-                        <hr>
-                        
-                        
-                    </div> */}
+        
+        mainContent.innerHTML =''
         const response = await fetch('/api/posts', {
             method: "GET",
         })
@@ -114,7 +112,7 @@ async function loadPosts() {
     </div>
                     `;
             }
-            document.getElementById('maincontent').innerHTML += content
+            mainContent.innerHTML += content
             
             
             hide_spinner()
@@ -964,29 +962,48 @@ function closeConversation() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-
-
-
+    const seen = localStorage.getItem('hasSeenWelcomePopup')
+    const welcomePopup = document.getElementById('welcome-popup')
+    if(!seen){
+        welcomePopup.style.display = 'flex'
+    }
+    if(welcomePopup){
+        const goHome = document.getElementById('go-home')
+        goHome.addEventListener('click',function (e) {
+            e.preventDefault()
+            welcomePopup.remove()
+            localStorage.setItem('hasSeenWelcomePopup',true)
+        })
+    }
+    
     popup_buttons.forEach((button, index) => {
-        button.addEventListener('click', function (event) {
-            const mainContent = document.getElementById('maincontent')
-            // mainContent.style.display = 'none'
+        button.removeEventListener('click', togglePopup); // Ensure no duplicate listeners
+        button.addEventListener('click', togglePopup);
+    
+        function togglePopup() {
+
+            mainContent.innerHTML = ''; // Clear existing content
+    
+            // Hide all popups except the current one
             popups.forEach((popup, popupIndex) => {
-                mainContent.innerHTML = ''
-                mainContent.innerHTML = popup.innerHTML
-                if (popupIndex !== index && popup.style.display === 'block') {
+                if (popupIndex !== index) {
                     popup.style.display = 'none';
                 }
             });
-
+    
+            // Toggle the visibility of the selected popup
             if (popups[index].style.display === 'block') {
                 popups[index].style.display = 'none';
             } else {
                 popups[index].style.display = 'block';
+                popups[index].remove()
+                mainContent.innerHTML = popups[index].innerHTML; // Add the clicked popup's content
             }
-        });
+        }
     });
-    document.getElementById('home').addEventListener('click',loadPosts)
+    
+    
+     document.getElementById('home').addEventListener('click',loadPosts)
 });
 
 

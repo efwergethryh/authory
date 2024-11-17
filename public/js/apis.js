@@ -3,7 +3,7 @@
 let conv_id;
 let user_type
 // const spinner = document.getElementById('loading-spinner')
-apiRequest('', {})
+// apiRequest('', {})
 
 
 
@@ -82,8 +82,13 @@ async function post_api(api, formData) {
 
         if (!response.ok) {
             const errorData = await response.json();
+            const error = document.getElementById('error')
+            error.textContent = errorData.message
+            error.style.display = 'block'
             console.log(errorData);
             // Assuming the server sends JSON errors
+            
+
             display_Message(errorData.message || 'An error occurred'); // Display the error message from the server
             return; // Stop further execution
         }

@@ -1691,6 +1691,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <p id="error" class="error"></p>
                                                                     <div class="css-1pg9ptm-StackItem eexjih91"><button
                                                                         id="signup-button"
                                                                             data-ds-id="Button" type="button"
@@ -1703,6 +1704,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </button></div>
+                                                                        
                                                                     <div class="css-1pg9ptm-StackItem eexjih91">
                                                                         <div data-ds-id="Stack"
                                                                             class="css-1ff2k4x-StackContainer eexjih90">
@@ -1750,7 +1752,7 @@
                                                             account? <a data-e2e-test-id="login-link" data-ds-id="Link"
                                                                 color="accent" weight="bold"
                                                                 class="css-cardb5-StyledLink ewxmrja0"
-                                                                href="/us/login?nextLink=%2Faccount%2Fpersonalization">Log
+                                                                href="/pages/login">Log
                                                                 in </a></p>
                                                     </div>
                                                 </div>
@@ -1855,6 +1857,17 @@
             })  
         })
         if(response.ok) window.location.href = '/pages/personalization';
+        if (!response.ok) {
+            const errorData = await response.json();
+            const error = document.getElementById('error')
+            error.textContent = errorData.message
+            error.style.display = 'block'
+            console.log(errorData);
+            
+            
+
+            return;
+        }
 
         
     });
