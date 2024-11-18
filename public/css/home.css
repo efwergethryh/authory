@@ -10,7 +10,7 @@ body {
     transition: margin-left 0.5s;
     margin: 0;
     padding: 0;
-    overflow-y: scroll;
+    overflow-y: hidden;
 }
 
 .userProfile {
@@ -1410,7 +1410,7 @@ button[id="join"] {
     padding: 0;
     margin: 0;
     position: relative;
-    left: 65vw;
+    left: 89vw;
     width: fit-content;
 }
 
@@ -1421,7 +1421,7 @@ button[id="join"] {
     border-radius: 50%;
     object-fit: cover;
     position: absolute;
-    left: 7vw;
+    
     top: -2.4vw;
 }
 
@@ -2413,7 +2413,7 @@ p#message_content {
     /* Max height with scrolling */
     overflow-y: auto;
     /* Add scrolling for overflowing content */
-    width: 100%;
+    width: 90%;
     /* Full width to match the input */
     z-index: 10000;
     /* Ensure dropdown appears above other content */
@@ -2426,6 +2426,7 @@ p#message_content {
 #typeofstudy-container.open .institute-dropdown-options,
 #weneed-container.open .university-dropdown-options,
 #start-language-container.open .institute-dropdown-options,
+
 
 #update-projectbranch-container.open .education-dropdown-options,
 #update-typeofstudy-container.open .institute-dropdown-options,
@@ -2504,7 +2505,7 @@ p#message_content {
     background-color: white;
     position: absolute;
     border-radius: 10px;
-    left: 84%;
+    left: 87%;
     top: 4vw;
     box-shadow: 0px 0px 5px 3px #8080803b;
     z-index: 10;

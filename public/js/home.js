@@ -313,13 +313,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         applyPendingNotifications(data.data.conversation._id)
     })
-    const dropdowns = [
-        { inputId: 'we_need', containerid: 'weneed-container', optionsid: 'weneed-list' },
-        { inputId: 'type_of_study', containerid: 'typeofstudy-container', optionsid: 'typeofstudy-list' },
-        { inputId: 'project_branch', containerid: 'projectbranch-container', optionsid: 'projectbranch-list' },
-        { inputId: 'start-language-input', containerid: 'start-language-container', optionsid: 'start-language-list' },
-
-    ];
+    
     const papersdropdowns = [
         { inputId: 'paper_we_need', containerid: 'paper-weneed-container', optionsid: 'paper-weneed-list' },
         { inputId: 'language-input', containerid: 'language-container', optionsid: 'language-list' },
@@ -351,29 +345,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    dropdowns.forEach(function (dropdown) {
-
-        const inputElement = document.getElementById(dropdown.inputId);
-        const container = document.getElementById(dropdown.containerid);
-        const optionsList = document.getElementById(dropdown.optionsid);
-        const options = optionsList.querySelectorAll('li');
-        inputElement.addEventListener('click', function () {
-            container.classList.toggle('open'); // Toggle the open class
-        });
-
-        options.forEach(function (option) {
-            option.addEventListener('click', function () {
-                inputElement.value = this.textContent;
-                container.classList.remove('open');
-            });
-        });
-
-        document.addEventListener('click', function (e) {
-            if (!container.contains(e.target) && e.target !== inputElement) {
-                container.classList.remove('open');
-            }
-        });
-    });
+    
 
 
     socket.emit('register', userId)
@@ -962,6 +934,7 @@ function closeConversation() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    
     const seen = localStorage.getItem('hasSeenWelcomePopup')
     const welcomePopup = document.getElementById('welcome-popup')
     if(!seen){
@@ -975,16 +948,14 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('hasSeenWelcomePopup',true)
         })
     }
-    
+    document.getElementById('home').addEventListener('click',loadPosts)
     popup_buttons.forEach((button, index) => {
         button.removeEventListener('click', togglePopup); // Ensure no duplicate listeners
         button.addEventListener('click', togglePopup);
-    
+        
         function togglePopup() {
 
-            mainContent.innerHTML = ''; // Clear existing content
-    
-            // Hide all popups except the current one
+            mainContent.textContent = ''; 
             popups.forEach((popup, popupIndex) => {
                 if (popupIndex !== index) {
                     popup.style.display = 'none';
@@ -996,14 +967,52 @@ document.addEventListener('DOMContentLoaded', function () {
                 popups[index].style.display = 'none';
             } else {
                 popups[index].style.display = 'block';
+                // const popupContent = popups[index].cloneNode(true)
                 popups[index].remove()
-                mainContent.innerHTML = popups[index].innerHTML; // Add the clicked popup's content
+                mainContent.innerHTML = popups[index].innerHTML;
+                // mainContent.append(popups[index])
+                // Add the clicked popup's content
             }
+            const dropdowns = [
+                { inputId: 'we_need', containerid: 'weneed-container', optionsid: 'weneed-list' },
+                { inputId: 'type_of_study', containerid: 'typeofstudy-container', optionsid: 'typeofstudy-list' },
+                { inputId: 'project_branch', containerid: 'projectbranch-container', optionsid: 'projectbranch-list' },
+                { inputId: 'start-language-input', containerid: 'start-language-container', optionsid: 'start-language-list' },
+        
+            ];
+            dropdowns.forEach(function (dropdown) {
+        
+                const inputElement = document.getElementById(dropdown.inputId);
+                const container = document.getElementById(dropdown.containerid);
+                const optionsList = document.getElementById(dropdown.optionsid);
+        
+                console.log(inputElement);
+                
+                const options = optionsList.querySelectorAll('li');
+                inputElement.addEventListener('focus', function () {
+                    container.classList.toggle('open');
+                    console.log('container.classList',container.classList);
+                    
+                });
+        
+                options.forEach(function (option) {
+                    option.addEventListener('click', function () {
+                        inputElement.value = this.textContent;
+                        container.classList.remove('open');
+                    });
+                });
+        
+                document.addEventListener('click', function (e) {
+                    if (!container.contains(e.target) && e.target !== inputElement) {
+                        container.classList.remove('open');
+                    }
+                });
+            });
         }
     });
     
     
-     document.getElementById('home').addEventListener('click',loadPosts)
+     
 });
 
 
@@ -2241,23 +2250,7 @@ async function load_f_conversations() {
     }
 }
 
-// function toggleSidebar() {
-//     const circleButton = document.querySelector('.circle-button');
-//     const sidebar = document.getElementById('sidebar');
-//     const maincontent = document.getElementById('maincontent')
 
-//     if (sidebar.style.left === '0px') {
-//         sidebar.style.left = '-30%';
-//         circleButton.classList.toggle('collapsed');
-//         maincontent.classList.remove('shifted');
-
-//     } else {
-
-//         sidebar.style.left = '0px';
-//         circleButton.classList.toggle('toggled');
-//         maincontent.classList.add('shifted');
-//     }
-// }
 function toggleSidebar() {
     const circleButton = document.querySelector('.circle-button');
     const sidebar = document.getElementById('sidebar');
