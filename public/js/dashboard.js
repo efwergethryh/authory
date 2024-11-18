@@ -4,8 +4,12 @@ const popups = [
     document.getElementById('yourposts-popup'),
     document.getElementById('users')
 ];
+const mainContent = document.getElementById('maincontent')
 let selectedFiles = [];
-const spinner = document.getElementById('loading-spinner')
+const spinner =
+    document.getElementById('loading-spinner')
+let offset = 5
+let topValue = -24
 const tools = `
 <section class="tools">
     <input id="text-fontFamily" class="fontFamily" title="Font family" value="Arial, sans-serif">
@@ -42,6 +46,8 @@ const tools = `
     </label>
     <input type="file" multiple id="post-image" name="post-image" style="display: none;" accept="image/*">
 </section>`;
+
+let li_id = 0
 async function loadTranslation(lang) {
     const response = await fetch(`/translations/${lang}`, {
         method: "GET"
@@ -82,21 +88,48 @@ const popup_buttons = [
     document.getElementById('owner-paper-toggle-3')
 ];
 const editableDiv = document.getElementById('post-text');
+// function toggleSidebar() {
+//     const circleButton = document.querySelector('.circle-button');
+//     const sidebar = document.getElementById('sidebar');
+//     const maincontent = document.getElementById('maincontent')
+
+//     if (sidebar.style.left === '0px') {
+//         sidebar.style.left = '-30%';
+//         circleButton.classList.toggle('collapsed');
+//         maincontent.classList.remove('shifted');
+
+//     } else {
+
+//         sidebar.style.left = '0px';
+//         circleButton.classList.toggle('toggled');
+//         maincontent.classList.add('shifted');
+//     }
+// }
 function toggleSidebar() {
     const circleButton = document.querySelector('.circle-button');
     const sidebar = document.getElementById('sidebar');
-    const maincontent = document.getElementById('maincontent')
+    const mainContent = document.getElementById('maincontent');
+    const label = document.getElementById('joined')
+    console.log(label);
 
-    if (sidebar.style.left === '0px') {
-        sidebar.style.left = '-30%';
-        circleButton.classList.toggle('collapsed');
-        maincontent.classList.remove('shifted');
-
+    // Check if the sidebar is closed and toggle accordingly
+    if (sidebar.classList.contains('closed')) {
+        // Sidebar is closed, open it
+        sidebar.classList.remove('closed');
+        sidebar.classList.add('open');
+        mainContent.classList.add('shifted');
+        label.classList.add('shifted');
+        // Shift main content to make space for the sidebar
+        circleButton.classList.remove('collapsed');
+        circleButton.classList.add('toggled'); // Rotate the button
     } else {
-
-        sidebar.style.left = '0px';
-        circleButton.classList.toggle('toggled');
-        maincontent.classList.add('shifted');
+        // Sidebar is open, close it
+        sidebar.classList.remove('open');
+        sidebar.classList.add('closed');
+        mainContent.classList.remove('shifted');
+        label.classList.remove('shifted'); // Revert main content position
+        circleButton.classList.remove('toggled');
+        circleButton.classList.add('collapsed');  // Reset button rotation
     }
 }
 function getCurrentSelection() {
@@ -144,22 +177,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const post_text = document.getElementById('post-text')
     const profileImage = document.getElementById('profileImage')
     const settings = document.getElementById('settings')
-    const settingsPopup =document.getElementById('settings-popup')
+    const settingsPopup = document.getElementById('settings-popup')
     const profileSpan = document.getElementById('profile-span')
-    console.log(profileImage);
+
 
     profileImage.addEventListener('click', function (e) {
         e.stopPropagation()
         profileSpan.style.display = 'flex'
     })
-    settings.addEventListener('click',function (e){
+    settings.addEventListener('click', function (e) {
         console.log(settingsPopup);
-        
+
         e.stopPropagation()
         // loadTranslation('ar')
-        settingsPopup.style.display='block'
+        settingsPopup.style.display = 'block'
     })
-    
+
     document.addEventListener('click', function (event) {
         const profileSpan = document.getElementById('profile-span');
 
@@ -174,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-    
+
     if (post_text) {
         post_text.addEventListener('mouseup', () => {
             setTimeout(function () {
@@ -226,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 img.onload = () => URL.revokeObjectURL(img.src);
 
-                console.log(startpost.children);
+
                 const tableElement = startpost.querySelector('table');
                 console.log(tableElement, startpost);
                 insertElementAtCursor(img)
@@ -265,25 +298,61 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleContainer.classList.toggle('active');
         });
     });
+    // popup_buttons.forEach((button, index) => {
+    //     button.addEventListener('click', function (event) {
+
+    //         popups.forEach((popup, popupIndex) => {
+    //             console.log(popup);
+
+
+    //             if (popupIndex !== index && popup.style.display === 'block') {
+    //                 popup.style.display = 'none';
+    //             }
+    //         });
+    //         if (popups[index].style.display === 'block') {
+    //             popups[index].style.display = 'none';
+    //         } else {
+    //             popups[index].style.display = 'block';
+    //         }
+    //     });
+    // });
     popup_buttons.forEach((button, index) => {
-        button.addEventListener('click', function (event) {
+        console.log(mainContent)
+        console.log('button', button);
 
+        // button.removeEventListener('click', togglePopup); // Ensure no duplicate listeners
+        if (button) button.addEventListener('click', togglePopup);
+        console.log('popup', popups[index]);
+        function togglePopup() {
+
+            mainContent.textContent = '';
             popups.forEach((popup, popupIndex) => {
-                console.log(popup);
-
-
-                if (popupIndex !== index && popup.style.display === 'block') {
+                if (popupIndex !== index) {
                     popup.style.display = 'none';
                 }
             });
-            if (popups[index].style.display === 'block') {
-                popups[index].style.display = 'none';
-            } else {
-                popups[index].style.display = 'block';
+
+
+            // Toggle the visibility of the selected popup
+            if (popups[index]) {
+                if (popups[index].style.display === 'block') {
+                    popups[index].style.display = 'none';
+                } else {
+                    popups[index].style.display = 'block';
+                    // const popupContent = popups[index].cloneNode(true)
+                    popups[index].remove()
+                    mainContent.innerHTML = popups[index].innerHTML;
+                    // mainContent.append(popups[index])
+                    // Add the clicked popup's content
+                }
+                console.log('content', mainContent);
             }
-        });
+
+
+        }
     });
-    document.addEventListener('click', function () {
+    document.addEventListener('click', function (e) {
+
         const font_list = document.getElementById('fonts-list');
         console.log(font_list);
 
@@ -292,6 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
             font_list.style.display = 'none';
         }
     });
+
 
 
 });
@@ -369,6 +439,7 @@ function resetPopups() {
     document.getElementById('yourposts-popup').style.display = 'none';
     document.getElementById('users').style.display = 'none';
 }
+
 document.getElementById('Users').addEventListener('click', async function () {
     resetPopups()
     show_spinner()
@@ -399,25 +470,41 @@ document.getElementById('Users').addEventListener('click', async function () {
                 </div>
                 <div class="post-tools" >
                 <i id="user-settings-${user._id}" class="fa-solid fa-ellipsis-vertical"></i>
-                
+                  
                 </div>
             </div>
             `
         })
         users.innerHTML = content
-        // document.getElementById('user-settings').addEventListener('click', function (e) {
-        //     e.stopPropagation()
-        //     const user_tools = document.getElementById('user-tools')
-        //     user_tools.style.display = 'flex'
-        // })
+        const firstUser = document.querySelector('#users .user ');
         data.users.forEach(user => {
-            document.getElementById(`user-settings-${user._id}`).addEventListener('click', function (e) {
+            const user_setting = document.getElementById(`user-settings-${user._id}`)
+
+            user_setting.addEventListener('click', function (e) {
+
                 e.stopPropagation();
                 userId = user._id
-                const user_tools = document.getElementById('user-tools');
-                user_tools.style.display = 'flex';
 
+                // offset+=5
             });
+            const user_tools = document.getElementById('user-tools')
+
+            console.log('first user', firstUser);
+            if (user_tools === firstUser) {
+
+
+                user_tools.style.top = `-24vw`;  // Set top for the first element
+            } else {
+
+                // Calculate how many elements are before the clicked paperLine
+                const users = document.querySelectorAll('.users');
+                const index = Array.from(users).indexOf(user_tools);  // Get the index of the clicked paper
+
+                // Set the top value based on the index (each paper adds 6vw to the top)
+                let newTop = -24 - (index * 5);  // 13vw + 6vw per paper
+                user_tools.style.display = 'flex';
+                user_tools.style.top = `${newTop}vw`;  // Set the new top for this paper
+            }
         });
         users.style.display = 'flex'
         document.addEventListener('click', function (e) {
@@ -473,9 +560,9 @@ document.getElementById('owner-posts').addEventListener('click', async function 
             let content = ``
             for (const post of data.posts) {
                 const User = await get_user(post.user_id);
-                const user =await  User.user[0];
+                const user = await User.user[0];
                 console.log(user);
-                
+
                 content += `
                     <div onclick="showPost('${post._id}')" class="post" id="post-${post._id}">
                         <h>${user.user_type === 2 ? 'Admin' : user.user_type === 3 ? 'Owner' : 'User'}</h>
@@ -496,13 +583,13 @@ document.getElementById('owner-posts').addEventListener('click', async function 
             }
             posts.innerHTML = content
             console.log(posts);
-            
+
             document.getElementById('yourposts-popup').style.display = 'flex'
             hide_spinner()
         }
     } catch (error) {
         console.log(error);
-        
+
     }
 })
 document.getElementById('posts').addEventListener('click', async function () {
@@ -1140,7 +1227,7 @@ document.getElementById('divide').addEventListener('click', function (e) {
 
     editableDiv.appendChild(divider)
 })
-let li_id = 0
+
 
 document.getElementById('make-list').addEventListener('click', make_list
 
@@ -1480,13 +1567,12 @@ function adjustFont(
     console.log(currentSelection);
 
     let span
-    const existSpan = range.startContainer.parentNode.tagName === "SPAN" && range.startContainer.parentNode.id === 'adjust-span'
-        ? range.startContainer.parentNode
-        : null;
-    if (existSpan) {
-        span = existSpan
-
-    } else {
+    if (range) {
+        span = range.startContainer.parentNode.tagName === "SPAN" && range.startContainer.parentNode.id === 'adjust-span'
+            ? range.startContainer.parentNode
+            : null;
+    }
+    else {
         span = document.createElement("span");
         span.id = 'adjust-span'
     }
@@ -1535,9 +1621,14 @@ function adjustFont(
         });
         console.log(adjust_span);
 
-        // adjust_span.textContent =''
+        // 
         post_text.style.direction = 'rtl'
-        adjust_span.remove()
+
+
+        if (adjust_span) {
+            adjust_span.textContent = ''
+            adjust_span.remove()
+        }
     };
     if (align_center) post_text.style.textAlign = 'center'
     if (existSpan) {

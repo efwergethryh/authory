@@ -3,16 +3,15 @@
 <head>
 
 </head>
-
+<div class="circle-button collapsed" onclick="toggleSidebar()">
+   <svg style="position: relative; z-index: 15; right: -16%; bottom: -13%;" xmlns="http://www.w3.org/2000/svg"
+      fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      class="feather feather-chevron-left " viewBox="0 0 34 34" role="img">
+      <path d="m15 18-6-6 6-6"></path>
+   </svg>
+</div>
 <div class="sidebar" id="sidebar">
 
-   <div class="circle-button collapsed" onclick="toggleSidebar()">
-      <svg style="position: relative; z-index: 15; right: -16%; bottom: -13%;" xmlns="http://www.w3.org/2000/svg"
-         fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-         class="feather feather-chevron-left " viewBox="0 0 34 34" role="img">
-         <path d="m15 18-6-6 6-6"></path>
-      </svg>
-   </div>
    <ul>
       <% if(userType===3){ %>
          <li>
@@ -161,11 +160,11 @@
 
 </div>
 
-
 <div id="user-tools" class="user-tools">
    <a id="ban-user">Ban</a>
    <a id="set-admin">Set as admin</a>
 </div>
+
 <div id="admin-tools" class="user-tools">
    <a id="degrade-admin">Degrade to user</a>
 </div>

@@ -33,7 +33,14 @@ const popup_buttons = [
     document.getElementById('your-friends-button'),
     document.getElementById('notifications-button')
 ];
-let mainContent =  document.getElementById('maincontent')
+const dropdowns = [
+    { inputId: 'we_need', containerid: 'weneed-container', optionsid: 'weneed-list' },
+    { inputId: 'type_of_study', containerid: 'typeofstudy-container', optionsid: 'typeofstudy-list' },
+    { inputId: 'project_branch', containerid: 'projectbranch-container', optionsid: 'projectbranch-list' },
+    { inputId: 'start-language-input', containerid: 'start-language-container', optionsid: 'start-language-list' },
+
+];
+let mainContent = document.getElementById('maincontent')
 const friend_search = document.getElementById('friend-search')
 let notificationQueue = [];
 let conversationsLoaded = false;
@@ -67,8 +74,8 @@ window.onload = loadPosts
 
 async function loadPosts() {
     try {
-        
-        mainContent.innerHTML =''
+
+        mainContent.innerHTML = ''
         const response = await fetch('/api/posts', {
             method: "GET",
         })
@@ -83,7 +90,7 @@ async function loadPosts() {
                 // const User = await get_user(post.user_id);
                 // const user =await  User.user[0];
                 // console.log(user);
-                
+
                 content += `
     <div data-ds-id="Box" class="css-16b0bx-StyledBox erlpbss0">
         <div data-e2e-test-id="last-read-widget" data-ds-id="Container" elevation="1"
@@ -113,13 +120,13 @@ async function loadPosts() {
                     `;
             }
             mainContent.innerHTML += content
-            
-            
+
+
             hide_spinner()
         }
     } catch (error) {
         console.log(error);
-        
+
     }
 }
 async function buildmessagecontent(message) {
@@ -313,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         applyPendingNotifications(data.data.conversation._id)
     })
-    
+
     const papersdropdowns = [
         { inputId: 'paper_we_need', containerid: 'paper-weneed-container', optionsid: 'paper-weneed-list' },
         { inputId: 'language-input', containerid: 'language-container', optionsid: 'language-list' },
@@ -345,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    
+
 
 
     socket.emit('register', userId)
@@ -583,10 +590,7 @@ function display_notification(data) {
 }
 
 
-toggleButton.addEventListener('click', () => {
-    advancedSearch.classList.toggle('show');
-    toggleButton.classList.toggle('toggled')
-});
+
 function handleNotificationClick(notificationType, notification) {
     console.log('notification', JSON.stringify(notification));
 
@@ -776,7 +780,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 })
                 const paperscontainer = document.querySelector('.yourpapers-container')
                 console.log(paperscontainer);
-
+                
                 paperscontainer.innerHTML = content
 
                 const paper_settings = document.getElementById('paper-settings');
@@ -784,7 +788,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 const paperLines = document.querySelectorAll('.paper-line');
                 const firstPaperLine = document.querySelector('.paper-line:first-child');
 
-                console.log(paperLines);
+                
 
                 paperLines.forEach(function (paperLine) {
                     const gear = paperLine.querySelector('.gear');
@@ -934,34 +938,34 @@ function closeConversation() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     const seen = localStorage.getItem('hasSeenWelcomePopup')
     const welcomePopup = document.getElementById('welcome-popup')
-    if(!seen){
+    if (!seen) {
         welcomePopup.style.display = 'flex'
     }
-    if(welcomePopup){
+    if (welcomePopup) {
         const goHome = document.getElementById('go-home')
-        goHome.addEventListener('click',function (e) {
+        goHome.addEventListener('click', function (e) {
             e.preventDefault()
             welcomePopup.remove()
-            localStorage.setItem('hasSeenWelcomePopup',true)
+            localStorage.setItem('hasSeenWelcomePopup', true)
         })
     }
-    document.getElementById('home').addEventListener('click',loadPosts)
+    document.getElementById('home').addEventListener('click', loadPosts)
     popup_buttons.forEach((button, index) => {
         button.removeEventListener('click', togglePopup); // Ensure no duplicate listeners
         button.addEventListener('click', togglePopup);
-        
+
         function togglePopup() {
 
-            mainContent.textContent = ''; 
+            mainContent.textContent = '';
             popups.forEach((popup, popupIndex) => {
                 if (popupIndex !== index) {
                     popup.style.display = 'none';
                 }
             });
-    
+
             // Toggle the visibility of the selected popup
             if (popups[index].style.display === 'block') {
                 popups[index].style.display = 'none';
@@ -973,35 +977,29 @@ document.addEventListener('DOMContentLoaded', function () {
                 // mainContent.append(popups[index])
                 // Add the clicked popup's content
             }
-            const dropdowns = [
-                { inputId: 'we_need', containerid: 'weneed-container', optionsid: 'weneed-list' },
-                { inputId: 'type_of_study', containerid: 'typeofstudy-container', optionsid: 'typeofstudy-list' },
-                { inputId: 'project_branch', containerid: 'projectbranch-container', optionsid: 'projectbranch-list' },
-                { inputId: 'start-language-input', containerid: 'start-language-container', optionsid: 'start-language-list' },
-        
-            ];
+
             dropdowns.forEach(function (dropdown) {
-        
+
                 const inputElement = document.getElementById(dropdown.inputId);
                 const container = document.getElementById(dropdown.containerid);
                 const optionsList = document.getElementById(dropdown.optionsid);
-        
+
                 console.log(inputElement);
-                
+
                 const options = optionsList.querySelectorAll('li');
                 inputElement.addEventListener('focus', function () {
                     container.classList.toggle('open');
-                    console.log('container.classList',container.classList);
-                    
+                    console.log('container.classList', container.classList);
+
                 });
-        
+
                 options.forEach(function (option) {
                     option.addEventListener('click', function () {
                         inputElement.value = this.textContent;
                         container.classList.remove('open');
                     });
                 });
-        
+
                 document.addEventListener('click', function (e) {
                     if (!container.contains(e.target) && e.target !== inputElement) {
                         container.classList.remove('open');
@@ -1010,9 +1008,42 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
-    
-    
-     
+
+    toggleButton.addEventListener('click', () => {
+        advancedSearch.classList.toggle('show');
+        toggleButton.classList.toggle('toggled')
+    });
+    search_button.addEventListener('click', async function (e) {
+        e.preventDefault()
+        show_spinner()
+        let content = ''
+        const title = document.getElementById('paper-title').value
+        const projectbranch = document.getElementById('paper_project_branch').value
+        const we_need = document.getElementById('paper_we_need').value
+        const language = document.getElementById('language-input').value
+        const id = document.getElementById('ID').value
+        const paper_result = document.getElementById('paper-result')
+        const paper_data = JSON.stringify({
+            title,
+            id,
+            projectbranch,
+            we_need,
+            language,
+        })
+
+        try {
+            content = await show_search_result(paper_data)
+
+            paper_result.innerHTML = content;
+            paper_result.classList.add('active')
+        } catch (error) {
+            console.log(error);
+
+        }
+        finally {
+            hide_spinner()
+        }
+    })
 });
 
 
@@ -1646,7 +1677,7 @@ async function get_conversation(id, type) {
         //         sendButton.style.pointerEvents = 'none'; // Disable clicking
         //     }
         // });
-        
+
     } catch (error) {
         console.error('Error fetching conversation:', error);
         // Optionally display an error message to the user
@@ -2152,7 +2183,7 @@ async function show_Single_conversation(user_id) {
             mainContent.innerHTML = content;
             load_f_conversations()
             control_sendButton()
-            
+
         } else {
             conversation_Id = data.f_conversation._id;
 
@@ -2165,7 +2196,7 @@ async function show_Single_conversation(user_id) {
             mainContent.innerHTML = content;
             load_f_conversations()
             control_sendButton()
-            
+
             const message_history = document.getElementById('message-history');
             if (messagesData.messages.length === 0) {
                 message_history.innerHTML = `
@@ -2257,7 +2288,7 @@ function toggleSidebar() {
     const mainContent = document.getElementById('maincontent');
     const label = document.getElementById('joined')
     console.log(label);
-    
+
     // Check if the sidebar is closed and toggle accordingly
     if (sidebar.classList.contains('closed')) {
         // Sidebar is closed, open it
@@ -2391,13 +2422,12 @@ async function show_public_conversation() {
 
 }
 function scrollToBottom() {
-    
+
     const messageContainer = document.getElementById('message-history');
-    console.log('message history',messageContainer);
+    console.log('message history', messageContainer);
 
     messageContainer.scrollTop = messageContainer.scrollHeight;
 }
-console.log(chatContainer);
 
 function initializeConversationItems() {
     const conversations = document.querySelectorAll('.conversation-item');
@@ -2415,37 +2445,7 @@ function initializeConversationItems() {
 
 
 
-search_button.addEventListener('click', async function (e) {
-    e.preventDefault()
-    show_spinner()
-    let content = ''
-    const title = document.getElementById('paper-title').value
-    const projectbranch = document.getElementById('paper_project_branch').value
-    const we_need = document.getElementById('paper_we_need').value
-    const language = document.getElementById('language-input').value
-    const id = document.getElementById('ID').value
-    const paper_result = document.getElementById('paper-result')
-    const paper_data = JSON.stringify({
-        title,
-        id,
-        projectbranch,
-        we_need,
-        language,
-    })
 
-    try {
-        content = await show_search_result(paper_data)
-
-        paper_result.innerHTML = content;
-        paper_result.classList.add('active')
-    } catch (error) {
-        console.log(error);
-
-    }
-    finally {
-        hide_spinner()
-    }
-})
 
 async function show_search_result(Paperdata) {
     let content = "";

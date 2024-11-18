@@ -30,7 +30,7 @@ checkboxes.forEach((checkbox) => {
         // Log the selected value
         const selectedCheckbox = Array.from(checkboxes).find((cb) => cb.checked);
         user_type = selectedCheckbox ? selectedCheckbox.value : null;
-        console.log(selectedValues);
+        // console.log(selectedValues);
     });
 });
 

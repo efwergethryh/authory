@@ -1,14 +1,88 @@
-/* :root {
+:root {
     --color-background: #EEF2F5;
     --color-torq: #047a88;
 }
 
-body {
+#auth-body {
     background-color: var(--color-background);
-} */
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+}
+form {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: fit-content;
+    gap: 1vw;
+    border-radius: 10px;
+    padding: 2%;
+}
+.input-group{
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+.input-group input {
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    width: 100%;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    color: rgb(26, 28, 28);
+    border-color: rgb(163, 178, 189);
+    background-color: rgb(255, 255, 255);
+    
+}
+.input-group label{
 
+        color: rgb(96, 117, 133);
+        font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+        font-weight: 900;
+        margin: 0px;
+        overflow-wrap: normal;
+        hyphens: none;
+        font-size: 12px;
+        line-height: 1.33333;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
 
-/*! CSS Used from: https://next.amboss.com/us/static/assets/auth~11048b4b.f2670c593ff0b651.css */
+}
+button[id="log-in"], button[id="create-owner"] {
+    background-color: var(--color-torq);
+    color: white;
+    border: none;
+    width: 50%;
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 14px;
+    padding: 16px 0px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.navbar{
+    margin-left: 16%;
+}
+.navbar img{
+    width: 50%;
+}
+.user-type{
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
+}
+.creds{
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+
 .-dc0a1b4b9d53c-pageTemplate {
     background-color: #eef2f5;
     flex-direction: column;

@@ -11,6 +11,8 @@ body {
     margin: 0;
     padding: 0;
     overflow-y: hidden;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+
 }
 
 .userProfile {
@@ -1068,7 +1070,7 @@ a#cancel {
 
 #advanced_button {
     position: relative;
-    left: -1%;
+    left: 1%;
 }
 
 .advancedsearch-container {
@@ -1518,7 +1520,8 @@ button[id="send_message"] {
     height: 100%;
     /* background-color: #0e1621;
      */
-    background: url('/images/Background.svg');
+    background: url('/images/Background.svg') no-repeat;
+    background-size: auto;
     position: relative;
     top: 1.6vh;
     left: 0;
