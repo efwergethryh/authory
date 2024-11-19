@@ -85,6 +85,8 @@ async function loadPosts() {
 
             let content = ``
             document.getElementById('home').classList.add('active')
+            const posts = document.createElement('div')
+            posts.className = 'posts'
             // document.getElementById('maincontent').classList.add('shifted')
             for (const post of data.posts) {
                 // const User = await get_user(post.user_id);
@@ -92,36 +94,20 @@ async function loadPosts() {
                 // console.log(user);
 
                 content += `
-    <div data-ds-id="Box" class="css-16b0bx-StyledBox erlpbss0">
-        <div data-e2e-test-id="last-read-widget" data-ds-id="Container" elevation="1"
-            class="css-uxowku-StyledContainer e1evskne0">
-            <div class="css-1m1fu2w-StyledDiv e1evskne1">
-                <div data-ds-id="Box" class="css-sh7anr-StyledBox erlpbss0">
-                    <p color="primary" data-ds-id="Text" class="css-gkrxgl-StyledText e1im9r3t0">${post.title}</p>
-                </div>
-                <div data-ds-id="Divider" class="css-1fcsbsk-StyledDivider e1xue2o81"></div>
-                <div data-ds-id="Box" class="css-1fu2yzn-StyledBox erlpbss0">
-                    <div data-ds-id="Inline" class="css-o1sld0-InlineContainer e1hzytjg0">
-                        <div>
-                            <p color="tertiary" data-ds-id="Text" class="css-14p1ltg-StyledText e1im9r3t0">${post.content}</p>
-                        </div>
-                        <div><a data-ds-id="Button" class="css-1k7990c-StyledButton e7wzybw0" href="/posts/${post._id}">
-                                <div class="css-19pexw4-StyledInner e7wzybw1">  
-                                    <div data-ds-id="Inline" class="css-alg3yb-InlineContainer e1hzytjg0">
-                                        <div>Go to post</div>
-                                    </div>
-                                </div>
-                            </a></div>
+
+                
+                    <div class="css-sh7anr-StyledBox">
+                        <p class="css-gkrxgl-StyledText">${post.title}</p>
+                        <a class="css-1k7990c-StyledButton" href="/posts/${post._id}">
+                            Go to post
+                        </a>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                
                     `;
             }
-            mainContent.innerHTML += content
-
-
+            posts.innerHTML = content
+            mainContent.appendChild(posts)
+            
             hide_spinner()
         }
     } catch (error) {
@@ -129,6 +115,18 @@ async function loadPosts() {
 
     }
 }
+{/* <div data-ds-id="Box" class="css-sh7anr-StyledBox erlpbss0">
+                    <p color="primary" data-ds-id="Text" class="css-gkrxgl-StyledText e1im9r3t0">${post.title}</p>
+                    
+                        <a data-ds-id="Button" class="css-1k7990c-StyledButton e7wzybw0" href="/posts/${post._id}">
+                            <div class="css-19pexw4-StyledInner e7wzybw1">  
+                                <div data-ds-id="Inline" class="css-alg3yb-InlineContainer e1hzytjg0">
+                                    <div>Go to post</div>
+                                </div>
+                            </div>
+                        </a>
+                    
+                </div> */}
 async function buildmessagecontent(message) {
     const sender = await get_user(message.m.sender);
     let messageContent = '';
@@ -780,7 +778,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 })
                 const paperscontainer = document.querySelector('.yourpapers-container')
                 console.log(paperscontainer);
-                
+
                 paperscontainer.innerHTML = content
 
                 const paper_settings = document.getElementById('paper-settings');
@@ -788,7 +786,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 const paperLines = document.querySelectorAll('.paper-line');
                 const firstPaperLine = document.querySelector('.paper-line:first-child');
 
-                
+
 
                 paperLines.forEach(function (paperLine) {
                     const gear = paperLine.querySelector('.gear');
@@ -954,7 +952,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     document.getElementById('home').addEventListener('click', loadPosts)
     popup_buttons.forEach((button, index) => {
-        button.removeEventListener('click', togglePopup); // Ensure no duplicate listeners
+        button.removeEventListener('click', togglePopup);
         button.addEventListener('click', togglePopup);
 
         function togglePopup() {

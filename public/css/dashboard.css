@@ -44,9 +44,10 @@ body[id="dashboard-body"] {
 table{
     border: none;
 }
+
 #tags-container{
     position: relative;
-    left: -14%;
+    left: -27%;
     top: -.5vw;
 }
 .topBar {
@@ -475,7 +476,7 @@ button[id="update_post"] {
 }
 .yourposts-popup{
     width: 100%;
-    position: absolute;
+    position: relative;
 }
 .user-tools a {
     padding: 1vw;

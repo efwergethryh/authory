@@ -2039,7 +2039,18 @@ p#file-frame {
     border-radius: 10px;
     background-color: white;
 }
-
+.posts {
+    display: flex;
+    flex-direction: column;
+    gap: 1%;
+    width: 100%;
+    background-color: transparent;
+    height: 20vw;
+    overflow: scroll;
+    position: relative;
+    top: 15%;
+    border-radius: 10px;
+}
 .post hr {
     background-color: var(--eee);
     border: none;
@@ -2076,7 +2087,7 @@ p#file-frame {
 }
 
 .css-1k7990c-StyledButton {
-    display: inline-block;
+    
     border: 1px solid rgb(163, 178, 189);
     margin: 0px;
     text-transform: none;
@@ -2091,18 +2102,41 @@ p#file-frame {
     background-color: rgba(255, 255, 255, 0);
     color: rgb(64, 81, 94);
     position: relative;
-    left: -12%;
+
+    display: flex; /* Or inline-flex */
+    
+    align-self: flex-end;
 }
 
-.css-sh7anr-StyledBox {
+
+
+/* .css-sh7anr-StyledBox {
     padding: 12px;
     text-align: left;
-}
-
-.css-sh7anr-StyledBox {
     padding-left: 24px;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    width: 100%;
+    left: -.7%;
+    background-color: white;
+    border-radius: 10px;
+    position: relative;
+    top: 7%;
+    box-shadow: 0px 0px 3px 2px #8080803b;
+} */
+.css-sh7anr-StyledBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 12px 24px;
+    background-color: white;
+    border-radius: 10px;
+    
+    box-shadow: 0px 0px 3px 2px #8080803b;
 }
-
 .css-16b0bx-StyledBox {
     padding: 0;
     text-align: left;

@@ -361,8 +361,111 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    
+    // document.getElementById('paper-toggle').addEventListener('click',function (e) {
+    //     e.preventDefault()
+        
+    // })
 
+    document.getElementById('fontFamily').addEventListener('click', function (e) {
+        e.preventDefault()
+        console.log('font-family');
+        const font_list = document.getElementById('fonts-list')
+        console.log(font_list);
+    
+        font_list.style.display = 'flex'
+    })
+    
+    document.getElementById('color-picker').addEventListener('change', function () {
+        const color = this.value
+    
+        adjustFont(color)
+    })
+    document.getElementById('bold').addEventListener('click', function (e) {
+        e.preventDefault()
+        if (this.classList.contains('active')) {
+            this.classList.remove('active')
+        } else {
+            this.classList.add('active')
+        }
+        adjustFont(null, null, null, true)
+    
+    })
+    document.getElementById('underline').addEventListener('click', function (e) {
+        e.preventDefault()
+        if (this.classList.contains('active')) {
+            this.classList.remove('active')
+        } else {
+            this.classList.add('active')
+        }
+        console.log('Selected text:', currentSelection.toString());
+        adjustFont(null, null, null, false, true)
+    })
+    document.getElementById('italic').addEventListener('click', function (e) {
+        e.preventDefault()
+        if (this.classList.contains('active')) {
+            this.classList.remove('active')
+        } else {
+            this.classList.add('active')
+        }
+        adjustFont(null, null, null, false, false, true)
+    })
+    document.getElementById('increase').addEventListener('click', function (e) {
+        e.preventDefault()
+    
+        const fontSize = document.getElementById('font-size')
+        sizeNumber += 1
+        fontSize.value = sizeNumber
+        adjustFont(null, sizeNumber)
+    })
+    document.getElementById('decrease').addEventListener('click', function (e) {
+        e.preventDefault()
+        const fontSize = document.getElementById('font-size')
+        sizeNumber -= 1
+        fontSize.value = sizeNumber
+        adjustFont(null, sizeNumber)
+    })
+    document.getElementById('align-left').addEventListener('click', function (e) {
+        e.preventDefault()
+        if (this.classList.contains('active')) {
+            this.classList.remove('active')
+        } else {
+            this.classList.add('active')
+        }
+        adjustFont(null, null, null, false, false, false, true, false, false)
+    })
+    document.getElementById('align-right').addEventListener('click', function (e) {
+        e.preventDefault()
+        if (this.classList.contains('active')) {
+            this.classList.remove('active')
+        } else {
+            this.classList.add('active')
+        }
+        adjustFont(null, null, null, false, false, false, false, true, false)
+    })
+    document.getElementById('align-center').addEventListener('click', function (e) {
+        e.preventDefault()
+        if (this.classList.contains('active')) {
+            this.classList.remove('active')
+        } else {
+            this.classList.add('active')
+        }
+        adjustFont(null, null, null, false, false, false, false, false, true)
+    })
+    document.getElementById('divide').addEventListener('click', function (e) {
+        e.preventDefault()
+        const divider = document.createElement('hr');
+        divider.style.border = 'px solid grey'
+        divider.style.backgroundColor = 'grey'
+    
+    
+    
+        editableDiv.appendChild(divider)
+    })
+    
+    
+    document.getElementById('make-list').addEventListener('click', make_list
+    
+    );
 });
 document.getElementById('admins').addEventListener('click', async function () {
     resetPopups()
@@ -603,8 +706,6 @@ document.getElementById('posts').addEventListener('click', async function () {
             const data = await response.json()
             console.log(data);
             const posts = document.getElementById('Myposts')
-            
-
             let content = ``
             data.posts.forEach(post => {    
                 content += `
@@ -816,6 +917,7 @@ async function update_post(id) {
         document.getElementById('post-text').contentEditable = true;
     }
 }
+
 function addListeners() {
     document.getElementById('fontFamily').addEventListener('click', function (e) {
         e.preventDefault();
@@ -1179,106 +1281,6 @@ function rgbToHex(rgb) {
     }).join('')}`;
 }
 
-document.getElementById('fontFamily').addEventListener('click', function (e) {
-    e.preventDefault()
-    console.log('font-family');
-    const font_list = document.getElementById('fonts-list')
-    console.log(font_list);
-
-    font_list.style.display = 'flex'
-})
-
-document.getElementById('color-picker').addEventListener('change', function () {
-    const color = this.value
-
-    adjustFont(color)
-})
-document.getElementById('bold').addEventListener('click', function (e) {
-    e.preventDefault()
-    if (this.classList.contains('active')) {
-        this.classList.remove('active')
-    } else {
-        this.classList.add('active')
-    }
-    adjustFont(null, null, null, true)
-
-})
-document.getElementById('underline').addEventListener('click', function (e) {
-    e.preventDefault()
-    if (this.classList.contains('active')) {
-        this.classList.remove('active')
-    } else {
-        this.classList.add('active')
-    }
-    console.log('Selected text:', currentSelection.toString());
-    adjustFont(null, null, null, false, true)
-})
-document.getElementById('italic').addEventListener('click', function (e) {
-    e.preventDefault()
-    if (this.classList.contains('active')) {
-        this.classList.remove('active')
-    } else {
-        this.classList.add('active')
-    }
-    adjustFont(null, null, null, false, false, true)
-})
-document.getElementById('increase').addEventListener('click', function (e) {
-    e.preventDefault()
-
-    const fontSize = document.getElementById('font-size')
-    sizeNumber += 1
-    fontSize.value = sizeNumber
-    adjustFont(null, sizeNumber)
-})
-document.getElementById('decrease').addEventListener('click', function (e) {
-    e.preventDefault()
-    const fontSize = document.getElementById('font-size')
-    sizeNumber -= 1
-    fontSize.value = sizeNumber
-    adjustFont(null, sizeNumber)
-})
-document.getElementById('align-left').addEventListener('click', function (e) {
-    e.preventDefault()
-    if (this.classList.contains('active')) {
-        this.classList.remove('active')
-    } else {
-        this.classList.add('active')
-    }
-    adjustFont(null, null, null, false, false, false, true, false, false)
-})
-document.getElementById('align-right').addEventListener('click', function (e) {
-    e.preventDefault()
-    if (this.classList.contains('active')) {
-        this.classList.remove('active')
-    } else {
-        this.classList.add('active')
-    }
-    adjustFont(null, null, null, false, false, false, false, true, false)
-})
-document.getElementById('align-center').addEventListener('click', function (e) {
-    e.preventDefault()
-    if (this.classList.contains('active')) {
-        this.classList.remove('active')
-    } else {
-        this.classList.add('active')
-    }
-    adjustFont(null, null, null, false, false, false, false, false, true)
-})
-document.getElementById('divide').addEventListener('click', function (e) {
-    e.preventDefault()
-    const divider = document.createElement('hr');
-    divider.style.border = 'px solid grey'
-    divider.style.backgroundColor = 'grey'
-
-
-
-    editableDiv.appendChild(divider)
-})
-
-
-document.getElementById('make-list').addEventListener('click', make_list
-
-);
 function make_list() {
     // e.preventDefault();
     // Enable list mode
