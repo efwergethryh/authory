@@ -10,6 +10,7 @@ const spinner =
     document.getElementById('loading-spinner')
 let offset = 5
 let topValue = -24
+let tags = new Set();
 const tools = `
 <section class="tools">
     <input id="text-fontFamily" class="fontFamily" title="Font family" value="Arial, sans-serif">
@@ -333,19 +334,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
 
-            // Toggle the visibility of the selected popup
             if (popups[index]) {
-                if (popups[index].style.display === 'block') {
+                if (popups[index].style.display === 'flex') {
                     popups[index].style.display = 'none';
                 } else {
-                    popups[index].style.display = 'block';
+                    popups[index].style.display = 'flex';
                     // const popupContent = popups[index].cloneNode(true)
                     popups[index].remove()
                     mainContent.innerHTML = popups[index].innerHTML;
                     // mainContent.append(popups[index])
                     // Add the clicked popup's content
                 }
-                console.log('content', mainContent);
             }
 
 
@@ -362,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
+    
 
 });
 document.getElementById('admins').addEventListener('click', async function () {
@@ -604,21 +603,22 @@ document.getElementById('posts').addEventListener('click', async function () {
             const data = await response.json()
             console.log(data);
             const posts = document.getElementById('Myposts')
-
+            
 
             let content = ``
-            data.posts.forEach(post => {
+            data.posts.forEach(post => {    
                 content += `
                 <div onclick="showPost('${post._id}')" class="post" id="post-${post._id}">
                     <h>${post.title}</h>
                     <div class="post-tools" >
-                    <i onclick="event.stopPropagation(); edit_post('${post._id}')" class="pen fa-regular fa-pen-to-square"></i>
-                    <i onclick="event.stopPropagation(); delete_post('${post._id}')"  class="trash-can fa-regular fa-trash-can"></i>
+                        <i onclick="event.stopPropagation(); edit_post('${post._id}')" class="pen fa-regular fa-pen-to-square"></i>
+                        <i onclick="event.stopPropagation(); delete_post('${post._id}')"  class="trash-can fa-regular fa-trash-can"></i>
                     </div>
                 </div>
                 `
             })
             posts.innerHTML = content
+            posts.style.display = 'flex'
             hide_spinner()
         }
     } catch (error) {
@@ -660,8 +660,8 @@ async function edit_post(id) {
                 <div class="input-group">
                    <label for="name">Tags</label>
                    <div class="input-container">
-                      <div id="tags-overlay" class="tags-overlay"></div>
-                      <input type="text" id="tags" name="name" placeholder="Write tags related to the topic...">
+                      <div id="post-tags-overlay" class="tags-overlay"></div>
+                      <input type="text" id="post-tags" value="" name="name" placeholder="Write tags related to the topic...">
                    </div>
                 </div>
              </td>
@@ -737,10 +737,57 @@ async function edit_post(id) {
                     section.style.display = 'block';
                 }
             });
-
-
+            
         });
+        const update_overlay = document.getElementById('post-tags-overlay');
+            const update_tags = document.getElementById('post-tags');
+            
+            let overlayText = ''
+        
+            // if(data.post.tags){
+            //     data.paper.tags.forEach(tag => {
+            //         console.log('tag', tag);
+            
+            //         overlayText += `<span class="is-tag"><strong>${tag} </strong></span>`;
+            //         update_tags.value += tag
+            
+            //     })
+            // }
+        
+        
+            update_tags.addEventListener("input", function () {
+                const update_tags_value = update_tags.value.trim(); // Get the current value of the input field
+                console.log('tags',tags);
+                
+                // Reset overlayText on each input event and rebuild it
+                overlayText = '';
+        
+                const tagRegex = /#[a-zA-Z0-9-_]+(?=\s|$)/g;
+                const matches = update_tags_value.match(tagRegex); // Match the tags using regex
+        
+                tags.clear(); // Clear the tags set before re-adding them
+        
+                // If there are matches, add them to the tags set
+                if (matches) {
+                    matches.forEach(tag => tags.add(tag)); // Add matched tags to the set
+                }
+        
+                // Split the input value by spaces and rebuild the overlay
+                update_tags_value.split(/(\s+)/).forEach((word) => {
+                    if (tags.has(word)) {
+                        overlayText += `<span class="is-tag"><strong>${word}</strong></span> `;
+                    } else {
+                        overlayText += `<span><strong>${word}</strong></span> `;
+                    }
+                });
+        
+                // Update the overlay with the new content, reflecting changes (additions/deletions)
+                update_overlay.innerHTML = overlayText;
+            });
+            update_overlay.innerHTML = overlayText;
+        
         hide_spinner()
+        
     }
 }
 async function update_post(id) {
@@ -1551,6 +1598,100 @@ function showPlaceHolder() {
     document.getElementById('placeholder').style.display = 'block'
 }
 
+// function adjustFont(
+//     font_color = null,
+//     font_size = null,
+//     font_family = null,
+//     bold = false,
+//     underline = false,
+//     italic = false,
+//     align_left = false,
+//     align_right = false,
+//     align_center = false
+// ){
+//     const post_text = document.getElementById('post-text');
+
+//     console.log(currentSelection);
+//     let span
+//     if (range && range.startContainer && range.startContainer.parentNode) {
+//         const parent = range.startContainer.parentNode;
+//         if (parent.tagName === "SPAN" && parent.id === "adjust-span") {
+//             span = parent;
+//         } else {
+//             span = document.createElement("span");
+//             span.id = 'adjust-span';
+//         }
+//     } else {
+//         span = document.createElement("span");
+//         span.id = 'adjust-span';
+//     }
+
+//     if (font_family) span.style.fontFamily = font_family;
+//     if (font_size) span.style.fontSize = font_size + "px";
+//     if (font_color) span.style.color = font_color;
+//     if (bold) span.style.fontWeight = span.style.fontWeight === 'bold' ? '400' : 'bold';
+//     if (underline) span.style.textDecoration = span.style.textDecoration === 'underline' ? 'none' : 'underline';
+//     if (italic) span.style.fontStyle = span.style.fontStyle === 'italic' ? 'normal' : 'italic';
+//     if (align_left) {
+//         const listItems = document.querySelectorAll('.chapters-list li');
+//         listItems.forEach(li => {
+//             const titleContainer = li.querySelector('.title-container')
+//             const title = titleContainer.querySelector('.title-text');
+//             const icon = titleContainer.querySelector('.list-icon');
+//             const adjust_span = document.getElementById('adjust-span')
+//             titleContainer.style.direction = 'ltr';
+//             titleContainer.style.textAlign = 'left';
+//             icon.textContent = '▶';
+
+//             titleContainer.appendChild(icon);
+//             titleContainer.appendChild(title);
+
+
+//         });
+
+//         // Set text direction for post_text
+//         post_text.style.direction = 'ltr';
+//         adjust_span.remove()
+//     }
+//     if (align_right) {
+//         const listItems = document.querySelectorAll('.chapters-list li');
+//         const adjust_span = document.getElementById('adjust-span')
+//         listItems.forEach(li => {
+//             const titleContainer = li.querySelector('.title-container')
+//             const title = titleContainer.querySelector('.title-text');
+//             const icon = titleContainer.querySelector('.list-icon');
+
+//             titleContainer.style.direction = 'rtl';
+//             titleContainer.style.textAlign = 'right';
+//             icon.textContent = '◀';
+//             titleContainer.appendChild(icon);
+//             titleContainer.appendChild(title);
+
+//         });
+//         console.log(adjust_span);
+
+//         // 
+//         post_text.style.direction = 'rtl'
+
+
+//         if (adjust_span) {
+//             adjust_span.textContent = ''
+//             adjust_span.remove()
+//         }
+//     };
+//     if (align_center) post_text.style.textAlign = 'center'
+
+//     span.textContent = currentSelection
+
+//     console.log('before', span);
+
+//     range.deleteContents(); 
+//     range.insertNode(span);
+//     span = ''
+//     console.log('after', span);
+//     console.log('selection', currentSelection);
+// }
+
 function adjustFont(
     font_color = null,
     font_size = null,
@@ -1566,15 +1707,19 @@ function adjustFont(
 
     console.log(currentSelection);
 
-    let span
-    if (range) {
-        span = range.startContainer.parentNode.tagName === "SPAN" && range.startContainer.parentNode.id === 'adjust-span'
-            ? range.startContainer.parentNode
-            : null;
-    }
-    else {
-        span = document.createElement("span");
-        span.id = 'adjust-span'
+    // Determine if the selection already has a span with id 'adjust-span'
+    let span;
+    if (range && range.startContainer && range.startContainer.parentNode) {
+        const parent = range.startContainer.parentNode;
+        if (parent.tagName === "SPAN" && parent.id === "adjust-span") {
+            span = parent; // Use the existing span
+        } else {
+            span = document.createElement("span"); // Create a new span
+            span.id = 'adjust-span';
+        }
+    } else {
+        span = document.createElement("span"); // Create a new span if no range
+        span.id = 'adjust-span';
     }
 
     if (font_family) span.style.fontFamily = font_family;
@@ -1583,67 +1728,31 @@ function adjustFont(
     if (bold) span.style.fontWeight = span.style.fontWeight === 'bold' ? '400' : 'bold';
     if (underline) span.style.textDecoration = span.style.textDecoration === 'underline' ? 'none' : 'underline';
     if (italic) span.style.fontStyle = span.style.fontStyle === 'italic' ? 'normal' : 'italic';
+
+    // Handle text alignment
     if (align_left) {
-        const listItems = document.querySelectorAll('.chapters-list li');
-        listItems.forEach(li => {
-            const titleContainer = li.querySelector('.title-container')
-            const title = titleContainer.querySelector('.title-text');
-            const icon = titleContainer.querySelector('.list-icon');
-            const adjust_span = document.getElementById('adjust-span')
-            titleContainer.style.direction = 'ltr';
-            titleContainer.style.textAlign = 'left';
-            icon.textContent = '▶';
-
-            titleContainer.appendChild(icon);
-            titleContainer.appendChild(title);
-
-
-        });
-
-        // Set text direction for post_text
         post_text.style.direction = 'ltr';
-        adjust_span.remove()
+        post_text.style.textAlign = 'left';
     }
     if (align_right) {
-        const listItems = document.querySelectorAll('.chapters-list li');
-        const adjust_span = document.getElementById('adjust-span')
-        listItems.forEach(li => {
-            const titleContainer = li.querySelector('.title-container')
-            const title = titleContainer.querySelector('.title-text');
-            const icon = titleContainer.querySelector('.list-icon');
-
-            titleContainer.style.direction = 'rtl';
-            titleContainer.style.textAlign = 'right';
-            icon.textContent = '◀';
-            titleContainer.appendChild(icon);
-            titleContainer.appendChild(title);
-
-        });
-        console.log(adjust_span);
-
-        // 
-        post_text.style.direction = 'rtl'
-
-
-        if (adjust_span) {
-            adjust_span.textContent = ''
-            adjust_span.remove()
+        post_text.style.direction = 'rtl';
+        post_text.style.textAlign = 'right';
+    }
+    if (align_center) {
+        post_text.style.textAlign = 'center';
+    }
+    if (range) {
+        const selectedText = range.toString(); 
+        if (selectedText) {
+            const newSpan = span.cloneNode(false); 
+            newSpan.textContent = selectedText;
+            range.deleteContents(); 
+            range.insertNode(newSpan);
         }
-    };
-    if (align_center) post_text.style.textAlign = 'center'
-    if (existSpan) {
-        console.log(existSpan);
     }
-    else {
-        span.textContent = currentSelection
-        range.deleteContents(); // Remove selected text
-        range.insertNode(span);
-    }
-    console.log(span);
-    currentSelection = ''
-
 
 }
+
 
 
 

@@ -4,14 +4,17 @@
     --color-text-secondary-default: #40515e;
 }
 
-body {
+body[id="dashboard-body"] {
     background-color: var(--color-background);
     transition: margin-left 0.5s;
     margin: 0;
     padding: 0;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
     font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
-
+}
+#post-tags{
+    color:transparent;
 }
 .title-container{
     display: flex;
@@ -25,7 +28,27 @@ body {
     top: -24px;
 
 } */
+ #publish-container{
+    position: relative;
+    left: 26%;
+ }
+.startpost-popup{
+    background: white;
+    top: 15%;
+    position: absolute;
+    width: 100%;
+    left: -.5%;
+    border-radius: 10px;
 
+}
+table{
+    border: none;
+}
+#tags-container{
+    position: relative;
+    left: -14%;
+    top: -.5vw;
+}
 .topBar {
     background-color: white;
     box-shadow: var(--elevation-2);
@@ -342,8 +365,10 @@ button[id="update_post"] {
     border-radius: 10px;
     padding: 2vw;
     gap: 1vw;
-    max-height: 30vw;
+    top: 15%;
+    max-height: 20vw;
     overflow: scroll;
+    
 }
 
 .post,
@@ -450,6 +475,7 @@ button[id="update_post"] {
 }
 .yourposts-popup{
     width: 100%;
+    position: absolute;
 }
 .user-tools a {
     padding: 1vw;
