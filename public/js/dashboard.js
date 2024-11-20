@@ -284,13 +284,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (popups[index].id === 'startpost-popup') {
                         console.log('post text', post_text);
-
-                        setTimeout(() => {
-                            mainContent.addEventListener('mouseup', (e) => {
-
-
-                                if (e.target.id === 'post-text') {
-                                    console.log(e.target.id);
+                        mainContent.addEventListener('mouseup', (e) => {
+                            console.log('id',e.target.id);
+                            // if (e.target.id === 'post-text') {
+                                setTimeout(() => {
+                                    
 
                                     // try {
                                     getSelectedText();
@@ -323,13 +321,14 @@ document.addEventListener('DOMContentLoaded', () => {
                                     document.getElementById('color-picker').value = rgbToHex(styles.color)
                                     document.getElementById('font-size').value = styles.fontSize
 
-                                    // } catch (error) {
-                                    //     console.log(error);
+                                }, 0);
+                                // } catch (error) {
+                                //     console.log(error);
 
-                                    // }
-                                }
-                            });
-                        }, 0);
+                                // }
+                            // }
+                        });
+
 
 
                         document.getElementById('fontFamily').addEventListener('click', function (e) {
@@ -363,7 +362,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             } else {
                                 this.classList.add('active')
                             }
-                            console.log('Selected text:', currentSelection.toString());
                             adjustFont(null, null, null, false, true)
                         })
                         document.getElementById('italic').addEventListener('click', function (e) {
@@ -1144,11 +1142,7 @@ function addListeners() {
             const tempSpan = document.createElement('span');
             const selectedContent = range.extractContents();
             tempSpan.appendChild(selectedContent);
-
-            // Insert the styled span at the selection
             range.insertNode(tempSpan);
-
-            // Get computed styles for `tempSpan`
             const computedStyle = window.getComputedStyle(tempSpan);
             const styles = {
                 fontWeight: computedStyle.fontWeight,
