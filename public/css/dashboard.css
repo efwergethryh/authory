@@ -50,6 +50,9 @@ table{
     left: -27%;
     top: -.5vw;
 }
+#tags{
+    color: transparent;
+}
 .topBar {
     background-color: white;
     box-shadow: var(--elevation-2);

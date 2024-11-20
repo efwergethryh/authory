@@ -2045,7 +2045,7 @@ p#file-frame {
     gap: 1%;
     width: 100%;
     background-color: transparent;
-    height: 20vw;
+    height: 30vw;
     overflow: scroll;
     position: relative;
     top: 15%;

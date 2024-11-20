@@ -209,69 +209,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    if (post_text) {
-        post_text.addEventListener('mouseup', () => {
-            setTimeout(function () {
-                getSelectedText();
-                const tempSpan = document.createElement('span');
-                const selectedContent = range.extractContents();
-                tempSpan.appendChild(selectedContent);
-
-                // Insert the styled span at the selection
-                range.insertNode(tempSpan);
-
-                // Get computed styles for `tempSpan`
-                const computedStyle = window.getComputedStyle(tempSpan);
-                const styles = {
-                    fontWeight: computedStyle.fontWeight,
-                    fontStyle: computedStyle.fontStyle,
-                    textDecoration: computedStyle.textDecoration,
-                    fontSize: computedStyle.fontSize,
-                    fontFamily: computedStyle.fontFamily,
-                    color: computedStyle.color,
-                };
-                console.log(styles);
-
-                document.getElementById('bold').classList[styles.fontWeight >= 500 ? 'add' : 'remove']('active');
-
-                // Toggle 'active' class for italic
-                document.getElementById('italic').classList[styles.fontStyle === 'italic' ? 'add' : 'remove']('active');
-
-                // Toggle 'active' class for underline
-                document.getElementById('underline').classList[styles.textDecoration.includes('underline') ? 'add' : 'remove']('active');
-                document.getElementById('color-picker').value = rgbToHex(styles.color)
-                document.getElementById('font-size').value = styles.fontSize
-
-            }, 0);
-        });
-    }
-    if (post_image) {  // Check if the element exists
-        post_image.addEventListener('change', function (event) {
-
-            const files = Array.from(fileInput.files);
-            selectedFiles = selectedFiles.concat(files);
-            const startpost = document.querySelector('.startpost-popup')
-
-            if (post_image.files && post_image.files[0]) {
-                const img = document.createElement('img');
-                img.className = 'post-image';
-
-                img.src = URL.createObjectURL(post_image.files[0]);
-
-                img.onload = () => URL.revokeObjectURL(img.src);
 
 
-                const tableElement = startpost.querySelector('table');
-                console.log(tableElement, startpost);
-                insertElementAtCursor(img)
-                updateImageSrc(event.target);
-            }
-
-        });
-
-    } else {
-        console.error('Element with ID "post-image" not found');
-    }
     fonts.forEach(font => {
         font.addEventListener('click', function (e) {
             e.preventDefault()
@@ -339,13 +278,229 @@ document.addEventListener('DOMContentLoaded', () => {
                     popups[index].style.display = 'none';
                 } else {
                     popups[index].style.display = 'flex';
-                    // const popupContent = popups[index].cloneNode(true)
+
                     popups[index].remove()
                     mainContent.innerHTML = popups[index].innerHTML;
-                    // mainContent.append(popups[index])
-                    // Add the clicked popup's content
+
+                    if (popups[index].id === 'startpost-popup') {
+                        console.log('post text', post_text);
+
+                        setTimeout(() => {
+                            mainContent.addEventListener('mouseup', (e) => {
+
+
+                                if (e.target.id === 'post-text') {
+                                    console.log(e.target.id);
+
+                                    // try {
+                                    getSelectedText();
+                                    const tempSpan = document.createElement('span');
+                                    const selectedContent = range.extractContents();
+                                    tempSpan.appendChild(selectedContent);
+
+                                    // Insert the styled span at the selection
+                                    range.insertNode(tempSpan);
+
+                                    // Get computed styles for `tempSpan`
+                                    const computedStyle = window.getComputedStyle(tempSpan);
+                                    const styles = {
+                                        fontWeight: computedStyle.fontWeight,
+                                        fontStyle: computedStyle.fontStyle,
+                                        textDecoration: computedStyle.textDecoration,
+                                        fontSize: computedStyle.fontSize,
+                                        fontFamily: computedStyle.fontFamily,
+                                        color: computedStyle.color,
+                                    };
+                                    console.log(styles);
+
+                                    document.getElementById('bold').classList[styles.fontWeight >= 500 ? 'add' : 'remove']('active');
+
+                                    // Toggle 'active' class for italic
+                                    document.getElementById('italic').classList[styles.fontStyle === 'italic' ? 'add' : 'remove']('active');
+
+                                    // Toggle 'active' class for underline
+                                    document.getElementById('underline').classList[styles.textDecoration.includes('underline') ? 'add' : 'remove']('active');
+                                    document.getElementById('color-picker').value = rgbToHex(styles.color)
+                                    document.getElementById('font-size').value = styles.fontSize
+
+                                    // } catch (error) {
+                                    //     console.log(error);
+
+                                    // }
+                                }
+                            });
+                        }, 0);
+
+
+                        document.getElementById('fontFamily').addEventListener('click', function (e) {
+                            e.preventDefault()
+                            console.log('font-family');
+                            const font_list = document.getElementById('fonts-list')
+                            console.log(font_list);
+
+                            font_list.style.display = 'flex'
+                        })
+
+                        document.getElementById('color-picker').addEventListener('change', function () {
+                            const color = this.value
+
+                            adjustFont(color)
+                        })
+                        document.getElementById('bold').addEventListener('click', function (e) {
+                            e.preventDefault()
+                            if (this.classList.contains('active')) {
+                                this.classList.remove('active')
+                            } else {
+                                this.classList.add('active')
+                            }
+                            adjustFont(null, null, null, true)
+
+                        })
+                        document.getElementById('underline').addEventListener('click', function (e) {
+                            e.preventDefault()
+                            if (this.classList.contains('active')) {
+                                this.classList.remove('active')
+                            } else {
+                                this.classList.add('active')
+                            }
+                            console.log('Selected text:', currentSelection.toString());
+                            adjustFont(null, null, null, false, true)
+                        })
+                        document.getElementById('italic').addEventListener('click', function (e) {
+                            e.preventDefault()
+                            if (this.classList.contains('active')) {
+                                this.classList.remove('active')
+                            } else {
+                                this.classList.add('active')
+                            }
+                            adjustFont(null, null, null, false, false, true)
+                        })
+                        document.getElementById('increase').addEventListener('click', function (e) {
+                            e.preventDefault()
+
+                            const fontSize = document.getElementById('font-size')
+                            sizeNumber += 1
+                            fontSize.value = sizeNumber
+                            adjustFont(null, sizeNumber)
+                        })
+                        document.getElementById('decrease').addEventListener('click', function (e) {
+                            e.preventDefault()
+                            const fontSize = document.getElementById('font-size')
+                            sizeNumber -= 1
+                            fontSize.value = sizeNumber
+                            adjustFont(null, sizeNumber)
+                        })
+                        document.getElementById('align-left').addEventListener('click', function (e) {
+                            e.preventDefault()
+                            if (this.classList.contains('active')) {
+                                this.classList.remove('active')
+                            } else {
+                                this.classList.add('active')
+                            }
+                            adjustFont(null, null, null, false, false, false, true, false, false)
+                        })
+                        document.getElementById('align-right').addEventListener('click', function (e) {
+                            e.preventDefault()
+                            if (this.classList.contains('active')) {
+                                this.classList.remove('active')
+                            } else {
+                                this.classList.add('active')
+                            }
+                            adjustFont(null, null, null, false, false, false, false, true, false)
+                        })
+                        document.getElementById('align-center').addEventListener('click', function (e) {
+                            e.preventDefault()
+                            if (this.classList.contains('active')) {
+                                this.classList.remove('active')
+                            } else {
+                                this.classList.add('active')
+                            }
+                            adjustFont(null, null, null, false, false, false, false, false, true)
+                        })
+                        document.getElementById('divide').addEventListener('click', function (e) {
+                            e.preventDefault()
+                            const divider = document.createElement('hr');
+                            divider.style.border = 'px solid grey'
+                            divider.style.backgroundColor = 'grey'
+
+
+
+                            editableDiv.appendChild(divider)
+                        })
+
+
+                        document.getElementById('make-list').addEventListener('click', make_list);
+                        const post_overlay = document.getElementById('tags-overlay');
+                        const tags_input = document.getElementById('tags')
+
+                        if (post_image) {  // Check if the element exists
+                            post_image.addEventListener('change', function (event) {
+
+                                const files = Array.from(fileInput.files);
+                                selectedFiles = selectedFiles.concat(files);
+                                const startpost = document.querySelector('.startpost-popup')
+
+                                if (post_image.files && post_image.files[0]) {
+                                    const img = document.createElement('img');
+                                    img.className = 'post-image';
+
+                                    img.src = URL.createObjectURL(post_image.files[0]);
+
+                                    img.onload = () => URL.revokeObjectURL(img.src);
+
+
+                                    const tableElement = startpost.querySelector('table');
+                                    console.log(tableElement, startpost);
+                                    insertElementAtCursor(img)
+                                    updateImageSrc(event.target);
+                                }
+
+                            });
+
+                        } else {
+                            console.error('Element with ID "post-image" not found');
+                        }
+                        let overlayText = ''
+
+                        tags_input.addEventListener("input", function () {
+                            const update_tags_value = tags_input.value.trim(); // Get the current value of the input field
+                            console.log('tags', tags);
+
+                            // Reset overlayText on each input event and rebuild it
+                            overlayText = '';
+
+                            const tagRegex = /#[a-zA-Z0-9-_]+(?=\s|$)/g;
+                            const matches = update_tags_value.match(tagRegex); // Match the tags using regex
+
+                            tags.clear(); // Clear the tags set before re-adding them
+
+                            // If there are matches, add them to the tags set
+                            if (matches) {
+                                matches.forEach(tag => tags.add(tag)); // Add matched tags to the set
+                            }
+
+                            // Split the input value by spaces and rebuild the overlay
+                            update_tags_value.split(/(\s+)/).forEach((word) => {
+                                if (tags.has(word)) {
+                                    overlayText += `<span class="is-tag"><strong>${word}</strong></span> `;
+                                } else {
+                                    overlayText += `<span><strong>${word}</strong></span> `;
+                                }
+                            });
+
+                            // Update the overlay with the new content, reflecting changes (additions/deletions)
+                            post_overlay.innerHTML = overlayText;
+                        });
+                        post_overlay.innerHTML = overlayText;
+
+                        document.getElementById('start_post').addEventListener('click', function (e) {
+                            e.preventDefault()
+                            new_post()
+                        })
+                    }
                 }
             }
+
 
 
         }
@@ -363,109 +518,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // document.getElementById('paper-toggle').addEventListener('click',function (e) {
     //     e.preventDefault()
-        
+
     // })
 
-    document.getElementById('fontFamily').addEventListener('click', function (e) {
-        e.preventDefault()
-        console.log('font-family');
-        const font_list = document.getElementById('fonts-list')
-        console.log(font_list);
-    
-        font_list.style.display = 'flex'
-    })
-    
-    document.getElementById('color-picker').addEventListener('change', function () {
-        const color = this.value
-    
-        adjustFont(color)
-    })
-    document.getElementById('bold').addEventListener('click', function (e) {
-        e.preventDefault()
-        if (this.classList.contains('active')) {
-            this.classList.remove('active')
-        } else {
-            this.classList.add('active')
-        }
-        adjustFont(null, null, null, true)
-    
-    })
-    document.getElementById('underline').addEventListener('click', function (e) {
-        e.preventDefault()
-        if (this.classList.contains('active')) {
-            this.classList.remove('active')
-        } else {
-            this.classList.add('active')
-        }
-        console.log('Selected text:', currentSelection.toString());
-        adjustFont(null, null, null, false, true)
-    })
-    document.getElementById('italic').addEventListener('click', function (e) {
-        e.preventDefault()
-        if (this.classList.contains('active')) {
-            this.classList.remove('active')
-        } else {
-            this.classList.add('active')
-        }
-        adjustFont(null, null, null, false, false, true)
-    })
-    document.getElementById('increase').addEventListener('click', function (e) {
-        e.preventDefault()
-    
-        const fontSize = document.getElementById('font-size')
-        sizeNumber += 1
-        fontSize.value = sizeNumber
-        adjustFont(null, sizeNumber)
-    })
-    document.getElementById('decrease').addEventListener('click', function (e) {
-        e.preventDefault()
-        const fontSize = document.getElementById('font-size')
-        sizeNumber -= 1
-        fontSize.value = sizeNumber
-        adjustFont(null, sizeNumber)
-    })
-    document.getElementById('align-left').addEventListener('click', function (e) {
-        e.preventDefault()
-        if (this.classList.contains('active')) {
-            this.classList.remove('active')
-        } else {
-            this.classList.add('active')
-        }
-        adjustFont(null, null, null, false, false, false, true, false, false)
-    })
-    document.getElementById('align-right').addEventListener('click', function (e) {
-        e.preventDefault()
-        if (this.classList.contains('active')) {
-            this.classList.remove('active')
-        } else {
-            this.classList.add('active')
-        }
-        adjustFont(null, null, null, false, false, false, false, true, false)
-    })
-    document.getElementById('align-center').addEventListener('click', function (e) {
-        e.preventDefault()
-        if (this.classList.contains('active')) {
-            this.classList.remove('active')
-        } else {
-            this.classList.add('active')
-        }
-        adjustFont(null, null, null, false, false, false, false, false, true)
-    })
-    document.getElementById('divide').addEventListener('click', function (e) {
-        e.preventDefault()
-        const divider = document.createElement('hr');
-        divider.style.border = 'px solid grey'
-        divider.style.backgroundColor = 'grey'
-    
-    
-    
-        editableDiv.appendChild(divider)
-    })
-    
-    
-    document.getElementById('make-list').addEventListener('click', make_list
-    
-    );
+
 });
 document.getElementById('admins').addEventListener('click', async function () {
     resetPopups()
@@ -707,7 +763,7 @@ document.getElementById('posts').addEventListener('click', async function () {
             console.log(data);
             const posts = document.getElementById('Myposts')
             let content = ``
-            data.posts.forEach(post => {    
+            data.posts.forEach(post => {
                 content += `
                 <div onclick="showPost('${post._id}')" class="post" id="post-${post._id}">
                     <h>${post.title}</h>
@@ -838,57 +894,46 @@ async function edit_post(id) {
                     section.style.display = 'block';
                 }
             });
-            
+
         });
         const update_overlay = document.getElementById('post-tags-overlay');
-            const update_tags = document.getElementById('post-tags');
-            
-            let overlayText = ''
-        
-            // if(data.post.tags){
-            //     data.paper.tags.forEach(tag => {
-            //         console.log('tag', tag);
-            
-            //         overlayText += `<span class="is-tag"><strong>${tag} </strong></span>`;
-            //         update_tags.value += tag
-            
-            //     })
-            // }
-        
-        
-            update_tags.addEventListener("input", function () {
-                const update_tags_value = update_tags.value.trim(); // Get the current value of the input field
-                console.log('tags',tags);
-                
-                // Reset overlayText on each input event and rebuild it
-                overlayText = '';
-        
-                const tagRegex = /#[a-zA-Z0-9-_]+(?=\s|$)/g;
-                const matches = update_tags_value.match(tagRegex); // Match the tags using regex
-        
-                tags.clear(); // Clear the tags set before re-adding them
-        
-                // If there are matches, add them to the tags set
-                if (matches) {
-                    matches.forEach(tag => tags.add(tag)); // Add matched tags to the set
+        const update_tags = document.getElementById('post-tags');
+
+        let overlayText = ''
+
+        update_tags.addEventListener("input", function () {
+            const update_tags_value = update_tags.value.trim(); // Get the current value of the input field
+            console.log('tags', tags);
+
+            // Reset overlayText on each input event and rebuild it
+            overlayText = '';
+
+            const tagRegex = /#[a-zA-Z0-9-_]+(?=\s|$)/g;
+            const matches = update_tags_value.match(tagRegex); // Match the tags using regex
+
+            tags.clear(); // Clear the tags set before re-adding them
+
+            // If there are matches, add them to the tags set
+            if (matches) {
+                matches.forEach(tag => tags.add(tag)); // Add matched tags to the set
+            }
+
+            // Split the input value by spaces and rebuild the overlay
+            update_tags_value.split(/(\s+)/).forEach((word) => {
+                if (tags.has(word)) {
+                    overlayText += `<span class="is-tag"><strong>${word}</strong></span> `;
+                } else {
+                    overlayText += `<span><strong>${word}</strong></span> `;
                 }
-        
-                // Split the input value by spaces and rebuild the overlay
-                update_tags_value.split(/(\s+)/).forEach((word) => {
-                    if (tags.has(word)) {
-                        overlayText += `<span class="is-tag"><strong>${word}</strong></span> `;
-                    } else {
-                        overlayText += `<span><strong>${word}</strong></span> `;
-                    }
-                });
-        
-                // Update the overlay with the new content, reflecting changes (additions/deletions)
-                update_overlay.innerHTML = overlayText;
             });
+
+            // Update the overlay with the new content, reflecting changes (additions/deletions)
             update_overlay.innerHTML = overlayText;
-        
+        });
+        update_overlay.innerHTML = overlayText;
+
         hide_spinner()
-        
+
     }
 }
 async function update_post(id) {
@@ -1707,7 +1752,7 @@ function adjustFont(
 ) {
     const post_text = document.getElementById('post-text');
 
-    console.log(currentSelection);
+    console.log('currentSelection', currentSelection);
 
     // Determine if the selection already has a span with id 'adjust-span'
     let span;
@@ -1744,11 +1789,11 @@ function adjustFont(
         post_text.style.textAlign = 'center';
     }
     if (range) {
-        const selectedText = range.toString(); 
+        const selectedText = range.toString();
         if (selectedText) {
-            const newSpan = span.cloneNode(false); 
+            const newSpan = span.cloneNode(false);
             newSpan.textContent = selectedText;
-            range.deleteContents(); 
+            range.deleteContents();
             range.insertNode(newSpan);
         }
     }
