@@ -92,8 +92,8 @@
       <table border="1" cellpadding="10" cellspacing="0">
          <tbody>
             <tr>
-               <section class="tools">
-
+               <section class="tools" draggable="false" contenteditable="false">
+                  
                   <input id="fontFamily" class="fontFamily" title="Font family" value="Arial, sans-serif">
                   <div class="fontSize">
                      <i id="decrease" class="fa-solid fa-minus"></i>
@@ -102,7 +102,7 @@
                   </div>
 
                   <input type="color" name="color" id="color-picker" title="font color">
-                  <div class="divider">
+                  <div class="dividerdivider">
 
                   </div>
                   <i id="bold" class="fa-solid fa-bold"></i>
@@ -120,8 +120,8 @@
                   <i id="align-right" class="fa-solid fa-align-right" title="Align Right"></i>
                   <i id="align-center" class="fa-solid fa-align-center" title="Align Center"></i>
                   <div class="divider"></div>
-                  <label for="post-image">
-                     <i class="fa-regular fa-image" title="upload image"></i>
+                  <label  for="post-image">
+                     <i id="choose-image" class="fa-regular fa-image" title="upload image"></i>
                   </label>
                   <input type="file" multiple id="post-image" name="post-image" style="display: none;" alt="image/*">
                </section>

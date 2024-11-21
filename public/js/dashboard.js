@@ -42,10 +42,10 @@ const tools = `
     
     <div class="divider"></div>
     
-    <label for="post-image">
-       <i id="upload-image" class="fa-regular fa-image" title="Upload Image"></i>
+    <label for="update-post-image">
+       <i  class="fa-regular fa-image" title="Upload Image"></i>
     </label>
-    <input type="file" multiple id="post-image" name="post-image" style="display: none;" accept="image/*">
+    <input type="file" multiple id="update-post-image" name="post-image" style="display: none;" accept="image/*">
 </section>`;
 
 let li_id = 0
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const toggleLinks = document.querySelectorAll('.toggle-link');
     const fonts = document.querySelectorAll('.fonts-list a');
-    const post_image = document.getElementById('post-image')
+
     const post_text = document.getElementById('post-text')
     const profileImage = document.getElementById('profileImage')
     const settings = document.getElementById('settings')
@@ -283,15 +283,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     mainContent.innerHTML = popups[index].innerHTML;
 
                     if (popups[index].id === 'startpost-popup') {
-                        console.log('post text', post_text);
                         mainContent.addEventListener('mouseup', (e) => {
-                            console.log('id',e.target.id);
-                            // if (e.target.id === 'post-text') {
-                                setTimeout(() => {
-                                    
+                            console.log('Before Target ID:', e.target.id);
 
-                                    // try {
+                            const targetId =
+                                e.target.id === 'maincontent' ?"post-text" :!e.target.id ?"post-text":""
+
+                                        console.log('after Target ID:', targetId);
+
+                            if (targetId === 'post-text') {
+                                setTimeout(() => {
                                     getSelectedText();
+
                                     const tempSpan = document.createElement('span');
                                     const selectedContent = range.extractContents();
                                     tempSpan.appendChild(selectedContent);
@@ -311,29 +314,86 @@ document.addEventListener('DOMContentLoaded', () => {
                                     };
                                     console.log(styles);
 
-                                    document.getElementById('bold').classList[styles.fontWeight >= 500 ? 'add' : 'remove']('active');
+                                    document
+                                        .getElementById('bold')
+                                        .classList[styles.fontWeight >= 500 ? 'add' : 'remove']('active');
 
                                     // Toggle 'active' class for italic
-                                    document.getElementById('italic').classList[styles.fontStyle === 'italic' ? 'add' : 'remove']('active');
+                                    document
+                                        .getElementById('italic')
+                                        .classList[styles.fontStyle === 'italic' ? 'add' : 'remove']('active');
 
                                     // Toggle 'active' class for underline
-                                    document.getElementById('underline').classList[styles.textDecoration.includes('underline') ? 'add' : 'remove']('active');
-                                    document.getElementById('color-picker').value = rgbToHex(styles.color)
-                                    document.getElementById('font-size').value = styles.fontSize
+                                    document
+                                        .getElementById('underline')
+                                        .classList[styles.textDecoration.includes('underline') ? 'add' : 'remove']('active');
 
+                                    document.getElementById('color-picker').value = rgbToHex(styles.color);
+                                    document.getElementById('font-size').value = styles.fontSize;
                                 }, 0);
-                                // } catch (error) {
-                                //     console.log(error);
+                            }
 
-                                // }
-                            // }
+                            if (targetId === 'make-list') {
+                                make_list();
+                            }
+
+                            if (targetId === 'divide') {
+                                divider();
+                            }
                         });
 
+                        // mainContent.addEventListener('mouseup', (e) => {
+                        //     console.log('id', e.target.id);
+                        //     // if (e.target.id === 'post-text') {
+                        //     if (e.target.id === 'post-text') {
+                        //     setTimeout(() => {
 
 
+                        //         // try {
+                        //         getSelectedText();
+                        //         const tempSpan = document.createElement('span');
+                        //         const selectedContent = range.extractContents();
+                        //         tempSpan.appendChild(selectedContent);
+
+                        //         // Insert the styled span at the selection
+                        //         range.insertNode(tempSpan);
+
+                        //         // Get computed styles for `tempSpan`
+                        //         const computedStyle = window.getComputedStyle(tempSpan);
+                        //         const styles = {
+                        //             fontWeight: computedStyle.fontWeight,
+                        //             fontStyle: computedStyle.fontStyle,
+                        //             textDecoration: computedStyle.textDecoration,
+                        //             fontSize: computedStyle.fontSize,
+                        //             fontFamily: computedStyle.fontFamily,
+                        //             color: computedStyle.color,
+                        //         };
+                        //         console.log(styles);
+
+                        //         document.getElementById('bold').classList[styles.fontWeight >= 500 ? 'add' : 'remove']('active');
+
+                        //         // Toggle 'active' class for italic
+                        //         document.getElementById('italic').classList[styles.fontStyle === 'italic' ? 'add' : 'remove']('active');
+
+                        //         // Toggle 'active' class for underline
+                        //         document.getElementById('underline').classList[styles.textDecoration.includes('underline') ? 'add' : 'remove']('active');
+                        //         document.getElementById('color-picker').value = rgbToHex(styles.color)
+                        //         document.getElementById('font-size').value = styles.fontSize
+
+                        //     }, 0);
+                        //     }
+                        //     if (e.target.id === 'make-list') {
+
+
+                        //         make_list()
+                        //     }
+                        //     if (e.target.id === 'divide') {
+                        //         divider()
+                        //     }
+                        // });
                         document.getElementById('fontFamily').addEventListener('click', function (e) {
                             e.preventDefault()
-                            console.log('font-family');
+
                             const font_list = document.getElementById('fonts-list')
                             console.log(font_list);
 
@@ -415,49 +475,34 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                             adjustFont(null, null, null, false, false, false, false, false, true)
                         })
-                        document.getElementById('divide').addEventListener('click', function (e) {
-                            e.preventDefault()
-                            const divider = document.createElement('hr');
-                            divider.style.border = 'px solid grey'
-                            divider.style.backgroundColor = 'grey'
+                        // console.log('post image',post_image);
+                        const post_image = document.getElementById('post-image')
+                        post_image.addEventListener('change', function (event) {
+                            console.log('post_image', post_image);
+                            const files = Array.from(fileInput.files);
+                            selectedFiles = selectedFiles.concat(files);
+
+
+                            if (post_image.files && post_image.files[0]) {
+                                const img = document.createElement('img');
+                                img.className = 'post-image';
+
+                                img.src = URL.createObjectURL(post_image.files[0]);
+
+                                img.onload = () => URL.revokeObjectURL(img.src);
+
+                                insertElementAtCursor(img)
+                                updateImageSrc(event.target);
+                            }
+
+                        });
 
 
 
-                            editableDiv.appendChild(divider)
-                        })
-
-
-                        document.getElementById('make-list').addEventListener('click', make_list);
                         const post_overlay = document.getElementById('tags-overlay');
                         const tags_input = document.getElementById('tags')
 
-                        if (post_image) {  // Check if the element exists
-                            post_image.addEventListener('change', function (event) {
 
-                                const files = Array.from(fileInput.files);
-                                selectedFiles = selectedFiles.concat(files);
-                                const startpost = document.querySelector('.startpost-popup')
-
-                                if (post_image.files && post_image.files[0]) {
-                                    const img = document.createElement('img');
-                                    img.className = 'post-image';
-
-                                    img.src = URL.createObjectURL(post_image.files[0]);
-
-                                    img.onload = () => URL.revokeObjectURL(img.src);
-
-
-                                    const tableElement = startpost.querySelector('table');
-                                    console.log(tableElement, startpost);
-                                    insertElementAtCursor(img)
-                                    updateImageSrc(event.target);
-                                }
-
-                            });
-
-                        } else {
-                            console.error('Element with ID "post-image" not found');
-                        }
                         let overlayText = ''
 
                         tags_input.addEventListener("input", function () {
@@ -496,6 +541,14 @@ document.addEventListener('DOMContentLoaded', () => {
                             new_post()
                         })
                     }
+                    // if (post_image) {
+
+
+
+
+                    // } else {
+                    //     console.error('Element with ID "post-image" not found');
+                    // }
                 }
             }
 
@@ -518,9 +571,47 @@ document.addEventListener('DOMContentLoaded', () => {
     //     e.preventDefault()
 
     // })
+    document.getElementById('posts').addEventListener('click', async function () {
+        show_spinner()
+        try {
 
+            const response = await fetch('/api/posts', {
+                method: "GET",
+            })
+            if (response.ok) {
+
+                const data = await response.json()
+                console.log(data);
+                const posts = document.getElementById('Myposts')
+                let content = ``
+                data.posts.forEach(post => {
+                    content += `
+                    <div onclick="showPost('${post._id}')" class="post" id="post-${post._id}">
+                        <h>${post.title}</h>
+                        <div class="post-tools" >
+                            <i onclick="event.stopPropagation(); edit_post('${post._id}')" class="pen fa-regular fa-pen-to-square"></i>
+                            <i onclick="event.stopPropagation(); delete_post('${post._id}')"  class="trash-can fa-regular fa-trash-can"></i>
+                        </div>
+                    </div>
+                    `
+                })
+                posts.innerHTML = content
+                posts.style.display = 'flex'
+                hide_spinner()
+            }
+        } catch (error) {
+
+        }
+    })
 
 });
+function divider() {
+    const divider = document.createElement('hr');
+    divider.style.border = 'px solid grey'
+    divider.style.backgroundColor = 'grey'
+    const editableDiv = document.getElementById('post-text')
+    editableDiv.appendChild(divider)
+}
 document.getElementById('admins').addEventListener('click', async function () {
     resetPopups()
     show_spinner()
@@ -748,38 +839,7 @@ document.getElementById('owner-posts').addEventListener('click', async function 
 
     }
 })
-document.getElementById('posts').addEventListener('click', async function () {
-    show_spinner()
-    try {
 
-        const response = await fetch('/api/posts', {
-            method: "GET",
-        })
-        if (response.ok) {
-
-            const data = await response.json()
-            console.log(data);
-            const posts = document.getElementById('Myposts')
-            let content = ``
-            data.posts.forEach(post => {
-                content += `
-                <div onclick="showPost('${post._id}')" class="post" id="post-${post._id}">
-                    <h>${post.title}</h>
-                    <div class="post-tools" >
-                        <i onclick="event.stopPropagation(); edit_post('${post._id}')" class="pen fa-regular fa-pen-to-square"></i>
-                        <i onclick="event.stopPropagation(); delete_post('${post._id}')"  class="trash-can fa-regular fa-trash-can"></i>
-                    </div>
-                </div>
-                `
-            })
-            posts.innerHTML = content
-            posts.style.display = 'flex'
-            hide_spinner()
-        }
-    } catch (error) {
-
-    }
-})
 async function edit_post(id) {
     show_spinner()
     let post_info = ''
@@ -827,6 +887,8 @@ async function edit_post(id) {
  </div>
     `
         editPost.innerHTML = post_info
+        editPost.remove()
+        mainContent.appendChild(editPost)
         addListeners()
         const listItems = document.querySelectorAll('.chapters-list li');
         const imageArray = data.post.post_image;
@@ -962,7 +1024,7 @@ async function update_post(id) {
 }
 
 function addListeners() {
-    document.getElementById('fontFamily').addEventListener('click', function (e) {
+    document.getElementById('text-fontFamily').addEventListener('click', function (e) {
         e.preventDefault();
         console.log('font-family');
         const font_list = document.getElementById('fonts-list');
@@ -1046,10 +1108,10 @@ function addListeners() {
 
 
 
-    document.getElementById('upload-image').addEventListener('click', function (e) {
-        e.preventDefault();
-        document.getElementById('post-image').click();
-    });
+    // document.getElementById('upload-image').addEventListener('click', function (e) {
+    //     e.preventDefault();
+    //     document.getElementById('post-image').click();
+    // });
     document.getElementById('text-fontFamily').addEventListener('click', function (e) {
         e.preventDefault()
         console.log('font-family');
@@ -1171,17 +1233,9 @@ function addListeners() {
 }
 
 function insertElementAtCursor(object) {
-    // Create the element to insert
-    // const newElement = document.createElement(elementTag);
-    // newElement.innerHTML = content;
 
-    // Get the current selection
-    console.log(object);
+    console.log('Object', object);
 
-    // if (!currentSelection.rangeCount) {
-    //     console.log('no rangecount');
-
-    //     return};
 
 
     range.deleteContents();
@@ -1326,20 +1380,22 @@ function make_list() {
 
     listMode = true;
 
-    // Get or create the unordered list in editableDiv
+    const editableDiv = document.getElementById('post-text')
     let list = editableDiv.querySelector('.chapters-list');
-
 
     if (!list) {
         list = document.createElement('ul');
         list.className = 'chapters-list';
         editableDiv.appendChild(list);
+
+        // console.log('chapters',list,'editableDiv',editableDiv);
     }
 
 
     // Create a new list item
     const li = document.createElement('li');
     li.id = `li-${li_id}`;
+    // console.log('li',li);
 
     // Create title container
     const titleContainer = document.createElement('span');
@@ -1360,22 +1416,21 @@ function make_list() {
     titleContainer.appendChild(title);
     li.appendChild(titleContainer);
 
-    // Create the editable section that toggles
     const section = document.createElement('section');
     section.id = `section-${li_id}`;
     section.contentEditable = true;
-    section.style.display = 'none'; // Start hidden
-    section.textContent = 'New section content...'; // Default content
+    section.style.display = 'none';
+    section.textContent = 'New section content...';
     section.addEventListener('focus', function () {
         listMode = false
     })
     li.appendChild(section);
     list.appendChild(li);
 
-    // Increment the li_id counter for the next list item
+    console.log('List', list);
+
     li_id++;
 
-    // Add click event listener to toggle the section display
     icon.addEventListener('click', function (event) {
         event.stopPropagation();
         if (section.style.display === 'block') {
@@ -1445,8 +1500,6 @@ function make_list() {
     // });
 }
 function make_text_list() {
-    // e.preventDefault();
-    // Enable list mode
 
     listMode = true;
     const editabletext = document.getElementById('edit-post-text')
@@ -1487,18 +1540,16 @@ function make_text_list() {
     const section = document.createElement('section');
     section.id = `section-${li_id}`;
     section.contentEditable = true;
-    section.style.display = 'none'; // Start hidden
-    section.textContent = 'New section content...'; // Default content
+    section.style.display = 'none';
+    section.textContent = 'New section content...';
     section.addEventListener('focus', function () {
         listMode = false
     })
     li.appendChild(section);
     text_list.appendChild(li);
 
-    // Increment the li_id counter for the next list item
     li_id++;
 
-    // Add click event listener to toggle the section display
     icon.addEventListener('click', function (event) {
         event.stopPropagation();
         if (section.style.display === 'block') {
@@ -1515,7 +1566,7 @@ function make_text_list() {
         if (e.key === 'Enter' && listMode) {
             e.preventDefault(); // Prevent default action (e.g., form submission)
 
-            // Check for an existing unordered list container, or create it if it doesn't exist
+
             let ul = document.querySelector('.chapters-list');
             if (!ul) {
                 ul = document.createElement('ul');
