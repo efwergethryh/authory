@@ -43,7 +43,7 @@ const tools = `
     <div class="divider"></div>
     
     <label for="update-post-image">
-       <i  class="fa-regular fa-image" title="Upload Image"></i>
+       <i id="choose-post-image" class="fa-regular fa-image" title="Upload Image"></i>
     </label>
     <input type="file" multiple id="update-post-image" name="post-image" style="display: none;" accept="image/*">
 </section>`;
@@ -284,12 +284,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (popups[index].id === 'startpost-popup') {
                         mainContent.addEventListener('mouseup', (e) => {
-                            console.log('Before Target ID:', e.target.id);
 
                             const targetId =
-                                e.target.id === 'maincontent' ?"post-text" :!e.target.id ?"post-text":""
+                                e.target.id === 'maincontent' ? "" : !e.target.id ? "post-text" : e.target.id
+                            console.log('id',e.target.id);
 
-                                        console.log('after Target ID:', targetId);
 
                             if (targetId === 'post-text') {
                                 setTimeout(() => {
@@ -333,67 +332,15 @@ document.addEventListener('DOMContentLoaded', () => {
                                 }, 0);
                             }
 
-                            if (targetId === 'make-list') {
-                                make_list();
-                            }
 
-                            if (targetId === 'divide') {
-                                divider();
-                            }
+
+
                         });
 
-                        // mainContent.addEventListener('mouseup', (e) => {
-                        //     console.log('id', e.target.id);
-                        //     // if (e.target.id === 'post-text') {
-                        //     if (e.target.id === 'post-text') {
-                        //     setTimeout(() => {
 
-
-                        //         // try {
-                        //         getSelectedText();
-                        //         const tempSpan = document.createElement('span');
-                        //         const selectedContent = range.extractContents();
-                        //         tempSpan.appendChild(selectedContent);
-
-                        //         // Insert the styled span at the selection
-                        //         range.insertNode(tempSpan);
-
-                        //         // Get computed styles for `tempSpan`
-                        //         const computedStyle = window.getComputedStyle(tempSpan);
-                        //         const styles = {
-                        //             fontWeight: computedStyle.fontWeight,
-                        //             fontStyle: computedStyle.fontStyle,
-                        //             textDecoration: computedStyle.textDecoration,
-                        //             fontSize: computedStyle.fontSize,
-                        //             fontFamily: computedStyle.fontFamily,
-                        //             color: computedStyle.color,
-                        //         };
-                        //         console.log(styles);
-
-                        //         document.getElementById('bold').classList[styles.fontWeight >= 500 ? 'add' : 'remove']('active');
-
-                        //         // Toggle 'active' class for italic
-                        //         document.getElementById('italic').classList[styles.fontStyle === 'italic' ? 'add' : 'remove']('active');
-
-                        //         // Toggle 'active' class for underline
-                        //         document.getElementById('underline').classList[styles.textDecoration.includes('underline') ? 'add' : 'remove']('active');
-                        //         document.getElementById('color-picker').value = rgbToHex(styles.color)
-                        //         document.getElementById('font-size').value = styles.fontSize
-
-                        //     }, 0);
-                        //     }
-                        //     if (e.target.id === 'make-list') {
-
-
-                        //         make_list()
-                        //     }
-                        //     if (e.target.id === 'divide') {
-                        //         divider()
-                        //     }
-                        // });
                         document.getElementById('fontFamily').addEventListener('click', function (e) {
                             e.preventDefault()
-
+                            e.stopPropagation()
                             const font_list = document.getElementById('fonts-list')
                             console.log(font_list);
 
@@ -475,14 +422,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                             adjustFont(null, null, null, false, false, false, false, false, true)
                         })
-                        // console.log('post image',post_image);
+                        document.getElementById('make-list').addEventListener('click', make_list)
+                        document.getElementById('divide').addEventListener('click', divider)
+
                         const post_image = document.getElementById('post-image')
                         post_image.addEventListener('change', function (event) {
-                            console.log('post_image', post_image);
-                            const files = Array.from(fileInput.files);
+
+                            const files = Array.from(post_image.files);
                             selectedFiles = selectedFiles.concat(files);
 
-
+                            console.log('Post image', post_image);
                             if (post_image.files && post_image.files[0]) {
                                 const img = document.createElement('img');
                                 img.className = 'post-image';
@@ -492,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 img.onload = () => URL.revokeObjectURL(img.src);
 
                                 insertElementAtCursor(img)
-                                updateImageSrc(event.target);
+                                // updateImageSrc(event.target);
                             }
 
                         });
@@ -541,14 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             new_post()
                         })
                     }
-                    // if (post_image) {
 
-
-
-
-                    // } else {
-                    //     console.error('Element with ID "post-image" not found');
-                    // }
                 }
             }
 
@@ -605,12 +547,84 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
 });
+let keyHandler = (e) => {
+
+    const editableDiv = document.getElementById('post-text')
+    if (e.key === 'Enter') {
+        if (!listMode) {
+            
+
+                console.log('listMode is off');
+
+            return;
+        }
+
+        else {
+            e.preventDefault();
+
+            let list = editableDiv.querySelector('.chapters-list');
+            if (!list) {
+                list = document.createElement('ul');
+                list.className = 'chapters-list';
+                editableDiv.appendChild(list);
+            }
+
+            const li = document.createElement('li');
+            li.id = `li-${li_id}`;
+
+            const titleContainer = document.createElement('span');
+            titleContainer.className = 'title-container';
+
+            // Create the disclosure icon
+            const icon = document.createElement('span');
+            icon.contentEditable = false;
+            icon.className = 'list-icon';
+            icon.innerHTML = '&#9654;';
+
+            // Title text that remains visible
+            const title = document.createElement('span');
+            title.className = 'title-text';
+            title.contentEditable = true;
+            title.textContent = 'Your title';
+            titleContainer.appendChild(icon);
+            titleContainer.appendChild(title);
+            li.appendChild(titleContainer);
+
+            const section = document.createElement('section');
+            section.id = `section-${li_id}`;
+            section.contentEditable = true;
+            section.style.display = 'none';
+            section.textContent = 'New section content...';
+            section.addEventListener('focus', function () {
+                listMode = false;
+            });
+            li.appendChild(section);
+            list.appendChild(li);
+
+            console.log('List', list);
+
+            li_id++;
+
+            icon.addEventListener('click', function (event) {
+                event.stopPropagation();
+                if (section.style.display === 'block') {
+                    section.style.display = 'none';
+                    icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : titleContainer.style.direction === 'rtl' ? '◀' : '▶';
+                } else {
+                    section.style.display = 'block';
+                    icon.innerHTML = '&#9660;'; // Downward triangle (open state).
+                }
+            });
+        }
+    }
+}
+let text_keyHandler = (e) => { }
 function divider() {
     const divider = document.createElement('hr');
     divider.style.border = 'px solid grey'
     divider.style.backgroundColor = 'grey'
-    const editableDiv = document.getElementById('post-text')
-    editableDiv.appendChild(divider)
+
+    insertElementAtCursor(divider)
 }
 document.getElementById('admins').addEventListener('click', async function () {
     resetPopups()
@@ -1007,6 +1021,7 @@ async function update_post(id) {
     console.log('files', selectedFiles);
 
     selectedFiles.forEach(file => {
+        console.log('file', file);
 
         formData.append('post-image', file);
     });
@@ -1153,7 +1168,26 @@ function addListeners() {
         }
 
     });
+    document.getElementById('update-post-image').addEventListener('change', function (e) {
+        const post_image = document.getElementById('update-post-image')
+        console.log('Post image', post_image);
 
+        const files = Array.from(post_image.files);
+        console.log('input files', post_image.files);
+
+        selectedFiles = selectedFiles.concat(files);
+        if (post_image.files && post_image.files[0]) {
+            const img = document.createElement('img');
+            img.className = 'post-image';
+
+            img.src = URL.createObjectURL(post_image.files[0]);
+
+            img.onload = () => URL.revokeObjectURL(img.src);
+
+            insertElementAtCursor(img)
+            updateImageSrc(e.target);
+        }
+    })
     // document.addEventListener('click', function(event) {
     //     event.stopPropagation()
     //     const fontsListPopup = document.getElementById('text-fonts-list');
@@ -1236,16 +1270,23 @@ function insertElementAtCursor(object) {
 
     console.log('Object', object);
 
+    if (!range) {
+        const editableDiv = document.getElementById('post-text')
+        const editableDiv_edit = document.getElementById('edit-post-text')
+        if (editableDiv) editableDiv.appendChild(object)
+        if (editableDiv_edit) editableDiv_edit.appendChild(object)
+    }
 
+    else {
+        range.deleteContents();
+        range.insertNode(object);
 
-    range.deleteContents();
-    range.insertNode(object);
-
-
-    range.setStartAfter(object);
-    range.setEndAfter(object);
-    currentSelection.removeAllRanges();
-    currentSelection.addRange(range);
+        ``
+        range.setStartAfter(object);
+        range.setEndAfter(object);
+        currentSelection.removeAllRanges();
+        currentSelection.addRange(range);
+    }
 }
 
 // Example usage: insert a <span> with "Hello!" at the cursor
@@ -1314,12 +1355,8 @@ function updateImageSrc(fileInput) {
     if (file) {
 
         const filename = file.name;
-
-
         const imageElement = document.querySelector('.post-image');
-        console.log(imageElement);
-
-
+        console.log('image element', imageElement);
         imageElement.src = `/post_images/${filename}`;
     }
 }
@@ -1377,127 +1414,88 @@ function rgbToHex(rgb) {
 function make_list() {
     // e.preventDefault();
     // Enable list mode
+    const toggle = document.getElementById('make-list')
+    if (listMode) {
+        listMode = false;
+        toggle.classList.remove('active')
+    }
+    else {
+        listMode = true;
+        toggle.classList.add('active')
+        const editableDiv = document.getElementById('post-text')
+        let list = editableDiv.querySelector('.chapters-list');
 
-    listMode = true;
+        if (!list) {
+            list = document.createElement('ul');
+            list.className = 'chapters-list';
+            editableDiv.appendChild(list);
 
-    const editableDiv = document.getElementById('post-text')
-    let list = editableDiv.querySelector('.chapters-list');
+        }
 
-    if (!list) {
-        list = document.createElement('ul');
-        list.className = 'chapters-list';
-        editableDiv.appendChild(list);
 
-        // console.log('chapters',list,'editableDiv',editableDiv);
+        // Create a new list item
+        const li = document.createElement('li');
+        li.id = `li-${li_id}`;
+        // console.log('li',li);
+
+        // Create title container
+        const titleContainer = document.createElement('span');
+        titleContainer.className = 'title-container';
+
+        // Create the disclosure icon
+        const icon = document.createElement('span');
+        icon.contentEditable = false
+        icon.className = 'list-icon';
+        icon.innerHTML = '&#9654;';
+
+        // Title text that remains visible
+        const title = document.createElement('span');
+        title.className = 'title-text';
+        title.contentEditable = true;
+        title.textContent = 'Your title';
+        titleContainer.appendChild(icon);
+        titleContainer.appendChild(title);
+        li.appendChild(titleContainer);
+
+        const section = document.createElement('section');
+        section.id = `section-${li_id}`;
+        section.contentEditable = true;
+        section.style.display = 'none';
+        section.textContent = 'New section content...';
+        section.addEventListener('focus', function () {
+            listMode = false
+        })
+        li.appendChild(section);
+        list.appendChild(li);
+
+        console.log('List', list);
+
+        li_id++;
+
+        icon.addEventListener('click', function (event) {
+            event.stopPropagation();
+            if (section.style.display === 'block') {
+                section.style.display = 'none';
+
+                icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : titleContainer.style.direction === 'rtl' ? '◀' : '▶'
+
+            } else {
+
+                section.style.display = 'block';
+                icon.innerHTML = '&#9660;';
+            }
+        });
+        console.log('before keydown');
+
+        console.log('Removing listener');
+        document.removeEventListener('keydown', keyHandler);
+
+        console.log('Adding listener');
+        document.addEventListener('keydown', keyHandler);
+
     }
 
 
-    // Create a new list item
-    const li = document.createElement('li');
-    li.id = `li-${li_id}`;
-    // console.log('li',li);
-
-    // Create title container
-    const titleContainer = document.createElement('span');
-    titleContainer.className = 'title-container';
-
-    // Create the disclosure icon
-    const icon = document.createElement('span');
-    icon.contentEditable = false
-    icon.className = 'list-icon';
-    icon.innerHTML = '&#9654;';
-
-    // Title text that remains visible
-    const title = document.createElement('span');
-    title.className = 'title-text';
-    title.contentEditable = true;
-    title.textContent = 'Your title';
-    titleContainer.appendChild(icon);
-    titleContainer.appendChild(title);
-    li.appendChild(titleContainer);
-
-    const section = document.createElement('section');
-    section.id = `section-${li_id}`;
-    section.contentEditable = true;
-    section.style.display = 'none';
-    section.textContent = 'New section content...';
-    section.addEventListener('focus', function () {
-        listMode = false
-    })
-    li.appendChild(section);
-    list.appendChild(li);
-
-    console.log('List', list);
-
-    li_id++;
-
-    icon.addEventListener('click', function (event) {
-        event.stopPropagation();
-        if (section.style.display === 'block') {
-            section.style.display = 'none';
-
-            icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : titleContainer.style.direction === 'rtl' ? '◀' : '▶'
-
-        } else {
-            section.style.display = 'block';
-            icon.innerHTML = '&#9660;'; // Downward triangle (open state)
-        }
-    });
-
-    // document.addEventListener('keydown', (e) => {
-    //     if (e.key === 'Enter' && listMode) {
-    //         e.preventDefault(); 
-    //         let ul = document.querySelector('.chapters-list');
-    //         if (!ul) {
-    //             ul = document.createElement('ul');
-    //             ul.className = 'chapters-list';
-    //             document.getElementById('editableDiv').appendChild(ul);
-    //         }
-
-    //         // Create new list item with unique ID
-    //         const li = document.createElement('li');
-    //         li.id = `li-${li_id}`;
-
-    //         // Create title container with icon and title
-    //         const titleContainer = document.createElement('span');
-    //         titleContainer.className = 'title-container';
-
-    //         const icon = document.createElement('span');
-    //         icon.contentEditable = false
-    //         icon.className = 'list-icon';
-    //         icon.innerHTML = '▶';
-
-    //         const title = document.createElement('span');
-    //         title.className = 'title-text';
-    //         title.textContent = 'Your title';
-
-    //         // Append icon and title to the titleContainer, then to li
-    //         titleContainer.appendChild(icon);
-    //         titleContainer.appendChild(title);
-    //         li.appendChild(titleContainer);
-
-    //         // Create editable section and append it to li
-    //         const section = document.createElement('section');
-    //         section.contentEditable = true;
-    //         section.id = `section-${li_id}`;
-    //         section.style.display = 'none'; // Hidden initially
-    //         section.textContent = 'New section content...';
-
-    //         li.appendChild(section);
-    //         ul.appendChild(li); // Append li to the ul
-
-
-    //         icon.addEventListener('click', function (event) {
-    //             event.stopPropagation();
-    //             section.style.display = section.style.display === 'block' ? 'none' : 'block';
-    //             // icon.innerHTML = section.style.display === 'block' ? '&#9660;' : '&#9654;'; // Toggle icon direction
-    //             icon.innerHTML = titleContainer.style.direction === 'ltr' ?'&#9654;' :titleContainer.style.direction === 'rtl'?'◀':'▶'
-
-    //         });
-
-    //         li_id++; // Increment the li_id to ensure each list item is unique
-    //     }
-    // });
 }
 function make_text_list() {
 
@@ -1562,66 +1560,7 @@ function make_text_list() {
         }
     });
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && listMode) {
-            e.preventDefault(); // Prevent default action (e.g., form submission)
 
-
-            let ul = document.querySelector('.chapters-list');
-            if (!ul) {
-                ul = document.createElement('ul');
-                ul.className = 'chapters-list';
-                document.getElementById('editableDiv').appendChild(ul);
-            }
-
-            // Create new list item with unique ID
-            const li = document.createElement('li');
-            li.id = `li-${li_id}`;
-
-            // Create title container with icon and title
-            const titleContainer = document.createElement('span');
-            titleContainer.className = 'title-container';
-
-            const icon = document.createElement('span');
-            icon.contentEditable = false
-            icon.className = 'list-icon';
-            icon.innerHTML = '▶';
-
-            const title = document.createElement('span');
-            title.className = 'title-text';
-            title.textContent = 'Your title';
-
-            // Append icon and title to the titleContainer, then to li
-            titleContainer.appendChild(icon);
-            titleContainer.appendChild(title);
-            li.appendChild(titleContainer);
-
-            // Create editable section and append it to li
-            const section = document.createElement('section');
-            section.contentEditable = true;
-            section.id = `section-${li_id}`;
-            section.style.display = 'none'; // Hidden initially
-            section.textContent = 'New section content...';
-
-            li.appendChild(section);
-            ul.appendChild(li); // Append li to the ul
-
-            // Toggle section display on icon click
-            // icon.addEventListener('click', function (event) {
-            //     event.stopPropagation();
-            //     section.style.display = section.style.display === 'block' ? 'none' : 'block';
-            //     icon.innerHTML = section.style.display === 'block' ? '&#9660;' : '&#9654;'; // Toggle icon direction
-            // });
-            icon.addEventListener('click', function (event) {
-                event.stopPropagation();
-                section.style.display = section.style.display === 'block' ? 'none' : 'block';
-                // icon.innerHTML = section.style.display === 'block' ? '&#9660;' : '&#9654;'; // Toggle icon direction
-                icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : titleContainer.style.direction === 'rtl' ? '◀' : '▶'
-
-            });
-            li_id++; // Increment the li_id to ensure each list item is unique
-        }
-    });
 
 }
 document.addEventListener('keydown', (e) => {

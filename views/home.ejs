@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        ICTOOB
+        landing
     </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,6 +16,8 @@
 
     <%- include('./layouts/SideBar') %>
         <%- include('./layouts/topBar') %>
+
+
             <form class="add-conversation" id="add_conversation" action="" enctype="multipart/form-data">
                 <i class="fa"></i>
                 <h3>Create a new conversation</h3>
@@ -90,95 +92,9 @@
             </div>
             <img src="/images/Book.gif" class="loading-spinner" id="loading-spinner" alt="">
             <div id="userProfile" class="userProfile">
-            </div>
-            <div tabindex="0" role="button" class="-e0b73ddffb195-container" id="welcome-popup">
-                <div data-e2e-test-id="modalContainer"  class="-e0b73ddffb195-modalContent">
-                    <div class="-e56e301b82e175d6-container" data-e2e-test-id="modal-light-paywall">
-                        <div class="-e56e301b82e175d6-column">
-                            <h2 class="-e56e301b82e175d6-title" data-e2e-test-id="modal-light-paywall-title">Hello,
-                                Mostafa<div class="-e56e301b82e175d6-subtitle"
-                                    data-e2e-test-id="modal-light-paywall-subtitle">Here’s how AMBOSS is keeping
-                                    clinicians like you at their best.</div>
-                            </h2>
-                            <picture data-ds-id="Image"><img
-                                    class="-e56e301b82e175d6-modalImage css-3ie5tp-StyledImg e1v3lyrm0"
-                                    src="https://next.amboss.com/us/static/assets/2a8f4b20345f40bc.png"></picture>
-                        </div>
-                        <div class="-e56e301b82e175d6-column">
-                            <ul>
-                                <li class="-e56e301b82e175d6-listItem"><svg xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" viewBox="0 0 24 24" role="img" class="-e56e301b82e175d6-icon">
-                                        <path d="M4 19.5C4 18.1 5.1 17 6.5 17H20"></path>
-                                        <path d="M6.5 2H20v20H6.5C5.1 22 4 20.9 4 19.5v-15C4 3.1 5.1 2 6.5 2M16 6H9">
-                                        </path>
-                                    </svg>
-                                    <div data-e2e-test-id="modal-light-paywall-info-text-1">
-                                        <h4>Smart content made for medical practice</h4>Optimized for quick reference.
-                                        Get clinical answers in just 5 seconds
-                                    </div>
-                                </li>
-                                <li class="-e56e301b82e175d6-listItem"><svg xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" viewBox="0 0 24 24" role="img" class="-e56e301b82e175d6-icon">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M4.222 12.707a5 5 0 0 0 7.071 7.071l4.243-4.242-7.071-7.072z"></path>
-                                        <path fill="currentColor" stroke="currentColor" stroke-linecap="round"
-                                            stroke-linejoin="round" stroke-width="2"
-                                            d="M12.707 4.222 8.465 8.464l7.07 7.072 4.244-4.243a5 5 0 1 0-7.072-7.071">
-                                        </path>
-                                    </svg>
-                                    <div data-e2e-test-id="modal-light-paywall-info-text-2">
-                                        <h4>Decision support tools for better outcomes</h4>Flowcharts, checklists, drug
-                                        dosing, and more
-                                    </div>
-                                </li>
-                                <li class="-e56e301b82e175d6-listItem"><svg xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" class="-e56e301b82e175d6-icon" viewBox="0 0 24 24" role="img">
-                                        <path d="M18 20V10m-6 10V4M6 20v-6"></path>
-                                    </svg>
-                                    <div data-e2e-test-id="modal-light-paywall-info-text-3">
-                                        <h4>Our mobile app for on-the-go reference</h4>Bad WiFi in your hospital? Never
-                                        lose access, even when offline
-                                    </div>
-                                </li>
-                            </ul>
-                            <div data-ds-id="Stack" class="css-1ff2k4x-StackContainer eexjih90">
-                                <div class="css-tn47vl-StackItem eexjih91">
-                                    <button
-                                        id="go-home"
-                                        data-e2e-test-id="compare-membership-button" data-ds-id="Button" type="button"
-                                        class="css-1ho5u8i-StyledButton e7wzybw0">
-                                        <div class="css-19pexw4-StyledInner e7wzybw1">
-                                            <div data-ds-id="Inline" class="css-alg3yb-InlineContainer e1hzytjg0">
-                                                <div>Go home</div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                </div>
-                                <!-- <div class="css-tn47vl-StackItem eexjih91"><button data-e2e-test-id="free-trial-button"
-                                        data-ds-id="Button" type="button" class="css-73tk2c-StyledButton e7wzybw0">
-                                        <div class="css-19pexw4-StyledInner e7wzybw1">
-                                            <div data-ds-id="Inline" class="css-alg3yb-InlineContainer e1hzytjg0">
-                                                <div>Continue 5-Day free trial</div>
-                                               </div>
-                                        </div>
-                                    </button></div>
-                            </div> -->
-                            <div class="-e56e301b82e175d6-creditCardNotRequired">(NO CREDIT CARD REQUIRED)</div>
-                            <div class="-e56e301b82e175d6-orActivate"><a
-                                    class="-e56e301b82e175d6-link -c455136b78fefae-underline -c455136b78fefae-anchor -c455136b78fefae-link"
-                                    href="https://www.amboss.com/us/campuslicense/add"
-                                    data-e2e-test-id="activate-license-link">Activate license</a> or <a
-                                    class="-c455136b78fefae-underline -c455136b78fefae-anchor -c455136b78fefae-link"
-                                    href="https://www.amboss.com/us/campuslicense/add"
-                                    data-e2e-test-id="redeem-code-link">redeem code</a></div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <script src="/js/home.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/ejs@latest/ejs.min.js"></script>
-
+            
 </body>

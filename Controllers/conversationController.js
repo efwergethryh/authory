@@ -135,9 +135,25 @@ const add_conversation = async(req, res) => {
         console.log('error',error);
     }
 }
+const get_conversation = async (req, res) => {
+    try {
+        const { id } = req.params
 
+        if (!id) {
+            res.json({ conversation: [] })
+        }
+        const conversation = await Conversation.findById(id)
+        console.log('conversation', conversation);
+
+        res.json({ conversation})
+    } catch (error) {
+        console.log(error);
+        
+        res.json(error.message)
+    }
+}
 module.exports = {
     add_conversation, send_message, get_conversations,
-    get_message
+    get_message,get_conversation
 }
 

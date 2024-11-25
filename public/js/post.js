@@ -66,3 +66,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 })
+function goBack() {
+    if (window.history.length > 1) {
+        window.history.back();
+    } else {
+        alert('No history to go back to.');
+    }
+}

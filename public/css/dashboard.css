@@ -37,6 +37,7 @@ body[id="dashboard-body"] {
     position: absolute;
     width: 100%;
     left: -.5%;
+    padding: 0.5vw;
     border-radius: 10px;
 
 }
@@ -110,10 +111,26 @@ table{
 .chapters-list {
     /* list-style-type: disclosure-closed; */
     list-style: none;
-    height: 10vw;
+    height: fit-content;
     overflow-y: scroll;
 }
-
+.circle-button {
+    width: 30px;
+    height: 30px;
+    background-color: #F5F7FA;
+    border: 1px solid #D3D8DE;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    position: absolute;
+    top: 10%;
+    z-index: 1;
+    left: 28.9vw;
+    transition: left 0.3s ease;
+}
 .loading-spinner {
 
     width: 60px;
@@ -142,7 +159,10 @@ table{
     position: relative;
     top: -1vw;
 }
-
+#post-title{
+    margin-left: 1vw;
+    width: 96%; 
+}
 .list-icon {
     margin-right: 2%;
     cursor: pointer;

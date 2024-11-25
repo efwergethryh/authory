@@ -107,6 +107,7 @@ router.get('/papers',paperController.get_papers)
 router.get('/paper/:paper_id', (req, res) => paperController.get_paper(null, req, res));
 router.get('/messages/:id', conversationController.get_message);
 router.get('/conversations/:id', conversationController.get_conversations);
+router.get('/conversation/:id', conversationController.get_conversation);
 router.get('/notifications', notificationController.get_notifications)
 router.get('/joinedPapers',(req,res)=> paperController.get_joined_paper(null,req,res));
 router.get('/get-request', requestController.get_requests);

@@ -5,9 +5,33 @@
 
 body {
     background-color: var(--color-background);
+    display: flex;
+    flex-direction: row;
+    height: 200vh;
+    overflow-y: hidden;
 }
-
-.view-post {
+.circle-button {
+    width: 30px;
+    height: 30px;
+    background-color: #F5F7FA;
+    border: 1px solid #D3D8DE;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    position: absolute;
+    top: 10%;
+    z-index: 1;
+    left: 7%;
+    transition: left 0.3s ease;
+}
+.circle-button:hover {
+    background-color: #E2E8F0;
+    /* Slightly darker on hover */
+}
+/* .view-post {
     width: 59%;
     height: fit-content;
     background-color: white;
@@ -18,8 +42,23 @@ body {
     left: 26%;
     top: 8vw;
 
+} */
+.view-post {
+    width: 90%;
+    height: 38%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 3vw;
+    border-radius: 20px;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    position: relative;
+    align-self: center;
+    top: -26%;
+    margin-left: 3%;
+    align-items: center;
+    overflow-y: auto;
 }
-
 .chapters-list{
     list-style: none;
 
