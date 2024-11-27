@@ -158,10 +158,12 @@ const degrade_admin = async (req, res) => {
 const set_admin = async (req, res) => {
     const { userId } = req.params
     try {
-        const user = await User.findOne({ _id: userId, user_type: 1 })
+        const user = await User.findOneAndUpdate({ _id: userId, user_type: 1 },{
+            user_type:2
+        })
         if (user) {
             user.user_type = 2
-            await user.save()
+            
             res.json({ message: "Admin have been Set" })
 
         } else {
