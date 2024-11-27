@@ -1,9 +1,17 @@
 const API_BASE_URL = 'http://145.223.34.195';
-const popups = [
+const userType = document.getElementById('userType').value
+let popups = []
+popups = userType === "2" ? [
     document.getElementById('startpost-popup'),
     document.getElementById('yourposts-popup'),
-    document.getElementById('users')
-];
+
+] : [
+    document.getElementById('users-popup'),
+    document.getElementById('admins-popup'),
+    document.getElementById('yourposts-popup'),
+]
+
+
 const mainContent = document.getElementById('maincontent')
 let selectedFiles = [];
 const spinner =
@@ -80,14 +88,18 @@ let currentSelection;
 let range;
 let sizeNumber = 18;
 let listMode = false
-const popup_buttons = [
+let popup_buttons = []
+popup_buttons = userType === "2" ? [
     document.getElementById('paper-toggle'),
     document.getElementById('paper-toggle-2'),
-    document.getElementById('paper-toggle-3'),
+    // document.getElementById('paper-toggle-3'),
+
+] : [
     document.getElementById('owner-paper-toggle'),
     document.getElementById('owner-paper-toggle-2'),
     document.getElementById('owner-paper-toggle-3')
 ];
+console.log('popups', popups, 'buttons', popup_buttons);
 const editableDiv = document.getElementById('post-text');
 // function toggleSidebar() {
 //     const circleButton = document.querySelector('.circle-button');
@@ -156,6 +168,306 @@ function getCursorPosition() {
 
     return selection;
 }
+// function keyHandler(event) {
+//     if (event.key === 'Enter') {
+//         // Prevent default behavior of Enter key
+
+//         // Check if listMode is enabled
+//         if (!listMode) {
+//             console.log("List mode is off. Ignoring Enter key.");
+//             return;
+//         } else {
+//             const li = document.createElement('li');
+//             li.id = `li-${li_id}`;
+
+//             // Create title container
+//             const titleContainer = document.createElement('span');
+//             titleContainer.className = 'title-container';
+
+//             // Create the disclosure icon
+//             const icon = document.createElement('span');
+//             icon.contentEditable = false;
+//             icon.className = 'list-icon';
+//             icon.innerHTML = '&#9654;';
+
+//             const title = document.createElement('span');
+//             title.className = 'title-text';
+//             title.contentEditable = true;
+//             title.textContent = 'Your title';
+//             titleContainer.appendChild(icon);
+//             titleContainer.appendChild(title);
+//             li.appendChild(titleContainer);
+
+//             const section = document.createElement('section');
+//             section.id = `section-${li_id}`;
+//             section.contentEditable = true;
+//             section.style.display = 'none';
+//             section.textContent = 'New section content...';
+//             section.addEventListener('focus', function () {
+//                 listMode = false;
+//             });
+//             li.appendChild(section);
+//             list.appendChild(li);
+
+//             li_id++;
+
+//             icon.addEventListener('click', function (event) {
+//                 event.stopPropagation();
+//                 if (section.style.display === 'block') {
+//                     section.style.display = 'none';
+//                     icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : titleContainer.style.direction === 'rtl' ? '◀' : '▶';
+//                 } else {
+//                     section.style.display = 'block';
+//                     icon.innerHTML = '&#9660;';
+//                 }
+//             });
+//         }
+
+//         const editableDiv = document.getElementById('post-text');
+//         let list = editableDiv.querySelector('.chapters-list');
+
+//         if (!list) {
+//             console.error("No list found. Cannot add new item.");
+//             return;
+//         }
+
+//         // Create a new list item
+
+//     }
+// }
+// function keyHandler(event) {
+//     // Check if the Enter key is pressed
+//     if (event.key === 'Enter') {
+
+//         if (!listMode) {
+//             return; 
+//         }
+
+//         const editableDiv = document.getElementById('post-text');
+//         let list = editableDiv.querySelector('.chapters-list');
+
+//         if (!list) {
+//             console.error("No list found. Creating a new list.");
+//             list = document.createElement('ul');
+//             list.className = 'chapters-list';
+//             editableDiv.appendChild(list);
+//         }
+//         event.preventDefault()
+//         const li = document.createElement('li');
+//         li.id = `li-${li_id}`;
+
+//         const titleContainer = document.createElement('span');
+//         titleContainer.className = 'title-container';
+
+//         const icon = document.createElement('span');
+//         icon.contentEditable = false;
+//         icon.className = 'list-icon';
+//         icon.innerHTML = '&#9654;';
+
+//         const title = document.createElement('span');
+//         title.className = 'title-text';
+//         title.contentEditable = true;
+//         title.textContent = 'Your title';
+//         titleContainer.appendChild(icon);
+//         titleContainer.appendChild(title);
+//         li.appendChild(titleContainer);
+
+//         const section = document.createElement('section');
+//         section.id = `section-${li_id}`;
+//         section.contentEditable = true;
+//         section.style.display = 'none';
+//         section.textContent = 'New section content...';
+//         section.addEventListener('focus', function () {
+//             listMode = false; // Disable listMode when editing the section
+//         });
+//         li.appendChild(section);
+
+//         list.appendChild(li);
+
+//         li_id++;
+
+//         // Add a click event listener to the icon for toggling the section
+//         icon.addEventListener('click', function (event) {
+//             event.stopPropagation();
+//             if (section.style.display === 'block') {
+//                 section.style.display = 'none';
+//                 icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : '&#9654;';
+//             } else {
+//                 section.style.display = 'block';
+//                 icon.innerHTML = '&#9660;';
+//             }
+//         });
+//     }
+// }
+function keyHandler(event) {
+    // Check if the Enter key is pressed
+    if (event.key === 'Enter') {
+        // Exit immediately if listMode is off
+
+        if (!listMode) {
+            event.preventDefault()
+            // const selection = window.getSelection();
+
+            // Check if there's a valid selection
+            const br = document.createElement('br'); // Create a new line element
+
+            insertElementAtCursor(br)
+            return;
+
+
+        }
+
+
+
+        event.preventDefault();
+        const editableDiv = document.getElementById('post-text');
+        let list = editableDiv.querySelector('.chapters-list');
+
+        if (!list) {
+            console.error("No list found. Creating a new list.");
+            list = document.createElement('ul');
+            list.className = 'chapters-list';
+            editableDiv.appendChild(list);
+        }
+
+        // Create a new list item
+        const li = document.createElement('li');
+        li.id = `li-${li_id}`;
+
+        // Create title container
+        const titleContainer = document.createElement('span');
+        titleContainer.className = 'title-container';
+
+        // Create the disclosure icon
+        const icon = document.createElement('span');
+        icon.contentEditable = false;
+        icon.className = 'list-icon';
+        icon.innerHTML = '&#9654;';
+
+        const title = document.createElement('span');
+        title.className = 'title-text';
+        title.contentEditable = true;
+        title.textContent = 'Your title';
+        titleContainer.appendChild(icon);
+        titleContainer.appendChild(title);
+        li.appendChild(titleContainer);
+
+        const section = document.createElement('section');
+        section.id = `section-${li_id}`;
+        section.contentEditable = true;
+        section.style.display = 'none';
+        section.textContent = 'New section content...';
+        section.addEventListener('click', function () {
+            listMode = false
+
+        })
+        li.appendChild(section);
+
+        const br = document.createElement('br')
+
+        list.appendChild(li);
+        list.appendChild(br)
+
+        li_id++;
+
+        // Add a click event listener to the icon for toggling the section
+        icon.addEventListener('click', function (event) {
+            event.stopPropagation();
+            if (section.style.display === 'block') {
+                section.style.display = 'none';
+                icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : '&#9654;';
+            } else {
+                section.style.display = 'block';
+                icon.innerHTML = '&#9660;';
+            }
+        });
+    }
+}
+function edit_keyHandler(event) {
+    // Check if the Enter key is pressed
+    if (event.key === 'Enter') {
+        // Exit immediately if listMode is off
+
+        if (!listMode) {
+            event.preventDefault()
+            // const selection = window.getSelection();
+
+            // Check if there's a valid selection
+            const br = document.createElement('br'); // Create a new line element
+
+            insertElementAtCursor(br)
+            return;
+
+
+        }
+
+
+
+        event.preventDefault();
+        const editableDiv = document.getElementById('edit-post-text');
+        let list = editableDiv.querySelector('.chapters-list');
+
+        if (!list) {
+            console.error("No list found. Creating a new list.");
+            list = document.createElement('ul');
+            list.className = 'chapters-list';
+            editableDiv.appendChild(list);
+        }
+
+        // Create a new list item
+        const li = document.createElement('li');
+        li.id = `li-${li_id}`;
+
+        // Create title container
+        const titleContainer = document.createElement('span');
+        titleContainer.className = 'title-container';
+
+        // Create the disclosure icon
+        const icon = document.createElement('span');
+        icon.contentEditable = false;
+        icon.className = 'list-icon';
+        icon.innerHTML = '&#9654;';
+
+        const title = document.createElement('span');
+        title.className = 'title-text';
+        title.contentEditable = true;
+        title.textContent = 'Your title';
+        titleContainer.appendChild(icon);
+        titleContainer.appendChild(title);
+        li.appendChild(titleContainer);
+
+        const section = document.createElement('section');
+        section.id = `section-${li_id}`;
+        section.contentEditable = true;
+        section.style.display = 'block';
+        section.textContent = 'New section content...';
+        section.addEventListener('click', function () {
+            listMode = false
+
+        })
+        li.appendChild(section);
+
+        const br = document.createElement('br')
+
+        list.appendChild(li);
+        list.appendChild(br)
+
+        li_id++;
+
+        // Add a click event listener to the icon for toggling the section
+        icon.addEventListener('click', function (event) {
+            event.stopPropagation();
+            if (section.style.display === 'block') {
+                section.style.display = 'none';
+                icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : '&#9654;';
+            } else {
+                section.style.display = 'block';
+                icon.innerHTML = '&#9660;';
+            }
+        });
+    }
+}
+
 async function get_user(query) {
     const response = await fetch('/api/get-user', {
         headers: {
@@ -238,60 +550,58 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleContainer.classList.toggle('active');
         });
     });
-    // popup_buttons.forEach((button, index) => {
-    //     button.addEventListener('click', function (event) {
+    console.log('user Type', userType);
 
-    //         popups.forEach((popup, popupIndex) => {
-    //             console.log(popup);
-
-
-    //             if (popupIndex !== index && popup.style.display === 'block') {
-    //                 popup.style.display = 'none';
-    //             }
-    //         });
-    //         if (popups[index].style.display === 'block') {
-    //             popups[index].style.display = 'none';
-    //         } else {
-    //             popups[index].style.display = 'block';
-    //         }
-    //     });
-    // });
     popup_buttons.forEach((button, index) => {
-        console.log(mainContent)
-        console.log('button', button);
+        // console.log('button', button);
 
         // button.removeEventListener('click', togglePopup); // Ensure no duplicate listeners
         if (button) button.addEventListener('click', togglePopup);
-        console.log('popup', popups[index]);
-        function togglePopup() {
+        // console.log('popup', popups[index]);
+        async function togglePopup() {
+            console.log('main content', mainContent)
 
             mainContent.textContent = '';
             popups.forEach((popup, popupIndex) => {
                 if (popupIndex !== index) {
+                    console.log('popup', popup);
+
                     popup.style.display = 'none';
                 }
             });
+
 
 
             if (popups[index]) {
                 if (popups[index].style.display === 'flex') {
                     popups[index].style.display = 'none';
                 } else {
+
                     popups[index].style.display = 'flex';
+
 
                     popups[index].remove()
                     mainContent.innerHTML = popups[index].innerHTML;
 
-                    if (popups[index].id === 'startpost-popup') {
+                    console.log('index', index, 'Popup', popups[index], 'inner html', popups[index].innerHTML);
+                    if (popups[index].id === 'users') {
+
+                    }
+                    if (popups[index].id === 'startpost-popup' || popups[index].id === 'yourposts-popup') {
+
                         mainContent.addEventListener('mouseup', (e) => {
 
                             const targetId =
                                 e.target.id === 'maincontent' ? "" : !e.target.id ? "post-text" : e.target.id
-                            console.log('id',e.target.id);
+                            console.log('id', e.target.id, 'tag name', e.target.tagName);
 
 
-                            if (targetId === 'post-text') {
+                            if (targetId === 'post-text' || e.target.tagName === 'SECTION' || e.target.tagName === 'UL') {
+
+
                                 setTimeout(() => {
+                                    console.log('selecting');
+
                                     getSelectedText();
 
                                     const tempSpan = document.createElement('span');
@@ -490,7 +800,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             new_post()
                         })
                     }
-
                 }
             }
 
@@ -547,78 +856,8 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
 });
-let keyHandler = (e) => {
 
-    const editableDiv = document.getElementById('post-text')
-    if (e.key === 'Enter') {
-        if (!listMode) {
-            
 
-                console.log('listMode is off');
-
-            return;
-        }
-
-        else {
-            e.preventDefault();
-
-            let list = editableDiv.querySelector('.chapters-list');
-            if (!list) {
-                list = document.createElement('ul');
-                list.className = 'chapters-list';
-                editableDiv.appendChild(list);
-            }
-
-            const li = document.createElement('li');
-            li.id = `li-${li_id}`;
-
-            const titleContainer = document.createElement('span');
-            titleContainer.className = 'title-container';
-
-            // Create the disclosure icon
-            const icon = document.createElement('span');
-            icon.contentEditable = false;
-            icon.className = 'list-icon';
-            icon.innerHTML = '&#9654;';
-
-            // Title text that remains visible
-            const title = document.createElement('span');
-            title.className = 'title-text';
-            title.contentEditable = true;
-            title.textContent = 'Your title';
-            titleContainer.appendChild(icon);
-            titleContainer.appendChild(title);
-            li.appendChild(titleContainer);
-
-            const section = document.createElement('section');
-            section.id = `section-${li_id}`;
-            section.contentEditable = true;
-            section.style.display = 'none';
-            section.textContent = 'New section content...';
-            section.addEventListener('focus', function () {
-                listMode = false;
-            });
-            li.appendChild(section);
-            list.appendChild(li);
-
-            console.log('List', list);
-
-            li_id++;
-
-            icon.addEventListener('click', function (event) {
-                event.stopPropagation();
-                if (section.style.display === 'block') {
-                    section.style.display = 'none';
-                    icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : titleContainer.style.direction === 'rtl' ? '◀' : '▶';
-                } else {
-                    section.style.display = 'block';
-                    icon.innerHTML = '&#9660;'; // Downward triangle (open state).
-                }
-            });
-        }
-    }
-}
-let text_keyHandler = (e) => { }
 function divider() {
     const divider = document.createElement('hr');
     divider.style.border = 'px solid grey'
@@ -626,83 +865,12 @@ function divider() {
 
     insertElementAtCursor(divider)
 }
-document.getElementById('admins').addEventListener('click', async function () {
-    resetPopups()
-    show_spinner()
-    const response = await fetch(`/api/users/${2}`, {
-        method: "GET",
-    })
-    if (response.ok) {
 
-        const data = await response.json()
-        console.log(data);
-        const users = document.getElementById('users')
 
-        let content = ``
-        let adminId
-        data.users.forEach(user => {
 
-            content += `
-            <div class="startpapers-label" id="admins">Admins</div>
-            <div class="user" id="user-${user._id}">
-                <div class="user-info">
-                    <h>user</h>
-                    <h>-</h> 
-                    <h>${user._id}</h>
-                    <h>-</h> 
-                    <h>${user.email}</h>
-                    <h>-</h> 
-                    <h>${user.name}</h>
-                </div>
-                <div class="post-tools" >
-                <i id="admin-settings-${user._id}" class="fa-solid fa-ellipsis-vertical"></i>
-                
-                </div>
-            </div>
-            `
-        })
-        users.innerHTML = content
 
-        data.users.forEach(user => {
-            document.getElementById(`admin-settings-${user._id}`).addEventListener('click', function (e) {
-                e.stopPropagation();
-                adminId = user._id
-                const admin_tools = document.getElementById('admin-tools');
-                admin_tools.style.display = 'flex';
-                // Set the user ID in the tool element for reference
-            });
-        });
-        document.addEventListener('click', function (e) {
-            const admin_tools = document.getElementById('admin-tools')
-            if (admin_tools.style.display === 'flex' && !admin_tools.contains(e.target)) admin_tools.style.display = 'none'
-
-        })
-        document.getElementById('degrade-admin').addEventListener('click', async function (e) {
-            const response = await fetch(`/api/degrade-admin/${adminId}`, {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            if (response.ok) {
-                const data = await response.json()
-                console.log(data);
-
-            }
-        })
-
-        users.style.display = 'flex'
-        hide_spinner()
-    }
-});
-function resetPopups() {
-    // Hide all popup tool elements
-    document.getElementById('yourposts-popup').style.display = 'none';
-    document.getElementById('users').style.display = 'none';
-}
 
 document.getElementById('Users').addEventListener('click', async function () {
-    resetPopups()
     show_spinner()
     const response = await fetch(`/api/users/${1}`, {
         method: "GET",
@@ -710,62 +878,88 @@ document.getElementById('Users').addEventListener('click', async function () {
     if (response.ok) {
 
         const data = await response.json()
-        console.log(data);
-        const users = document.getElementById('users')
 
+        const users = document.getElementById('users')
+        console.log('users popup', users);
         let content = ``
         let userId
         data.users.forEach(user => {
-
             content += `
-            <div class="startpapers-label" id="joined">Users</div>
-            <div class="user" id="user-${user._id}">
-                <div class="user-info">
-                    <h>user</h>
-                    <h>-</h> 
-                    <h>${user._id}</h>
-                    <h>-</h> 
-                    <h>${user.email}</h>
-                    <h>-</h> 
-                    <h>${user.name}</h>
+                
+                <div class="user" id="user-${user._id}">
+                    <div class="user-info">
+                        <h>user</h>
+                        <h>-</h> 
+                        <h>${user._id}</h>
+                        <h>-</h> 
+                        <h>${user.email}</h>
+                        <h>-</h> 
+                        <h>${user.name}</h>
+                    </div>
+                    <div class="post-tools" >
+                    <i id="user-settings-${user._id}" class=" user-sittings fa-solid fa-ellipsis-vertical">
+                    </i>
+                    
+                    </div>
                 </div>
-                <div class="post-tools" >
-                <i id="user-settings-${user._id}" class="fa-solid fa-ellipsis-vertical"></i>
-                  
-                </div>
-            </div>
             `
         })
         users.innerHTML = content
-        const firstUser = document.querySelector('#users .user ');
+        const firstUser = document.querySelector('.user:first-child');
+        const user_tool = document.getElementById('user-tools')
         data.users.forEach(user => {
             const user_setting = document.getElementById(`user-settings-${user._id}`)
 
             user_setting.addEventListener('click', function (e) {
 
-                e.stopPropagation();
-                userId = user._id
+                e.stopPropagation(); // Prevent click event propagation
 
-                // offset+=5
+                // Fetch the user ID from the clicked button
+                userId = user._id;
+                const parentUserElement = document.getElementById(`user-${user._id}`);
+
+                // Find the tools container relative to this user
+                const fUser = user_setting.closest('.user');
+
+                if (!user_tool) {
+                    console.error('No user tools found for user:', user._id);
+                    return;
+                }
+
+                // Toggle display of user tools
+                user_tool.style.display = 'flex';
+
+                // Calculate top position based on the user element's position
+                const allusers = document.querySelectorAll('.user');
+                const index = Array.from(allusers).indexOf(fUser);
+                if (fUser === firstUser) {
+                    console.log('first user');
+
+                    user_tool.style.top = `16vw`; // First user gets a fixed top
+                } else {
+                    const rect = parentUserElement.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight;
+
+                    // Calculate initial top position
+                    let newTop = rect.top + rect.height; // Position directly below the parent element
+
+                    // Prevent overflow: ensure it doesn't go beyond the viewport
+                    const maxAllowedTop = viewportHeight - user_tool.offsetHeight - 10; // 10px padding from bottom
+                    if (newTop > maxAllowedTop) {
+                        newTop = maxAllowedTop;
+                    }
+
+                    // Set calculated position
+                    user_tool.style.top = `${newTop}px`;
+
+                    console.log('Dropdown position:', { newTop, rect }); // Set new top position
+                }
             });
-            const user_tools = document.getElementById('user-tools')
-
-            console.log('first user', firstUser);
-            if (user_tools === firstUser) {
 
 
-                user_tools.style.top = `-24vw`;  // Set top for the first element
-            } else {
 
-                // Calculate how many elements are before the clicked paperLine
-                const users = document.querySelectorAll('.users');
-                const index = Array.from(users).indexOf(user_tools);  // Get the index of the clicked paper
+            // console.log('first user', firstUser);
 
-                // Set the top value based on the index (each paper adds 6vw to the top)
-                let newTop = -24 - (index * 5);  // 13vw + 6vw per paper
-                user_tools.style.display = 'flex';
-                user_tools.style.top = `${newTop}vw`;  // Set the new top for this paper
-            }
         });
         users.style.display = 'flex'
         document.addEventListener('click', function (e) {
@@ -802,10 +996,10 @@ document.getElementById('Users').addEventListener('click', async function () {
         })
         hide_spinner()
     }
-});
 
+});
 document.getElementById('owner-posts').addEventListener('click', async function () {
-    resetPopups()
+    // resetPopups()
     show_spinner()
     try {
 
@@ -817,44 +1011,201 @@ document.getElementById('owner-posts').addEventListener('click', async function 
             const data = await response.json()
             console.log(data);
             const posts = document.getElementById('Myposts')
-
             let content = ``
-            for (const post of data.posts) {
-                const User = await get_user(post.user_id);
-                const user = await User.user[0];
-                console.log(user);
-
+            data.posts.forEach(post => {
                 content += `
                     <div onclick="showPost('${post._id}')" class="post" id="post-${post._id}">
-                        <h>${user.user_type === 2 ? 'Admin' : user.user_type === 3 ? 'Owner' : 'User'}</h>
-                        <h>-</h>
-                        <h>${user.name}</h>
-                        <h>-</h>
-                        <h>${user._id}</h>
-                        <h>-</h>
-                        <h>${user.email}</h>
-                        <h>-</h>
-                        <h>"${post.title}"</h>
-                        <div class="post-tools">
+                        <h>${post.title}</h>
+                        <div class="post-tools" >
                             <i onclick="event.stopPropagation(); edit_post('${post._id}')" class="pen fa-regular fa-pen-to-square"></i>
-                            <i onclick="event.stopPropagation(); delete_post('${post._id}')" class="trash-can fa-regular fa-trash-can"></i>
+                            <i onclick="event.stopPropagation(); delete_post('${post._id}')"  class="trash-can fa-regular fa-trash-can"></i>
                         </div>
                     </div>
-                `;
-            }
+                    `
+            })
             posts.innerHTML = content
-            console.log(posts);
+            posts.style.display = 'flex'
 
-            document.getElementById('yourposts-popup').style.display = 'flex'
             hide_spinner()
         }
     } catch (error) {
-        console.log(error);
 
     }
-})
+    // show_spinner()
+    // try {
+
+    //     const response = await fetch('/api/posts', {
+    //         method: "GET",
+    //     })
+    //     if (response.ok) {
+
+    //         const data = await response.json()
+    //         console.log(data);
+    //         const posts = document.getElementById('Myposts')
+
+    //         let content = ``
+    //         for (const post of data.posts) {
+    //             const User = await get_user(post.user_id);
+    //             const user = await User.user[0];
+    //             console.log(user);
+
+    //             content += `
+    //                 <div onclick="showPost('${post._id}')" class="post" id="post-${post._id}">
+    //                     <h>${user.user_type === 2 ? 'Admin' : user.user_type === 3 ? 'Owner' : 'User'}</h>
+    //                     <h>-</h>
+    //                     <h>${user.name}</h>
+    //                     <h>-</h>
+    //                     <h>${user._id}</h>
+    //                     <h>-</h>
+    //                     <h>${user.email}</h>
+    //                     <h>-</h>
+    //                     <h>"${post.title}"</h>
+    //                     <div class="post-tools">
+    //                         <i onclick="event.stopPropagation(); edit_post('${post._id}')" class="pen fa-regular fa-pen-to-square"></i>
+    //                         <i onclick="event.stopPropagation(); delete_post('${post._id}')" class="trash-can fa-regular fa-trash-can"></i>
+    //                     </div>
+    //                 </div>
+    //             `;
+    //         }
+    //         posts.innerHTML = content
+    //         console.log(posts);
+
+    //         document.getElementById('yourposts-popup').style.display = 'flex'
+    //         hide_spinner()
+    //     }
+    // } catch (error) {
+    //     console.log(error);
+
+    // }
+});
+document.getElementById('admins').addEventListener('click', async function () {
+    // resetPopups()
+    show_spinner()
+    const response = await fetch(`/api/users/${2}`, {
+        method: "GET",
+    })
+    if (response.ok) {
+
+        const data = await response.json()
+        console.log(data);
+        const users = document.getElementById('Admins')
+
+        let content = ``
+        let adminId
+        data.users.forEach(user => {
+
+            content += `
+            
+            <div class="user" id="user-${user._id}">
+                <div class="user-info">
+                    <h>user</h>
+                    <h>-</h> 
+                    <h>${user._id}</h>
+                    <h>-</h> 
+                    <h>${user.email}</h>
+                    <h>-</h> 
+                    <h>${user.name}</h>
+                </div>
+                <div class="post-tools" >
+                <i id="admin-settings-${user._id}" class="fa-solid fa-ellipsis-vertical"></i>
+                
+                </div>
+            </div>
+            `
+        })
+        users.innerHTML = content
+
+        // data.users.forEach(user => {
+        //     document.getElementById(`admin-settings-${user._id}`).addEventListener('click', function (e) {
+        //         e.stopPropagation();
+        //         adminId = user._id
+        //         const admin_tools = document.getElementById('admin-tools');
+        //         admin_tools.style.display = 'flex';
+        //         // Set the user ID in the tool element for reference
+        //     });
+        // });
+        const firstUser = document.querySelector('.user:first-child');
+        const user_tool = document.getElementById('admin-tools')
+        data.users.forEach(user => {
+            const user_setting = document.getElementById(`admin-settings-${user._id}`)
+
+            user_setting.addEventListener('click', function (e) {
+                
+                e.stopPropagation(); // Prevent click event propagation
+
+                // Fetch the user ID from the clicked button
+                adminId = user._id;
+                const parentUserElement = document.getElementById(`user-${user._id}`);
+
+                // Find the tools container relative to this user
+                const fUser = user_setting.closest('.user');
+
+                if (!user_tool) {
+                    console.error('No user tools found for user:', user._id);
+                    return;
+                }
+
+                // Toggle display of user tools
+                user_tool.style.display = 'flex';
+
+                // Calculate top position based on the user element's position
+                const allusers = document.querySelectorAll('.user');
+                const index = Array.from(allusers).indexOf(fUser);
+                if (fUser === firstUser) {
+                    console.log('first user');
+
+                    user_tool.style.top = `16vw`; // First user gets a fixed top
+                } else {
+                    const rect = parentUserElement.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight;
+
+                    // Calculate initial top position
+                    let newTop = rect.top + rect.height; // Position directly below the parent element
+
+                    // Prevent overflow: ensure it doesn't go beyond the viewport
+                    const maxAllowedTop = viewportHeight - user_tool.offsetHeight - 10; // 10px padding from bottom
+                    if (newTop > maxAllowedTop) {
+                        newTop = maxAllowedTop;
+                    }
+
+                    // Set calculated position
+                    user_tool.style.top = `${newTop}px`;
+
+                    console.log('Dropdown position:', { newTop, rect }); // Set new top position
+                }
+            });
+
+
+
+            // console.log('first user', firstUser);
+
+        });
+        document.addEventListener('click', function (e) {
+            const admin_tools = document.getElementById('admin-tools')
+            if (admin_tools.style.display === 'flex' && !admin_tools.contains(e.target)) admin_tools.style.display = 'none'
+
+        })
+        document.getElementById('degrade-admin').addEventListener('click', async function (e) {
+            const response = await fetch(`/api/degrade-admin/${adminId}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            if (response.ok) {
+                const data = await response.json()
+                console.log(data);
+
+            }
+        })
+
+        users.style.display = 'flex'
+        hide_spinner()
+    }
+});
 
 async function edit_post(id) {
+    mainContent.style.overflowY = 'auto'
     show_spinner()
     let post_info = ''
     listMode = true
@@ -863,7 +1214,7 @@ async function edit_post(id) {
     const response = await fetch(`/api/posts/${id}`, {
         method: "GET"
     })
-    console.log('response status', response)
+
     if (response.ok) {
         const data = await response.json();
         console.log(data);
@@ -1118,7 +1469,7 @@ function addListeners() {
         const divider = document.createElement('hr');
         divider.style.border = '1px solid grey';
         divider.style.backgroundColor = 'grey';
-        document.getElementById('post-text').appendChild(divider);
+        insertElementAtCursor(divider)
     });
 
 
@@ -1400,7 +1751,60 @@ async function new_post() {
         console.log(error);
     }
 }
+// Create a new list item
+// const li = document.createElement('li');
+// li.id = `li-${li_id}`;
+// // console.log('li',li);
 
+// // Create title container
+// const titleContainer = document.createElement('span');
+// titleContainer.className = 'title-container';
+
+// // Create the disclosure icon
+// const icon = document.createElement('span');
+// icon.contentEditable = false
+// icon.className = 'list-icon';
+// icon.innerHTML = '&#9660;';
+
+// const title = document.createElement('span');
+// title.className = 'title-text';
+// title.contentEditable = true;
+// title.textContent = 'Your title';
+// titleContainer.appendChild(icon);
+// titleContainer.appendChild(title);
+// li.appendChild(titleContainer);
+
+// const section = document.createElement('section');
+// section.id = `section-${li_id}`;
+// section.contentEditable = true;
+// section.style.display = 'block';
+// section.textContent = 'New section content...';
+// section.addEventListener('click', function () {
+//     listMode = false
+
+// })
+// li.appendChild(section);
+// const br = document.createElement('br')
+
+// list.appendChild(li);
+// list.appendChild(br)
+// console.log('List', list);
+
+// li_id++;
+
+// icon.addEventListener('click', function (event) {
+//     event.stopPropagation();
+//     if (section.style.display === 'block') {
+//         section.style.display = 'none';
+
+//         icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : titleContainer.style.direction === 'rtl' ? '◀' : '▶'
+
+//     } else {
+
+//         section.style.display = 'block';
+//         icon.innerHTML = '&#9660;';
+//     }
+// });
 
 
 function rgbToHex(rgb) {
@@ -1410,10 +1814,57 @@ function rgbToHex(rgb) {
         return hex.length === 1 ? '0' + hex : hex;
     }).join('')}`;
 }
+function createListItem(list) {
+    const li = document.createElement('li');
+    li.id = `li-${li_id}`;
 
+    // Create title container
+    const titleContainer = document.createElement('span');
+    titleContainer.className = 'title-container';
+
+    // Create the disclosure icon
+    const icon = document.createElement('span');
+    icon.contentEditable = false;
+    icon.className = 'list-icon';
+    icon.innerHTML = '&#9654;';
+
+    const title = document.createElement('span');
+    title.className = 'title-text';
+    title.contentEditable = true;
+    title.textContent = 'Your title';
+
+    titleContainer.appendChild(icon);
+    titleContainer.appendChild(title);
+    li.appendChild(titleContainer);
+
+    // Create hidden editable section
+    const section = document.createElement('section');
+    section.id = `section-${li_id}`;
+    section.contentEditable = true;
+    section.style.display = 'block';
+    section.textContent = 'New section content...';
+    section.addEventListener('focus', function () {
+        listMode = false; // Disable list mode when editing section
+    });
+    li.appendChild(section);
+    const br = document.createElement('br')
+    list.appendChild(li);
+    list.appendChild(br)
+    icon.addEventListener('click', function (event) {
+        event.stopPropagation();
+        if (section.style.display === 'block') {
+            section.style.display = 'none';
+            icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : '&#9654;';
+        } else {
+            section.style.display = 'block';
+            icon.innerHTML = '&#9660;';
+        }
+    });
+
+    li_id++; // Increment unique ID
+}
 function make_list() {
-    // e.preventDefault();
-    // Enable list mode
+
     const toggle = document.getElementById('make-list')
     if (listMode) {
         listMode = false;
@@ -1432,196 +1883,99 @@ function make_list() {
 
         }
 
+        createListItem(list)
 
-        // Create a new list item
-        const li = document.createElement('li');
-        li.id = `li-${li_id}`;
-        // console.log('li',li);
-
-        // Create title container
-        const titleContainer = document.createElement('span');
-        titleContainer.className = 'title-container';
-
-        // Create the disclosure icon
-        const icon = document.createElement('span');
-        icon.contentEditable = false
-        icon.className = 'list-icon';
-        icon.innerHTML = '&#9654;';
-
-        // Title text that remains visible
-        const title = document.createElement('span');
-        title.className = 'title-text';
-        title.contentEditable = true;
-        title.textContent = 'Your title';
-        titleContainer.appendChild(icon);
-        titleContainer.appendChild(title);
-        li.appendChild(titleContainer);
-
-        const section = document.createElement('section');
-        section.id = `section-${li_id}`;
-        section.contentEditable = true;
-        section.style.display = 'none';
-        section.textContent = 'New section content...';
-        section.addEventListener('focus', function () {
-            listMode = false
-        })
-        li.appendChild(section);
-        list.appendChild(li);
-
-        console.log('List', list);
-
-        li_id++;
-
-        icon.addEventListener('click', function (event) {
-            event.stopPropagation();
-            if (section.style.display === 'block') {
-                section.style.display = 'none';
-
-                icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : titleContainer.style.direction === 'rtl' ? '◀' : '▶'
-
-            } else {
-
-                section.style.display = 'block';
-                icon.innerHTML = '&#9660;';
-            }
-        });
-        console.log('before keydown');
 
         console.log('Removing listener');
         document.removeEventListener('keydown', keyHandler);
 
-        console.log('Adding listener');
         document.addEventListener('keydown', keyHandler);
 
     }
 
 
 }
+
 function make_text_list() {
 
-    listMode = true;
-    const editabletext = document.getElementById('edit-post-text')
-    let text_list
-
-    if (!text_list) {
-        text_list = document.createElement('ul');
-        text_list.className = 'chapters-list';
-        editabletext.appendChild(text_list);
+    const toggle = document.getElementById('make-bullet-list')
+    if (listMode) {
+        listMode = false;
+        toggle.classList.remove('active')
     }
+    else {
+        listMode = true;
+        toggle.classList.add('active')
+        const editableDiv = document.getElementById('edit-post-text')
+        let list = editableDiv.querySelector('.chapters-list');
 
-    // Create a new list item
-    const li = document.createElement('li');
-    li.id = `li-${li_id}`;
+        if (!list) {
+            list = document.createElement('ul');
+            list.className = 'chapters-list';
+            editableDiv.appendChild(list);
 
-    // Create title container
-    const titleContainer = document.createElement('span');
-    titleContainer.className = 'title-container';
-
-    // Create the disclosure icon
-    const icon = document.createElement('span');
-    icon.contentEditable = false
-    icon.className = 'list-icon';
-    icon.innerHTML = '&#9654;';
-
-    // Title text that remains visible
-    const title = document.createElement('span');
-    title.className = 'title-text';
-    title.contentEditable = true; // Make only the title editable
-    title.textContent = 'Your title'; // Example title text
-
-    // Append icon and title to the titleContainer
-    titleContainer.appendChild(icon);
-    titleContainer.appendChild(title);
-    li.appendChild(titleContainer);
-
-    // Create the editable section that toggles
-    const section = document.createElement('section');
-    section.id = `section-${li_id}`;
-    section.contentEditable = true;
-    section.style.display = 'none';
-    section.textContent = 'New section content...';
-    section.addEventListener('focus', function () {
-        listMode = false
-    })
-    li.appendChild(section);
-    text_list.appendChild(li);
-
-    li_id++;
-
-    icon.addEventListener('click', function (event) {
-        event.stopPropagation();
-        if (section.style.display === 'block') {
-            section.style.display = 'none';
-            icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : titleContainer.style.direction === 'rtl' ? '◀' : '▶'
-
-        } else {
-            section.style.display = 'block';
-            icon.innerHTML = '&#9660;'; // Downward triangle (open state)
         }
-    });
+
+        createListItem(list)
 
 
+        console.log('Removing listener');
+        document.removeEventListener('keydown', edit_keyHandler);
 
+        document.addEventListener('keydown', edit_keyHandler);
+
+    }
 }
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && listMode) {
-        e.preventDefault(); // Prevent default action (e.g., form submission)
+// const li = document.createElement('li');
+// li.id = `li-${li_id}`;
 
-        // Check for an existing unordered list container, or create it if it doesn't exist
-        let ul = document.querySelector('.chapters-list');
-        if (!ul) {
-            ul = document.createElement('ul');
-            ul.className = 'chapters-list';
-            document.getElementById('editableDiv').appendChild(ul);
-        }
+// // Create title container
+// const titleContainer = document.createElement('span');
+// titleContainer.className = 'title-container';
 
-        // Create new list item with unique ID
-        const li = document.createElement('li');
-        li.id = `li-${li_id}`;
+// // Create the disclosure icon
+// const icon = document.createElement('span');
+// icon.contentEditable = false
+// icon.className = 'list-icon';
+// icon.innerHTML = '&#9654;';
 
-        // Create title container with icon and title
-        const titleContainer = document.createElement('span');
-        titleContainer.className = 'title-container';
+// // Title text that remains visible
+// const title = document.createElement('span');
+// title.className = 'title-text';
+// title.contentEditable = true; // Make only the title editable
+// title.textContent = 'Your title'; // Example title text
 
-        const icon = document.createElement('span');
-        icon.contentEditable = false
-        icon.className = 'list-icon';
-        icon.innerHTML = '▶';
+// // Append icon and title to the titleContainer
+// titleContainer.appendChild(icon);
+// titleContainer.appendChild(title);
+// li.appendChild(titleContainer);
 
-        const title = document.createElement('span');
-        title.className = 'title-text';
-        title.textContent = 'Your title';
+// // Create the editable section that toggles
+// const section = document.createElement('section');
+// section.id = `section-${li_id}`;
+// section.contentEditable = true;
+// section.style.display = 'none';
+// section.textContent = 'New section content...';
+// section.addEventListener('focus', function () {
+//     listMode = false
+// })
+// const br = document.createElement('br')
+// li.appendChild(section);
+// text_list.appendChild(li);
+// text_list.appendChild(br)
+// li_id++;
 
-        // Append icon and title to the titleContainer, then to li
-        titleContainer.appendChild(icon);
-        titleContainer.appendChild(title);
-        li.appendChild(titleContainer);
+// icon.addEventListener('click', function (event) {
+//     event.stopPropagation();
+//     if (section.style.display === 'block') {
+//         section.style.display = 'none';
+//         icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : titleContainer.style.direction === 'rtl' ? '◀' : '▶'
 
-        // Create editable section and append it to li
-        const section = document.createElement('section');
-        section.contentEditable = true;
-        section.id = `section-${li_id}`;
-        section.style.display = 'none'; // Hidden initially
-        section.textContent = 'New section content...';
-
-        li.appendChild(section);
-        ul.appendChild(li); // Append li to the ul
-
-        // Toggle section display on icon click
-        icon.addEventListener('click', function (event) {
-            event.stopPropagation();
-            section.style.display = section.style.display === 'block' ? 'none' : 'block';
-            icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : titleContainer.style.direction === 'rtl' ? '◀' : '▶'
-
-            icon.innerHTML = section.style.display === 'block' ? '&#9660;' : '&#9654;'; // Toggle icon direction
-        });
-
-        li_id++; // Increment the li_id to ensure each list item is unique
-    }
-});
-
-
-
+//     } else {
+//         section.style.display = 'block';
+//         icon.innerHTML = '&#9660;'; // Downward triangle (open state)
+//     }
+// });
 function hidePlaceHolder() {
     document.getElementById('placeholder').style.display = 'none'
 }
@@ -1760,7 +2114,6 @@ function adjustFont(
     if (underline) span.style.textDecoration = span.style.textDecoration === 'underline' ? 'none' : 'underline';
     if (italic) span.style.fontStyle = span.style.fontStyle === 'italic' ? 'normal' : 'italic';
 
-    // Handle text alignment
     if (align_left) {
         post_text.style.direction = 'ltr';
         post_text.style.textAlign = 'left';

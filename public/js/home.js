@@ -874,11 +874,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('tags-overlay');
 
     if (!seen) {
-        if (welcomePopup){
+        if (welcomePopup) {
             welcomePopup.style.display = 'flex'
 
-        }   
- }
+        }
+    }
     if (welcomePopup) {
         const goHome = document.getElementById('go-home')
         goHome.addEventListener('click', function (e) {
@@ -888,198 +888,6 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     }
     document.getElementById('home').addEventListener('click', loadPosts)
-    // popup_buttons.forEach((button, index) => {
-    //     button.removeEventListener('click', togglePopup);
-    //     button.addEventListener('click', togglePopup);
-
-    //     function togglePopup() {
-
-    //         mainContent.textContent = '';
-    //         popups.forEach((popup, popupIndex) => {
-    //             if (popupIndex !== index) {
-    //                 popup.style.display = 'none';
-    //             }
-    //         });
-
-    //         // Toggle the visibility of the selected popup
-    //         if (popups[index].style.display === 'block') {
-    //             popups[index].style.display = 'none';
-    //         } else {
-    //             popups[index].style.display = 'block';
-    //             // const popupContent = popups[index].cloneNode(true)
-    //             popups[index].remove()
-    //             mainContent.innerHTML = popups[index].innerHTML;
-
-    //         }
-
-    //         if(popups[index].id ==='startpaper-popup'){
-
-    //             dropdowns.forEach(function (dropdown) {
-
-    //                 const inputElement = document.getElementById(dropdown.inputId);
-    //                 const container = document.getElementById(dropdown.containerid);
-    //                 const optionsList = document.getElementById(dropdown.optionsid);    
-    //                 const options = optionsList.querySelectorAll('li');
-    //                 inputElement.addEventListener('focus', function () {
-    //                     container.classList.toggle('open');
-    //                 });
-
-    //                 options.forEach(function (option) {
-    //                     option.addEventListener('click', function () {
-    //                         inputElement.value = this.textContent;
-    //                         container.classList.remove('open');
-    //                     });
-    //                 });
-
-    //                 document.addEventListener('click', function (e) {
-    //                     if (!container.contains(e.target) && e.target !== inputElement) {
-    //                         container.classList.remove('open');
-    //                     }
-    //                 });
-    //             });
-    //             // inputField.addEventListener("input", function () {
-    //             //     const inputValue = inputField.value;
-    //             //     let overlayText = '';
-
-    //             //     const tagRegex = /#[a-zA-Z0-9-_]+(?=\s|$)/g;
-    //             //     const matches = inputValue.match(tagRegex);
-
-    //             //     tags.clear();
-    //             //     if (matches) {
-    //             //         matches.forEach(tag => tags.add(tag)); // Only add full tags
-    //             //     }
-
-
-    //             //     inputValue.split(/(\s+)/).forEach((word) => {
-    //             //         if (tags.has(word)) {
-    //             //             overlayText += `<span class="is-tag"><strong>${word}</strong></span> `;
-    //             //         } else {
-    //             //             overlayText += `<span><strong>${word}</strong></span> `;
-    //             //         }
-    //             //     });
-
-    //             //     overlay.innerHTML = overlayText; // Update the overlay
-
-    //             //     // Debug: Check tags
-    //             // });
-    //             // create_paper.addEventListener('click', async function (e) {
-
-
-    //             //     e.preventDefault()
-    //             //     const we_need = document.getElementById('we_need').value;
-    //             //     const type_of_study = document.getElementById('type_of_study').value;
-    //             //     const project_branch = document.getElementById('project_branch').value;
-    //             //     const paper_title = document.getElementById('paper_title').value;
-    //             //     const language = document.getElementById('language-input').value;
-    //             //     tags = Array.from(tags)
-    //             //     await fetch('/api/create-paper', {
-    //             //         headers: { 'Content-Type': 'application/json' },
-    //             //         method: 'POST',
-    //             //         body: JSON.stringify({
-    //             //             type_of_study,
-    //             //             project_branch,
-    //             //             title: paper_title,
-    //             //             we_need,
-    //             //             tags,
-    //             //             language
-    //             //         })
-    //             //     }).then(res => res.json()).then(async data => {
-    //             //         const form = new FormData();
-    //             //         form.append('type', 'private')
-    //             //         form.append('paper_id', data.paper._id)
-    //             //         form.append('members', Array.from(members))
-    //             //         form.append('conv_pic', 'welcome.png')
-    //             //         form.append('title', 'welcome chat')
-    //             //         await fetch('/api/new-conversation', {
-    //             //             method: 'POST',
-    //             //             body: form
-    //             //         }).then(response => response.json()).then(data => {
-    //             //             console.log(data);
-
-    //             //         })
-    //             //     })
-    //             // })
-    //             if (inputField) {
-    //                 console.log('tag field',inputField);
-
-    //                 inputField.addEventListener('input', function () {
-    //                     console.log('tag',this.value);
-
-    //                     const inputValue = inputField.value;
-    //                     let overlayText = '';
-
-    //                     const tagRegex = /#[a-zA-Z0-9-_]+(?=\s|$)/g;
-    //                     const matches = inputValue.match(tagRegex);
-
-    //                     tags.clear();
-    //                     if (matches) {
-    //                         matches.forEach(tag => tags.add(tag)); // Only add full tags
-    //                     }
-
-    //                     inputValue.split(/(\s+)/).forEach((word) => {
-    //                         if (tags.has(word)) {
-    //                             overlayText += `<span class="is-tag"><strong>${word}</strong></span> `;
-    //                         } else {
-    //                             overlayText += `<span><strong>${word}</strong></span> `;
-    //                         }
-    //                     });
-
-    //                     overlay.innerHTML = overlayText; // Update the overlay
-    //                 });
-    //             } else {
-    //                 console.error('Input field is not defined.');
-    //             }
-
-    //             // Create paper listener
-    //             if (create_paper) {
-    //                 create_paper.addEventListener('click', async function (e) {
-
-    //                     const we_need = document.getElementById('we_need').value;
-    //                     const type_of_study = document.getElementById('type_of_study').value;
-    //                     const project_branch = document.getElementById('project_branch').value;
-    //                     const paper_title = document.getElementById('paper_title').value;
-    //                     const language = document.getElementById('language-input').value;
-
-    //                     tags = Array.from(tags);
-
-    //                     await fetch('/api/create-paper', {
-    //                         headers: { 'Content-Type': 'application/json' },
-    //                         method: 'POST',
-    //                         body: JSON.stringify({
-    //                             type_of_study,
-    //                             project_branch,
-    //                             title: paper_title,
-    //                             we_need,
-    //                             tags,
-    //                             language,
-    //                         }),
-    //                     })
-    //                         .then((res) => res.json())
-    //                         .then(async (data) => {
-    //                             const form = new FormData();
-    //                             form.append('type', 'private');
-    //                             form.append('paper_id', data.paper._id);
-    //                             form.append('members', Array.from(members));
-    //                             form.append('conv_pic', 'welcome.png');
-    //                             form.append('title', 'welcome chat');
-
-    //                             await fetch('/api/new-conversation', {
-    //                                 method: 'POST',
-    //                                 body: form,
-    //                             })
-    //                                 .then((response) => response.json())
-    //                                 .then((data) => {
-    //                                     console.log(data);
-    //                                 });
-    //                         });
-    //                 });
-    //             } else {
-    //                 console.error('Create paper button is not defined.');
-    //             }
-    //         }
-    //     }
-
-    // });
     popup_buttons.forEach((button, index) => {
         button.removeEventListener('click', togglePopup);
         button.addEventListener('click', togglePopup);
@@ -1248,8 +1056,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function show_spinner() {
-
+function show_spinner() {   
     spinner.style.display = 'block'
 }
 function hide_spinner() {

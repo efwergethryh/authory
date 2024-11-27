@@ -119,10 +119,12 @@ const createOwner = async (req, res) => {
 const ban_user = async (req, res) => {
     const { userId } = req.params
     try {
-        const user = await User.findById(userId)
+        const user = await User.findByIdAndUpdate(userId,{
+            banned:true
+        })
         if (user) {
-            user.banned = true
-            await user.save()
+            
+            
             res.json({ message: "User have been banned" })
         }
         else {
@@ -135,10 +137,13 @@ const ban_user = async (req, res) => {
 const degrade_admin = async (req, res) => {
     const { adminId } = req.params
     try {
-        const admin = await User.findOne({ _id: adminId, user_type: 2 })
+        const admin = await User.findOneAndUpdate({ _id: adminId, user_type: 2 },{
+            user_type:1
+        })
+        console.log('admin',admin);
+        
         if (admin) {
-            admin.user_type = 1
-            await admin.save()
+            
             res.json({ message: "Admin have been degraded" })
 
         } else {

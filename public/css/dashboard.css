@@ -175,6 +175,7 @@ ul li section {
     overflow-y: scroll;
     margin-top: 1vw;
     margin-left: 3vw;
+    background-color: aliceblue;
 }
 
 ul li section.active {
@@ -353,7 +354,7 @@ button[id="update_post"] {
 .create-post,
 .yourpostspopup,
 .edit-post,
-.users {
+.users-popup ,.admins-popup{
     display: none;
     width: 68%;
     height: 60%;
@@ -366,7 +367,9 @@ button[id="update_post"] {
 
 .edit-post {
     margin-top: 0.5%;
-    width: 100%;
+    width: 98%;
+    position: absolute;
+    left: 1%;
     height: fit-content;
     margin: 0;
 }
@@ -386,7 +389,7 @@ button[id="update_post"] {
     top: -5%;
 }
 
-.yourposts-popup, .users {
+.yourposts-popup,.users {
     flex-direction: column;
     background-color: white;
     border-radius: 10px;
@@ -425,7 +428,7 @@ button[id="update_post"] {
     background-color: white;
     position: relative;
     left: 84%;
-    top: -24vw;
+    top: 16vw;
     border-radius: 10px;
     box-shadow: 0px 0px 5px 3px #8080803b;
 }
@@ -500,10 +503,11 @@ button[id="update_post"] {
 #profileImage{
     cursor: pointer;
 }
-.yourposts-popup{
-    width: 100%;
+.yourposts-popup,.users{
+    width: 98%;
     position: relative;
     top: 5%;
+    left: .7%;
     margin-top: 7%;
     margin-bottom: 5%;
 }

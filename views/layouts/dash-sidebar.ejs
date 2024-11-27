@@ -11,7 +11,7 @@
    </svg>
 </div>
 <div class="sidebar" id="sidebar">
-
+   <input id="userType" type="number" hidden value="<%= userType %>">
    <ul>
       <% if(userType===3){ %>
          <li>
@@ -93,7 +93,7 @@
          <tbody>
             <tr>
                <section class="tools" id="tools" draggable="false" contenteditable="false">
-                  
+
                   <input id="fontFamily" class="fontFamily" title="Font family" value="Arial, sans-serif">
                   <div class="fontSize">
                      <i id="decrease" class="fa-solid fa-minus"></i>
@@ -120,7 +120,7 @@
                   <i id="align-right" class="fa-solid fa-align-right" title="Align Right"></i>
                   <i id="align-center" class="fa-solid fa-align-center" title="Align Center"></i>
                   <div class="divider"></div>
-                  <label  for="post-image">
+                  <label for="post-image">
                      <i id="choose-image" class="fa-regular fa-image" title="upload image"></i>
                   </label>
                   <input type="file" multiple id="post-image" name="post-image" style="display: none;" alt="image/*">
@@ -155,9 +155,17 @@
 <div id="editpost-popup" class="edit-post">
 
 </div>
-<div id="users" class="users">
+<div id="users-popup" class="users-popup">
+   <div class="startpapers-label" id="joined">Users</div>
+   <div id="users" class="users">
 
+   </div>
+</div>
+<div id="admins-popup" class="admins-popup">
+   <div class="startpapers-label" id="joined">Admins</div>
+   <div id="Admins" class="users">
 
+   </div>
 </div>
 
 <div id="user-tools" class="user-tools">
