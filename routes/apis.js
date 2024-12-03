@@ -98,7 +98,7 @@ router.post('/notify-all', notificationController.notify_all)
 router.post('/notify-members', notificationController.notifyMembersOnly)
 router.post('/create-request/:paper_id', requestController.create_request)
 router.post('/accept-request/:paper_id', requestController.accept_request)
-
+router.post('/delete-request/:paper_id', requestController.delete_request)
 //get routes
 router.get('/get-friendconversation/:id', friendsConversationController.getFriendConversation);
 router.get('/get-friendconversations', friendsConversationController.getFriendConversations);
@@ -109,6 +109,7 @@ router.get('/messages/:id', conversationController.get_message);
 router.get('/conversations/:id', conversationController.get_conversations);
 router.get('/conversation/:id', conversationController.get_conversation);
 router.get('/notifications', notificationController.get_notifications)
+router.get('/notifications/:userId', notificationController.get_notification)
 router.get('/joinedPapers',(req,res)=> paperController.get_joined_paper(null,req,res));
 router.get('/get-request', requestController.get_requests);
 router.get('/get-joined-users/:paper_id',paperController.joined_papers_users);
@@ -119,7 +120,7 @@ router.delete('/delete-paper/:paper_id',paperController.delete_paper);
 router.delete('/delete-user-from-paper/:paper_id',paperController.delete_user_from_paper);
 //Put routes
 router.put('/update-paper/:id',paperController.update_paper)
-
+router.put('/read-notification/:n_id',notificationController.read_notification)
 
 router.use(authMiddleware([2,3]))
 router.post('/new-post',upload_post.array('post-image'),postController.create_post)

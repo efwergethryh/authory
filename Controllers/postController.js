@@ -26,7 +26,7 @@ const create_post = async (req, res) => {
             user_id:myId
         })
         await post.save()
-        res.status(200).json({ message: 'Post Published' })
+        res.status(200).json({ message: 'Post Published', post })
     } catch (error) {
         console.log(error);
 
@@ -34,7 +34,8 @@ const create_post = async (req, res) => {
 }
 const get_posts = async (req, res) => {
     try {
-        const posts = await Post.find()
+        const { skip = 0, limit = 12 } = req.query; 
+        const posts = await Post.find().sort({ createdAt: -1 }).skip(skip).limit(parseInt(limit));
         res.status(200).json({ posts })
 
     } catch (error) {
@@ -50,7 +51,11 @@ const delete_posts = async (req, res) => {
 const get_post = async (req, res) => {
     try {
         const { post_id } = req.params
+        
+        
         const post = await Post.findById(post_id)
+        
+        
         if (!post) {
             res.status(500).json({ message: 'Post not found' })
         }

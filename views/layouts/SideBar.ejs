@@ -17,12 +17,16 @@
 </div>
 <div class="sidebar open" id="sidebar">
    <input id="user-id" hidden value="<%= user._id %>">
-   
+
    <ul>
       <li>
          <a id="home" href="#">
-            <i class="fas fa-home"></i>
-            <span class="text-only">Home</span>
+
+            <div id="head" class="header">
+               <i class="fas fa-home"></i>
+               <span class="text-only">Home</span>
+               
+            </div>
          </a>
       </li>
       <li>
@@ -100,14 +104,26 @@
       </li>
       <li>
          <a onclick="show_public_conversation()" href="#" id="chat">
-            <i class="fa-solid fa-comment"></i>
-            <span class="text-only">Public chat</span>
+            <!-- <i class="fa-solid fa-comment"></i>
+            <span class="text-only">Public chat</span> -->
+            <div id="head" class="header">
+               <!-- <i id="paper-3" class="fa-solid fa-user-group"></i> -->
+               <i class="fa-solid fa-comment"></i>
+               <span id="text" class="toggle-item">Public chat</span>
+               
+            </div>
          </a>
       </li>
       <li id="notifications-button">
          <a href="#">
-            <i class="fa-solid fa-bell"></i>
-            <span class="text-only">Notifications</span>
+            <!-- <i class="fa-solid fa-bell"></i>
+            <span class="text-only">Notifications</span> -->
+            <div id="head" class="header">
+               <i class="fa-solid fa-bell"></i>
+               <span class="text-only">Notifications</span>
+               
+               </span>
+            </div>
             <div id="newNotification" class="new-notfication"></div>
          </a>
       </li>
@@ -141,7 +157,6 @@
                            </svg>
                         </div>
                         <ul id="projectbranch-list" class="education-dropdown-options">
-                           <!-- <li class="level1">A-Medicine</li> -->
                            <li class="unselectable">Internal Medicine</li>
                            <li data-value="Cardiology">Cardiology</li>
                            <li data-value="Pulmonology">Pulmonology</li>
@@ -254,7 +269,7 @@
                            autocomplete="off" class="styled-input" placeholder="language">
                         <div class="icon-container">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                               stroke-linejoin="round" class="feather feather-chevron-down">
                               <polyline points="6 9 12 15 18 9"></polyline>
                            </svg>
@@ -276,7 +291,7 @@
 <div id="yourpapers-popup" class="yourpapers-popup">
    <div class="joined-label" id="joined">Your papers</div>
    <div id="yourpapers-container" class="yourpapers-container">
-      
+
    </div>
 </div>
 
@@ -433,7 +448,7 @@
    <div class="joined-label" id="joined">Joined papers</div>
    <div class="joinedpapers-container">
 
-      
+
 
    </div>
 </div>
@@ -442,7 +457,7 @@
    <div class="yourfriends-label" id="joined">Your friends</div>
    <div class="yourfriends-container">
 
-      
+
    </div>
 </div>
 

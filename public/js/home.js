@@ -51,7 +51,10 @@ const socket = io(API_BASE_URL, {
         userId: userId
     }
 });
-
+let Nskip = 0
+let Nlimit = 12
+let skip = 0;
+let limit = 12
 async function applyPendingNotifications(conversation_id) {
     console.log('conversations-state', conversationsLoaded);
 
@@ -69,61 +72,89 @@ async function applyPendingNotifications(conversation_id) {
 socket.emit('join-public-room')
 window.onload = loadPosts
 
+async function get_Post(post_id) {
+    try {
+        const url = `/api/posts/${post_id}`;
+
+        const response = await fetch(url, {
+            method: 'GET',
+        });
+        console.log('Response:', response);
+
+        if (response.ok) {
+            const data = await response.json();
+
+            return data.post;
+        }
+
+        console.error('Error: Failed to fetch post. Status:', response.status);
+        return null;
+    } catch (error) {
+        console.error('Error fetching post:', error);
+        return null;
+    }
+}
+
 async function loadPosts() {
     try {
-
-        mainContent.innerHTML = ''
-        const response = await fetch('/api/posts', {
+        const response = await fetch(`/api/posts?skip=${skip}&limit=${limit}`, {
             method: "GET",
-        })
+        });
+
         if (response.ok) {
+            const data = await response.json();
 
-            const data = await response.json()
+            let content = "";
 
-            let content = ``
-            document.getElementById('home').classList.add('active')
-            const posts = document.createElement('div')
-            posts.className = 'posts'
-            // document.getElementById('maincontent').classList.add('shifted')
             for (const post of data.posts) {
-                // const User = await get_user(post.user_id);
-                // const user =await  User.user[0];
-                // console.log(user);
-
                 content += `
-
-                
                     <div class="css-sh7anr-StyledBox">
                         <p class="css-gkrxgl-StyledText">${post.title}</p>
                         <a class="css-1k7990c-StyledButton" href="/posts/${post._id}">
                             Go to post
                         </a>
-                    </div>
-                
-                    `;
+                    </div>`;
             }
-            posts.innerHTML = content
-            mainContent.appendChild(posts)
 
-            hide_spinner()
+            // Append posts to container
+            let postsContainer = document.querySelector(".posts");
+            if (!postsContainer) {
+                postsContainer = document.createElement("div");
+                postsContainer.className = "posts";
+                document.getElementById("maincontent").appendChild(postsContainer);
+            }
+            postsContainer.innerHTML += content;
+
+            // Manage Load More button
+            let loadPostsBtn = document.getElementById("loadMoreBtn");
+            if (!loadPostsBtn) {
+                // Create button if not exists
+                loadPostsBtn = document.createElement("button");
+                loadPostsBtn.id = "loadMoreBtn";
+                loadPostsBtn.textContent = "Load More";
+                loadPostsBtn.className = "notifications-button";
+                postsContainer.appendChild(loadPostsBtn);
+
+                // Add click event listener
+                loadPostsBtn.addEventListener("click", loadPosts);
+            }
+
+            // Hide button if no more posts
+            if (data.posts.length < limit) {
+                loadPostsBtn.style.display = "none";
+            }
+
+            // Update skip count
+            skip += data.posts.length;
         }
     } catch (error) {
-        console.log(error);
-
+        console.error("Error loading posts:", error);
     }
 }
-{/* <div data-ds-id="Box" class="css-sh7anr-StyledBox erlpbss0">
-                    <p color="primary" data-ds-id="Text" class="css-gkrxgl-StyledText e1im9r3t0">${post.title}</p>
-                    
-                        <a data-ds-id="Button" class="css-1k7990c-StyledButton e7wzybw0" href="/posts/${post._id}">
-                            <div class="css-19pexw4-StyledInner e7wzybw1">  
-                                <div data-ds-id="Inline" class="css-alg3yb-InlineContainer e1hzytjg0">
-                                    <div>Go to post</div>
-                                </div>
-                            </div>
-                        </a>
-                    
-                </div> */}
+
+// Attach event listener to "Load More" button
+
+
 async function buildmessagecontent(message) {
     const sender = await get_user(message.m.sender);
     let messageContent = '';
@@ -419,7 +450,7 @@ async function accept_request(paper_id, user_id) {
         },
         method: 'POST',
         body: JSON.stringify({
-            paper_id,
+
             user_id
         })
     }).then(res => res.json()).then(async data => {
@@ -448,13 +479,95 @@ async function accept_request(paper_id, user_id) {
         })
     })
 }
-function display_notification(data) {
+async function decline_request(paper_id, user_id) {
+
+    await fetch(`/api/delete-request/${paper_id}`, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: 'DELETE',
+        body: JSON.stringify({
+
+            user_id
+        })
+    }).then(res => res.json()).then(async data => {
+        console.log('join result', data);
+
+        await fetch(`/api/notify/${user_id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                type: 'decline-request',
+                paper_id: paper_id
+            })
+        }).then(res => res.json()).then(data => {
+
+            socket.emit("send-notification", {
+
+                receiver: user_id,
+                user: data.user,
+                type: 'decline-request',
+
+                paper: data.paper
+            });
+
+        })
+    })
+}
+async function display_notification(data) {
     console.log(data);
     const redDot = document.getElementById('newNotification')
     notificationCount += 1
     redDot.textContent = notificationCount
+    let profilePicture = data.data.user.profile_picture;
+    let isExternal;
+    let imageSrc;
+    if (profilePicture) {
+        isExternal = profilePicture.startsWith("http");
+        imageSrc = isExternal
+            ? profilePicture
+            : `profile_images/${profilePicture}`;
+    } else {
+        imageSrc = 'profile_images/non-picture'
+    }
+    let post = data.data.post
+    const backgroundSize = data.data.type === "message"
+        ? 'fa-solid fa-comment'
+        : data.data.type === "join-request"
+            ? 'fas fa-file'
+            : data.data.type === "new-post"
+                ? 'fas fa-home'
+                : data.data.type === "accept-request"
+                    ? 'fa-solid fa-handshake'
+                    : data.data.type === "decline-request"
+                        ? 'fa-solid fa-handshake'
+                        : data.data.type === "private"
+                            ? 'fa-solid fa-comment'
+                            : data.data.type === "mention-in-public"
+                                ? 'fa-solid fa-comment'
+                                : data.data.type === "mention-in-welcome"
+                                    ? 'fa-solid fa-comment'
+                                    : data.data.type === "reply"
+                                        ? 'fa-solid fa-comment'
+                                        : data.data.type === "accept"
+                                            ? 'fa-solid fa-handshake'
+                                            : 'fa-solid fa-bell';
+    let postHtml
+    if (post) {
+        postHtml = `
+        <div class="request-buttons" style="display:flex">
+            <a class="css-1k7990c-StyledButton" onclick="goTopost('${post._id}','${data.data.notification._id}')">
+                Go to post
+            </a>
+            <a id="ignore-post" class="css-1k7990c-StyledButton" onclick="ignorePost('${post._id}',${data.data.notification._id})">
+                Ignore
+            </a>
+        </div>
+    `;
 
-
+    }
     if (data.data.paper && data.data.type !== "join-request") {
 
         if (data.data.paper.user_id == userId) {
@@ -466,40 +579,63 @@ function display_notification(data) {
 
             joineNew.style.display = 'flex';
         }
+        const user = await get_user(data.data.sender);
 
-        // Your existing code for notification rendering
         document.getElementById('notifications-container').innerHTML += `
-            <div class="notification" onclick="handleNotificationClick('${data.data.type}', ${JSON.stringify(data.conversation)})">
-                <img src="profile_images/${data.data.user.profile_picture}" alt="Profile Picture"/>
+            
+            <div class="notification unread" onclick="handleNotificationClick('${data.data.type}', ${JSON.stringify(data.conversation)})">
+                <div  class="notificationInfo>
+                    <div id class="image-comb">
+                            <img src="${imageSrc}" alt="Profile Picture"/>
+                            <i class="notification-i ${backgroundSize}"></i>
+                    </div>
+                </div>
                 <p>${data.data.type === "message" ? `${data.data.user.name} sent you a message`
                 : data.data.type === "join-request" ? `${data.data.user.name} requested to join your paper`
                     : data.data.type === "accept-request" ? `${data.data.user.name} accepted your request `
                         : data.data.type === "private" ? `${data.data.user.name} requested to join your paper`
-                            : data.data.type === "mention-in-public" ? `${data.data.user.name} mentioned you in public chat`
-                                : data.data.type === "mention-in-welcome" ? `${data.data.user.name} mentioned you in welcome chat`
-                                    : data.data.type === "reply" ? `${data.data.user.name} replied to you in private`
+                            : data.data.type === "public" ? `${data.data.user.name} new public message`
 
-                                        : "You have a new notification"
+                                : data.data.type === "mention-in-public" ? `${data.data.user.name} mentioned you in public chat`
+                                    : data.data.type === "mention-in-welcome" ? `${data.data.user.name} mentioned you in welcome chat`
+                                        : data.data.type === "reply" ? `${data.data.user.name} replied to you in private`
+                                            : "You have a new notification"
             }</p>
-            <button onclick="accept_request('${data.data.paper._id}', '${data.data.user._id}')" id="accept-button" style='display:${data.data.type === "join-request" ? 'block' : 'none'}'>accept</button>
+            <div class="request-buttons" style='display:${data.data.type === "join-request" ? 'flex' : 'none'}'>
+                <button onclick="accept_request('${data.data.paper_id}','${data.data.sender}')" id="accept-button" style="display:block">accept</button>
+                <button onclick="decline_request('${data.data.paper_id}','${data.data.sender}')" id="decline-button" style="display:block">delete</button>
             </div>
+
+        
         `;
     } else {
-        // Your existing code for notifications without a paper
+       
         document.getElementById('notifications-container').innerHTML += `
-            <div class="notification" onclick="handleNotificationClick('${data.data.type}', ${JSON.stringify(data.conversation)})">
-                <img src="profile_images/${data.data.user.profile_picture}" alt="Profile Picture"/>
-                <p>${data.data.type === "message" ? `${data.data.user.name} sent you a message`
-                : data.data.type === "join-request" ? `${data.data.user.name} requested to join your paper`
-                    : data.data.type === "private" ? `${data.data.user.name} requested to join your paper`
-                        : data.data.type === "mention-in-public" ? `${data.data.user.name} mentioned you in public chat`
-                            : data.data.type === "mention-in-welcome" ? `${data.data.user.name} mentioned you in welcome chat`
-                                : data.data.type === "reply" ? `${data.data.user.name} replied to you in private`
-                                    : data.data.type === "accept" ? `your request to join the paper has been approved`
-                                        : "You have a new notification"
-            }</p>
-            <button onclick="accept_request('${data.data.paper._id}', '${data.data.user._id}')" id="accept-button" style='display:${data.data.type === "join-request" ? 'block' : 'none'}'>accept</button>
+            
+                <div id="${data.data.type === 'new-post' ? `post-${post._id}` : ""}" class="notification unread" onclick="handleNotificationClick('${data.data.type}', ${JSON.stringify(data.conversation)})">
+                    <div  class="notificationInfo">
+                        <div id class="image-comb">
+                                <img src="${imageSrc}" alt="Profile Picture"/>
+                                <i class="notification-i ${backgroundSize}"></i>
+
+                        </div>
+                        <p>${data.data.type === "message" ? `${data.data.user.name} sent you a message`
+                                        : data.data.type === "join-request" ? `${data.data.user.name} requested to join your paper`
+                                            : data.data.type === "private" ? `${data.data.user.name} new private message`
+                                                : data.data.type === "public" ? `${data.data.user.name} new public message`
+                                                    : data.data.type === "decline-request" ? `${data.data.user.name} Declined your request to join the paper`
+                                                        : data.data.type === "new-post" ? `${data.data.user.name} posted a new post`
+                                                            : data.data.type === "mention-in-public" ? `${data.data.user.name} mentioned you in public chat`
+                                                                : data.data.type === "mention-in-welcome" ? `${data.data.user.name} mentioned you in welcome chat`
+                                                                    : data.data.type === "reply" ? `${data.data.user.name} replied to you in private`
+                                                                        : data.data.type === "accept" ? `your request to join the paper has been approved`
+                                                                            : "You have a new notification"
+                        }</p>
+                    </div>
+                
+            ${postHtml}
             </div>
+            
         `;
     }
 
@@ -571,7 +707,36 @@ function reset_reply() {
     isreply = false;
     replyTo = null;
 }
+async function ignorePost(id) {
+    console.log('Ignoring post');
+    // const posts = document.querySelector('.posts')
+    const post = document.getElementById(`post-${id}`)
+    const response = fetch(`/read-notification/${id}`, {
+        method: "PUT"
+    })
+    if (response.ok) {
+        const data = await response.json()
+        console.log('data', data);
+        post.remove()
+    }
 
+
+
+}
+async function goTopost(id, n_id) {
+    const post = document.getElementById(`post-${id}`)
+    const response = await fetch(`/api/read-notification/${n_id}`, {
+        method: "PUT"
+    })
+
+
+    if (response.ok) {
+        const data = await response.json()
+        console.log('data', JSON.stringify(data.notification));
+        window.location.href = `/posts/${id}`
+        post.classList.add('unread')
+    }
+}
 function reply(id, message) {
 
 
@@ -640,26 +805,85 @@ async function buildNotifications(notifications) {
     const notificationPromises = notifications.map(async (notification) => {
         const user = await get_user(notification.sender);
 
+        const backgroundSize = notification.type === "message"
+            ? 'fa-solid fa-comment'
+            : notification.type === "join-request"
+                ? 'fas fa-file'
+                : notification.type === "new-post"
+                    ? 'fas fa-home'
+                    : notification.type === "accept-request"
+                        ? 'fa-solid fa-handshake'
+                        : notification.type === "decline-request"
+                            ? 'fa-solid fa-handshake'
+                            : notification.type === "private"
+                                ? 'fa-solid fa-comment'
+                                : notification.type === "mention-in-public"
+                                    ? 'fa-solid fa-comment'
+                                    : notification.type === "mention-in-welcome"
+                                        ? 'fa-solid fa-comment'
+                                        : notification.type === "reply"
+                                            ? 'fa-solid fa-comment'
+                                            : notification.type === "accept"
+                                                ? 'fa-solid fa-handshake'
+                                                : 'fa-solid fa-bell';
+
+        const profilePicture = user.user[0].profile_picture;
+
+        // Determine if the URL is external or local
+        let isExternal;
+        let imageSrc;
+        if (profilePicture) {
+            isExternal = profilePicture.startsWith("http");
+            imageSrc = isExternal
+                ? profilePicture
+                : `profile_images/${profilePicture}`;
+        }
+        
+
+        let post  = get_Post(notification.post_id)
+        let postHtml
+        if (post) {
+            postHtml = `
+                <div class="request-buttons" style="display:flex">
+                    <a class="css-1k7990c-StyledButton" onclick="goTopost('${post._id}','${notification._id}')">
+                        Go to post
+                    </a>
+                    <a id="ignore-post" class="css-1k7990c-StyledButton" onclick="ignorePost('${post._id}',${notification._id})">
+                        Ignore
+                    </a>
+                </div>
+        `;
+
+        }
         return `
-            <div class="notification"   
-                    onclick="handleNotificationClick('${notification.type}', ${JSON.stringify(notification).replace(/"/g, '&quot;')})">
-
-
-                <img src="profile_images/${user.user[0].profile_picture}" alt="Profile Picture"/>
-                <p>${notification.type === "message" ? `${user.user[0].name} sent you a message`
+            <div id="post-${post._id}" class="${notification.read ? 'notification' : 'notification unread'}" 
+                    onclick="handleNotificationClick('${notification.type}',${JSON.stringify(notification).replace(/"/g, '&quot;')})">
+                <div class="notificationInfo">
+                    <div class="image-comb">
+                        <img src="${imageSrc}" alt="Profile Picture"/>
+                        <i class="notification-i ${backgroundSize}"></i>
+                    </div>
+                    <p>${notification.type === "message" ? `${user.user[0].name} sent you a message`
                 : notification.type === "join-request" ? `${user.user[0].name} requested to join your paper`
                     : notification.type === "accept-request" ? `${user.user[0].name} accepted your request`
-                        : notification.type === "private" ? `${user.user[0].name} sent a message in private chat`
-                            : notification.type === "mention-in-public" ? `${user.user[0].name} mentioned you in public chat`
-                                : notification.type === "mention-in-welcome" ? `${user.user[0].name} mentioned you in welcome chat`
-                                    : notification.type === "reply" ? `${user.user[0].name} replied to you in private`
-                                        : notification.type === "accept" ? `your request to join the paper has been approved`
-                                            : "You have a new notification"
+                        : notification.type === "decline-request" ? `${user.user[0].name} Declined your request to join the paper`
+                            : notification.type === "new-post" ? `${user.user[0].name} posted a new post`
+                                : notification.type === "private" ? `${user.user[0].name} sent a message in private chat`
+                                    : notification.type === "mention-in-public" ? `${user.user[0].name} mentioned you in public chat`
+                                        : notification.type === "mention-in-welcome" ? `${user.user[0].name} mentioned you in welcome chat`
+                                            : notification.type === "reply" ? `${user.user[0].name} replied to you in private`
+                                                : notification.type === "accept" ? `your request to join the paper has been approved`
+                                                    : "You have a new notification"
             }</p>
-            <button onclick="accept_request('${notification.paper_id}','${notification.sender}')" id="accept-button" style='display:${notification.type === "join-request" ? 'block' : 'none'}'>accept</button>               
-                
+            </div>
+            <div class="request-buttons" style='display:${notification.type === "join-request" ? 'flex' : 'none'}'>
+                <button onclick="accept_request('${notification.paper_id}','${notification.sender}')" id="accept-button" style="display:block">accept</button>
+                <button onclick="decline_request('${notification.paper_id}','${notification.sender}')" id="decline-button" style="display:block">delete</button>
+            </div>
+            ${postHtml}
             </div>
         `;
+        // document.getElementById('ignore-post').addEventListener('click')
     });
 
     // Wait for all promises to resolve
@@ -763,6 +987,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 hide_spinner()
             }
         })
+
         document.getElementById('joined-papers-button').addEventListener('click', async function () {
             show_spinner()
             const response = await fetch('/api/joinedPapers', {
@@ -771,7 +996,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             if (response.ok) {
 
                 const data = await response.json()
-                console.log(data);
+
                 let content = ''
                 if (data.joinedpapers.length == 0) {
                     content = 'No joined papers yet'
@@ -779,24 +1004,24 @@ document.addEventListener('DOMContentLoaded', async function () {
                     data.joinedpapers.forEach(paper => {
                         content += `
                      <div id="${paper._id}" class="paper-line">
-                    <div class="paperinfo">
-                        <i id="joined-paper" class="fas fa-file"></i>
-                        <span class="paper-title"><strong>${paper.title}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-branch"><strong>${paper.project_branch}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-tags"><strong>${paper.language}</strong></span>
-                        <div class="new-notification" id="${paper._id}"></div>
-                    </div>
-                    <div class="button-container">
-                        <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
-                        <div class="divider"></div>
-                        <i id="gear" class="gear fa-solid fa-bars"></i>
-                    </div>
+                        <div class="paperinfo">
+                            <i id="joined-paper" class="fas fa-file"></i>
+                            <span class="paper-title"><strong>${paper.title}</strong></span>
+                            <span class="dash"><strong>-</strong></span>
+                            <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
+                            <span class="dash"><strong>-</strong></span>
+                            <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
+                            <span class="dash"><strong>-</strong></span>
+                            <span class="paper-branch"><strong>${paper.project_branch}</strong></span>
+                            <span class="dash"><strong>-</strong></span>
+                            <span class="paper-tags"><strong>${paper.language}</strong></span>
+                            <div class="new-notification" id="${paper._id}"></div>
+                        </div>
+                        <div class="button-container">
+                            <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
+                            <div class="divider"></div>
+                            <i id="gear" class="gear fa-solid fa-bars"></i>
+                        </div>
                 </div>
                     `
 
@@ -844,15 +1069,9 @@ document.addEventListener('DOMContentLoaded', async function () {
                 hide_spinner()
             }
         })
-        const response = await fetch('/api/notifications', {
-            method: "GET"
-        });
 
-        const data = await response.json();
 
-        // Build the notifications content and update the DOM
-        const content = await buildNotifications(data.Notifications);
-        document.getElementById('notifications-container').innerHTML = content;
+        // const data = await loadNotifications();
 
     } catch (error) {
         console.error('Error fetching notifications:', error);
@@ -865,6 +1084,39 @@ function closeConversation() {
         mainContent.style.display = 'none' // Clear conversation content if needed
     }
 }
+async function loadNotifications() {
+
+    const response = await fetch(`/api/notifications?skip=${Nskip}&limit=${Nlimit}`, {
+        method: "GET"
+    });
+
+    const data = await response.json();
+    console.log('notifications', data);
+
+    // Build the notifications content and update the DOM
+    let content = await buildNotifications(data.Notifications);
+
+    const notificationsContainer = document.getElementById('notifications-container')
+    notificationsContainer.innerHTML += content;
+    let loadNotificationsBtn = document.getElementById('loadMoreNotifications')
+    if (!loadNotificationsBtn) {
+        loadNotificationsBtn = document.createElement('button');
+        loadNotificationsBtn.id = 'loadMoreNotifications';
+        loadNotificationsBtn.textContent = 'Load More';
+        loadNotificationsBtn.className = 'notifications-button'
+        notificationsContainer.appendChild(loadNotificationsBtn);
+        loadNotificationsBtn.addEventListener('click', loadNotifications);
+    }
+    notificationsContainer.appendChild(loadNotificationsBtn);
+    if (data.Notifications.length < Nlimit) {
+        loadNotificationsBtn.style.display = 'none'
+    }
+    loadNotificationsBtn.addEventListener('click', function () {
+        loadNotifications();
+    });
+    Nskip += data.Notifications.length;
+
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     const inputField = document.getElementById('tags');
@@ -872,7 +1124,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const welcomePopup = document.getElementById('welcome-popup')
     const create_paper = document.getElementById('start_create')
     const overlay = document.getElementById('tags-overlay');
-
+    const notifications_button = document.getElementById('notifications-button')
+    notifications_button.addEventListener('click', function () {
+        loadNotifications(); // Call loadNotifications when the button is clicked
+    });
     if (!seen) {
         if (welcomePopup) {
             welcomePopup.style.display = 'flex'
@@ -1056,7 +1311,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function show_spinner() {   
+function show_spinner() {
     spinner.style.display = 'block'
 }
 function hide_spinner() {
@@ -1095,7 +1350,7 @@ async function send_message(type) {
                     },
                     body: JSON.stringify({
                         type,
-                        paper_id: ''
+                        paper_id: paper._id
                     })
                 }).then(res => res.json()).then(data => {
 

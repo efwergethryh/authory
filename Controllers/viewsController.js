@@ -17,7 +17,9 @@ const view_post = async (req, res) => {
     try {
         const { postId } = req.params
         const post = await Post.findById(postId)
-
+        if(!post){
+            res.redirect('/pages/notfound')
+        }
 
         res.render('post', { post })
     } catch (error) {

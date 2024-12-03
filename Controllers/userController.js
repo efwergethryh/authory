@@ -59,7 +59,6 @@ async function loadFetch() {
     fetch = (await import('node-fetch')).default; // Fetch is now assigned globally
 }
 
-// Call loadFetch only once when your app starts up
 loadFetch()
 
 let creationStatus = process.env.ALLOWED === 'true';
@@ -172,13 +171,10 @@ const set_admin = async (req, res) => {
         }
     } catch (error) {
         res.json({ error })
-
     }
 }
 const fetchUniversities = async (req, res) => {
     const { value } = req.params; // Get the country value from the URL params
-
-    
 
     try {
         // Make the GET request using Axios

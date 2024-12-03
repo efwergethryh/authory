@@ -178,15 +178,20 @@ p#user-name {
 
 
 
+/* .header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    
+} */
 .header {
     display: flex;
     align-items: center;
     width: 100%;
-    /* Ensure header takes full container width */
     padding: 10px;
-    /* Adjust padding as needed */
+    gap: 4%;
 }
-
 #text {
     color: #607585;
     width: 50%;
@@ -251,14 +256,20 @@ p#user-name {
 }
 
 /* Optional: Adjust icon positioning */
-.sidebar ul li a i {
+/* .sidebar ul li a i {
     margin-right: 10px;
     margin-left: 4%;
     padding-left: 20px;
     position: static;
     font-size: larger;
+} */
+.sidebar ul li a i {
+    margin-right: 0;
+    margin-left: 0;
+    padding-left: 20px;
+    position: static;
+    font-size: larger;
 }
-
 .text-only {
     color: #607585;
     font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
@@ -431,7 +442,7 @@ i[id="icon"] {
     align-items: flex-start;
     width: fit-content;
     margin: 0%;
-    margin-right: 4%;
+    /* margin-right: 4%; */
 }
 
 .toggle-tab-container:hover,
@@ -658,20 +669,33 @@ i[id="icon"] {
 .notification {
     display: flex;
     flex-direction: row;
-    gap: 3%;
     width: 100%;
-    background-color: rgb(37, 150, 190);
+    background-color: white;
     padding: 10px 20px;
-
-    color: white;
-    border-bottom: 2px solid rgb(180, 180, 180);
+    color: #607585;
+    border-bottom: 2px solid #a2a2a2;
     cursor: pointer;
 }
-
+.notification.unread{
+    background-color: #e0e0e0;
+}
+.notifications-button{
+    background-color:rgb(229 229 229);
+    border: none;
+}
 .notification:hover {
-    background-color: rgb(65, 174, 214);
+    background-color: #e0e0e0;
 }
 
+.notification-i {
+    height: 28px;
+    width: 28px;
+    background-size: auto;
+    background-repeat: no-repeat;
+    display: inline-block;
+    font-size: larger;
+    transform: translate(-38%, 85%);
+}
 .notification:first-child {
     border-radius: 10px 10px 0 0;
     /* Top left and top right corners */
@@ -698,8 +722,7 @@ i[id="icon"] {
 
 .joinedpapers-container,
 .yourpapers-container,
-.papers-container,
-.notifications-container {
+.papers-container,.notifications-container{
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -711,12 +734,47 @@ i[id="icon"] {
 }
 
 .notifications-container {
-    background-color: white;
-    margin-top: 10%;
-    margin-left: 2%;
+    background-color: transparent;
+    margin-top: 7%;
+    margin-left: 0.5%;
     gap: 0;
+    height: 90%;
     padding: 0;
-
+}
+.request-buttons {
+    width: 100%;
+    flex-direction: row;
+    gap: 2%;
+    justify-content: end;
+}
+.notificationInfo {
+    width: 301%;
+    display: flex;
+    flex-direction: row;
+}
+.image-comb{
+    display: flex;
+    flex-direction: row;
+}
+#accept-button {
+    display: block;
+    border-radius: 10px;
+    border: none;
+    background-color: white;
+    padding: 0 14% 0 14%;
+    font-weight: 600;
+    color: black;
+    box-shadow: 0px 0px 7px 1px gray;
+}
+#decline-button {
+    display: block;
+    border-radius: 10px;
+    border: none;
+    background-color: #bbb9b9;
+    padding: 0 14% 0 14%;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0px 0px 7px 1px gray;
 }
 
 .joinedpapers-container,
@@ -1444,18 +1502,7 @@ button[id="join"] {
 }
 
 
-#accept-button {
-    display: block;
-    border-radius: 10px;
-    border: none;
-    background-color: #20dedf;
-    padding-left: 5%;
-    padding-right: 5%;
-    margin-left: 25%;
-    font-weight: 600;
-    color: white;
 
-}
 
 .popup-message.show {
     opacity: 1;
@@ -1506,11 +1553,11 @@ button[id="send_message"] {
     /* background-color: #17212b; */
     position: absolute;
     top: 7%;
-    
+
     transition: transform 0.3s ease;
     display: block;
     z-index: -1;
-    overflow-y: hidden;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -1844,7 +1891,7 @@ p#file-frame {
     align-items: center;
     font-size: small;
     color: white;
-    margin-left: 30%;
+    margin-left: -22%;
     display: none;
 }
 
@@ -2087,6 +2134,7 @@ p#file-frame {
     cursor: pointer;
     border-radius: 10px;
     background-color: white;
+    width: 100%;
 }
 
 .posts {
@@ -2150,7 +2198,7 @@ p#file-frame {
     font-weight: 700;
     cursor: pointer;
     padding: 11px 23px;
-    background-color: rgba(255, 255, 255, 0);
+    background-color:white;
     color: rgb(64, 81, 94);
     position: relative;
 
@@ -3072,281 +3120,276 @@ html [type=button] {
 }
 
 /* Design of popups */
-    .ce0d8d64ae4556f3--col {
-        flex: 300px;
-    }
+.ce0d8d64ae4556f3--col {
+    flex: 300px;
+}
 
-    .ce0d8d64ae4556f3--col:empty {
-        display: none;
-    }
+.ce0d8d64ae4556f3--col:empty {
+    display: none;
+}
 
-    .ce0d8d64ae4556f3--size6 {
-        min-width: 50%;
-    }
+.ce0d8d64ae4556f3--size6 {
+    min-width: 50%;
+}
 
-    .f94e00cb3381848b--row {
-        justify-content: var(--row-justify-content, stretch);
-        place-items: var(--row-align-items, stretch)var(--row-justify-items, stretch);
-        flex-wrap: wrap;
-        display: flex;
-    }
+.f94e00cb3381848b--row {
+    justify-content: var(--row-justify-content, stretch);
+    place-items: var(--row-align-items, stretch)var(--row-justify-items, stretch);
+    flex-wrap: wrap;
+    display: flex;
+}
 
-    /*! CSS Used from: https://next.amboss.com/us/static/assets/app~99b43025.913fded830e20078.css */
-    .ac38006eca9237c9--link {
-        color: inherit;
-        text-decoration: none;
-    }
+/*! CSS Used from: https://next.amboss.com/us/static/assets/app~99b43025.913fded830e20078.css */
+.ac38006eca9237c9--link {
+    color: inherit;
+    text-decoration: none;
+}
 
-    /*! CSS Used from: https://next.amboss.com/us/static/assets/app~00d95b45.3b8428b00e49e9ca.css */
-    .a749ec7141f32b4a--divider {
-        border-bottom: 1px solid var(--color-border-secondary);
-    }
+/*! CSS Used from: https://next.amboss.com/us/static/assets/app~00d95b45.3b8428b00e49e9ca.css */
+.a749ec7141f32b4a--divider {
+    border-bottom: 1px solid var(--color-border-secondary);
+}
 
-    .d5c6627064771888--linkList {
-        flex: none;
-    }
+.d5c6627064771888--linkList {
+    flex: none;
+}
 
-    .d5c6627064771888--linkList>:last-child {
-        border-radius: inherit;
-    }
+.d5c6627064771888--linkList>:last-child {
+    border-radius: inherit;
+}
 
-    /*! CSS Used from: https://next.amboss.com/us/static/assets/app~f4b8b076.95ac1a84d6132ed9.css */
-    .c5fc4f4d25a3f8e0--linkWithIcon {
-        width: 100%;
-        min-height: 40px;
-        display: flex;
-    }
+/*! CSS Used from: https://next.amboss.com/us/static/assets/app~f4b8b076.95ac1a84d6132ed9.css */
+.c5fc4f4d25a3f8e0--linkWithIcon {
+    width: 100%;
+    min-height: 40px;
+    display: flex;
+}
 
-    .c5fc4f4d25a3f8e0--linkWithIcon span {
-        -webkit-hyphens: auto;
-        -ms-hyphens: auto;
-        hyphens: auto;
-        overflow-wrap: anywhere;
-    }
+.c5fc4f4d25a3f8e0--linkWithIcon span {
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+    overflow-wrap: anywhere;
+}
 
-    .c5fc4f4d25a3f8e0--linkWithIcon:hover {
-        background-color: var(--color-background-transparent-hover);
-    }
+.c5fc4f4d25a3f8e0--linkWithIcon:hover {
+    background-color: var(--color-background-transparent-hover);
+}
 
-    .c5fc4f4d25a3f8e0--linkWithIcon:hover span {
-        background-size: 1px 1em;
-    }
+.c5fc4f4d25a3f8e0--linkWithIcon:hover span {
+    background-size: 1px 1em;
+}
 
-    .c5fc4f4d25a3f8e0--iconContainer,
-    .c5fc4f4d25a3f8e0--linkContainer {
-        flex: none;
-        padding: 12px 16px;
-    }
+.c5fc4f4d25a3f8e0--iconContainer,
+.c5fc4f4d25a3f8e0--linkContainer {
+    flex: none;
+    padding: 12px 16px;
+}
 
-    .c5fc4f4d25a3f8e0--linkContainer {
-        border-left: 1px solid var(--color-divider-primary);
-        flex: 1 0 0;
-    }
+.c5fc4f4d25a3f8e0--linkContainer {
+    border-left: 1px solid var(--color-divider-primary);
+    flex: 1 0 0;
+}
 
-    /*! CSS Used from: https://next.amboss.com/us/static/assets/app~972a0c8a.5983ce5b2f91c87d.css */
-    div:focus {
-        outline: 0;
-    }
+/*! CSS Used from: https://next.amboss.com/us/static/assets/app~972a0c8a.5983ce5b2f91c87d.css */
+div:focus {
+    outline: 0;
+}
 
-    /*! CSS Used from: Embedded */
-    * {
-        box-sizing: border-box;
-    }
+/*! CSS Used from: Embedded */
+* {
+    box-sizing: border-box;
+}
 
-    a {
-        text-decoration: none;
-        background-color: transparent;
-        -webkit-text-decoration-skip: objects;
-    }
+a {
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
 
-    svg:not(:root) {
-        overflow: hidden;
-    }
+svg:not(:root) {
+    overflow: hidden;
+}
 
-    /*! CSS Used from: Embedded */
-    * {
-        box-sizing: border-box !important;
-    }
+/*! CSS Used from: Embedded */
+* {
+    box-sizing: border-box !important;
+}
 
-    ::selection {
-        text-shadow: none !important;
-        background-color: #dae0e6 !important;
-    }
+::selection {
+    text-shadow: none !important;
+    background-color: #dae0e6 !important;
+}
 
-    /*! CSS Used from: Embedded */
+/*! CSS Used from: Embedded */
+.css-16b0bx-StyledBox {
+    box-sizing: border-box;
+}
+
+@media screen {
     .css-16b0bx-StyledBox {
-        box-sizing: border-box;
+        padding: 8px;
+        text-align: left;
     }
+}
 
-    @media screen {
-        .css-16b0bx-StyledBox {
-            padding: 8px;
-            text-align: left;
-        }
-    }
+.css-uxowku-StyledContainer {
+    position: relative;
+    background-color: rgb(255, 255, 255);
+}
 
+@media screen {
     .css-uxowku-StyledContainer {
-        position: relative;
-        background-color: rgb(255, 255, 255);
+        border-radius: 8px;
     }
+}
 
-    @media screen {
-        .css-uxowku-StyledContainer {
-            border-radius: 8px;
-        }
-    }
+.css-uxowku-StyledContainer::after {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border-radius: inherit;
+    box-shadow: rgba(0, 0, 0, 0.004) 0px 0.3px 0.6px, rgba(0, 0, 0, 0.07) 0px 2px 5px;
+}
 
-    .css-uxowku-StyledContainer::after {
-        content: " ";
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        border-radius: inherit;
-        box-shadow: rgba(0, 0, 0, 0.004) 0px 0.3px 0.6px, rgba(0, 0, 0, 0.07) 0px 2px 5px;
-    }
+.css-1m1fu2w-StyledDiv {
+    border-radius: inherit;
+    height: 100%;
+}
 
-    .css-1m1fu2w-StyledDiv {
-        border-radius: inherit;
-        height: 100%;
-    }
+.css-1m1fu2w-StyledDiv> :last-child {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
 
-    .css-1m1fu2w-StyledDiv> :last-child {
-        border-bottom-left-radius: inherit;
-        border-bottom-right-radius: inherit;
-    }
+.css-1m1fu2w-StyledDiv> :first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
 
-    .css-1m1fu2w-StyledDiv> :first-child {
-        border-top-left-radius: inherit;
-        border-top-right-radius: inherit;
-    }
+.css-sh7anr-StyledBox {
+    box-sizing: border-box;
+}
 
+@media screen {
     .css-sh7anr-StyledBox {
-        box-sizing: border-box;
+        padding: 12px;
+        text-align: left;
     }
+}
 
-    @media screen {
-        .css-sh7anr-StyledBox {
-            padding: 12px;
-            text-align: left;
-        }
+@media screen {
+    .css-sh7anr-StyledBox {
+        padding-left: 24px;
     }
+}
 
-    @media screen {
-        .css-sh7anr-StyledBox {
-            padding-left: 24px;
-        }
-    }
+.css-gkrxgl-StyledText {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
+    font-weight: 700;
+    color: rgb(26, 28, 28);
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-wrap: normal;
+}
 
+@media screen {
     .css-gkrxgl-StyledText {
-        font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
-        margin: 0px;
-        text-transform: none;
-        text-align: left;
-        font-weight: 700;
-        color: rgb(26, 28, 28);
-        font-size: 16px;
-        line-height: 1.5;
-        overflow-wrap: normal;
+        hyphens: none;
     }
+}
 
-    @media screen {
-        .css-gkrxgl-StyledText {
-            hyphens: none;
-        }
-    }
+.css-1fcsbsk-StyledDivider {
+    border-bottom: 1px solid rgb(224, 230, 235);
+    flex: 1 1 0%;
+}
 
-    .css-1fcsbsk-StyledDivider {
-        border-bottom: 1px solid rgb(224, 230, 235);
-        flex: 1 1 0%;
-    }
+.css-1lrmym0-StyledIcon {
+    width: 24px;
+    height: 24px;
+    color: rgb(163, 178, 189);
+}
 
-    .css-1lrmym0-StyledIcon {
-        width: 24px;
-        height: 24px;
-        color: rgb(163, 178, 189);
-    }
+.css-1lrmym0-StyledIcon>svg {
+    width: 24px;
+    height: 24px;
+}
 
-    .css-1lrmym0-StyledIcon>svg {
-        width: 24px;
-        height: 24px;
-    }
+.css-iqynoh-StyledText {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
+    font-weight: 400;
+    color: rgb(64, 81, 94);
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-wrap: normal;
+}
 
+@media screen {
     .css-iqynoh-StyledText {
-        font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
-        margin: 0px;
-        text-transform: none;
-        text-align: left;
-        font-weight: 400;
-        color: rgb(64, 81, 94);
-        font-size: 16px;
-        line-height: 1.5;
-        overflow-wrap: normal;
+        hyphens: none;
     }
+}
 
-    @media screen {
-        .css-iqynoh-StyledText {
-            hyphens: none;
-        }
-    }
+.css-w6p1zi-InlineContainer {
+    display: flex;
+    flex-flow: row;
+}
 
+@media screen {
     .css-w6p1zi-InlineContainer {
-        display: flex;
-        flex-flow: row;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: start;
+        justify-content: flex-start;
+        gap: 0px;
     }
+}
 
-    @media screen {
-        .css-w6p1zi-InlineContainer {
-            -webkit-box-align: center;
-            align-items: center;
-            -webkit-box-pack: start;
-            justify-content: flex-start;
-            gap: 0px;
-        }
-    }
+/*! CSS Used fontfaces */
+@font-face {
+    font-family: Lato;
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
 
-    /*! CSS Used fontfaces */
-    @font-face {
-        font-family: Lato;
-        font-weight: 400;
-        font-style: normal;
-        font-display: swap;
-        src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff");
-    }
+@font-face {
+    font-family: Lato;
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
 
-    @font-face {
-        font-family: Lato;
-        font-weight: 400;
-        font-style: italic;
-        font-display: swap;
-        src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff");
-    }
+@font-face {
+    font-family: Lato;
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
 
-    @font-face {
-        font-family: Lato;
-        font-weight: 700;
-        font-style: normal;
-        font-display: swap;
-        src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff");
-    }
+@font-face {
+    font-family: Lato;
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
 
-    @font-face {
-        font-family: Lato;
-        font-weight: 700;
-        font-style: italic;
-        font-display: swap;
-        src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff");
-    }
-
-    @font-face {
-        font-family: Lato;
-        font-weight: 900;
-        font-style: normal;
-        font-display: swap;
-        src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff");
-    }
+@font-face {
+    font-family: Lato;
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
 
 /* End of Design of popups */
 /*! CSS Used fontfaces */
@@ -3355,7 +3398,6 @@ html [type=button] {
     font-weight: 400;
     font-style: normal;
     font-display: swap;
-    src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff");
 }
 
 @font-face {
@@ -3363,7 +3405,6 @@ html [type=button] {
     font-weight: 400;
     font-style: italic;
     font-display: swap;
-    src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff");
 }
 
 @font-face {
@@ -3371,7 +3412,6 @@ html [type=button] {
     font-weight: 700;
     font-style: normal;
     font-display: swap;
-    src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff");
 }
 
 @font-face {
@@ -3379,7 +3419,6 @@ html [type=button] {
     font-weight: 700;
     font-style: italic;
     font-display: swap;
-    src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff");
 }
 
 @font-face {
@@ -3387,7 +3426,6 @@ html [type=button] {
     font-weight: 900;
     font-style: normal;
     font-display: swap;
-    src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff");
 }
 
 /* End Welcoming popup */

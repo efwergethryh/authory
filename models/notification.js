@@ -2,17 +2,28 @@ const mongoose = require('mongoose')
 
 const notificationSchema = new mongoose.Schema(
     {
-        user_id:{type:String,ref:"users"},
-        sender:{type:String,ref:"users"},
-        paper_id:{type: String,
-            ref: 'papers'},
-        type:{
-            type:String,
-            required:true
+        user_id: { type: String, ref: "users" },
+        sender: { type: String, ref: "users" },
+        paper_id: {
+            type: String,
+            ref: 'papers'
+        },
+        post_id: {
+            type: String,
+            
+            ref: 'posts'
+        },
+        read:{
+            type:Boolean,
+            default:false
+        },
+        type: {
+            type: String,
+            required: true
         }
-        
+
     },
-    { timestamps: true }    
+    { timestamps: true }
 )
 
 

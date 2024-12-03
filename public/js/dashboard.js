@@ -1,10 +1,15 @@
 const API_BASE_URL = 'http://145.223.34.195';
 const userType = document.getElementById('userType').value
 let popups = []
+const socket = io(API_BASE_URL, {
+    // transports: ['polling', 'websocket'],
+    // query: {
+    //     userId: userId
+    // }
+});
 popups = userType === "2" ? [
     document.getElementById('startpost-popup'),
     document.getElementById('yourposts-popup'),
-
 ] : [
     document.getElementById('users-popup'),
     document.getElementById('admins-popup'),
@@ -583,10 +588,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     popups[index].remove()
                     mainContent.innerHTML = popups[index].innerHTML;
 
-                    console.log('index', index, 'Popup', popups[index], 'inner html', popups[index].innerHTML);
+                    console.log('index', index, 'Popup', popups[index]);
                     if (popups[index].id === 'users') {
 
                     }
+
+
+                    const handleNewPost = (e) => {
+                        e.preventDefault();
+                        new_post();
+                    };
                     if (popups[index].id === 'startpost-popup' || popups[index].id === 'yourposts-popup') {
 
                         mainContent.addEventListener('mouseup', (e) => {
@@ -758,47 +769,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-                        const post_overlay = document.getElementById('tags-overlay');
-                        const tags_input = document.getElementById('tags')
+                        //New post listeners
+                        if (popups[index].id === 'startpost-popup') {
+                            console.log('this is a start post popup');
 
+                            const post_overlay = document.getElementById('tags-overlay');
+                            const tags_input = document.getElementById('tags');
 
-                        let overlayText = ''
+                            let overlayText = '';
+                            const tags = new Set(); // Ensure the `tags` variable is declared somewhere
 
-                        tags_input.addEventListener("input", function () {
-                            const update_tags_value = tags_input.value.trim(); // Get the current value of the input field
-                            console.log('tags', tags);
+                            tags_input.addEventListener("input", function () {
+                                const update_tags_value = tags_input.value.trim(); // Get the current value of the input field
+                                console.log('tags', tags);
 
-                            // Reset overlayText on each input event and rebuild it
-                            overlayText = '';
+                                // Reset overlayText on each input event and rebuild it
+                                overlayText = '';
 
-                            const tagRegex = /#[a-zA-Z0-9-_]+(?=\s|$)/g;
-                            const matches = update_tags_value.match(tagRegex); // Match the tags using regex
+                                const tagRegex = /#[a-zA-Z0-9-_]+(?=\s|$)/g;
+                                const matches = update_tags_value.match(tagRegex); // Match the tags using regex
 
-                            tags.clear(); // Clear the tags set before re-adding them
+                                tags.clear(); // Clear the tags set before re-adding them
 
-                            // If there are matches, add them to the tags set
-                            if (matches) {
-                                matches.forEach(tag => tags.add(tag)); // Add matched tags to the set
-                            }
-
-                            // Split the input value by spaces and rebuild the overlay
-                            update_tags_value.split(/(\s+)/).forEach((word) => {
-                                if (tags.has(word)) {
-                                    overlayText += `<span class="is-tag"><strong>${word}</strong></span> `;
-                                } else {
-                                    overlayText += `<span><strong>${word}</strong></span> `;
+                                // If there are matches, add them to the tags set
+                                if (matches) {
+                                    matches.forEach(tag => tags.add(tag)); // Add matched tags to the set
                                 }
+
+                                // Split the input value by spaces and rebuild the overlay
+                                update_tags_value.split(/(\s+)/).forEach((word) => {
+                                    if (tags.has(word)) {
+                                        overlayText += `<span class="is-tag"><strong>${word}</strong></span> `;
+                                    } else {
+                                        overlayText += `<span><strong>${word}</strong></span> `;
+                                    }
+                                });
+
+                                // Update the overlay with the new content, reflecting changes (additions/deletions)
+                                post_overlay.innerHTML = overlayText;
                             });
 
-                            // Update the overlay with the new content, reflecting changes (additions/deletions)
                             post_overlay.innerHTML = overlayText;
-                        });
-                        post_overlay.innerHTML = overlayText;
-
-                        document.getElementById('start_post').addEventListener('click', function (e) {
-                            e.preventDefault()
-                            new_post()
-                        })
+                            const startPostButton = document.getElementById('start_post');
+                            startPostButton.removeEventListener('click', handleNewPost);
+                            startPostButton.addEventListener('click', handleNewPost);
+                        }
                     }
                 }
             }
@@ -818,10 +833,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // document.getElementById('paper-toggle').addEventListener('click',function (e) {
-    //     e.preventDefault()
 
-    // })
     document.getElementById('posts').addEventListener('click', async function () {
         show_spinner()
         try {
@@ -1130,7 +1142,7 @@ document.getElementById('admins').addEventListener('click', async function () {
             const user_setting = document.getElementById(`admin-settings-${user._id}`)
 
             user_setting.addEventListener('click', function (e) {
-                
+
                 e.stopPropagation(); // Prevent click event propagation
 
                 // Fetch the user ID from the clicked button
@@ -1145,7 +1157,6 @@ document.getElementById('admins').addEventListener('click', async function () {
                     return;
                 }
 
-                // Toggle display of user tools
                 user_tool.style.display = 'flex';
 
                 // Calculate top position based on the user element's position
@@ -1168,16 +1179,11 @@ document.getElementById('admins').addEventListener('click', async function () {
                         newTop = maxAllowedTop;
                     }
 
-                    // Set calculated position
                     user_tool.style.top = `${newTop}px`;
 
-                    console.log('Dropdown position:', { newTop, rect }); // Set new top position
                 }
             });
 
-
-
-            // console.log('first user', firstUser);
 
         });
         document.addEventListener('click', function (e) {
@@ -1220,7 +1226,7 @@ async function edit_post(id) {
         console.log(data);
         post_info = `
     <div class="editpost-popup">
-    <i class="fas fa-times"></i>
+    <i id="close-edit" class="fas fa-times"></i>
     <div class="input-group">
        <input type="text" value="${data.post.title}" name="name" id="text-post-title" required placeholder="Write your project title here ">
     </div>
@@ -1519,6 +1525,10 @@ function addListeners() {
         }
 
     });
+    document.getElementById('close-edit').addEventListener('click', function (event) {
+        const editpopup = document.getElementById('editpost-popup');
+        editpopup.style.display = 'none';
+    });
     document.getElementById('update-post-image').addEventListener('change', function (e) {
         const post_image = document.getElementById('update-post-image')
         console.log('Post image', post_image);
@@ -1539,23 +1549,9 @@ function addListeners() {
             updateImageSrc(e.target);
         }
     })
-    // document.addEventListener('click', function(event) {
-    //     event.stopPropagation()
-    //     const fontsListPopup = document.getElementById('text-fonts-list');
-
-    //     // Check if the font list is visible and if the clicked target is not within the font list
-    //     if (fontsListPopup.style.display === 'flex' && !fontsListPopup.contains(event.target)) {
-    //         fontsListPopup.style.display = 'none'; // Close the font list
-    //     }
-    // });
-
-
-
     if (edit_post_text) {
-        // Initialize the MutationObserver to watch for deletions
         const observer = new MutationObserver((mutationsList) => {
             mutationsList.forEach((mutation) => {
-                // Check if nodes were removed from the DOM
                 if (mutation.type === "childList" && mutation.removedNodes.length > 0) {
                     mutation.removedNodes.forEach((node) => {
                         // If the removed node is an image
@@ -1640,9 +1636,6 @@ function insertElementAtCursor(object) {
     }
 }
 
-// Example usage: insert a <span> with "Hello!" at the cursor
-
-
 document.getElementById('font-size').addEventListener('input', function (e) {
     e.preventDefault()
     adjustFont(null, this.value)
@@ -1696,8 +1689,9 @@ function delete_post(id) {
     }
 }
 async function showPost(post_id) {
-    window.location.href = `0/posts/${post_id}`
+    window.location.href = `/posts/${post_id}`
 }
+
 function updateImageSrc(fileInput) {
     // Assuming 'fileInput' is the <input type="file"> element
     const file = fileInput.files[0];
@@ -1711,7 +1705,23 @@ function updateImageSrc(fileInput) {
         imageElement.src = `/post_images/${filename}`;
     }
 }
+async function get_notification(userId){
+    try {
+        const response = await fetch(`/api/notifications/${userId}`, { metod: "GET" })
+        if(response.ok){
+            const data = await response.json()
+            console.log('notification data',data);
+            
+            const notification = data.Notification
+            return notification
+        }
+    } catch (error) {
+        alert('an error happened')
+    }
+}
 async function new_post() {
+    console.log('in new post');
+
     try {
         document.getElementById('post-text').contentEditable = false;
 
@@ -1719,9 +1729,6 @@ async function new_post() {
         const formData = new FormData();
         formData.append("content", document.getElementById('post-text').innerHTML);
         formData.append("title", document.getElementById('post-title').value);
-
-        // Get the file from the input and append it to formData
-        console.log('files', fileInput.files);
 
         selectedFiles.forEach(file => {
 
@@ -1743,7 +1750,26 @@ async function new_post() {
         // Check for response and log it
         if (response.ok) {
             const data = await response.json();
-            console.log(data);
+
+            const post = data.post
+            let user = await get_user(post.user_id)
+            user = user.user[0]
+            console.log('user', user);
+            const notification =await get_notification(user._id)
+            console.log('notification',notification);
+            
+            await fetch(`/api/notify-all`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    type: "new-post",
+                    post_id: post._id
+                })
+            }).then(res => res.json()).then(data => {
+                socket.emit("notify-publicgroup", { post, user, type: "new-post",notification });
+            })
         } else {
             console.error("Failed to create post", response.statusText);
         }
@@ -1751,61 +1777,6 @@ async function new_post() {
         console.log(error);
     }
 }
-// Create a new list item
-// const li = document.createElement('li');
-// li.id = `li-${li_id}`;
-// // console.log('li',li);
-
-// // Create title container
-// const titleContainer = document.createElement('span');
-// titleContainer.className = 'title-container';
-
-// // Create the disclosure icon
-// const icon = document.createElement('span');
-// icon.contentEditable = false
-// icon.className = 'list-icon';
-// icon.innerHTML = '&#9660;';
-
-// const title = document.createElement('span');
-// title.className = 'title-text';
-// title.contentEditable = true;
-// title.textContent = 'Your title';
-// titleContainer.appendChild(icon);
-// titleContainer.appendChild(title);
-// li.appendChild(titleContainer);
-
-// const section = document.createElement('section');
-// section.id = `section-${li_id}`;
-// section.contentEditable = true;
-// section.style.display = 'block';
-// section.textContent = 'New section content...';
-// section.addEventListener('click', function () {
-//     listMode = false
-
-// })
-// li.appendChild(section);
-// const br = document.createElement('br')
-
-// list.appendChild(li);
-// list.appendChild(br)
-// console.log('List', list);
-
-// li_id++;
-
-// icon.addEventListener('click', function (event) {
-//     event.stopPropagation();
-//     if (section.style.display === 'block') {
-//         section.style.display = 'none';
-
-//         icon.innerHTML = titleContainer.style.direction === 'ltr' ? '&#9654;' : titleContainer.style.direction === 'rtl' ? '◀' : '▶'
-
-//     } else {
-
-//         section.style.display = 'block';
-//         icon.innerHTML = '&#9660;';
-//     }
-// });
-
 
 function rgbToHex(rgb) {
     const result = rgb.match(/\d+/g);

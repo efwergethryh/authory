@@ -102,11 +102,12 @@ module.exports = (io) => {
                         
                         console.log('Socket is not in the room');
                     }
-                }
+                }   
             } catch (error) {
                 console.error('Error saving message:', error);
             }
-        });
+        }
+    );
 
         socket.on('disconnect', () => {
             console.log('Client disconnected');

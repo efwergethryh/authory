@@ -369,9 +369,11 @@ button[id="update_post"] {
     margin-top: 0.5%;
     width: 98%;
     position: absolute;
-    left: 1%;
     height: fit-content;
     margin: 0;
+    left: .5%;
+    top: 20%;
+    box-shadow: 0px 0px 8px 7px #dbdbdb;
 }
 
 .user-info {
@@ -401,14 +403,14 @@ button[id="update_post"] {
     
 }
 
-.post,
-.user {
+.post, .user {
     gap: 0.5vw;
     padding: 1vw;
     font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
     box-shadow: 0px 0px 5px 4px #eeeeee;
     cursor: pointer;
     border-radius: 10px;
+    background: white;
 }
 
 .user {
@@ -503,13 +505,16 @@ button[id="update_post"] {
 #profileImage{
     cursor: pointer;
 }
-.yourposts-popup,.users{
+.yourposts-popup, .users {
+    align-items: center;
     width: 98%;
     position: relative;
-    top: 5%;
+    top: -1%;
     left: .7%;
     margin-top: 7%;
     margin-bottom: 5%;
+    background: transparent;
+    max-height: 95%;
 }
 .user-tools a {
     padding: 1vw;
