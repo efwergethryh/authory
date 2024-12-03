@@ -19,11 +19,7 @@ const PostSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        index: { expires: '2m' } 
-    }
+    
 })
 const Post  = new mongoose.model('Post',PostSchema)
 

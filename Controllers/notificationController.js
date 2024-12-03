@@ -42,7 +42,7 @@ const notify_all = async (req, res) => {
         Notification.save()
 
     })
-    res.json({ message: "users notified"});
+    res.json({ message: "users notified" });
 }
 const notifyMembersOnly = (req, res) => {
     const { members, type } = req.body
@@ -63,10 +63,10 @@ const notifyMembersOnly = (req, res) => {
 const get_notifications = async (req, res) => {
     try {
         const user = res.locals.user
-        const { skip = 0, limit = 12 } = req.query;
-        const Notifications = await notification.find({ user_id: user._id }).sort({read:1, createdAt: -1 }).skip(skip).limit(parseInt(limit));
-        console.log('my notifications',Notifications);
-        
+        const { skip = 0, limit = 10 } = req.query;
+        const Notifications = await notification.find({ user_id: user._id }).sort({ read: 1, createdAt: -1 }).skip(skip).limit(parseInt(limit));
+        console.log('my notifications', Notifications);
+
         res.json({ Notifications })
     } catch (error) {
         console.log(error);
@@ -75,10 +75,10 @@ const get_notifications = async (req, res) => {
 }
 const get_notification = async (req, res) => {
     try {
-        const {userId} = req.params
+        const { userId } = req.params
         const Notification = await notification.findOne({ user_id: userId });
-        console.log('my notifications',Notification);
-        
+        console.log('my notifications', Notification);
+
         res.json({ Notification })
     } catch (error) {
         console.log(error);
@@ -88,22 +88,41 @@ const get_notification = async (req, res) => {
 const read_notification = async (req, res) => {
     try {
         const { n_id } = req.params
-        
-        
-        const Notification =await  notification.findByIdAndUpdate(n_id, { read: true },{ new: true })
-        console.log('notification',Notification);
-        
+
+
+        const Notification = await notification.findByIdAndUpdate(n_id, { read: true }, { new: true })
+        console.log('notification', Notification);
+
         if (Notification) {
-            res.status(200).send({ message: "updated" ,notification: Notification})
+            res.status(200).send({ message: "updated", notification: Notification })
         }
     } catch (error) {
-        console.log('error',error);
-        
+        console.log('error', error);
+
         // res.status(500).send({ error })
     }
 }
 
+ const delete_notification =async (req, res) => {
+    const { n_id } = req.params
 
+
+    try {
+        const Notification = await notification.findByIdAndDelete(n_id)
+        console.log(Notification,'n id',n_id);
+         
+        if (Notification) {
+            res.status(200).send({ message: "deleted successfully"})
+        }else{
+            res.status(500).send({ message: "An error occured"})
+     
+        }
+    } catch (error) {
+        res.status(500).send({ error})
+
+    }
+    
+}
 module.exports = {
-    new_notification, get_notifications, notify_all, notifyMembersOnly,read_notification,get_notification
+    new_notification, get_notifications, notify_all, notifyMembersOnly, read_notification, get_notification, delete_notification
 }

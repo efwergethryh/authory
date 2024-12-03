@@ -6,8 +6,8 @@ const message = require('../models/message');
 const { get_paper } = require('./papersController');
 
 const get_message = async (req, res) => {
-    const { id } = req.params
-
+    const { id,skip=0,limit=10 } = req.params
+    
     const userId = res.locals.user._id
     let messages;
     try {
@@ -15,7 +15,7 @@ const get_message = async (req, res) => {
 
             res.json({ messages })
         }
-        messages = await message.find({ conversation_id: id })
+        messages = await message.find({ conversation_id: id }).skip(skip).limit(parseInt(limit)).sort({createdAt:-1})
         const public_conv = await Conversation.findOne({ paper_id: id, type: 'public' })
 
         if (public_conv) {

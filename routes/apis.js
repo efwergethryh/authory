@@ -118,6 +118,8 @@ router.get('/posts/:post_id',postController.get_post)
 // Delete Routes
 router.delete('/delete-paper/:paper_id',paperController.delete_paper);
 router.delete('/delete-user-from-paper/:paper_id',paperController.delete_user_from_paper);
+router.delete('/delete-notification/:n_id',notificationController.delete_notification);
+
 //Put routes
 router.put('/update-paper/:id',paperController.update_paper)
 router.put('/read-notification/:n_id',notificationController.read_notification)
