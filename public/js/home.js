@@ -665,12 +665,14 @@ async function display_notification(data) {
 
 
 
-function handleNotificationClick(notificationType, notification) {
+async function handleNotificationClick(notificationType, notification) {
     console.log('notification', JSON.stringify(notification));
 
     switch (notificationType) {
         case "message":
             show_Single_conversation(notification.user_id);
+            // await read_notification(notification._id)
+
             break;
         case "join-request":
             show_Single_conversation(id);
@@ -692,9 +694,11 @@ function handleNotificationClick(notificationType, notification) {
             break;
         case "public":
             show_public_conversation()
+            
         default:
             console.log("Unknown notification type");
     }
+    if(!notification.read) await read_notification(notification._id);
 }
 function reset_reply() {
     const message_container = document.getElementById('messaging-container');
@@ -2779,6 +2783,7 @@ async function show_public_conversation() {
     chatHistory.style.top = '105%'
     input.style.width = '94%'
     await get_conversation(conv_id, 'public')
+    
     toggleSidebar()
     scrollToBottom()
 
