@@ -50,7 +50,7 @@ const authMiddleware =(allowedRoles)=> async (req, res, next) => {
     
         console.log(error);
         
-        res.redirect('/login')
+        res.redirect('/pages/login')
     }
 };
 

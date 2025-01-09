@@ -69,7 +69,7 @@ const get_papers = async (user_id = null, res = null) => {
 };
 const search_papers = async (req, res) => {
     try {
-        const { title, we_need, project_branch, id, language } = req.body;
+        const { title, we_need, main_field, id, language } = req.body;
         const myId = res.locals.user._id;
 
         
@@ -79,8 +79,8 @@ const search_papers = async (req, res) => {
             // query.title = title;
             query.title = { $regex: title, $options: 'i' };
         }
-        if (project_branch) {
-            query.project_branch = project_branch;
+        if (main_field) {
+            query.main_field = main_field;
         }
         if (we_need) {
             query.we_need = we_need;
@@ -95,6 +95,7 @@ const search_papers = async (req, res) => {
 
         // Execute the query
 
+        console.log('query',query);
         
         let papers = await Paper.find(query);
 

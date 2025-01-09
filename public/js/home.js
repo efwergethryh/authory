@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://ictoob.com';
+const API_BASE_URL = 'https://scholagram.com';
 const localhostAPI = 'http://localhost:3000';
 let messages;
 let conversation_type;
@@ -57,7 +57,7 @@ const chatContainer = document.querySelector('.chat-container');
 // const advancedSearch = document.querySelector('.advancedsearch-container');
 const toggleButton = document.getElementById('advanced_button');
 // const search_button = document.getElementById('search')
-const socket = io(localhostAPI, {
+const socket = io(API_BASE_URL, {
     transports: ['polling', 'websocket'],
     query: {
         userId: userId,
@@ -1073,34 +1073,64 @@ async function addListeners() {
             mainContent.innerHTML = popups[index].innerHTML;
             popups[index].style.display = 'none';
             // popups[index].remove()
-            console.log('maincContent', mainContent);
+            
             if (popups[index].id === 'startpaper-popup') {
                 const startpaper = mainContent.querySelector('.startpaper-popup')
-                dropdowns.forEach(function (dropdown) {
+                // dropdowns.forEach(function (dropdown) {
 
+                //     const inputElement = startpaper.querySelector(`#${dropdown.inputId}`);
+                //     const container = startpaper.querySelector(`#${dropdown.containerid}`);
+                //     const optionsList = startpaper.querySelector(`#${dropdown.optionsid}`);
+                //     const options = optionsList.querySelectorAll('li');
+                //     console.log('inputElement',inputElement);
+                    
+                //     inputElement.addEventListener('focus', function () {
+                //         container.classList.toggle('open');
+                //     });
+
+                //     options.forEach(function (option) {
+                //         option.addEventListener('click', function () {
+                //             inputElement.value = this.textContent;
+                //             container.classList.remove('open');
+                //         });
+                //     });
+
+                //     document.addEventListener('click', function (e) {
+                //         if (!container.contains(e.target) && e.target !== inputElement) {
+                //             container.classList.remove('open');
+                //         }
+                //     });
+                // });
+                dropdowns.forEach(function (dropdown) {
                     const inputElement = startpaper.querySelector(`#${dropdown.inputId}`);
                     const container = startpaper.querySelector(`#${dropdown.containerid}`);
                     const optionsList = startpaper.querySelector(`#${dropdown.optionsid}`);
                     const options = optionsList.querySelectorAll('li');
-
+                    
+                    
+                
+                    // Open dropdown when input is focused
                     inputElement.addEventListener('focus', function () {
-                        container.classList.toggle('open');
+                        container.classList.add('open');
                     });
-
+                
+                    
                     options.forEach(function (option) {
                         option.addEventListener('click', function () {
+                           
                             inputElement.value = this.textContent;
                             container.classList.remove('open');
                         });
                     });
-
+                
+                    
                     document.addEventListener('click', function (e) {
                         if (!container.contains(e.target) && e.target !== inputElement) {
                             container.classList.remove('open');
                         }
                     });
                 });
-
+                
                 const create_paper = startpaper.querySelector('#start_create')
                 const inputField = startpaper.querySelector('#tags');
                 const overlay = startpaper.querySelector('#tags-overlay');
@@ -1198,7 +1228,7 @@ async function addListeners() {
                         const inputElement = searchPopup.querySelector(`#${dropdown.inputId}`);
                         const container = searchPopup.querySelector(`#${dropdown.containerid}`);
                         const optionsList = searchPopup.querySelector(`#${dropdown.optionsid}`);
-                        const options = searchPopup.querySelectorAll('li');
+                        const options = optionsList.querySelectorAll('li');
                         console.log('input', inputElement);
 
                         inputElement.addEventListener('click', function () {
@@ -1207,6 +1237,7 @@ async function addListeners() {
 
                         options.forEach(function (option) {
                             option.addEventListener('click', function () {
+                                console.log('inputElement', inputElement);
                                 inputElement.value = this.textContent;
                                 container.classList.remove('open');
                             });
@@ -1224,7 +1255,7 @@ async function addListeners() {
                     show_spinner()
                     let content = ''
                     const title = searchPopup.querySelector('#paper-title').value
-                    const projectbranch = searchPopup.querySelector('#paper_project_branch').value
+                    const main_field = searchPopup.querySelector('#paper_project_branch').value
                     const we_need = searchPopup.querySelector('#paper_we_need').value
                     const language = searchPopup.querySelector('#language-input').value
                     const id = searchPopup.querySelector('#ID').value
@@ -1232,7 +1263,7 @@ async function addListeners() {
                     const paper_data = JSON.stringify({
                         title,
                         id,
-                        projectbranch,
+                        main_field,
                         we_need,
                         language,
                     })
