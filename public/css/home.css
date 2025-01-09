@@ -1071,7 +1071,8 @@ a#cancel {
 
 #filter {
     position: absolute;
-    margin-left: 95%;
+    margin-left: 97%;
+    top: 4%;
     z-index: 20;
 }
 
