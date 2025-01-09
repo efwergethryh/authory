@@ -36,24 +36,38 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     
-    
-    if(document.getElementById('placeholder'))this.remove()
+    const view_post_h1 = document.querySelector('.view-post h1')
+
+    if(document.getElementById('placeholder'))document.getElementById('placeholder').remove()
     listItems.forEach(li => {
         const titleContainer = li.querySelector('.title-container')
         const title = titleContainer.querySelector('.title-text');
         const icon = titleContainer.querySelector('.list-icon');
         const adjust_span = titleContainer.querySelector('span')
         adjust_span.contentEditable = false
-        icon.textContent = '▶';
+        
         const post_text = document.getElementById('post-text')
+        console.log('direction',post_text.getAttribute('direction'));
+        const direction = post_text.getAttribute('dir') || post_text.dir;
+        console.log(direction);
+        
+        if(post_text.getAttribute('direction') ==='rtl'){
+            view_post_h1.style.alignSelf = 'end'
+            Customicon = '◀'
+        }else{
+            view_post_h1.style.alignSelf = 'start'
+            Customicon = '▶'
+        }
         const section = li.querySelector('section')
         section.style.display = 'none'
         section.style.height = '100%'
         section.contentEditable = false
         icon.addEventListener('click', function () {
             // Toggle the icon text
-            icon.textContent = icon.textContent === '▼' ? '▶' : '▼';
-            console.log(icon);
+            console.log(Customicon);
+            
+            icon.textContent = icon.textContent === '▼' ? Customicon : '▼';
+            
 
             // Toggle the section's display style
             if (section.style.display === 'block') {

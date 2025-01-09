@@ -4,35 +4,228 @@ const Conversation = require('../models/conversation');
 const message = require('../models/message');
 
 const { get_paper } = require('./papersController');
+const { default: mongoose } = require('mongoose');
 
+
+// const get_message = async (req, res) => {
+//     const { id } = req.params; // conversation ID
+//     const skip = parseInt(req.query.skip, 10) || 0;
+//     const limit = parseInt(req.query.limit, 10) || 10;
+//     const userId = res.locals.user._id;
+
+//     let filter = req.query.profession || ""; // Get the filter from the query string
+//     let messages;
+//     console.log('filter', filter);
+
+//     try {
+//         if (!id) {
+//             return res.json({ messages });
+//         }
+
+//         const matchCriteria = { conversation_id: new mongoose.Types.ObjectId(id) };
+
+//         if (filter === "Doctor") {
+//             matchCriteria["senderDetails.profession"] = "Doctor";
+//         } else if (filter === "student") {
+//             matchCriteria["senderDetails.profession"] = "student";
+//         }
+//         else if (filter === "engineer") {
+//             matchCriteria["senderDetails.profession"] = "engineer";
+//         }
+
+//         messages = await message.aggregate([
+//             {
+//                 $lookup: {
+//                     from: "users", // The name of the users collection
+//                     localField: "sender", // The sender field in the messages collection
+//                     foreignField: "_id", // The _id field in the users collection
+//                     as: "senderDetails", // Alias for the joined data
+//                 },
+//             },
+//             { $unwind: "$senderDetails" }, // Flatten the senderDetails array
+//             {
+//                 $match: {
+//                     conversation_id: new mongoose.Types.ObjectId(id), // Ensure conversation_id matches
+//                     ...(filter
+//                         ? {
+//                               $or: [
+//                                   { "senderDetails.profession": filter }, 
+//                                   { "senderDetails.profession": { $exists: false } }, // Include missing field
+//                               ],
+//                           }
+//                         : {}), // If no filter, don't add $or condition
+//                 },
+//             },
+//             {
+//                 $project: {
+//                     text: 1,
+//                     conversation_id: 1,
+//                     createdAt: 1,
+//                     replyTo: 1,
+//                     fileUrl: 1,
+//                     isreply: 1,
+//                     "senderDetails.name": 1,
+//                     "senderDetails.email": 1,
+//                     "senderDetails.profession": 1,
+//                 },
+//             },
+//             { $sort: { createdAt: -1 } }, // Sort messages by creation time
+//             { $skip: skip }, // Skip for pagination
+//             { $limit: limit }, // Limit for pagination
+//         ]);
+
+
+//         // messages = await message.aggregate([
+//         //     {
+//         //         $lookup: {
+//         //             from: "users", // The name of the users collection
+//         //             localField: "sender", // The sender field in the messages collection
+//         //             foreignField: "_id", // The _id field in the users collection
+//         //             as: "senderDetails", // Alias for the joined data
+//         //         },
+//         //     },
+//         //     { $unwind: "$senderDetails" }, // Flatten the senderDetails array
+//         //     {
+//         //         $match: { 
+//         //             "senderDetails.profession": filter // Filter messages by profession
+//         //         },
+//         //     },
+//         //     {
+//         //         $project: { // Select fields to include in the result
+//         //             text: 1,
+//         //             conversation_id: 1,
+//         //             createdAt: 1,
+//         //             replyTo: 1,
+//         //             fileUrl: 1,
+//         //             isreply: 1,
+//         //             "senderDetails.name": 1,
+//         //             "senderDetails.email": 1,
+//         //             "senderDetails.profession": 1,
+//         //         },
+//         //     },
+//         //     { $sort: { createdAt: -1 } }, // Sort messages by creation date
+//         // ]);
+//         // messages = await message.aggregate([
+//         //     {
+//         //         $lookup: {
+//         //             from: "users", // The name of the users collection
+//         //             localField: "sender", // The sender field in the messages collection
+//         //             foreignField: "_id", // The _id field in the users collection
+//         //             as: "senderDetails", // Alias for the joined data
+//         //         },
+//         //     },
+//         //     { $unwind: "$senderDetails" }, // Flatten the senderDetails array
+
+//         //     ...(filter
+//         //         ? [
+//         //               {
+//         //                   $match: {
+//         //                       ...matchCriteria,
+//         //                       "senderDetails.profession": filter,
+//         //                   },
+//         //               },
+//         //           ]
+//         //         : [
+//         //               {
+//         //                   $match: matchCriteria,
+//         //               },
+//         //           ]),
+//         //     {
+//         //         $project: {
+//         //             text: 1,
+//         //             conversation_id: 1,
+//         //             createdAt: 1,
+//         //             replyTo: 1,
+//         //             fileUrl: 1,
+//         //             isreply: 1,
+//         //             "senderDetails.name": 1,
+//         //             "senderDetails.email": 1,
+//         //             "senderDetails.profession": 1,
+//         //         },
+//         //     },
+//         //     { $sort: { createdAt: -1 } },
+//         //     { $skip: skip }, 
+//         //     { $limit: limit },
+//         // ]);
+//         const public_conv = await Conversation.findOne({ paper_id: id, type: "public" });
+
+//         if (public_conv) {
+//             const public_conv_id = public_conv._id.toString();
+//             return res.json({ messages, userId, public_conv_id });
+//         }
+
+//         return res.json({ messages, userId });
+//     } catch (error) {
+//         console.error(error);
+//         return res.json({ message: "An error occurred" });
+//     }
+// };
 const get_message = async (req, res) => {
-    const { id,skip=0,limit=10 } = req.params
+    const { id } = req.params; // conversation ID
+    const skip = parseInt(req.query.skip, 10) || 0;
+    const limit = parseInt(req.query.limit, 10) || 10;
+    const myId = res.locals.user._id
+    const filter = req.query.mainfield || ""; // Filter by profession
     
-    const userId = res.locals.user._id
-    let messages;
     try {
-        if (!id) {
+        const messages = await message.aggregate([
+            {
+                $lookup: {
+                    from: "users", // Name of the users collection
+                    localField: "sender", // Field in messages collection
+                    foreignField: "_id", // Corresponding field in users collection
+                    as: "senderDetails", // Alias for the joined data
+                },
+            },
+            { $unwind: "$senderDetails" }, // Flatten senderDetails
+            {
+                $match: 
+               
+                filter == "All" ?
+                    {
+                        conversation_id: new mongoose.Types.ObjectId(id),
+                        // "senderDetails.profession": filter, 
+                    } : {
+                        conversation_id: new mongoose.Types.ObjectId(id),
+                        // "senderDetails.profession": filter,
+                        $or: [
+                            { "senderDetails.main_field": filter }, // Messages from users with the specified profession
+                            { sender: myId } 
+                        ]
+                    }
+                
 
-            res.json({ messages })
-        }
-        messages = await message.find({ conversation_id: id }).skip(skip).limit(parseInt(limit)).sort({createdAt:-1})
-        const public_conv = await Conversation.findOne({ paper_id: id, type: 'public' })
 
-        if (public_conv) {
-            const public_conv_id = public_conv._id.toString()
-            res.json({ messages, userId, public_conv_id })
-        }
-        else {
-            res.json({ messages, userId, })
-        }
+            },
+            {
+                $project: {
+                    text: 1,
+                    conversation_id: 1,
+                    createdAt: 1,
+                    replyTo: 1,
+                    fileUrl: 1,
+                    isreply: 1,
+                    "senderDetails.name": 1,
+                    "senderDetails.email": 1,
+                    "senderDetails.profession": 1,
+                    "senderDetails._id": 1,
+                    "senderDetails.country": 1,
+                    
+                },
+            },
+            { $sort: { createdAt: -1 } }, // Sort by date
+            { $skip: skip },
+            { $limit: limit },
+        ]);
+        console.log('filter:',filter,'\n----------------------\n', 'messages', messages);
 
+        return res.json({ messages });
+    } catch (error) {
+        console.error("Error in get_message controller:", error);
+        return res.status(500).json({ message: "An error occurred" });
     }
-    catch (error) {
-        console.log(error);
+};
 
-        res.json({ message: "An error occured" })
-    }
-}
 const send_message = async (req, res) => {
 
     try {
@@ -41,7 +234,9 @@ const send_message = async (req, res) => {
         const { isreply, replyTo } = req.body
         const conversation = await Conversation.findById(conversation_id)
         const members = conversation.members
-        console.log('body',req.body);
+        console.log('body', req.body);
+        const file = req.file
+        console.log('file in controller',file);
         
         const body = req.body
         const newMessage = new message({
@@ -49,7 +244,8 @@ const send_message = async (req, res) => {
             sender: id,
             conversation_id,
             isreply,
-            replyTo 
+            replyTo,
+            fileUrl:file ? file.originalname : null
         })
         newMessage.save();
 
@@ -75,20 +271,22 @@ const get_conversations = async (req, res) => {
         const conversations = await Conversation.find({ paper_id: id }).lean()
         console.log('conversations', conversations);
 
-        const public_conv = await Conversation.findOne({ paper_id: id})
+        const public_conv = await Conversation.findOne({ paper_id: id })
         const public_conv_id = public_conv._id.toString()
         res.json({ conversations, public_conv_id })
     } catch (error) {
         console.log(error);
-        
+
         res.json(error.message)
     }
 }
-const add_conversation = async(req, res) => {
+const add_conversation = async (req, res) => {
     const f = req.file;
     const body = req.body
-    const { title, type, members, paper_id } = req.body; 
-    const paper = get_paper(paper_id, req = null, res = null)
+    const { title, type, members, paper_id } = req.body;
+    
+    const paper = await get_paper(paper_id, req = null, res = null)
+    console.log('paper',paper);
     try {
 
         let conv;
@@ -129,10 +327,10 @@ const add_conversation = async(req, res) => {
             conv.save()
 
 
-            res.json({ message: 'conversation created successfully', conv, paper })
+            res.status(200).json({ message: 'conversation created successfully', conv, paper })
         }
     } catch (error) {
-        console.log('error',error);
+        console.log('error', error);
     }
 }
 const get_conversation = async (req, res) => {
@@ -145,15 +343,15 @@ const get_conversation = async (req, res) => {
         const conversation = await Conversation.findById(id)
         console.log('conversation', conversation);
 
-        res.json({ conversation})
+        res.json({ conversation })
     } catch (error) {
         console.log(error);
-        
+
         res.json(error.message)
     }
 }
 module.exports = {
     add_conversation, send_message, get_conversations,
-    get_message,get_conversation
+    get_message, get_conversation
 }
 

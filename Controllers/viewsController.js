@@ -13,6 +13,12 @@ const landing = (req, res) => {
 const login_view = (req, res) => {
     res.render('login');
 };
+const profile =  (req,res)=>{
+    console.log('profile');
+    
+    res.render('profile');
+
+}
 const view_post = async (req, res) => {
     try {
         const { postId } = req.params
@@ -28,7 +34,7 @@ const view_post = async (req, res) => {
 }
 const register_view = (req, res) => {
     res.render('register');
-};
+};``
 const dashboard = (req, res) => {
     res.render('dashboard')
 }
@@ -42,8 +48,6 @@ const render_page = async (req, res, next) => {
         if (page) {
             const filePath = path.resolve(__dirname, '../views', `${page}.ejs`);
 
-            // console.log(filePath);
-            
             if (page === 'dashboard' || page === 'custom-register') {
                 // Run `authMiddleware` and `checkBanStatus` in sequence
                 await authMiddleware([2, 3])(req, res, async (authErr) => {
@@ -95,7 +99,6 @@ const render_page = async (req, res, next) => {
     }
 };
 
-// Helper function to check file existence and render
 const renderPageIfExists = (filePath, req, res) => {
     fs.access(filePath, fs.constants.F_OK, (err) => {
         if (!err) {
@@ -153,8 +156,9 @@ const conv_layout = (req, res) => {
 };
 const get_translation = (req, res) => {
     const lang = req.params.lang;
+    console.log('lang',lang);
+    
     const filePath = path.resolve(__dirname,`../translations/${lang}.json`);
-    console.log('file path',filePath,'dir',__dirname);
     
     res.sendFile(filePath, (err) => {
         if (err) {
@@ -169,5 +173,5 @@ module.exports = {
     register_view, home_view,
     conv_layout,
     dashboard,
-    render_page, view_post,get_translation
+    render_page, view_post,get_translation,profile
 }

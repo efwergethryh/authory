@@ -8,6 +8,29 @@
     <link rel="stylesheet" href="/css/register.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.min.css">
+    <style>
+        @media only screen and (min-width: 768px) and (max-width: 1024px) {
+            form{
+                width: 94%;
+                height: 30vw;
+                gap:8vw;
+                font-size: xx-large;
+            }
+        }
+        @media (max-width:425px) {
+
+            form {
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+                width: 82%;
+                height: 65vw;
+                gap: 15vw;
+                border-radius: 10px;
+                padding: 6%;
+            }
+        }   
+    </style>
 </head>
 
 <body id="auth-body">

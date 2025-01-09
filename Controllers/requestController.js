@@ -26,19 +26,19 @@ const delete_request = async (req, res) => {
     const { user_id } = req.body;
     const user = res.locals.user;
     try {
-        const request = await Request.deleteOne({
+        const request = await Request.findOneAndDelete({
             paper_id,
             sender: user_id,
             receiver: user._id
         });
         if (request) {
-            res.statu(200).json({ message: "Rejectd successfully" });
+            res.status(200).json({ message: "Rejectd successfully" });
         } else {
-            res.statu(500).json({ message: "Something went wrong" });
+            res.status(500).json({ message: "Something went wrong" });
         }
 
     } catch (error) {
-        res.statu(500).json({ error });
+        res.status(500).json({ error });
 
     }
 }

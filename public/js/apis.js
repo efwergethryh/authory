@@ -86,11 +86,10 @@ async function post_api(api, formData) {
             error.textContent = errorData.message
             error.style.display = 'block'
             console.log(errorData);
-            // Assuming the server sends JSON errors
-            
+           
 
             display_Message(errorData.message || 'An error occurred'); // Display the error message from the server
-            return; // Stop further execution
+            return;
         }
 
         // Process the successful response

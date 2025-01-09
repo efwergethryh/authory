@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!dropdown || !searchInput) {
         console.error('Dropdown or search input element not found');
         return;
-    }
+    }   
 
     fetch('https://restcountries.com/v3.1/all')
         .then(response => response.json())

@@ -8,7 +8,6 @@ const messageSchema = new mongoose.Schema(
                   ref: 'users', required:true },
         text: {
             type:String,
-            
         },
         isreply:{
             type:Boolean,

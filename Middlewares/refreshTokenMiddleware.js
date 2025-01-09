@@ -4,7 +4,7 @@ require('dotenv').config()
 // Middleware to validate the refresh token
 const validateRefreshToken = (req, res, next) => {
     const refreshToken = req.body.refreshToken;
-    console.log('ref',refreshToken);
+   
     
     // Check if token exists
     if (!refreshToken) {

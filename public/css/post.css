@@ -61,7 +61,7 @@ body {
 }
 .chapters-list{
     list-style: none;
-
+    width: 85vw;
 }
 .list-icon {
     margin-right: 2%;
@@ -71,7 +71,7 @@ ul li section {
     display: none;
     width: 95%;
     height: 6.5vw;
-    overflow-y: scroll;
+    overflow-y: auto;
     margin-top: 1vw;
     margin-left: 3vw;
 }

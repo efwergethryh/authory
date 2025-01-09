@@ -18,32 +18,52 @@ const new_notification = async (req, res) => {
             post_id: post_id || null
         })
         Notification.save()
-        res.json({ message: "Notification sent", user })
+        res.json({ message: "Notification sent", user,Notification })
     } catch (error) {
         console.log(error);
 
     }
 }
 const notify_all = async (req, res) => {
-    const me = res.locals.user
-    const limit = parseInt(req.query.limit) || 10; // Number of users per batch
-    const skip = parseInt(req.query.skip) || 0;
-    const users = await User.find().skip(skip).limit(limit);
+    try {
+        const me = res.locals.user;
+        const { type, post_id } = req.body;
 
-    const { type, post_id } = req.body
-    users.forEach(user => {
+        const limit = parseInt(req.query.limit) || 10; // Number of users per batch
+        const skip = parseInt(req.query.skip) || 0;
 
-        const Notification = new notifications({
+        // Retrieve users in batches
+        const users = await User.find({ _id: { $ne: me } })
+            .skip(skip)
+            .limit(limit);
+
+        // Check if users exist
+        if (users.length === 0) {
+            return res.status(200).json({ message: "No more users to notify" });
+        }
+
+        // Batch save notifications
+        const notificationsBatch = users.map(user => ({
             sender: me._id,
             user_id: user._id,
             type,
-            post_id: post_id || null
-        })
-        Notification.save()
+            post_id: post_id || null,
+        }));
 
-    })
-    res.json({ message: "users notified" });
-}
+        const notification = await notifications.insertMany(notificationsBatch);
+        
+        res.status(200).json({
+            message: "Batch of users notified",
+            notifiedCount: notificationsBatch.length,
+            notifiedUsers: users, // Include the notified users in the response
+            sender: me._id,
+        });
+    } catch (error) {
+        console.error("Error notifying users:", error);
+        res.status(500).json({ error: "Failed to notify users" });
+    }
+};
+
 const notifyMembersOnly = (req, res) => {
     const { members, type } = req.body
     console.log('paperId', paper_id);
@@ -64,7 +84,56 @@ const get_notifications = async (req, res) => {
     try {
         const user = res.locals.user
         const { skip = 0, limit = 10 } = req.query;
-        const Notifications = await notification.find({ user_id: user._id }).sort({ read: 1, createdAt: -1 }).skip(skip).limit(parseInt(limit));
+        const Notifications = await notification.aggregate([
+            { $match: { user_id: user._id } }, // Filter notifications for the specific user
+            { $sort: { read: 1, createdAt: -1 } }, // Sort by 'read' and 'createdAt'
+            { $skip: parseInt(skip) }, 
+            { $limit: parseInt(limit) },
+            {
+                $lookup: {
+                    from: 'paper', // Name of the 'paper' collection
+                    localField: 'paper_id', // Field in 'notification' collection
+                    foreignField: '_id', // Field in 'paper' collection
+                    as: 'paper_info' // Name of the field to include the joined data
+                }
+            },
+            {
+                $lookup: {
+                    from: 'post', // Name of the 'paper' collection
+                    localField: 'post_id', // Field in 'notification' collection
+                    foreignField: '_id', // Field in 'paper' collection
+                    as: 'post_info' // Name of the field to include the joined data
+                }
+            },
+            {
+                $lookup: {
+                    from: 'users', // Join with 'users' collection
+                    localField: 'sender', // Field in 'notification' collection (assuming 'sender_id')
+                    foreignField: '_id', // Field in 'users' collection
+                    as: 'sender_info' // Name of the field for the joined data
+                }
+            },
+            {
+                $unwind: { 
+                    path: "$paper_info", 
+                    preserveNullAndEmptyArrays: true // Keep notifications even if no matching paper is found
+                }
+            },
+            {
+                $unwind: { 
+                    path: "$sender_info", 
+                    preserveNullAndEmptyArrays: true // Keep notifications even if no matching sender is found
+                }
+            },
+            {
+                $unwind: { 
+                    path: "$post_info", 
+                    preserveNullAndEmptyArrays: true // Keep notifications even if no matching sender is found
+                }
+            }
+        ]);
+        
+        // const Notifications = await notification.find({ user_id: user._id }).sort({ read: 1, createdAt: -1 }).skip(skip).limit(parseInt(limit));
         console.log('my notifications', Notifications);
 
         res.json({ Notifications })
@@ -110,7 +179,9 @@ const read_notification = async (req, res) => {
     try {
         const Notification = await notification.findByIdAndDelete(n_id)
         console.log(Notification,'n id',n_id);
-         
+        if(!Notification){
+            res.status(500).send({ message: "An error occured"})
+        }
         if (Notification) {
             res.status(200).send({ message: "deleted successfully"})
         }else{
@@ -124,5 +195,10 @@ const read_notification = async (req, res) => {
     
 }
 module.exports = {
-    new_notification, get_notifications, notify_all, notifyMembersOnly, read_notification, get_notification, delete_notification
+    new_notification,
+     get_notifications,
+      notify_all, notifyMembersOnly,
+       read_notification,
+        get_notification,
+         delete_notification
 }

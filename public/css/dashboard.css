@@ -175,7 +175,7 @@ ul li section {
     overflow-y: scroll;
     margin-top: 1vw;
     margin-left: 3vw;
-    background-color: aliceblue;
+    background-color: #0000000f;
 }
 
 ul li section.active {
@@ -254,8 +254,13 @@ ul li section.active {
     outline-color: transparent;
 }
 
-i.active {
-    color: rgb(205, 205, 205);
+.tools-item{
+    padding: 5px;
+    border-radius: 4px;
+}
+.active {
+    background-color: #4574fb;
+    color: white;
 }
 
 #color-picker,
@@ -286,7 +291,7 @@ i.active {
 #text-font-size {
     border: none;
     background: none;
-    width: 1rem;
+    width: 1.2rem;
 }
 
 #font-size:focus {
@@ -578,4 +583,79 @@ table td {
     color: inherit;
     padding: 0;
     margin: 0;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+    .sidebar {
+        width: 37%;
+        height: 100%;
+        top: 7%;
+        left: -38%;
+    }
+    .sidebar.open{
+        left: 0;
+    }
+
+}
+@media (max-width:425px) {
+    .user{
+        width:100%
+    }
+    .post h, .user h{
+        font-size: small;
+        
+        word-break: break-word;
+    }
+    .yourposts-popup, .users{
+        margin-top: 19%;
+        gap: 2vw;
+    }
+    .user-tools{
+        width: 74%;
+        left: 158%;
+    }
+    .users{
+        width: 100%;
+    }
+    .user-info{
+        
+        flex-direction: column;
+    }
+    .post-tools{
+        margin-left: 84%;
+    }
+    .edit-post{
+        height: fit-content;
+    }
+    .tools{
+        width: 99%;
+        overflow-x: auto;
+        gap: 5vw;
+
+    }
+    .fontFamily{
+        width: 20vw;
+    }
+    .text-fonts-list {
+        top: 39%;
+        left: 4%;
+    }
+    ul li section {
+        width: 100%;
+        height: 100%;
+    }
+    .editable-text{
+        height: 100%
+    }
+    button[id="start_post"], button[id="update_post"]{
+        width: 61%;
+    }
+    table td{
+        width: 50%;
+    }
+    .post-tools {
+        margin-left: 87%;
+    }
+
 }

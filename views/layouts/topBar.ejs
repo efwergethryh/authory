@@ -7,38 +7,156 @@
             <li>
                 <a href="#" id="slidingBar" onclick="toggleSidebar()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="feather feather-menu">
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
                         <line x1="3" y1="12" x2="21" y2="12" />
                         <line x1="3" y1="6" x2="21" y2="6" />
                         <line x1="3" y1="18" x2="21" y2="18" />
                     </svg>
                 </a>
-            </li>   
+            </li>
             <li id="profile">
-                
+
                 <a>
-                    <img id="profileImage" src="/profile_images/<%= user.profile_picture ? user.profile_picture : 'non-picture.jpg' %>">
+                    <img id="profileImage"
+                        src="/profile_images/<%= user.profile_picture ? user.profile_picture : 'non-picture.jpg' %>">
                 </a>
             </li>
         </ul>
     </div>
-    <div id="profile-span" class="profile-span">
-        <a id="sign-out">sign out</a>
-        
-        <a id="settings">Settings</a>
-        <a href="/pages/home" <%= (user.user_type === 2 || user.user_type === 3) ? 'style="display: block;"' : 'style="display: none;"' %>>home</a>
-        <a href="/pages/dashboard" <%= (user.user_type === 2 || user.user_type === 3) ? 'style="display: block;"' : 'style="display: none;"' %>>Dashboard</a>
+
+
+    <div id="profile-span" class="d70dcff543b0a8d8--userMenuContainer" data-e2e-test-id="user-menu-container">
+        <div class="cb6958e808d5fa34--userNavContainer" id="LOGGED-IN-USER-MENU">
+            <div class="cb6958e808d5fa34--profileHeader">
+                <div class="cb6958e808d5fa34--userInfo">
+                    <div data-ds-id="Stack" class="css-1ff2k4x-StackContainer eexjih90">
+                        <div style="display: flex;" class="css-tn47vl-StackItem eexjih91">
+                            <div class="cb6958e808d5fa34--name">
+                                <%= user.name %>
+
+                            </div>
+                            -
+                            <% if(userType===3){ %>
+                                <div class="cb6958e808d5fa34--name">
+                                    Owner
+                                </div>
+                                <%}else if(userType===2){ %>
+                                    <div class="cb6958e808d5fa34--name">
+                                        Admin
+                                    </div>
+                                    <%}else { %>
+                                        <div class="cb6958e808d5fa34--name">
+                                            user </div>
+                                        <% } %>
+                                            <div class="cb6958e808d5fa34--name">
+
+                                                -<%= user._id %>
+
+                                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cb6958e808d5fa34--menuOptions">
+
+
+
+                <div onclick="window.location.href ='/pages/home'" class="cb6958e808d5fa34--menuOption" tabindex="0"
+                    role="button" data-e2e-test-id="">
+                    <div id="home-setting">Home</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2" class="cb6958e808d5fa34--chevron" viewBox="0 0 24 24"
+                        role="img">
+                        <path d="m9 18 6-6-6-6"></path>
+                    </svg>
+                </div>
+
+                <div onclick="window.location.href ='/pages/dashboard'" class="cb6958e808d5fa34--menuOption"
+                    tabindex="0" role="button" data-e2e-test-id="">
+                    <div id="dashboard-setting">Dashboard</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2" class="cb6958e808d5fa34--chevron" viewBox="0 0 24 24"
+                        role="img">
+                        <path d="m9 18 6-6-6-6"></path>
+                    </svg>
+                </div>
+                <div onclick="window.location.href ='/profile'" class="cb6958e808d5fa34--menuOption" tabindex="0"
+                    role="button" data-e2e-test-id="">
+                    <div id="editProfile-setting">Edit profile</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2" class="cb6958e808d5fa34--chevron" viewBox="0 0 24 24"
+                        role="img">
+                        <path d="m9 18 6-6-6-6"></path>
+                    </svg>
+                </div>
+                <div class="cb6958e808d5fa34--menuOption" tabindex="0" role="button" data-e2e-test-id="">
+                    <div id="language-setting">Lanugage</div>
+                    <div data-ds-id="SegmentedControl" class="css-iadjan-StyledFormField etbad390">
+                        <div data-ds-id="Stack" class="css-1ff2k4x-StackContainer eexjih90">
+                            <div class="css-1c20xzu-StackItem eexjih91"><label>
+                                    <div data-ds-id="Stack" class="css-1ff2k4x-StackContainer eexjih90">
+                                        <div class="css-tn47vl-StackItem eexjih91">
+                                            <div class="css-1ku4s63-StyledContainer e1ewpmhp1">
+                                                <label
+                                                    class="css-1mbyi6v-StyledContainer" id="ar" onclick="setLang('ar')">
+                                                    <input type="radio"
+                                                        name="Light" class="css-w5hltc-StyledInput ep1kebi0"
+                                                        value="light" checked="">
+                                                    <p color="primary" data-ds-id="Text"
+                                                        class="ep1kebi1 css-15twdcn-StyledText-StyledLabel e1im9r3t0">
+                                                        Arabic</p>
+                                                </label>
+                                                <div class="css-1fa6sju-StyledDivider e1ewpmhp0">
+
+                                                </div>
+                                                <label
+                                                    class="css-1mbyi6v-StyledContainer" id="en" onclick="setLang('en')" >
+                                                    <input type="radio" 
+                                                        name="Dark" class="css-w5hltc-StyledInput ep1kebi0"
+                                                        value="dark">
+                                                    <p color="primary" data-ds-id="Text"
+                                                        class="ep1kebi1 css-15twdcn-StyledText-StyledLabel e1im9r3t0">
+                                                        English</p>
+                                                </label>
+                                                <div id="right-border" style="background-color:1px solid rgba(163, 178, 189, 0.3);" class="css-1fa6sju-StyledDivider e1ewpmhp0">
+
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cb6958e808d5fa34--menuOption" tabindex="0" role="button" data-e2e-test-id="">
+                    <div id="sign-out">Log out</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2" class="cb6958e808d5fa34--chevron" viewBox="0 0 24 24"
+                        role="img">
+                        <path d="m9 18 6-6-6-6"></path>
+                    </svg>
+                </div>  
+                
+                <!-- <div id="advanced-singout" class="css-1ku4s63-StyledContainer e1ewpmhp1">
+                    <label class="css-1mbyi6v-StyledContainer" id="ar" onclick="signout()">
+                        <input type="radio" name="Light" class="css-w5hltc-StyledInput ep1kebi0" value="light" checked="">
+                        <p color="primary" data-ds-id="Text" class="ep1kebi1 css-15twdcn-StyledText-StyledLabel e1im9r3t0">
+                            Sign out</p>
+                    </label>
+                    <div class="css-1fa6sju-StyledDivider e1ewpmhp0">
+
+                    </div>
+                    <label class="css-1mbyi6v-StyledContainer active" id="en" onclick="signAsadmin()">
+                        <input type="radio" name="Dark" class="css-w5hltc-StyledInput ep1kebi0" value="dark">
+                        <p color="primary" data-ds-id="Text" class="ep1kebi1 css-15twdcn-StyledText-StyledLabel e1im9r3t0">
+                            Sign in as admin</p>
+                    </label>
+                   
+                </div> -->
+            </div>
+        </div>
     </div>
-    <div id="settings-popup" class="settigns">
-        <label for="language">Choose Language:</label>
-        <select name="language" id="language" onchange="loadTranslation(this.value)">
-           <option value="en">English</option>
-           <option value="ar">Arabic</option>
-        </select>
-     
-    </div>
+
+    
 </div>
-
-
- 

@@ -17,8 +17,8 @@
 </div>
 <div class="sidebar open" id="sidebar">
    <input id="user-id" hidden value="<%= user._id %>">
-
-   <ul>
+   <input id="user-mainfield" hidden value="<%= user.mainfield %>">
+   <ul id="sidebar-content">
       <li>
          <a id="home" href="#">
 
@@ -30,11 +30,11 @@
          </a>
       </li>
       <li>
-         <a class="toggle-link" id="paper-toggle" href="">
+         <a  class="toggle-link" id="paper-toggle" href="">
             <div class="toggle-tab-container">
                <div id="head" class="header">
                   <i id="paper" class="fas fa-file"></i>
-                  <span id="text" class="toggle-item">Create paper</span>
+                  <span id="new-paper" class="text toggle-item">Create paper</span>
                   <div id="create-newNotification" class="new-notfication"></div>
                   <span class="tab-icon">
                      <div class="create-dropdown">
@@ -59,7 +59,7 @@
             <div class="toggle-tab-container-2">
                <div id="head" class="header">
                   <i id="paper-2" class="fa-solid fa-handshake"></i>
-                  <span id="text" class="toggle-item">Join papers</span>
+                  <span id="join-paper" class="text toggle-item">Join papers</span>
                   <div id="join-paperNotification" class="new-notfication"></div>
 
                   <span class="tab-icon">
@@ -84,7 +84,7 @@
             <div class="toggle-tab-container-4">
                <div id="head" class="header">
                   <i id="paper-3" class="fa-solid fa-user-group"></i>
-                  <span id="text" class="toggle-item">friends</span>
+                  <span id="friends-tab" class="text toggle-item">friends</span>
                   <span class="tab-icon">
                      <div class="create-dropdown">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -109,19 +109,19 @@
             <div id="head" class="header">
                <!-- <i id="paper-3" class="fa-solid fa-user-group"></i> -->
                <i class="fa-solid fa-comment"></i>
-               <span id="text" class="toggle-item">Public chat</span>
+               <span id="chat-tab" class="text toggle-item">Public chat</span>
                
             </div>
          </a>
       </li>
-      <li id="notifications-button">
-         <a href="#">
-            <!-- <i class="fa-solid fa-bell"></i>
-            <span class="text-only">Notifications</span> -->
+      <li >
+         <a id="notifications-button" href="#">
+            
             <div id="head" class="header">
                <i class="fa-solid fa-bell"></i>
-               <span class="text-only">Notifications</span>
+               <span id="notifications" class="text-only">Notifications</span>
                
+               </span>
                </span>
             </div>
             <div id="newNotification" class="new-notfication"></div>
@@ -132,7 +132,7 @@
 
 
 <div id="startpaper-popup" class="create-paper">
-   <div class="startpapers-label" id="joined">Start paper</div>
+   <div class="startpapers-label" >Start paper</div>
    <div class="startpaper-popup">
 
       <i class="fas fa-times"></i>
@@ -145,10 +145,10 @@
             <tr>
                <td>
                   <div class="input-group" id="project-branch">
-                     <label for="text">Project branch</label>
+                     <label for="text">Main field</label>
                      <div id="projectbranch-container" class="education-container">
                         <input type="text" id="project_branch" name="country-innerInput" aria-label="Country"
-                           autocomplete="off" class="styled-input" placeholder="project branch">
+                           autocomplete="off" class="styled-input" placeholder="Main field">
                         <div class="icon-container">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -157,53 +157,29 @@
                            </svg>
                         </div>
                         <ul id="projectbranch-list" class="education-dropdown-options">
-                           <li class="unselectable">Internal Medicine</li>
-                           <li data-value="Cardiology">Cardiology</li>
-                           <li data-value="Pulmonology">Pulmonology</li>
-                           <li data-value="Gastroenterology">Gastroenterology</li>
-                           <li data-value="Nephrology">Nephrology</li>
-                           <li data-value="Endocrinology">Endocrinology</li>
-                           <li data-value="Neurology">Neurology</li>
-                           <li data-value="Critical Care Medicine">Critical Care Medicine</li>
+                           <li data-value="Engineering">Engineering</li>
+                              <li data-value="Medicine and Health Sciences">Medicine and Health Sciences</li>
+                              <li data-value="Computer Science">Computer Science</li>
+                              <li data-value="Law">Law</li>
+                              <li data-value="Natural Sciences">Natural Sciences</li>
+                              <li data-value="Social and Humanities Sciences">Social and Humanities Sciences</li>
+                              <li data-value="Economics and Management">Economics and Management</li>
+                              <li data-value="Agriculture and Natural Resources">Agriculture and Natural Resources</li>
+                              <li data-value="Arts">Arts</li>
+                              <li data-value="Material Sciences">Material Sciences</li>
+                              <li data-value="Space Sciences">Space Sciences</li>
+                              <li data-value="Interdisciplinary Studies">Interdisciplinary Studies</li>
+                              <li data-value="Environmental and Sustainability">Environmental and Sustainability</li>
+                              <li data-value="Security Studies">Security Studies</li>
+                              <li data-value="Marine Sciences">Marine Sciences</li>
+                              <li data-value="Disaster Management">Disaster Management</li>
 
-                           <li class="unselectable">Surgery Medicine</li>
-                           <li data-value="General Surgery">General Surgery</li>
-                           <li data-value="Cardiothoracic Surgery">Cardiothoracic Surgery</li>
-                           <li data-value="Neurosurgery">Neurosurgery</li>
-                           <li data-value="Orthopedic Surgery">Orthopedic Surgery</li>
-                           <li data-value="Plastic Surgery">Plastic Surgery</li>
-                           <li data-value="Urology">Urology</li>
-                           <li data-value="Vascular Surgery">Vascular Surgery</li>
-                           <li data-value="Pediatric Surgery">Pediatric Surgery</li>
-                           <li data-value="Trauma Surgery">Trauma Surgery</li>
-
-                           <li class="unselectable">Gynecology medicine</li>
-                           <li data-value="Trauma Surgery">General gynecology</li>
-                           <li data-value="Trauma Surgery">Obstetrics</li>
-                           <li data-value="Trauma Surgery">Gynecology oncology</li>
-                           <li data-value="Trauma Surgery">Infertility</li>
-                           <li class="unselectable">Pediatric medicine</li>
-                           <li class="unselectable">Pediatric medicine</li>
-
-                           <div class="unselectable">Emergency medicine</div>
-                           <div class="unselectable">Dermatology</div>
-                           <div class="unselectable">Ophthalmology</div>
-                           <div class="unselectable">Otolaryngology (ENT)</div>
-                           <div class="unselectable">Psychology</div>
-                           <div class="unselectable">Hematology</div>
-                           <div class="unselectable">Oncology</div>
-                           <div class="unselectable">Rhumatology</div>
-                           <div class="unselectable">infectious</div>
-                           <div class="unselectable">geriatric medicine</div>
-                           <div class="unselectable">Family medicine</div>
-                           <div class="unselectable">Radiology</div>
-                           <div class="unselectable">Anesthesiology</div>
                         </ul>
                      </div>
                   </div>
                </td>
                <td>
-                  <div class="input-group">
+                  <div class="input-group" id="study-container">
                      <label for="institute">Type of study</label>
                      <div id="typeofstudy-container" class="institute-container">
                         <input type="text" id="type_of_study" name="country-innerInput" aria-label="Country"
@@ -227,7 +203,7 @@
                   </div>
                </td>
                <td>
-                  <div class="input-group">
+                  <div class="input-group" id="we-need-container">
                      <label for="institute">We need</label>
                      <div id="weneed-container" class="university-container">
                         <input type="text" id="we_need" name="country-innerInput" aria-label="Country"
@@ -252,8 +228,8 @@
                </td>
             </tr>
             <tr>
-               <td>
-                  <div class="input-group">
+               <td class="tags-td">
+                  <div class="input-group" id="tags-container">
                      <label for="tags">Tags</label>
                      <div class="input-container">
                         <div id="tags-overlay" class="tags-overlay"></div>
@@ -261,8 +237,8 @@
                      </div>
                   </div>
                </td>
-               <td>
-                  <div class="input-group" id="project-branch">
+               <td class="language-td">
+                  <div class="input-group" id="lang-container">
                      <label for="language">Language</label>
                      <div id="start-language-container" class="institute-container">
                         <input type="text" id="start-language-input" name="country-innerInput" aria-label="Country"
@@ -289,14 +265,14 @@
 </div>
 
 <div id="yourpapers-popup" class="yourpapers-popup">
-   <div class="joined-label" id="joined">Your papers</div>
+   <div class="yourpapers-label" id="joined">Your papers</div>
    <div id="yourpapers-container" class="yourpapers-container">
 
    </div>
 </div>
 
 <div id="searchpapers-popup" class="search-papers">
-   <div class="searchpapers-label" id="joined">Search papers</div>
+   <div class="searchpapers-label">Search papers</div>
    <div class="searchpapers-popup">
       <div class="search-container">
          <i class="fa-solid fa-magnifying-glass"></i>
@@ -324,7 +300,7 @@
                   <div class="input-group" id="Project-branch">
                      <div id="paper-projectbranch-container" class="education-container">
                         <input type="text" id="paper_project_branch" name="country-innerInput" aria-label="Country"
-                           autocomplete="on" class="styled-input" placeholder="branch">
+                           autocomplete="on" class="styled-input" placeholder="main field">
                         <div class="icon-container">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -333,7 +309,7 @@
                            </svg>
                         </div>
                         <ul id="paper-projectbranch-list" class="education-dropdown-options">
-                           <li class="level1">A-Medicine</li>
+                           
                            <li class="unselectable">Internal Medicine</li>
                            <li data-value="Cardiology">Cardiology</li>
                            <li data-value="Pulmonology">Pulmonology</li>
@@ -380,7 +356,7 @@
                   </div>
                </th>
                <th>
-                  <div class="input-group" id="project-branch">
+                  <div class="input-group">
                      <div id="language-container" class="institute-container">
                         <input type="text" id="language-input" name="country-innerInput" aria-label="Country"
                            autocomplete="off" class="styled-input" placeholder="language">
@@ -399,7 +375,7 @@
                   </div>
                </th>
                <th>
-                  <div class="input-group" id="project-branch">
+                  <div class="input-group" id="we-need">
                      <div id="paper-weneed-container" class="university-container">
                         <input type="text" id="paper_we_need" name="country-innerInput" aria-label="Country"
                            autocomplete="off" class="styled-input" placeholder="We need">
@@ -448,13 +424,11 @@
    <div class="joined-label" id="joined">Joined papers</div>
    <div class="joinedpapers-container">
 
-
-
    </div>
 </div>
 
 <div id="yourfriends-popup" class="yourfriends-popup">
-   <div class="yourfriends-label" id="joined">Your friends</div>
+   <div class="yourfriends-label" >Your friends</div>
    <div class="yourfriends-container">
 
 
@@ -462,7 +436,7 @@
 </div>
 
 <div id="searchfriends-popup" class="search-friends">
-   <div class="searchfriends-label" id="joined">Search friends</div>
+   <div class="searchfriends-label" >Search friends</div>
    <div class="searchfriends-popup">
       <div class="search-container">
          <i class="fa-solid fa-magnifying-glass"></i>
@@ -471,13 +445,12 @@
       </div>
       <button id="friend-search">search</button>
       <div id="friend-result" class="friend-result">
-
       </div>
    </div>
 </div>
 
 <div id="notifications_popup" class="notifications-popup">
-   <div class="notifications-label" id="joined">Notifications</div>
+   <div class="notifications-label" >Notifications</div>
    <div id="notifications-container" class="notifications-container">
    </div>
 </div>

@@ -1,10 +1,22 @@
 {
   "sidebar": {
-    "usersEmails": "البريد الإلكتروني للمستخدمين",
+    "users": "المستخدمين",
     "admins": "المشرفون",
     "posts": "المشاركات",
     "newPost": "منشور جديد",
-    "yourPosts": "منشوراتك"
+    "yourPosts": "منشوراتك",
+    "notifications": "الاشعارات",
+    "publicChat": "المحادثة العامة",
+    "goTopost": "عرض المنشور",
+    "search": "ابحث",
+    "confirm_delete":"هل انت متأكد؟",
+    "confirm":"تأكيد",
+    "cancel":"الغاء",
+    "delete":"حذف",
+    "no_joined_papers":"لم تنضم الى بحوث",
+    "no_papers":"لا تملك اي أبحاث",
+    "no_notifications":"لا يوجد اشعارات"
+    
   },
   "popupLabels": {
     "publishPost": "نشر منشور",
@@ -25,7 +37,22 @@
     "alignCenterTitle": "محاذاة إلى الوسط",
     "uploadImageTitle": "تحميل صورة",
     "tagsPlaceholder": "اكتب العلامات المتعلقة بالموضوع...",
-    "publishButton": "نشر"
+    "publishButton": "نشر",
+    "update":"تحديث",
+    "text_placeholder":"ادخل نصك هنا"
+  },
+  "startPaper": {
+    "placeholder": "ادخل عنوان بحثك هنا",
+    "projectBranch": "صنف البحث",
+    "type_of_study": "نوع الدراسة",
+    "we_need": "نحتاج الى",
+    "language": "اللغة",
+    "publish": "نشر",
+    "update":"تحديث",
+    "tags": {
+      "label": "الاشارات",
+      "placeholder": "ادخل اشارات متعلقة بالبحث ..."
+    }
   },
   "userTools": {
     "banUser": "حظر المستخدم",
@@ -83,9 +110,69 @@
   },
   "topBar": {
     "signOut": "تسجيل خروج",
-    "settings": "الاعدادات"
+    "settings": "الاعدادات",
+    "home": "الرئيسية",
+    "dashboard": "لوحة التحكم",
+    "editProfile":"تعديل الملف الشخصي",
+    "language":"اللغة",
+    "ar":"العربية",
+    "en":"الانجليزية" 
+    
   },
-  "settingsPpup": {
+  "settingsPopup": {
     "chooseLanguage": "اختر اللغة"
+  },
+  "newPaper": {
+    "label": "بحث جديد",
+    "dropdowns": {
+      "startPaper": "انشئ بحث",
+      "yourPapers": "أبحاثك"
+    }
+  },
+  "yourPapers": {
+    "enter": "دخول",
+    "editPaper": "تعديل البحث",
+    "deleteUser": "طرد مستخدم من البحث",
+    "deletePaper": "حذف البحث"
+  },
+  "joinPaper": {
+    "label": " انضم الى ابحاث اخرى",
+    "searchpaper": "البحث عن ابحاث",
+    "joinButton": "انضمام",
+    "enterButton": "دخول",
+    "advancedSearch": {
+      "searchPapers": "ابحث عن بحث بواسطة العنوان",
+      "label": "البحث المتقدم",
+      "paperId": "رقم البحث",
+      "paperBranch": "الصنف",
+      "paperLang": "لغة البحث",
+      "search": "بحث",
+      "we_need": "بحاجة الى"
+    },
+    "dropdowns": {
+      "joinedPapers": "المنضم اليها"
+    }
+  },
+  "friends": {
+    "label": "الأصدقاء",
+    "searchfriends": "البحث عن أصدقاء",
+    "dropdowns": {
+      "yourfriends": "أصدقائك"
+    },
+    "searchFriends": "رقم الهاتف, الاسم, الايميل",
+    "sendFriendMessage": "أرسل رسالة"
+  },
+  "notification_message": {
+    "message": " أرسل لك رسالة",
+    "accept_request": "وافق على طلب انضمامك للبحث",
+    "join_request": " طلب الانضمام إلى بحثك",
+    "private":"أرسل اليك في الخاص",
+    "public": "رسالة عامة جديدة",
+    "mention_in_public": " ذكرك في المحادثة العامة",
+    "mention_in_welcome": "ذكرك في محادثة الترحيب",
+    "reply": " رد عليك في الخاص",
+    "newPost":"نشر منشورا جديدا",
+    "default": "لديك إشعار جديد",
+    "decline_request":"رفض طلب انضمامك للبحث"
   }
 }

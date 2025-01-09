@@ -26,6 +26,7 @@ const create_paper =async (req, res) => {
 
         const body = req.body;
         const { type_of_study, project_branch, title, we_need, tags, language } = body;
+        console.log('body',body);
         
         const paperId = await generatePaperId()
         const paper = new Paper({
@@ -34,20 +35,15 @@ const create_paper =async (req, res) => {
             title,
             we_need,
             tags,
-            project_branch,
+            main_field:project_branch,
             user_id: id,
             language
         });
         await paper.save()
-            .then(doc => {
-
-            })
-            .catch(err => {
-                console.error('Error creating document:', err);
-            });
-        res.status(200).json({ messsage: 'Paper created successfully', paper })
+            
+        res.status(200).json({ message: 'Paper added', paper })
     } catch (e) {
-        res.status(200).json({ messsage: `Something went wrong ${e}` })
+        res.status(500).json({ messsage: `Something went wrong ${e}` })
     }
 };
 const get_papers = async (user_id = null, res = null) => {
@@ -74,7 +70,8 @@ const get_papers = async (user_id = null, res = null) => {
 const search_papers = async (req, res) => {
     try {
         const { title, we_need, project_branch, id, language } = req.body;
- 
+        const myId = res.locals.user._id;
+
         
         let query = {};
 
@@ -99,10 +96,19 @@ const search_papers = async (req, res) => {
         // Execute the query
 
         
-        const papers = await Paper.find(query);
+        let papers = await Paper.find(query);
 
+        let joinedPapers =new Set()
         
-        res.status(200).json({ papers });
+        for (let paper of papers) {
+            const joinedPaper = await JoinedPaper.find({ paper_id: paper._id, user_id: myId });
+            if (joinedPaper.length > 0) {
+                joinedPapers.add(paper._id.toString());  // Add paper._id to the Set if the user has joined
+            }
+        }
+        console.log('joined papers',joinedPapers);
+        joinedPapers  = Array.from(joinedPapers)
+        res.status(200).json({ papers,joinedPapers});
     } catch (error) {
         console.error('Error searching papers:', error);
         res.status(500).json({ message: 'Error searching papers' });

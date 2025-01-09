@@ -51,7 +51,7 @@ const UserSchema = new mongoose.Schema({
     project_branch: {
         type: String
     },
-    project_title: {
+    main_field: {
         type: String
     },
     scientific_interest: {
@@ -81,6 +81,15 @@ const UserSchema = new mongoose.Schema({
         type: String,  // Store the Google ID as a strin
         unique: true    // Make sure it's unique to prevent duplicate users
     },
+    phoneHidden:{
+        type:Boolean,
+        default:false
+    },
+    resetPasswordToken:{
+        type:String,
+        required:false,
+        index: { expires: '1h' } 
+    }   
 });
 
 const User = mongoose.model('User', UserSchema);

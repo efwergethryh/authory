@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let unidropdown = document.getElementById('university-dropdown');
             const uni_selection = document.getElementById('university-selection');
             const project_dropdown = document.getElementById('projectBranch-dropdown')
-            const project_selection = document.getElementById('project-branch-selection')
+            const project_selection = document.getElementById('main-field-selection')
             const marketingSource_dropdown = document.getElementById('marketingSource-dropdown');
             const marketingSource_selection = document.getElementById('marketingSource-selection')
             const firstNameE = document.querySelector('[data-e2e-test-id="first-name-input"]');
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const phoneNumber = document.getElementsByName('phone_number')[0]
 
             getUniversities()
-
+            
 
             searchInput.addEventListener('focus', getUniversities)
             async function getUniversities() {
@@ -178,7 +178,7 @@ function error_validation() {
     const lastName = document.getElementsByName('lastName')[0];
     const phoneNumber = document.getElementsByName('phone_number')[0];
     const university = document.getElementsByName('university')[0];
-    const projectBranch = document.getElementsByName('project_branch')[0];
+    const projectBranch = document.getElementsByName('main_field')[0];
     console.log(
         phoneNumber.value,
         ' - ',
@@ -195,7 +195,7 @@ function error_validation() {
     const firstNameE = document.querySelector('[data-e2e-test-id="first-name-input"]');
     const phoneNumberE = document.querySelector('[data-e2e-test-id="phone-number-input"]');
     const universityE = document.querySelector('[data-e2e-test-id="university-input"]');
-    const projectBranchE = document.querySelector('[data-e2e-test-id="project-input"]');
+    const projectBranchE = document.querySelector('[data-e2e-test-id="mainfield-input"]');
 
     const termsButton = document.querySelector('#terms');
     console.log(termsButton.checked);

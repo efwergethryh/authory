@@ -192,7 +192,8 @@ p#user-name {
     padding: 10px;
     gap: 4%;
 }
-#text {
+
+.text {
     color: #607585;
     width: 50%;
 }
@@ -240,7 +241,7 @@ p#user-name {
     border: 1px solid #e0e6eb;
     border-left: 4px solid transparent;
     /* Keep the left border consistent */
-    padding-left: 20px;
+    /* padding-left: 20px; */
     /* Consistent padding to prevent shifting */
 }
 
@@ -270,6 +271,7 @@ p#user-name {
     position: static;
     font-size: larger;
 }
+
 .text-only {
     color: #607585;
     font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
@@ -348,6 +350,57 @@ i[id="icon"] {
 
 .hidden {
     display: none;
+}
+
+.chat-filter input {
+    padding: 0.5%;
+    border: none;
+    border-radius: 5px;
+    width: 90%;
+    box-shadow: 0px 0px 5px 0px grey;
+}
+
+.chat-filter input:focus {
+    outline-color: transparent;
+}
+
+.filter-select {
+    display: none;
+    width: 15%;
+    position: absolute;
+    left: 79%;
+    border: none;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px grey;
+    max-height: 15%;
+    overflow-y: auto;
+}
+
+.filter-select li {
+    padding: 2.5%;
+}
+
+.filter-select li:hover {
+    background-color: rgb(223, 223, 223);
+}
+
+.chat-filter {
+    display: none;
+    align-items: center;
+    position: relative;
+    margin-top: 6%;
+    width: 15%;
+    margin-left: 79%;
+    border-radius: 9px;
+    gap: 10%;
+    padding: 0% 1% 0% 1%;
+    background: white;
+}
+
+.chat-filter p {
+    margin-top: 5%;
+    font-weight: 600;
 }
 
 .create-dropdown {
@@ -583,6 +636,7 @@ i[id="icon"] {
     flex-direction: row;
     gap: 2.5%;
     cursor: pointer;
+    background-color: white;
 }
 
 .friend-info:hover {
@@ -642,6 +696,7 @@ i[id="icon"] {
     position: relative;
     left: 0;
     top: 13%;
+    padding: 12px;
     background-color: white;
     border-radius: 10px;
     height: fit-content;
@@ -676,13 +731,16 @@ i[id="icon"] {
     border-bottom: 2px solid #a2a2a2;
     cursor: pointer;
 }
-.notification.unread{
+
+.notification.unread {
     background-color: #e0e0e0;
 }
-.notifications-button{
-    background-color:rgb(229 229 229);
+
+.notifications-button {
+    background-color: rgb(229 229 229);
     border: none;
 }
+
 .notification:hover {
     background-color: #e0e0e0;
 }
@@ -696,6 +754,7 @@ i[id="icon"] {
     font-size: larger;
     transform: translate(-38%, 85%);
 }
+
 .notification:first-child {
     border-radius: 10px 10px 0 0;
     /* Top left and top right corners */
@@ -722,14 +781,15 @@ i[id="icon"] {
 
 .joinedpapers-container,
 .yourpapers-container,
-.papers-container,.notifications-container{
+.papers-container,
+.notifications-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding: 20px;
     background-color: #f4f4f4;
     border-radius: 8px;
-    height: 70%;
+    height: fit-content;
     overflow: scroll;
 }
 
@@ -741,21 +801,25 @@ i[id="icon"] {
     height: 90%;
     padding: 0;
 }
+
 .request-buttons {
     width: 100%;
     flex-direction: row;
     gap: 2%;
     justify-content: end;
 }
+
 .notificationInfo {
     width: 301%;
     display: flex;
     flex-direction: row;
 }
-.image-comb{
+
+.image-comb {
     display: flex;
     flex-direction: row;
 }
+
 #accept-button {
     display: block;
     border-radius: 10px;
@@ -766,6 +830,7 @@ i[id="icon"] {
     color: black;
     box-shadow: 0px 0px 7px 1px gray;
 }
+
 #decline-button {
     display: block;
     border-radius: 10px;
@@ -780,13 +845,13 @@ i[id="icon"] {
 .joinedpapers-container,
 .yourpapers-container,
 .yourfriends-container {
-    gap: 0.02px;
+    gap: 11px;
     position: fixed;
     border-bottom: 1px;
     background-color: transparent;
     box-shadow: none;
-    margin-top: 10%;
-
+    margin-top: 5%;
+    height: fit-content;
     position: relative;
 }
 
@@ -794,11 +859,12 @@ i[id="icon"] {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: white;
+    background-color: transparent;
     height: 30vw;
     border-radius: 20px;
     overflow-y: scroll;
-
+    height: fit-content;
+    margin-top: 8%;
 }
 
 #gear {
@@ -814,7 +880,7 @@ i[id="icon"] {
     display: none;
     width: 10%;
     position: relative;
-    left: 69%;
+    left: 85%;
     top: 16vw;
     z-index: 2;
     height: fit-content;
@@ -907,20 +973,28 @@ a#cancel {
 .paper-line {
     display: flex;
     align-items: center;
+    padding: 11px;
+    background-color: #ffffff;
+    border: 1px solid #eef2f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin: 0;
+    width: 95%;
+    height: 5vw;
+}
+
+/* .paper-line {
+    display: flex;
+    align-items: center;
     padding: 40px 24px 40px 10px;
     background-color: #ffffff;
-    /* White background */
     border: 1px solid #eef2f5;
-    /* Light border */
-    /* Rounded corners */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    /* Light shadow */
     height: 4%;
     margin: 0;
     width: 100%;
 
 
-}
+} */
 
 .paper-line:first-child {
     border-top-left-radius: 15px;
@@ -947,7 +1021,8 @@ a#cancel {
 
 .paper-line span strong {
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
+    color: grey;
 }
 
 .input-container {
@@ -995,7 +1070,9 @@ a#cancel {
 }
 
 #filter {
+    position: absolute;
     margin-left: 95%;
+    z-index: 20;
 }
 
 .paper-title,
@@ -1124,7 +1201,7 @@ a#cancel {
 
 #advanced {
     position: relative;
-    left: 4%;
+    left: 6%;
     top: 10%;
     font-weight: 600;
     font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
@@ -1133,14 +1210,37 @@ a#cancel {
 #advanced_button {
     position: relative;
     left: 1%;
+    width: 29px;
+    height: 29px;
 }
 
 .advancedsearch-container {
     max-height: 0;
-    opacity: 0;
-
+    /* opacity: 0; */
+    display: none;
     transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
 
+}
+
+#advanced-singout {
+    display: none;
+
+    margin-left: 21%;
+}
+
+/* 
+.advanced-singout a {
+    box-shadow: 0px 1px 2px 3px #0000003b;
+    padding: 1%;
+    border-radius: 5px;
+    cursor: pointer;
+} */
+#right-border {
+    border-right: 1px solid rgba(163, 178, 189, 0.3);
+}
+
+#right-border.active {
+    border-right: 1px solid rgb(133, 211, 220);
 }
 
 .button-container {
@@ -1160,8 +1260,9 @@ a#cancel {
 
 .advancedsearch-container.show {
     max-height: 40%;
-    /* or a value that matches the content height */
-    opacity: 1;
+    /* opacity: 1; */
+    display: block;
+    margin-top: 1%;
 }
 
 table {
@@ -1363,7 +1464,7 @@ button[id="friend-search"] {
     display: inline-block;
     border: 0px;
     margin-top: 2%;
-    margin-bottom: 5%;
+    margin-bottom: 1%;
     margin-left: 85%;
     text-transform: none;
     text-decoration: none;
@@ -1377,6 +1478,9 @@ button[id="friend-search"] {
     background-color: rgb(4, 122, 136);
     color: rgb(255, 255, 255);
     width: 13%;
+    position: relative;
+    z-index: 30;
+
 }
 
 button[id="join"] {
@@ -1480,13 +1584,13 @@ button[id="join"] {
 
 /* Style the profile image */
 #profile img {
-    width: 50px;
-    height: 50px;
+    width: 41px;
+    height: 41px;
     border-radius: 50%;
     object-fit: cover;
     position: absolute;
-
-    top: -2.4vw;
+    top: -2.2vw;
+    left: 2vw;
 }
 
 /* Style the profile text */
@@ -1501,27 +1605,30 @@ button[id="join"] {
     margin-bottom: 1vw;
 }
 
-
-
-
 .popup-message.show {
     opacity: 1;
-}
-
-.popup-message {
-    width: fit-content;
-    font-size: 34%;
-    padding: 0.6%;
-    border-radius: 47px;
-    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
-    background-color: #00000080;
-    color: white;
-    position: absolute;
-    top: 84%;
-    left: 48%;
     transition: opacity 0.5s ease-in-out;
 }
 
+.popup-message {
+    align-items: center;
+    opacity: 0;
+    display: flex;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 47px;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    background-color: #000000a1;
+    color: white;
+    position: absolute;
+    top: 75%;
+    left: 42%;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.popup-message h1 {
+    font-size: large;
+}
 
 .paper-line button,
 button[id="send_message"] {
@@ -1549,7 +1656,7 @@ button[id="send_message"] {
 
 .mainContent {
     width: 100%;
-    height: 91vh;
+    height: 92vh;
     /* background-color: #17212b; */
     position: absolute;
     top: 7%;
@@ -1564,18 +1671,19 @@ button[id="send_message"] {
 .mainContent.shifted {
     transform: translateX(29%);
     transition: transform 0.3s ease;
-    width: 69%;
-    left: 11%;
+    width: 70%;
+    left: 10%;
 }
 
 .mainContent.conversation {
-    /* mainContent.style.width = '100%'
-    mainContent.style.left = '-.5%'
-    mainContent.style.overflow = 'hidden' */
+
     width: 100%;
     left: -.5%;
     overflow: hidden;
 }
+
+
+
 
 .chat-container {
     width: 100%;
@@ -1802,15 +1910,14 @@ button[id="send_message"] {
 } */
 #img-frame {
     vertical-align: middle;
-    width: 4.5vw;
+    width: fit-content;
+    max-width: 25%;
     position: relative;
-    top: -5vw;
     left: 0;
 }
 
 p#file-frame {
-    font-size: small;
-    text-wrap: nowrap;
+    font-weight: 600;
 }
 
 .users-to-delete {
@@ -1904,6 +2011,7 @@ p#file-frame {
 }
 
 .chat {
+
     background-color: transparent;
     display: flex;
     flex-direction: column;
@@ -1915,6 +2023,58 @@ p#file-frame {
     flex-grow: 1;
 }
 
+.file-frame {
+    background: white;
+    width: 30%;
+    height: 19vw;
+    border-radius: 10px;
+    display: flex;
+    left: 31%;
+    top: 10vw;
+    padding: 1%;
+    gap: 0;
+    flex-direction: column;
+    align-self: center;
+    position: relative;
+}
+
+.frame-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 14%;
+    align-items: center;
+    position: relative;
+    top: -4%;
+}
+.photo-frame {
+    width: 90%;
+    height: fit-content;
+    max-height: 16%;
+    margin-bottom: 35%;
+}
+.frame-buttons button{
+    background-color: rgb(5, 79, 87);
+    color: white;
+    border: none;
+    padding: 2%;
+    position: relative;
+    border-radius: 6px;
+
+}
+.frame-buttons input{
+    border: none;
+}
+.frame-buttons input:focus{
+    outline-color: transparent;
+}
+.frame-buttons a{
+    color: rgb(4, 122, 136);
+    cursor: pointer;
+}
+.file-frame p{
+    font-weight: 700;
+    font-size: large;
+}
 .conversation-item {
     display: flex;
     align-items: center;
@@ -2002,7 +2162,8 @@ p#file-frame {
 .yourfriends-label,
 .notifications-label,
 .joined-label,
-.searchpapers-label {
+.searchpapers-label,
+.yourpapers-label {
     color: var(--color-text-secondary-default);
     white-space: normal;
     flex: none;
@@ -2029,11 +2190,12 @@ p#file-frame {
     font-size: 25px;
     font-weight: 700;
     line-height: 32px;
-    position: fixed;
+    position: absolute;
 }
 
 .searchpapers-label,
-.searchfriends-label {
+.searchfriends-label,
+.yourfriends-label {
     color: var(--color-text-secondary-default);
     white-space: normal;
     flex: none;
@@ -2054,9 +2216,9 @@ p#file-frame {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 25vh;
+    /* height: 25vh; */
+    gap: 1vw;
     overflow-y: auto;
-
 
 }
 
@@ -2122,7 +2284,7 @@ p#file-frame {
     background-color: #e2ede5;
     position: fixed;
     bottom: 0;
-    left: 31.6%;
+    left: 31.4%;
 
 }
 
@@ -2198,7 +2360,7 @@ p#file-frame {
     font-weight: 700;
     cursor: pointer;
     padding: 11px 23px;
-    background-color:white;
+    background-color: white;
     color: rgb(64, 81, 94);
     position: relative;
 
@@ -2345,14 +2507,14 @@ p#file-frame {
 }
 
 .message-history {
-    width: 132%;
-    height: 96%;
+    width: 139%;
+    height: 130%;
     overflow-x: hidden;
     overflow-y: scroll;
     padding: 1%;
     margin-bottom: 0.5%;
     position: absolute;
-    top: -24%;
+    top: -29%;
     left: 3%;
     flex-direction: column;
 }
@@ -2371,12 +2533,14 @@ p#file-frame {
 
 #sent_file i {
     color: white;
+    position: relative;
     font-size: 1.5vw;
     font-weight: 400;
     position: relative;
-
-    left: 1vw;
+    font-size: larger;
+    left: 35%;
 }
+
 
 #sent_file p {
     color: black;
@@ -2402,8 +2566,8 @@ p#file-frame {
     color: #000000;
     font-size: 14px;
     position: relative;
-    top: -2vh;
-    max-width: 80%;
+    top: 1vh;
+    max-width: 19.5%;
 }
 
 
@@ -2453,6 +2617,25 @@ p#file-frame {
 .scroll-button {
     width: 40%;
     display: none;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    transition: opacity .2s ease;
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: auto;
+    right: -93%;
+    top: 208%;
+    top: 208%;
+    background: #f4f4f4;
+    z-index: 9;
+    width: 6%;
+    border-radius: 100%;
+}
+
+/* .scroll-button {
+    width: 40%;
+    display: none;
 
     flex-direction: column;
     align-items: center;
@@ -2467,7 +2650,7 @@ p#file-frame {
     z-index: 9;
     width: 6%;
     border-radius: 100%;
-}
+} */
 
 .Button {
     outline: none !important;
@@ -2550,10 +2733,10 @@ p#file-frame {
 
 .openedImage img {
     width: fit-content;
-    max-width: 50%;
+    max-width: 24%;
     position: relative;
-    left: 32%;
-    top: 7%;
+    left: 37%;
+    top: 8%;
 }
 
 .imageTime {
@@ -2588,13 +2771,15 @@ p#file-frame {
     display: flex;
     align-items: flex-start;
     margin-bottom: 10px;
+    height: fit-content;
 }
 
 .message-text {
     max-width: 100%;
     display: block;
     word-break: normal;
-    margin-left: 0;
+    margin-left: 6%;
+    margin-top: 7%;
     position: relative;
     align-self: start;
 }
@@ -2606,6 +2791,7 @@ p#file-frame {
     margin-right: 5px;
     margin-top: 0%;
     margin-bottom: 0%;
+    align-self: end;
 }
 
 p#message_content {
@@ -2734,29 +2920,1175 @@ p#message_content {
     background-color: #f0f0f0;
 }
 
-.profile-span {
+/* .profile-span {
     display: none;
-    width: 10%;
+    width: 17%;
     flex-direction: column;
     background-color: white;
     position: absolute;
     border-radius: 10px;
-    left: 87%;
-    top: 4vw;
+    left: 82%;
+    top: 132%;
     box-shadow: 0px 0px 5px 3px #8080803b;
     z-index: 10;
-}
+} */
+/* .profile-span {
+    z-index: 4322;
+    background-color: #fff;
+    border-radius: 5px;
+    width: 400px;
+    position: absolute;
+    top: 72px;
+    right: 8px;
+    box-shadow: 0 8px 64px rgba(99, 117, 138, .25);
+} */
 
-.profile-span a {
+
+/* .profile-span a {
     padding: 1vw;
     cursor: pointer;
     color: black;
     text-decoration: none;
+} */
+/*! CSS Used from: https://next.amboss.com/us/static/assets/app~601b10ea.ef3ad4cda3ddbe4b.css */
+div:focus {
+    outline: 0;
+}
+
+.feb81a99d1e6576--appearanceSetting {
+    color: inherit;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 40px;
+    margin-bottom: 8px;
+    display: flex;
+    position: relative;
+}
+
+.feb81a99d1e6576--menuLabel {
+    flex: none;
+    position: relative;
+}
+
+.feb81a99d1e6576--beta {
+    vertical-align: top;
+    font-size: 7.403px;
+    position: relative;
+    top: -.5em;
+}
+
+.feb81a99d1e6576--notificationIndicator {
+    background: #f17d7c;
+    border: 2px solid #fff;
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 0;
+    right: -12px;
+}
+
+.cb6958e808d5fa34--userNavContainer {
+    border-radius: 5px;
+    width: 100%;
+
+}
+
+.cb6958e808d5fa34--profileHeader {
+    padding: 16px;
+    display: flex;
+}
+
+.cb6958e808d5fa34--name {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.cb6958e808d5fa34--userInfo {
+    align-items: center;
+    display: flex;
+}
+
+.cb6958e808d5fa34--menuOptions {
+    padding: 16px;
+}
+
+.cb6958e808d5fa34--menuOption {
+    color: inherit;
+    cursor: pointer;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 39%;
+    position: relative;
+    font-weight: 400;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, segoe ui, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, arial, sans-serif;
+}
+
+.cb6958e808d5fa34--menuOption:hover>svg {
+    color: #1a1c1c;
+}
+
+.cb6958e808d5fa34--menuOption:hover {
+    color: #1a1c1c;
+}
+
+.cb6958e808d5fa34--menuOption:last-of-type {
+    margin-bottom: 0;
+}
+
+.cb6958e808d5fa34--chevron {
+    color: #99a7b3;
+    width: 24px;
+    position: absolute;
+    top: 1px;
+    right: -7px;
+}
+
+.d70dcff543b0a8d8--userMenuContainer {
+    display: none;
+    z-index: 4322;
+    background-color: #fff;
+    border-radius: 5px;
+    width: 400px;
+    position: absolute;
+    top: 72px;
+    right: 8px;
+    box-shadow: 0 8px 64px rgba(99, 117, 138, .25);
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+    /* Styles for Retina iPads */
+    .sidebar {
+        width: 37%;
+        height: 100%;
+        top: 7%;
+    }
+
+    .css-sh7anr-StyledBox p {
+        font-size: x-large;
+        max-width: 70%;
+    }
+
+    tr {
+        margin-top: 2.5%;
+        display: flex;
+        flex-direction: column;
+        width: 175%;
+    }
+
+    .input-group input {
+        width: 100%;
+        font-size: x-large;
+    }
+
+    .university-dropdown-options,
+    .institute-dropdown-options,
+    .education-dropdown-options {
+        width: 100%;
+
+    }
+
+    .openedImage {
+        display: flex;
+        width: 100%;
+        height: 135vw;
+        align-items: center;
+    }
+
+    .scroll-button {
+        width: 9%;
+
+        right: -87%;
+    }
+
+    .imageTime {
+        right: 2%;
+        top: -3vw;
+        font-size: large;
+    }
+
+    .education-dropdown-options li,
+    .institute-dropdown-options li,
+    .university-dropdown-options li {
+        font-size: xx-large;
+    }
+
+    #start_create {
+        font-size: x-large;
+    }
+
+    #sent_image {
+
+        width: 20vw;
+    }
+
+    #sent_file p {
+        font-size: larger;
+        max-width: 90%;
+    }
+
+    .input-group label {
+        font-size: larger;
+
+    }
+
+    .circle-button {
+        width: 49px;
+        height: 49px;
+        left: 34%;
+    }
+
+    .circle-button.collapsed {
+        left: -2.1vw;
+
+    }
+
+    .startpaper-popup {
+        overflow-y: auto;
+    }
+
+    .css-sh7anr-StyledBox a {
+        font-size: x-large;
+    }
+
+    .text-only {
+        font-size: xx-large;
+    }
+
+    .circle-button {
+        top: 10%;
+    }
+
+    .file {
+        width: 75px;
+        height: 75px;
+    }
+
+    .mainContent.shifted {
+        transform: translateX(40%);
+        transition: transform 0.3s ease;
+        width: 64%;
+        left: 10%;
+    }
+
+    .mainContent.conversation {
+        top: 7% !important;
+    }
+
+    .header {
+        font-size: xx-large;
+    }
+
+    .yourfriends-container,
+    .yourpapers-container {
+        top: 3%;
+    }
+
+    #tags,
+    #update-tags {
+        font-size: x-larger;
+    }
+
+    .userinfo {
+        height: 6%;
+    }
+
+    .chats-view {
+        height: 109%;
+    }
+
+    .tags-overlay {
+        font-size: x-large;
+    }
+
+    .sidebar.closed {
+        left: -39%;
+    }
+
+    .posts {
+        top: 4%;
+        left: 1.7%;
+    }
+
+    .time {
+        font-size: large;
+    }
+
+    .topBar ul li a svg {
+        font-size: x-large;
+    }
+
+    .search-container i {
+        font-size: x-large;
+    }
+
+    .friend-info {
+        font-size: xx-large;
+    }
+
+    .friend-info img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .create-dropdown svg {
+        width: 41px;
+        height: 41px;
+    }
+
+    .sidebar ul li {
+        font-size: x-large;
+    }
+
+    #profile img {
+        width: 70px;
+        height: 70px;
+        left: -6vw;
+    }
+
+    .topBar {
+        height: 95px;
+    }
+
+    .mainContent {
+        top: 9%;
+    }
+
+
+
+    .messaging-container i {
+        font-size: xx-large;
+    }
+
+    .startpaper-popup,
+    .yourpapers-popup,
+    .searchpapers-popup,
+    .joinedpapers-popup,
+    .searchfriends-popup,
+    .yourfriends-popup {
+        top: 3%;
+        height: fit-content;
+        overflow-x: hidden;
+    }
+
+    .d70dcff543b0a8d8--userMenuContainer {
+        font-size: x-large;
+
+        left: 46%;
+        top: 100%;
+        width: 50%;
+    }
+
+    .cb6958e808d5fa34--menuOption {
+        gap: 15%;
+    }
+
+    .cb6958e808d5fa34--name {
+        font-size: x-large;
+    }
+
+    .startpapers-label,
+    .searchfriends-label,
+    .yourfriends-label,
+    .notifications-label,
+    .joined-label,
+    .searchpapers-label,
+    .yourpapers-label {
+        top: 0%;
+        font-size: xx-large;
+    }
+
+    .joinedpapers-container,
+    .yourpapers-container,
+    .yourfriends-container,
+    .notifications-container {
+        font-size: x-large;
+    }
+
+    .yourfriends-container {
+        margin-left: 3%;
+    }
+
+    #title input {
+        margin-bottom: 2%;
+    }
+
+    .chat-container {
+        top: 0;
+    }
+
+    .messaging-container {
+        top: 94%;
+    }
+
+    .messaging-container input,
+    .search-container input {
+        font-size: xx-large;
+    }
+
+    #friend-search,
+    #search {
+        font-size: xx-large;
+        padding: 3%;
+        padding-right: 20%;
+        margin-left: 74%;
+    }
+
+    /* #send_message{
+        font-size: large;
+        width: fit-content;
+    } */
+
+    .chat-filter {
+        margin-top: 21%;
+        width: 33%;
+        font-size: x-large;
+        left: -13%;
+    }
+
+    .filter-select {
+        width: 33%;
+        left: 66%;
+    }
+
+    #filter {
+        top: 2%;
+        font-size: xx-large;
+    }
+
+    .userProfile {
+        font-size: xx-large;
+        width: 52%;
+        top: 32vw;
+        left: 21%;
+    }
+
+    .userinfo {
+        font-size: x-large;
+    }
+
+    .conversation-item {
+        font-size: x-large;
+    }
+
+    .options-popup {
+        top: 111vw;
+        font-size: xx-large;
+    }
+
+    .filter-select li {
+
+        font-size: x-large;
+
+    }
+
+    .advancedsearch-container.show {
+        margin-top: 6%;
+    }
+
+    #advanced_button {
+        width: 40px;
+        height: 40px;
+    }
+
+    #advanced {
+        font-size: x-large;
+        left: 11%;
+        top: 17%;
+    }
+
+    .topBar ul {
+        position: relative;
+        top: -1vw;
+    }
+
+    .message {
+        font-size: xx-large;
+    }
+
+    .sender-image {
+        width: 50px;
+        height: 50px;
+    }
+
+    .message-history {
+        height: 130%;
+    }
+
+    .paper-result,
+    .friend-result {
+        font-size: xx-large;
+    }
+
+    .friend-result img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .paper-line,
+    .paperinfo {
+        height: 50%;
+    }
+
+    .friend-message,
+    .join-button {
+        font-size: large;
+        width: fit-content;
+    }
+
+}
+
+@media (max-width:425px) {
+    html {
+        width: 20vh;
+    }
+
+    body {
+        width: 100%;
+    }
+
+    .openedImage {
+
+
+        width: 290%;
+        height: 200vw;
+        display: flex;
+        align-items: center;
+
+    }   
+    .openedImage img {
+        width: fit-content;
+        max-width: 76%;
+        position: relative;
+        left: 11%;
+        top: -3%;
+    }
+    .mainContent.conversation {
+        width: 100%;
+        top: 5%;
+        left: 1%;
+    }
+
+    .notifications-container {
+        position: relative;
+        left: 1.7%;
+        width: 100%;
+    }
+
+    .d70dcff543b0a8d8--userMenuContainer {
+        margin-right: 2% !important;
+    }
+
+    .sidebar {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        top: 54px;
+    }
+
+    .isfile {
+        max-width: 62.5%;
+    }
+
+    .userProfile {
+        top: 34vw;
+        width: 177%;
+    }
+    .file-frame {
+        background: white;
+        width: 200%;
+        height: 84vw;
+
+        left: 31%;
+        top: 36vw;
+        padding: 11%;
+        gap: 0;
+        z-index: 400;
+        
+    }
+    .photo-frame {
+        width: 90%;
+        height: fit-content;
+        max-height: 16%;
+        margin-bottom: 76%;
+    }
+    .frame-buttons input {
+        width: 60%;
+    }
+    .frame-buttons {
+        gap: 4%;
+    }
+    #img-frame {
+        max-width: 60%; 
+    }
+    #sent_image {
+
+        width: 29vw;
+
+    }
+
+    #sent_file p {
+        font-size: medium;
+        max-width: 80%;
+        width: fit-content;
+        word-break: break-word;
+    }
+
+    .imageTime {
+        right: 3%;
+        font-size: x-small;
+        top: -4vw;
+    }
+
+    table td {
+        width: 46%;
+    }
+
+    .cb6958e808d5fa34--menuOption {
+        gap: 27%;
+    }
+
+    .chat-filter {
+        margin-top: 51%;
+        width: 107%;
+        left: 50%;
+    }
+
+    .options-popup {
+        left: 2%;
+        top: 136vw;
+    }
+
+    .paper-settings {
+        width: 100%;
+    }
+
+    .confirm-delete {
+        padding: 19px;
+
+        left: 22%;
+        top: 80vw;
+        width: 50%;
+    }
+
+    .buttons {
+        gap: 21%;
+    }
+
+    .chats-mobile {
+        display: flex;
+        gap: 10vw;
+        flex-direction: column;
+        height: 100%;
+        background-color: #f7f7f7;
+
+    }
+
+    #exit_conversations {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 17%;
+        gap: 1%;
+        width: 50%;
+        padding: 4vw;
+    }
+
+    .users-to-delete {
+        width: 100%;
+        left: -0.5%;
+    }
+
+    .paper-settings {
+        left: 149%
+    }
+
+    #exit_conversations p,
+    #exit_conversations i {
+        z-index: 0;
+    }
+
+    #exit_conversations:hover {
+        background-color: rgb(224, 224, 224);
+    }
+
+    .chats-view {
+        width: 100%;
+    }
+
+    .message-history {
+        height: 126%;
+        top: 117%;
+        left: -42%;
+    }
+
+    .filter-select {
+        width: 39%;
+        left: 54%;
+    }
+
+    .chatInfo {
+        top: 0.8%;
+        left: 0.6%;
+        width: 100%;
+        gap: 22%;
+    }
+
+    .messaging-container {
+        left: 0;
+        width: 100%;
+    }
+
+    .userinfo {
+        top: 1.1%;
+        left: 0;
+        padding-left: 5%;
+    }
+
+    .notifications-container {
+        margin-top: 20%;
+    }
+
+    .filter-select li {
+        padding: 6.5% 2.5% 6.5% 2.5%;
+    }
+
+    #advanced {
+        left: 16%;
+    }
+
+    .text,
+    .text-only {
+        font-size: large;
+    }
+
+    .sidebar.closed {
+        left: -100%;
+
+    }
+
+    .sidebar ul li a.active {
+        padding-left: 0%;
+    }
+
+    .circle-button.collapsed {
+        left: -4.1vw;
+    }
+
+    .circle-button {
+        left: 94.9vw;
+    }
+
+    .topBar ul li[id="profile"] {
+
+        left: 63vw;
+        top: -6vw;
+
+    }
+
+    .scroll-button {
+        width: 18%;
+        right: -80%;
+    }
+
+    .Button {
+        height: 3rem;
+    }
+
+    .mainContent {
+        /* width: 93%;
+        top: 5%;
+        left: 2% */
+        width: 100%;
+        top: 5%;
+        left: 0%;
+    }
+
+    .mainContent.shifted {
+        transform: translateX(0%);
+        /* transition: transform 0.3s ease; */
+
+    }
+
+    .topBar {
+        width: 100%;
+    }
+
+    .sidebar ul li a {
+        padding: 7% 0px 7% 0px;
+    }
+
+    .toggle-tab-container,
+    .toggle-tab-container-2,
+    .toggle-tab-container-3,
+    .toggle-tab-container-4 {
+        padding: 7% 0px 7% 0px;
+    }
+
+    .d70dcff543b0a8d8--userMenuContainer {
+        width: calc(100vw - 35px);
+        margin-right: 9%;
+    }
+
+    button[id="search"],
+    button[id="friend-search"] {
+
+        margin-top: 7%;
+        margin-left: auto;
+        display: flex;
+        align-self: end;
+        width: 26%;
+        position: relative;
+        z-index: 30
+    }
+
+    .searchpapers-popup {
+        position: relative;
+        z-index: 20;
+    }
+
+    .dropdown-icon {
+        position: relative;
+        z-index: 109;
+    }
+
+    .paper-line {
+        height: fit-content;
+        width: 100%;
+        font-size: smaller;
+    }
+
+    .paper-line button,
+    button[id="send_message"],
+    button[id="friend-search"] {
+        width: 31%;
+    }
+
+    .paper-result,
+    .friend-result {
+        margin-top: 2.5%;
+    }
+
+    tr {
+        margin-top: 2.5%;
+        display: flex;
+        flex-direction: column;
+        width: 175%;
+    }
+
+    .startpaper-popup,
+    .edit-paper {
+        height: fit-content;
+        overflow-y: auto;
+        overflow-x: hidden;
+        top: 13%;
+    }
+
+    .css-gkrxgl-StyledText {
+        max-width: 58%;
+        word-break: break-word;
+        hyphens: none;
+    }
+
+    .css-1k7990c-StyledButton {
+        padding: 11px 10px;
+    }
+
+    .language-td {
+        position: relative;
+        top: -28vw;
+    }
+
+    .tags-td {
+        position: relative;
+        top: 17vw;
+    }
+
+    #tags,
+    #update-tags {
+        width: 100%;
+
+    }
+
+    .button-container {
+        padding: 10px;
+        gap: 1.5vw;
+    }
+
+    .joinedpapers-container,
+    .yourpapers-container,
+    .yourfriends-container {
+        margin-top: 16%;
+        width: 100%;
+        overflow-x: hidden;
+
+    }
+
+    .conversation-item {
+        top: 1%;
+
+    }
+
+    .yourfriends-container {
+        margin-top: 16%;
+        margin-left: 1.5%;
+
+    }
+
+    .message {
+        /* max-width: 45.5%; */
+        max-width: 86.5%;
+    }
+    #sent_file{
+        margin-left: 0%;
+    }
+    .file {
+        width: 67px;
+        height: 44px;
+    }
+    .message-text{
+        top: -2vw;
+    }
+    .add-conversation {
+        
+        width: 223%;
+        
+        top: 34VW;
+        left: 24%;
+        
+    }
+    /* 34.5% */
+}
+
+.d70dcff543b0a8d8--userMenuContainer:after {
+    content: "";
+    border: 10px solid transparent;
+    border-bottom-color: #fff;
+    position: absolute;
+    top: -20px;
+    right: 10px;
+}
+
+/*! CSS Used from: Embedded */
+input {
+    overflow: visible;
+}
+
+[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+input {
+    margin: 0;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+/*! CSS Used from: Embedded */
+* {
+    box-sizing: border-box !important;
+}
+
+::selection {
+    text-shadow: none !important;
+    background-color: #dae0e6 !important;
+}
+
+/*! CSS Used from: Embedded */
+.css-1ff2k4x-StackContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen {
+    .css-tn47vl-StackItem {
+        margin-top: 8px;
+    }
+}
+
+.css-tn47vl-StackItem:first-of-type {
+    margin-top: 0px;
+}
+
+.css-tn47vl-StackItem:empty {
+    margin-top: 0px;
+}
+
+@media screen {
+    .css-1c20xzu-StackItem {
+        margin-top: 4px;
+    }
+}
+
+.css-1c20xzu-StackItem:first-of-type {
+    margin-top: 0px;
+}
+
+.css-1c20xzu-StackItem:empty {
+    margin-top: 0px;
+}
+
+.css-1ku4s63-StyledContainer {
+    display: flex;
+}
+
+.css-1xcixx6-StyledContainer {
+    cursor: pointer;
+    background-color: rgb(231, 246, 248);
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 8px 16px;
+    border-width: 1px;
+    border-style: solid none;
+    border-image: initial;
+    position: relative;
+    border-color: rgb(133, 211, 220);
+}
+
+.css-1xcixx6-StyledContainer .e1u7ymv11 {
+    color: rgb(4, 122, 136);
+}
+
+.css-1xcixx6-StyledContainer:first-of-type {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-left-style: solid;
+}
+
+.css-zg0eas-StyledInput {
+    opacity: 0;
+    height: 0px;
+    width: 0px;
+    position: absolute;
+}
+
+.css-rsvycn-StyledText-StyledLabel {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
+    font-weight: 700;
+    color: rgb(26, 28, 28);
+    font-size: 14px;
+    overflow-wrap: normal;
+    line-height: 1.14286;
+}
+
+@media screen {
+    .css-rsvycn-StyledText-StyledLabel {
+        hyphens: none;
+    }
+}
+
+.css-1fa6sju-StyledDivider {
+    border-right: 1px solid rgb(133, 211, 220);
+    background-color: rgb(255, 255, 255);
+    border-top-color: rgb(133, 211, 220);
+    border-bottom-color: rgb(133, 211, 220);
+    border-left-color: rgb(133, 211, 220);
+}
+
+.css-1dg0gft-StyledContainer {
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 8px 16px;
+    border-width: 1px;
+    border-style: solid none;
+    border-color: rgba(163, 178, 189, 0.3);
+    border-image: initial;
+    position: relative;
+}
+
+.css-1dg0gft-StyledContainer:hover {
+    background-color: rgb(245, 247, 249);
+}
+
+.css-1dg0gft-StyledContainer .e1u7ymv11 {
+    color: rgb(64, 81, 94);
+}
+
+.css-1dg0gft-StyledContainer:last-of-type {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-right-style: solid;
+}
+
+.css-tfzb2o-StyledDivider {
+    border-right: 1px solid rgba(163, 178, 189, 0.3);
+    background-color: rgb(255, 255, 255);
+}
+
+/*! CSS Used fontfaces */
+@font-face {
+    font-family: Lato;
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    /* src: local("Lato-Regular"), local("Lato Regular"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.normal.woff") format("woff"); */
+}
+
+@font-face {
+    font-family: Lato;
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+    /* src: local("Lato-Italic"), local("Lato Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.400.italic.woff") format("woff"); */
+}
+
+@font-face {
+    font-family: Lato;
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    /* src: local("Lato-Bold"), local("Lato Bold"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.normal.woff") format("woff"); */
+}
+
+@font-face {
+    font-family: Lato;
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+    /* src: local("Lato-BoldItalic"), local("Lato Bold Italic"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.700.italic.woff") format("woff"); */
+}
+
+@font-face {
+    font-family: Lato;
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+    /* src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff"); */
+}
+
+/* .profile-span a {
+    color: inherit;
+    cursor: pointer;
+    margin-bottom: 16px;
+    display: flex;
+    position: relative;
 }
 
 .profile-span a:hover {
     background-color: #dddddd;
-}
+} */
 
 .settigns {
     display: none;
@@ -3355,77 +4687,178 @@ svg:not(:root) {
     }
 }
 
-/*! CSS Used fontfaces */
-@font-face {
-    font-family: Lato;
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+/*! CSS Used from: https://next.amboss.com/us/static/assets/app~bc5604ab.1d938c3740d8ee23.css */
+div:focus {
+    outline: 0;
 }
 
-@font-face {
-    font-family: Lato;
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
+/*! CSS Used from: Embedded */
+input {
+    overflow: visible;
 }
 
-@font-face {
-    font-family: Lato;
+[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+input {
+    margin: 0;
+}
+
+/*! CSS Used from: Embedded */
+* {
+    box-sizing: border-box !important;
+}
+
+::selection {
+    text-shadow: none !important;
+    background-color: #dae0e6 !important;
+}
+
+/*! CSS Used from: Embedded */
+.css-1ff2k4x-StackContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen {
+    .css-tn47vl-StackItem {
+        margin-top: 8px;
+    }
+}
+
+.css-tn47vl-StackItem:first-of-type {
+    margin-top: 0px;
+}
+
+.css-tn47vl-StackItem:empty {
+    margin-top: 0px;
+}
+
+@media screen {
+    .css-1c20xzu-StackItem {
+        margin-top: 4px;
+    }
+}
+
+.css-1c20xzu-StackItem:first-of-type {
+    margin-top: 0px;
+}
+
+.css-1c20xzu-StackItem:empty {
+    margin-top: 0px;
+}
+
+.css-1ku4s63-StyledContainer {
+    display: flex;
+}
+
+.css-1mbyi6v-StyledContainer {
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 8px 16px;
+    border-width: 1px;
+    border-style: solid none;
+    border-image: initial;
+    position: relative;
+    border-color: rgba(163, 178, 189, 0.3);
+    color: rgb(26, 28, 28);
+}
+
+.css-1mbyi6v-StyledContainer.active {
+    background-color: rgb(231, 246, 248);
+    color: rgb(4, 122, 136);
+    border-color: rgb(133, 211, 220);
+}
+
+.css-1mbyi6v-StyledContainer:hover {
+    background-color: var(--color-background);
+}
+
+.css-1mbyi6v-StyledContainer:first-of-type {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-left-style: solid;
+}
+
+.css-w5hltc-StyledInput {
+    opacity: 0;
+    height: 0px;
+    width: 0px;
+    position: absolute;
+}
+
+.css-15twdcn-StyledText-StyledLabel {
+    font-family: Lato, "Apple Symbols", BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    margin: 0px;
+    text-transform: none;
+    text-align: left;
     font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+    color: rgb(26, 28, 28);
+    font-size: 14px;
+    overflow-wrap: normal;
+    line-height: 1.14286;
 }
 
-@font-face {
-    font-family: Lato;
-    font-weight: 700;
-    font-style: italic;
-    font-display: swap;
+@media screen {
+    .css-15twdcn-StyledText-StyledLabel {
+        hyphens: none;
+    }
 }
 
-@font-face {
-    font-family: Lato;
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
+.css-1fa6sju-StyledDivider {
+    border-right: 1px solid rgb(133, 211, 220);
+    background-color: rgb(255, 255, 255);
+    border-top-color: rgb(133, 211, 220);
+    border-bottom-color: rgb(133, 211, 220);
+    border-left-color: rgb(133, 211, 220);
 }
 
-/* End of Design of popups */
-/*! CSS Used fontfaces */
-@font-face {
-    font-family: Lato;
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+.css-b8ebet-StyledContainer {
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 8px 16px;
+    border-width: 1px;
+    border-style: solid none;
+    border-color: rgba(163, 178, 189, 0.3);
+    border-image: initial;
+    position: relative;
 }
 
-@font-face {
-    font-family: Lato;
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
+.css-b8ebet-StyledContainer:hover {
+    background-color: rgb(245, 247, 249);
 }
 
-@font-face {
-    font-family: Lato;
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+
+
+.css-b8ebet-StyledContainer:last-of-type {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-right-style: solid;
 }
 
-@font-face {
-    font-family: Lato;
-    font-weight: 700;
-    font-style: italic;
-    font-display: swap;
+.css-tfzb2o-StyledDivider {
+    border-right: 1px solid rgba(163, 178, 189, 0.3);
+    background-color: rgb(255, 255, 255);
 }
 
-@font-face {
-    font-family: Lato;
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
+
 
 /* End Welcoming popup */

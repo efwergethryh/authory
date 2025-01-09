@@ -10,8 +10,8 @@ const paperSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-
     type_of_study: { type: String, required: true },
+    main_field: { type: String, required: true },
     title: { type: String, required: true },
     we_need: { type: String, required: true },
     language:{
@@ -26,7 +26,7 @@ const paperSchema = new mongoose.Schema({
             message: 'Tags must be unique.',
         },
     },
-    project_branch: { type: String, required: true },
+    // project_branch: { type: String, required: true },
 });
 
 // Use singular and capitalized model name 'Paper'

@@ -5,10 +5,11 @@ const User = require('../models/User'); // Adjust the path as necessary
 require('dotenv').config()
 // Middleware function to verify JWT
 const authMiddleware =(allowedRoles)=> async (req, res, next) => {
-    
-    
+    console.log(`Request URL: ${req.originalUrl}`);
+    if (req.originalUrl ==='/api/universities/') {
+        return next(); // Skip authMiddleware for this route
+    }        
     const token = req.cookies?.accessToken;
-    
     
     if (!token) {
         return res.redirect('/pages/login')
@@ -18,11 +19,9 @@ const authMiddleware =(allowedRoles)=> async (req, res, next) => {
         
         const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
-        console.log('decoded.id',decoded.id);
-        //_id:
         const user = await User.findOne({_id:decoded.id});
-        console.log('authorized user',user);
-        
+        console.log(allowedRoles,user.user_type);
+
         if (!user) {
            
             if (Array.isArray(allowedRoles) && allowedRoles.includes(1)) {
@@ -54,42 +53,6 @@ const authMiddleware =(allowedRoles)=> async (req, res, next) => {
         res.redirect('/login')
     }
 };
-const ownerAdminMiddleware = (allowedRoles)=>async(req, res, next)=>{
-    const token = req.cookies?.accessToken;
-
-    if (!token) {
-        return res.redirect('/pages/log-in')
-    }
-
-    try {
-        
-        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-
-        const user = await User.findById(decoded.id);
-
-        if (!user) {
-           
-            return res.redirect('/pages/log-in')
-        }
-        if (!user || !allowedRoles.includes(user.user_type)) {
-            // Redirect if user is not found or not in allowed roles
-            return res.redirect('/pages/log-in');
-        }
-        res.locals.user = user;
-        next();
-    } catch (error) {
-        if (error.name === 'TokenExpiredError') {
-            
-            
-            res.locals.user = null;
-        }
-        
-        console.log(error);
-        
-        res.redirect('/pages/log-in')
-    }
-}
 
 
-const ownerOrAdminMiddleware = ownerAdminMiddleware(["Owner", "Admin"]);
-module.exports = {authMiddleware,ownerOrAdminMiddleware};
+module.exports = {authMiddleware};

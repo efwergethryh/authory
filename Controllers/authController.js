@@ -4,8 +4,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose')
 const passport = require('passport')
+const crypto = require('crypto');
 require('../models/auth')
 require('../models/facebookauth')
+const transporter = require('../models/nodemailer')
 const ObjectId = mongoose.Types.ObjectId;
 const generateToken = (user, type, user_type) => {
     if (type === 'access') {
@@ -45,7 +47,79 @@ const hashpassword = async (password) => {
 
     return hashedPassword
 };
+const resetPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
+        // Generate the token
+        const resetToken = crypto.randomBytes(32).toString('hex');
+
+        // Save the token to the user in the database (hashed for security)
+        const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+        user.resetPasswordToken = hashedToken;
+        
+        await user.save({ validateBeforeSave: false });
+
+
+        // Create the reset URL
+        const resetURL = `http://localhost:3000/preset?token=${resetToken}`;
+
+        // Send the email
+        await sendResetEmail(user.email, resetURL);
+        res.cookie('email', user.email, {
+            maxAge: 3600000, 
+            httpOnly: false, 
+            secure: false, 
+            sameSite: 'Lax',
+        },()=>{
+            console.log('cookie set');
+            
+        });
+        res.json({ message: `An email has been sent to ${user.email}` });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'An error occurred' });
+    }
+};
+const change_password = async (req, res) => {
+    try {
+        const {password} = req.body
+        const email = req.cookies?.email
+        
+        console.log('email',email,'password',password);
+        const user = await User.findOne({email})
+        const hashedPassword = await hashpassword(password)
+        console.log('hashedpassword',hashedPassword);
+        
+        user.password = hashedPassword;
+        
+        await user.save({ validateBeforeSave: false });
+        return res.status(200).json({ message: 'Passowrd has been changed'});
+    } catch (error) {
+        return res.status(404).json({ error });
+    }
+}
+const sendResetEmail = async (to, resetURL) => {
+    const mailOptions = {
+        from: 'no-reply@scholagram.com', // Sender address
+        to: to, // Recipient's email
+        subject: 'Password Reset Request',
+        html: `
+            <p>Hello,</p>
+            <p>You requested to reset your password. Click the link below to reset it:</p>
+            <a href="${resetURL}" target="_blank">${resetURL}</a>
+            <p>If you did not request this, please ignore this email.</p>
+        `,
+    };
+
+    // Send the email
+    await transporter.sendMail(mailOptions);
+};
 
 const checkUser = (req, res) => {
     if (req.user) {
@@ -77,7 +151,7 @@ const login = async (req, res) => {
             user_type: type === "Owner" ? 3 : type === "Admin" ? 2 : type === "User" ? 1 : '',
             email: email
         });
-        console.log(user);
+        console.log('user',user);
         
         if (!user) {
             return res.status(404).json({ message: 'Account not found' });
@@ -142,7 +216,7 @@ const register = async (req, res) => {
             profession:body.profession,
             password: hashedPassword,
             looking_for: body.looking_for,
-            project_branch: body.project_branch,
+            main_field: body.main_field,
             type_of_study: body.type_of_study,
             scientific_interest: body.scientific_interest,
             project_title: body.project_title,
@@ -178,7 +252,17 @@ const register = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
-
+const signOut = async(req,res) =>{
+    req.session.destroy((err) => {
+        if (err) {
+            console.log(err);
+            
+            return res.status(500).json({ error: 'Failed to sign out' });
+        }
+        res.clearCookie('connect.sid'); // Clear session cookie
+        return res.status(200).json({ message: 'Signed out successfully' });
+    });
+}
 const refresh_token = async (req, res) => {
     const { refreshToken } = req.body;
     if (!refreshToken) {
@@ -225,5 +309,8 @@ module.exports = {
     login,
     register,
     refresh_token, loginFailed, checkUser,
-    setCookie
+    setCookie,
+    signOut,
+    resetPassword,
+    change_password
 };

@@ -1,0 +1,18 @@
+{
+    "_id": "0785846996012345678",
+    "firstName": "Abid",
+    "university": "Schiller International University, American College of Switzerland",
+    "profession": "doctor",
+    "lastName": "Salam",
+    "email": "example@gmail.com",
+    "password": "$2b$10$sErWOybJwjqhiXlH22wWM.ELofBEe.PHopNlapGetrUryF7SaLmAq",
+    "country": "Burundi",
+    "project_branch": "                                                                                                                        Cardiology                                                                                                                    ",
+    "profile_picture": "non-picture.jpg",
+    "user_type": 1,
+    "banned": false,
+    "phoneHidden": true,
+    "createdAt": "2024-11-15T21:46:02.854Z",
+    "__v": 0,
+    "name": "Abid Salam"
+}

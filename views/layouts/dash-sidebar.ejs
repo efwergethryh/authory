@@ -56,7 +56,7 @@
                   <div class="toggle-tab-container">
                      <div id="head" class="header">
                         <i id="paper" class="fa-solid fa-plus"></i>
-                        <span id="text" class="toggle-item">New post</span>
+                        <span id="new-post" class="toggle-item">New post</span>
                      </div>
 
                   </div>
@@ -67,7 +67,7 @@
                   <div id="posts" class="toggle-tab-container">
                      <div id="head" class="header">
                         <i class="fa-solid fa-"></i>
-                        <span id="text" class="toggle-item">Your posts</span>
+                        <span id="your-posts" class="toggle-item">Your posts</span>
                      </div>
 
                   </div>
@@ -83,7 +83,7 @@
 
 
 <div id="startpost-popup" class="create-post">
-   <div class="startpapers-label" id="joined">Publish a post</div>
+   <div class="startpapers-label" id="publish-post">Publish a post</div>
    <div class="startpost-popup">
       <i class="fas fa-times"></i>
       <div class="input-group">
@@ -96,29 +96,45 @@
 
                   <input id="fontFamily" class="fontFamily" title="Font family" value="Arial, sans-serif">
                   <div class="fontSize">
-                     <i id="decrease" class="fa-solid fa-minus"></i>
+                     <i id="increase-i">
+                        <svg id="decrease" height="24" viewBox="0 0 24 24" width="60" xmlns="http://www.w3.org/2000/svg">
+                           <path class="heroicon-ui"
+                              d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm4-8a1 1 0 0 1-1 1H9a1 1 0 0 1 0-2h6a1 1 0 0 1 1 1z" />
+                        </svg>
+                     </i>
+
+
                      <input id="font-size" value="18"></p>
-                     <i id="increase" class="fa-solid fa-plus"></i>
+                     <i>
+                        <svg width="26" id="increase" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round"
+                           stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                           <path
+                              d="m12.002 2c5.518 0 9.998 4.48 9.998 9.998 0 5.517-4.48 9.997-9.998 9.997-5.517 0-9.997-4.48-9.997-9.997 0-5.518 4.48-9.998 9.997-9.998zm0 1.5c-4.69 0-8.497 3.808-8.497 8.498s3.807 8.497 8.497 8.497 8.498-3.807 8.498-8.497-3.808-8.498-8.498-8.498zm-.747 7.75h-3.5c-.414 0-.75.336-.75.75s.336.75.75.75h3.5v3.5c0 .414.336.75.75.75s.75-.336.75-.75v-3.5h3.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-3.5v-3.5c0-.414-.336-.75-.75-.75s-.75.336-.75.75z"
+                              fill-rule="nonzero" />
+                        </svg>
+                     </i>
+
+                     <!-- <i id="increase" class="fa-solid fa-plus"></i> -->
                   </div>
 
                   <input type="color" name="color" id="color-picker" title="font color">
                   <div class="dividerdivider">
 
                   </div>
-                  <i id="bold" class="fa-solid fa-bold"></i>
-                  <i id="italic" class="fa-solid fa-italic"></i>
-                  <i id="underline" class="fa-solid fa-underline"></i>
-                  <i id="divide" class="fa-solid fa-window-minimize"></i>
+                  <i id="bold" class="tools-item fa-solid fa-bold"></i>
+                  <i id="italic" class="tools-item fa-solid fa-italic"></i>
+                  <i id="underline" class="tools-item fa-solid fa-underline"></i>
+                  <i id="divide" class="tools-item fa-solid fa-window-minimize"></i>
                   <div class="divider"></div>
 
-                  <i id="make-list" class="fa-solid fa-caret-right"></i>
+                  <i id="make-list" class="tools-item fa-solid fa-caret-right"></i>
                   <!-- <i class="fa-solid fa-list-ol"></i> -->
 
                   <div class="divider"></div>
 
-                  <i id="align-left" class="fa-solid fa-align-left" title="Align Left"></i>
-                  <i id="align-right" class="fa-solid fa-align-right" title="Align Right"></i>
-                  <i id="align-center" class="fa-solid fa-align-center" title="Align Center"></i>
+                  <i id="align-left" class="tools-item fa-solid fa-align-left" title="Align Left"></i>
+                  <i id="align-right" class="tools-item fa-solid fa-align-right" title="Align Right"></i>
+                  <i id="align-center" class="tools-item fa-solid fa-align-center" title="Align Center"></i>
                   <div class="divider"></div>
                   <label for="post-image">
                      <i id="choose-image" class="fa-regular fa-image" title="upload image"></i>
@@ -149,20 +165,20 @@
 </div>
 
 <div class="yourpostspopup" id="yourposts-popup">
-   <div class="startpapers-label" id="joined">Posts</div>
+   <div class="startpapers-label" id="posts-label">Posts</div>
    <div class="yourposts-popup" id="Myposts"></div>
 </div>
 <div id="editpost-popup" class="edit-post">
 
 </div>
 <div id="users-popup" class="users-popup">
-   <div class="startpapers-label" id="joined">Users</div>
+   <div class="startpapers-label" id="users-label">Users</div>
    <div id="users" class="users">
 
    </div>
 </div>
 <div id="admins-popup" class="admins-popup">
-   <div class="startpapers-label" id="joined">Admins</div>
+   <div class="startpapers-label" id="admins-label">Admins</div>
    <div id="Admins" class="users">
 
    </div>

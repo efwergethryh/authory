@@ -1,15 +1,176 @@
 {
-    "topBar":{
-        "signOut":"sign out",
-        "settings":"settings"
-    },
-    "sidebar": {
-      "usersEmails": "User Emails",
-      "admins": "admins",
-      "posts": "posts",
-      "yourPosts": "Posts"
-    },
-    "settingsPpup":{
-        "chooseLanguage":"Choose language"
+  "sidebar": {
+    "users": "Users",
+    "admins": "Admins",
+    "posts": "Posts",
+    "newPost": "New post",
+    "yourPosts": "Your posts",
+    "notifications": "Notifications",
+    "publicChat": "public chat",
+    "goTopost": "Go to post",
+    "search": "search",
+    "confirm": "confirm",
+    "cancel": "cancel",
+    "no_joined_papers": "No joined papers yet",
+    "no_papers": "You don't have any papers",
+    "delete": "delete",
+    "no_notifications":"You don't have any notifications"
+  },
+  "popupLabels": {
+    "publishPost": "publish",
+    "yourPosts": "Your Posts",
+    "editPost": "Edit post",
+    "posts": "Posts"
+  },
+  "postForm": {
+    "titlePlaceholder": "Post title ...",
+    "fontFamilyTitle": "font family",
+    "fontSizeTitle": "Font size",
+    "fontColorTitle": "font color",
+    "boldTitle": "Bold",
+    "italicTitle": "Italic",
+    "underlineTitle": "Underline",
+    "alignLeftTitle": "Align left",
+    "alignRightTitle": "Align right",
+    "alignCenterTitle": "Align center",
+    "uploadImageTitle": "Uplaod image",
+    "tagsPlaceholder": "Write tags related to the topic ...",
+    "publishButton": "Publish",
+    "update": "update",
+    "text_placeholder": "Enter your text"
+  },
+  "startPaper": {
+    "placeholder": "Enter your paper title ...",
+    "projectBranch": "Main field",
+    "type_of_study": "Type of study",
+    "we_need": "We need",
+    "language": "language",
+    "update": "update",
+    "publish": "Publish",
+    "tags": {
+      "label": "Tags",
+      "placeholder": "Write tags related to the topic ..."
     }
+  },
+  "userTools": {
+    "banUser": "Block user",
+    "setAdmin": "Set as admin",
+    "degradeAdmin": "Degrade to user"
+  },
+  "fontsList": {
+    "arabicFonts": [
+      "أميري, serif",
+      "القاهرة, sans-serif",
+      "درويد كوفي عربي, serif",
+      "لطيف, serif",
+      "المراعي, sans-serif",
+      "مونتسيرات عربي, sans-serif",
+      "تاجوال, sans-serif",
+      "ركس, cursive",
+      "نص مركزي, serif",
+      "سكل مجلى, sans-serif",
+      "حرمتان, sans-serif",
+      "المسيري, sans-serif",
+      "ريم كوفي, sans-serif",
+      "ساميم, sans-serif",
+      "صوفيا, sans-serif",
+      "رودا, sans-serif",
+      "أميثيست, serif",
+      "جنى لت, sans-serif",
+      "أميري قرآن, serif"
+    ],
+    "englishFonts": [
+      "أريال, sans-serif",
+      "فيردانا, sans-serif",
+      "هيلفيتيكا, sans-serif",
+      "تهوما, sans-serif",
+      "تريبيشيت مس, sans-serif",
+      "تايمز نيو رومان, serif",
+      "جورجيا, serif",
+      "غاراموند, serif",
+      "كورير نيو, monospace",
+      "برش سكريبت مس, cursive",
+      "سانس سيريف",
+      "بوبينز",
+      "روبوتو, sans-serif",
+      "مونتسيرات, sans-serif",
+      "أوبن سانس, sans-serif",
+      "لورا, serif",
+      "بليفير ديسبلي, serif",
+      "ميري ويذر, serif",
+      "لوبيستر, cursive",
+      "باسيفيكو, cursive",
+      "نونيتو, sans-serif",
+      "موكيتا, sans-serif",
+      "رالواي, sans-serif",
+      "أوبونتو, sans-serif"
+    ]
+  },
+  "topBar": {
+    "signOut": "Sign out",
+    "settings": "Settings",
+    "home": "Home",
+    "dashboard": "dashboard",
+    "editProfile":"Edit profile",
+    "language":"language",
+    "ar":"Arabic",
+    "en":"English"
+  },
+  "settingsPopup": {
+    "chooseLanguage": "Choose language"
+  },
+  "newPaper": {
+    "label": "Create paper",
+    "dropdowns": {
+      "startPaper": "start a paper",
+      "yourPapers": "your papers" 
+    }
+  },
+  "yourPapers": {
+    "enter": "enter",
+    "editPaper": "edit paper",
+    "deleteUser": "delete user from paper",
+    "deletePaper": "delete paper"
+  },
+  "joinPaper": {
+    "label": " Join papers",
+    "searchpaper": "Search papers",
+    "joinButton": "Join",
+    "enterButton": "Enter",
+    "accept":"accept",
+    "reject":"reject",
+    "advancedSearch": {
+      "searchPapers": "Search papers by title ...",
+      "label": "Advanced search",
+      "paperId": "ID",
+      "paperBranch": "Project branch",
+      "paperLang": "language",
+      "search": "search",
+      "we_need": "We need"
+    },
+    "dropdowns": {
+      "joinedPapers": "already joined"
+    }
+  },
+  "friends": {
+    "label": "friends",
+    "dropdowns": {
+      "yourfriends": "Your friends"
+    },
+    "searchfriends":"Search people",
+    "searchFriends": "Phone number, name, email",
+    "sendFriendMessage": "Send a message"
+  },
+  "notification_message": {
+    "message": " Sent you a message",
+    "accept_request": "accepted to join his paper",
+    "private": " Sent you a message in private chat",
+    "join_request": " Requested to join your paper",
+    "public": "Sent a public message",
+    "mention-in-public": " Mentioned you in public chat",
+    "mention-in-welcome": "Mentioned you in welcome chat",
+    "reply": " Replied to you in chat",
+    "default": "You have a new notification",
+    "decline_request":"Declined your request to join the paper"
+  }
 }

@@ -1,6 +1,6 @@
 const { default: mongoose } = require('mongoose');
 
-let users ={};
+let users = {};
 module.exports = (io) => {
     io.on('connection', (socket) => {
         socket.on('disconnect', () => {
@@ -11,12 +11,13 @@ module.exports = (io) => {
                 }
             }
         });
-        socket.on('register', (userId) => {
-            console.log('user id',userId);
-            
-            users[userId] = socket.id; 
-            console.log('user',users);
-            
+        socket.on('register', ({ userId, mainfield }) => {
+            console.log('user id', userId, mainfield);
+
+            users[userId] = { socketId: socket.id, mainfield };
+
+            console.log('user', users);
+
         });
         socket.on('disconnect', () => {
             for (let userId in users) {
@@ -26,40 +27,48 @@ module.exports = (io) => {
                 }
             }
         });
-            socket.on('send-notification', (data) => {
+        socket.on('send-notification', (data) => {
             try {
-               if (data.receiver) {
-                console.log('send notification data',data);
-                
-                socket.to(users[data.receiver]).emit('receive-notification', { data })
-                
-               } else {
-                    
-               }
+                if (data.receiver) {
+                    console.log('send notification data', data);
+
+                    socket.to(users[data.receiver]).emit('receive-notification', { data })
+
+                } else {
+
+                }
             } catch (error) {
                 console.log(error);
             }
         })
-        socket.on('notify-conversation',(data)=>{
-            console.log('data',data);
-            
+        socket.on('notify-conversation', (data) => {
+            console.log('data', data);
+
             if (data.receiver) {
-                console.log('sending notificaiont to user',users[data.receiver])
+                console.log('sending notificaiont to user', users[data.receiver])
                 socket.to(users[data.receiver]).emit('receive-notification-fromconversation', { data })
-                
-               } else {
-                    
-               }
+
+            } else {
+
+            }
         })
-        socket.on('notify-publicgroup',(data)=>{
-            console.log('sending to public group', data);
-            
-            for (const [userId, socketId] of Object.entries(users)) {
-                io.to(socketId).emit('receive-notification', {
-                   data
-                });
+        socket.on('notify-publicgroup', async (data) => {
+
+            if (data.message.profession =='') {
+                await socket.to('public-room').emit('receive-notification', { m: data.message.m });
             }
 
+            else {
+                
+                for (const [key, { socketId, mainfield }] of Object.entries(users)) {
+                
+                    if (data.message.mainfield === mainfield) {
+                
+                        await socket.to(socketId).emit('receive-notification', { m: data.message.m });
+                    }
+                }
+                
+            }
         })
     })
 }

@@ -1,10 +1,13 @@
-const express = require('express')
-const viewsRouter = require('../Controllers/viewsController')
-const userController = require('../Controllers/userController')
+const express = require('express');
+const viewsRouter = require('../Controllers/viewsController');
+const userController = require('../Controllers/userController');
+const { authMiddleware } = require('../Middlewares/authMiddleware');
+const validateResetToken = require('../Middlewares/resetValidation');
+const router = express.Router();
+const passport = require('passport');
+const User = require('../models/User');
 
-const router = express.Router()
-const passport = require('passport')
-
+// Public routes that don't require authentication
 router.get('/auth/google', (req, res, next) => {
     console.log("Redirecting to Google OAuth...");
     passport.authenticate('google', {
@@ -12,28 +15,36 @@ router.get('/auth/google', (req, res, next) => {
     })(req, res, next);
 });
 
+
 router.get('/auth/google/callback', passport.authenticate("google", {
     successRedirect: '/pages/home',
-    failureRedirect: '/pages/login'
-}))
+    failureRedirect: '/pages/login',
+}));
+
 router.get('/auth/facebook/', (req, res, next) => {
     passport.authenticate('facebook')(req, res, next);
-})
+});
+
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/login' }),
     function (req, res) {
-        // Successful authentication, redirect home.
         res.redirect('/pages/home');
-    });
+    }
+);
+
 router.get('/', viewsRouter.landing);
-router.get('/translations/:lang', viewsRouter.get_translation)
-// router.get('/login', viewsRouter.login_view);
-// router.get('/register', viewsRouter.register_view);
-router.get('/conversation-layout', viewsRouter.conv_layout)
-// router.get('/home', authMiddleware, viewsRouter.home_view);  
-// router.get('/dashboard',authMiddleware.authMiddleware([1,2,3]),viewsRouter.dashboard)
-// router.get('/custom-register',authMiddleware.authMiddleware([1,2,3]),)
-router.get('/posts/:postId', viewsRouter.view_post)
-router.get('/pages/:page', viewsRouter.render_page)
-router.get('/api/universities/:value', userController.fetchUniversities);
-module.exports = router
+router.get('/translations/:lang', viewsRouter.get_translation);
+router.get('/conversation-layout', viewsRouter.conv_layout);
+
+router.get('/posts/:postId', viewsRouter.view_post);
+router.get('/pages/:page', viewsRouter.render_page);
+
+router.get('/profile', authMiddleware([1, 2, 3]), (req, res) => {
+    res.render('profile');
+});
+
+router.get('/preset',validateResetToken, async (req, res) => {
+    res.render('preset')
+});
+
+module.exports = router;
