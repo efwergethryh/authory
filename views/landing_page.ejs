@@ -16,15 +16,15 @@
 <body>
     <div class="navbar">
 
-        <div class="auth-buttons">
+        <!-- <div class="auth-buttons">
             <button id="signIn" onclick="redirect('pages/login')">
                 Sign in
             </button>
             <button id="signUp" onclick="redirect('pages/register')">
                 Sign up
             </button>
-        </div>
-
+        </div> -->
+        <img class="logo" src="/images/ictoob.png" alt="not found">
         <div class="tabBar">
             <a href="#">Home</a>
             <a href="#">create paper</a>
@@ -34,12 +34,19 @@
                 <i id="pricing-toggle" class="fa-solid fa-chevron-up"></i>
             </a>
         </div>
-
+        <div class="auth-buttons">
+            <button id="signIn" onclick="redirect('pages/login')">
+                Login
+            </button>
+            <button id="signUp" onclick="redirect('pages/register')">
+               5 day Free Trial
+            </button>
+        </div>
         
 
     </div>
 
-    <img class="logo" src="images/ictoob.png" alt="not found">
+    <!-- <img class="logo" src="/images/ictoob.png" alt="not found"> -->
     <section class="section-1col bg-imghomeint">
         <div class="banner" style="display: none;">
             <div class="containerbanner">
@@ -58,16 +65,10 @@
                         fields and nationalities.</strong></h2>
             </div>
             <div class="container-content">
-                <h5 class="weight-regular color-dark02">A secure and trusted community that exclusively attracts
+                <h5 class="weight-regular" style="color: var(--grey--dark02);font-weight: 400;">A secure and trusted community that exclusively attracts
                     scientists and researchers, to collaboration on scientific and literary projects</h5>
             </div>
-            <div class="container-footer">
-                <div><a track-prop-value="none" track-evt="register_button_clicked" class="btn-lg-brand w-button">Start
-                        Free
-                        Trial</a>
-                    <p id="not-credit" class="xsmall btn-companion">(No credit card required)</p>
-                </div>
-            </div>
+            
         </div>
     </section>
     <section class="section-3col">
@@ -154,7 +155,7 @@
                             data-autoplay="true" data-loop="true" data-wf-ignore="true"
                             class="home--group-chat-img video w-background-video w-background-video-atom"><video
                                 id="a02aafd0-5263-8c7a-e8e6-eddeb8d5f018-video" autoplay="" loop=""
-                                style="background-image:url(&quot;https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/663b271d6f05c8c9e11f8d65_Discord Refresh Sound-MP4-poster-00001.jpg&quot;)"
+                                style="background-image:url('https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/663b271d6f05c8c9e11f8d65_Discord Refresh Sound-MP4-poster-00001.jpg')"
                                 muted="" playsinline="" data-wf-ignore="true" data-object-fit="cover"
                                 src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/663b271d6f05c8c9e11f8d65_Discord Refresh Sound-MP4-transcode.mp4">
                                 <source
@@ -167,9 +168,7 @@
                     </div>
                     <div class="home--text-wr is-mobile-first">
                         <h2 class="heading--h2">Updated news</h2>
-                        <!-- <p class="body-text--xl new-home">Use custom emoji, stickers, soundboard effects and more to add
-                            your personality to your voice, video, or text chat. Set your avatar and a custom status,
-                            and write your own profile to show up in chat your way.</p> -->
+                       
                     </div>
                 </div>
             </div>

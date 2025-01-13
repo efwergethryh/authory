@@ -173,8 +173,8 @@ const login = async (req, res) => {
         await refreshTokenRecord.save();
 
         res.cookie('accessToken', accessToken, {
-            httpOnly: false,
-            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
+            secure: true,
             sameSite: 'Lax',
         });
 
@@ -186,8 +186,6 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-
-    
     try {
         const email = res.locals.email
         const password = res.locals.password
@@ -236,8 +234,8 @@ const register = async (req, res) => {
 
         await refreshTokenRecord.save();
         res.cookie('accessToken', accessToken, {
-            httpOnly: false,
-            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
+            secure: true,
             sameSite: 'Strict',
         });
 

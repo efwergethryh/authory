@@ -26,17 +26,7 @@ const allowedOrigins = [
     'http://localhost:3000',
 ];
 
-// app.use(cors({
-//     origin: (origin, callback) => {
-//         if (allowedOrigins.includes(origin) || !origin) {
-//             callback(null, true); // Allow requests from these origins
-//         } else {
-//             callback(new Error('Not allowed by CORS')); // Reject others
-//         }
-//     },
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     credentials: true, // Allow credentials (cookies, authorization headers)
-// }));
+
 app.use(cors({
     origin: '*',  // Allow all origins for debugging
     methods: ['GET', 'POST', 'PUT', 'DELETE'],

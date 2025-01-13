@@ -42,7 +42,9 @@ router.get('/pages/:page', viewsRouter.render_page);
 router.get('/profile', authMiddleware([1, 2, 3]), (req, res) => {
     res.render('profile');
 });
-
+router.get('/sockettest',authMiddleware([1, 2, 3]),(req,res)=>{
+    res.render('sockettest')
+})
 router.get('/preset',validateResetToken, async (req, res) => {
     res.render('preset')
 });

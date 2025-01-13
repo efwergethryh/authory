@@ -16,6 +16,62 @@ module.exports = (io) => {
         //     console.log('user', users);
 
         // }); 
+        // socket.on('joinRoom', (roomID, ) => {
+        //     socket.join(roomID);
+        //     console.log(`user joined room: ${roomID}`);
+        
+        //     // Emit event to other users in the room
+        //     socket.to(roomID).emit('userJoinedRoom', {
+        //       id: socket.id,
+        //       username: userData.name,
+        //       mobile: userData.mobile,
+        //     });
+        
+        //     callback('Joined successfully');
+        //   });
+        // socket.on('userJoinedRoom', (userID) => {
+
+        //     socket.emit('userJoinedRoom', {
+        //         id: socket.id,
+        //         userID
+        //     });
+
+           
+        // });
+
+        // // Handling mute/unmute toggle
+        // socket.on('toggleMute', (roomID) => {
+        //     socket.to(roomID).emit('userMuteStatusChanged', { userID: socket.id, isMuted: true });
+        // });
+
+        // // Handling video on/off toggle
+        // socket.on('toggleVideo', (roomID) => {
+        //     socket.to(roomID).emit('userVideoStatusChanged', { userID: socket.id, isVideoOn: true });
+        // });
+
+        // // Screen share
+        // socket.on('startScreenShare', (roomID) => {
+        //     socket.to(roomID).emit('userStartedScreenShare', socket.id);
+        // });
+
+        // socket.on('stopScreenShare', (roomID) => {
+        //     socket.to(roomID).emit('userStoppedScreenShare', socket.id);
+        // });
+
+        // // Sending messages
+        // socket.on('sendMessage', (roomID, message) => {
+        //     socket.to(roomID).emit('newMessage', {
+        //         user: socket.id,
+        //         message: message,
+        //     });
+        // });
+
+        // Handle user disconnect
+        socket.on('disconnect', () => {
+            console.log('user disconnected:', socket.id);
+            // Notify others in the room about the user leaving
+            io.emit('userRemoved', { id: socket.id });
+        });
         socket.on('register', ({ userId, mainfield }) => {
             console.log('user id', userId, mainfield);
 
@@ -65,20 +121,20 @@ module.exports = (io) => {
             console.log(`User with ID ${userId} joined public room`);
         })
         socket.on('send-to-public-room', async (data) => {
-            if (data.message.profession =='') {
+            if (data.message.profession == '') {
                 await io.to('public-room').emit('receive-message', { m: data.message.m });
             }
 
             else {
-                
+
                 for (const [key, { socketId, profession }] of Object.entries(users)) {
-                
+
                     if (data.message.mainfield === profession) {
-                
+
                         await socket.to(socketId).emit('receive-message', { m: data.message.m });
                     }
                 }
-                
+
             }
         })
         socket.on('send-to-subchat', async (data) => {
