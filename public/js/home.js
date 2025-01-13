@@ -3046,7 +3046,8 @@ async function get_conversation(id, type) {
     show_spinner();
 
     try {
-
+        
+           
         loadMessages(id, false)
 
         join_conversation(id);
@@ -3057,6 +3058,7 @@ async function get_conversation(id, type) {
             // Ensure messaging-container is added only once
             let chat_body = document.getElementById('chat-body');
             let message_history = document.getElementById('message-history');
+            
             if (!chat_body) {
                 chat_body = document.createElement('div')
                 chat_body.className = 'chat-body'
@@ -3069,6 +3071,7 @@ async function get_conversation(id, type) {
                 message_history.id = 'message-history'
                 chat_body.append(message_history)
             }
+        
             if (!document.getElementById('messaging-container')) {
                 chat_body.innerHTML += `
                     <div id="messaging-container" class="messaging-container">
@@ -3080,8 +3083,30 @@ async function get_conversation(id, type) {
                     </div>
                 `;
             }
+            const response = await fetch(`/api/conversation/${id}`);
 
+            if (response.ok) {
+                const data = await response.json();
+                const chats = document.querySelector('.chat-container');
+                message_history.innerHTML =''
+                let Chatcontent = '';
+        
+                Chatcontent = `
+                        <div class="chatInfo" style="display:flex">
+                            <a onclick="close_conversation()">
+                                Close
+                            </a>
+                            <span style="font-weight:700;">
+                                ${data.conversation.conv_title}
+                            </span>
+                            <img src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
+                        </div>
+                `;
+        
+                chats.innerHTML += Chatcontent;
+            }
         }
+        
         document.getElementById('message-history').onscroll = () => {
             handleScroll()
         };
@@ -3250,7 +3275,7 @@ async function buildConversations(paper_UserId, paper_id) {
 
         for (const conversation of data.conversations) {
             conversationContent += `
-                <div id="conversationItem" onclick="load_conversation('${conversation._id}')" class="conversation-item">
+                <div id="conversationItem" onclick="get_conversation('${conversation._id}')" class="conversation-item">
                     <img src="/conversation_images/${conversation.conv_pic}" alt="${conversation.conv_title}"/>
                     <h3>${conversation.conv_title}</h3>
                     <div class="new-notification" id="private-new-${conversation._id}">
@@ -3530,7 +3555,7 @@ async function show_Single_conversation(user_id) {
             load_f_conversations()
 
             control_sendButton('private')
-            inputListeners('private')
+            // inputListeners('private')
             const message_history = document.getElementById('message-history');
             if (messagesData.messages.length === 0) {
                 message_history.innerHTML = `
@@ -3951,25 +3976,44 @@ function show_options() {
 
     document.getElementById('options-popup').style.display = 'block';
 
-
-
-
 }
-function inputListeners(value) {
+// Global event handler functions
+const imageInputHandler = (event,value) => {
+    initializeFile(value);
+    processImage(event);
+};
 
+const fileInputHandler = (event,value) => {
+    initializeFile(value);
+    processFile(event);
+};
+
+function inputListeners(value) {
+    console.log('input listener triggered');
 
     const imageInput = document.getElementById('image-input');
     const fileInput = document.getElementById('file-input');
-    imageInput.addEventListener('change', (event) => {
 
-        initializeFile(value)
-        processImage(event)
-    });
-    fileInput.addEventListener('change', (event) => {
-        initializeFile(value)
-        processFile(event)
-    });
+    // Check if the elements exist
+    if (!imageInput || !fileInput) {
+        console.error('Error: Inputs not found!');
+        return;
+    }
+
+    // Remove previous event listeners and log the action
+    console.log("Removing previous event listeners...");
+    imageInput.removeEventListener('change', imageInputHandler);
+    fileInput.removeEventListener('change', fileInputHandler);
+
+    // Add new event listeners
+    console.log("Adding new event listeners...");
+    imageInput.addEventListener('change', (event)=>{imageInputHandler(event,value)});
+    fileInput.addEventListener('change', (event)=>{fileInputHandler(event,value)});
+
+    // Verify that event listeners were added correctly
+    console.log("Event listeners added!");
 }
+
 function initializeFile(value) {
     const fileFrame = document.createElement('div');
     fileFrame.className = 'file-frame';
@@ -4256,24 +4300,23 @@ function control_sendButton(value) {
 
 
     });
-    document.removeEventListener('keydown', function (event) {
+    document.removeEventListener('keydown',async function (event) {
         if (event.key === 'Enter') { // Correct the key check
             console.log('event', event.key);
 
             if (text.value.trim() !== "") { // Ensure there is text to send
-                send_message(value);
+                await send_message(value);
                 text.value = ''; // Clear the input field
                 sendButton.classList.remove('active'); // Reset button state
                 sendButton.style.pointerEvents = 'none'; // Disable clicking
             }
         }
     });
-    document.addEventListener('keydown', function (event) {
+    document.addEventListener('keydown', async function (event) {
         if (event.key === 'Enter') { // Correct the key check
-            console.log('event', event.key);
 
             if (text.value.trim() !== "") { // Ensure there is text to send
-                send_message(value);
+                await send_message(value);
                 text.value = ''; // Clear the input field
                 sendButton.classList.remove('active'); // Reset button state
                 sendButton.style.pointerEvents = 'none'; // Disable clicking
@@ -4306,7 +4349,7 @@ async function load_f_conversations() {
             console.log('convesation', conversation);
 
             Chatcontent += `
-                <div id="conversationItem" onclick="load_conversation('${conversation._id}')" class="conversation-item">
+                <div id="conversationItem" onclick="get_conversation('${conversation._id}')" class="conversation-item">
                     <img src="/profile_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
                     <h3>${user.name}</h3>
                     <div class="new-notification" id="private-new-${conversation._id}">
@@ -4328,26 +4371,26 @@ async function load_conversation(id) {
     const response = await fetch(`/api/conversation/${id}`);
 
     if (response.ok) {
-        const data = await response.json();
-        const chats = document.querySelector('.chat-container');
-        document.getElementById('message-history').innerHTML =''
-        let Chatcontent = '';
+        // const data = await response.json();
+        // const chats = document.querySelector('.chat-container');
+        // document.getElementById('message-history').innerHTML =''
+        // let Chatcontent = '';
 
-        Chatcontent = `
-                <div class="chatInfo" style="display:flex">
-                    <a onclick="close_conversation()">
-                        Close
-                    </a>
-                    <span style="font-weight:700;">
-                        ${data.conversation.conv_title}
-                    </span>
-                    <img src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
-                </div>
-        `;
+        // Chatcontent = `
+        //         <div class="chatInfo" style="display:flex">
+        //             <a onclick="close_conversation()">
+        //                 Close
+        //             </a>
+        //             <span style="font-weight:700;">
+        //                 ${data.conversation.conv_title}
+        //             </span>
+        //             <img src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
+        //         </div>
+        // `;
 
-        chats.innerHTML += Chatcontent;
+        // chats.innerHTML += Chatcontent;
 
-        get_conversation(data.conversation._id, 'private')
+        // get_conversation(data.conversation._id, 'private')
     } else {
         chats.innerHTML = `Error loading your conversations`;
     }
@@ -4493,7 +4536,7 @@ async function show_public_conversation() {
         `;
 
     mainContent.innerHTML = content
-    inputListeners('public')
+    // inputListeners('public')
     mainContent.style.display = 'block'
     control_sendButton('public')
     const messagingContainer = document.getElementById('messaging-container');

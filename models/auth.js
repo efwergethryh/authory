@@ -38,7 +38,7 @@ async function generateUserId() {
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: 'http://ictoob.com/auth/google/callback',
+    callbackURL: 'https://scholagram.com/auth/google/callback',
     passReqToCallback: true,
     scope: ['profile', 'email', 'name'] // Specify the necessary scopes
 }, async (req, accessToken, refreshToken, profile, done) => {

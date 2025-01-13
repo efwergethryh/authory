@@ -236,7 +236,6 @@ const send_message = async (req, res) => {
         const members = conversation.members
         console.log('body', req.body);
         const file = req.file
-        console.log('file in controller',file);
         
         const body = req.body
         const newMessage = new message({
@@ -247,7 +246,7 @@ const send_message = async (req, res) => {
             replyTo,
             fileUrl:file ? file.originalname : null
         })
-        newMessage.save();
+        await newMessage.save();
 
         const paper = await get_paper(conversation.paper_id)
 

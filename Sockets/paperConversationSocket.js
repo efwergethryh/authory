@@ -59,7 +59,7 @@ module.exports = (io) => {
             socket.join('public-room')
         })
         socket.on('send-to-public-room', async (data) => {
-            if (data.message.profession == '') {
+            if (data.message.mainfield == '') {
                 await io.to('public-room').emit('receive-message', { m: data.message.m });
             }
 
