@@ -85,7 +85,7 @@ async function generateUserId() {
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "https://ictoob.com/auth/facebook/callback",
+    callbackURL: "https://scholagram.com/pages/callback",
     profileFields: ['id', 'displayName', 'emails', 'photos'],
     scope: ['email'], 
     passReqToCallback: true
