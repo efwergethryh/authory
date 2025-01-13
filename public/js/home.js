@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://scholagram.com:3000';
+const API_BASE_URL = 'https://scholagram.com';
 const localhostAPI = 'http://localhost:3000';
 let messages;
 let conversation_type;
