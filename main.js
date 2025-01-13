@@ -56,7 +56,7 @@ app.use('/api/', apisRouter);
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "https://scholagram.com",
+        origin: "*",
         methods: ["GET", "POST","DELETE","PUT"]
     }   
 });
