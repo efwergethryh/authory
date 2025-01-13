@@ -58,10 +58,9 @@ const chatContainer = document.querySelector('.chat-container');
 const toggleButton = document.getElementById('advanced_button');
 // const search_button = document.getElementById('search')
 const socket = io(API_BASE_URL, {
-    // transports: ['polling', 'websocket'],
+    transports: ['polling', 'websocket'],
     query: {
         userId: userId,
-
     }
 });
 let Nskip = 0
