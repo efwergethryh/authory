@@ -124,10 +124,10 @@ passport.use(new FacebookStrategy({
             //     secure: true,
             //     sameSite: 'Lax',
             // });
-            const accessToken = generateToken(existingUser, 'access', 1);
-            const refreshToken = generateToken(existingUser, 'refresh', 1);
+            const accessToken = generateToken(user, 'access', 1);
+            const refreshToken = generateToken(user, 'refresh', 1);
             const refreshTokenRecord = new RefreshToken({
-                userId: existingUser._id,
+                userId,
                 token: refreshToken,
                 expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
             });
