@@ -61,7 +61,8 @@ const server = http.createServer(options,app);
 const io = new Server(server, {
     cors: {
         origin: "https://scholagram.com",
-        methods: ["GET", "POST","DELETE","PUT"]
+        methods: ["GET", "POST","DELETE","PUT"],
+        credentials:true
     }   
 });
 require('./Sockets/paperConversationSocket')(io);
