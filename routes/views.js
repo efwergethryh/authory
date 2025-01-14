@@ -25,11 +25,11 @@ router.get('/auth/facebook/', (req, res, next) => {
     passport.authenticate('facebook')(req, res, next);
 });
 
-router.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { failureRedirect: '/pages/login' }),
-    function (req, res) {
-        res.redirect('/pages/home');
-    }
+router.get('/auth/facebook/callback',passport.authenticate('facebook', {
+        successRedirect: '/pages/home',
+        failureRedirect: '/pages/login'
+    }),
+
 );
 
 router.get('/', viewsRouter.landing);
@@ -42,10 +42,10 @@ router.get('/pages/:page', viewsRouter.render_page);
 router.get('/profile', authMiddleware([1, 2, 3]), (req, res) => {
     res.render('profile');
 });
-router.get('/sockettest',authMiddleware([1, 2, 3]),(req,res)=>{
+router.get('/sockettest', authMiddleware([1, 2, 3]), (req, res) => {
     res.render('sockettest')
 })
-router.get('/preset',validateResetToken, async (req, res) => {
+router.get('/preset', validateResetToken, async (req, res) => {
     res.render('preset')
 });
 
