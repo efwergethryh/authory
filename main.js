@@ -12,7 +12,7 @@ const passport = require('passport');
 const http = require('http');
 const multer = require('multer'); 
 const path = require('path')
-
+const fs = require('fs');
 // Database connection
 m_connect();
 
@@ -52,8 +52,12 @@ app.use('/', viewsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/', apisRouter); 
 
+const options = {
+    key: fs.readFileSync('/etc/letsencrypt/live/scholagram.com/privkey.pem'),  // Private key
+    cert: fs.readFileSync('/etc/letsencrypt/live/scholagram.com/fullchain.pem'),  // Full certificate chain
+};
+const server = http.createServer(options,app);
 
-const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         origin: "https://scholagram.com",
