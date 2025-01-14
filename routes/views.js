@@ -9,7 +9,6 @@ const User = require('../models/User');
 
 // Public routes that don't require authentication
 router.get('/auth/google', (req, res, next) => {
-    console.log("Redirecting to Google OAuth...");
     passport.authenticate('google', {
         scope: ['profile', 'email'],
     })(req, res, next);
@@ -22,10 +21,12 @@ router.get('/auth/google/callback', passport.authenticate("google", {
 }));
 
 router.get('/auth/facebook/', (req, res, next) => {
+    
     passport.authenticate('facebook')(req, res, next);
 });
 
 router.get('/auth/facebook/callback',passport.authenticate('facebook', {
+        
         successRedirect: '/pages/home',
         failureRedirect: '/pages/login'
     }),

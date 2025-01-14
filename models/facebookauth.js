@@ -106,7 +106,7 @@ passport.use(new FacebookStrategy({
             req.res.cookie("jwt", token, {
                 maxAge: 3600000,
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production'
+                secure: true
             });
             return done(null, user);
         } else {
@@ -127,7 +127,7 @@ passport.use(new FacebookStrategy({
             req.res.cookie("jwt", token, {
                 maxAge: 3600000,
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production'
+                secure: true
             });
 
             return done(null, user);
