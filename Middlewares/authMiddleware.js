@@ -10,6 +10,7 @@ const authMiddleware =(allowedRoles)=> async (req, res, next) => {
         return next(); // Skip authMiddleware for this route
     }        
     const token = req.cookies?.accessToken;
+    console.log('token',token);
     
     if (!token) {
         return res.redirect('/pages/login')

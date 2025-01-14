@@ -2,6 +2,7 @@ const passport = require('passport');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const RefreshToken = require('./refreshtoken');
 require('dotenv').config();
 const FacebookStrategy = require('passport-facebook').Strategy;
 const createToken = (id) => jwt.sign({ userId: id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
@@ -21,6 +22,15 @@ async function generateUserId() {
 
     return uniqueId;
 }
+const generateToken = (user, type, user_type) => {
+    if (type === 'access') {
+        return jwt.sign({ user_type, id: user._id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+    } else if (type === 'refresh') {
+        return jwt.sign({ user_type, id: user._id, email: user.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+    } else {
+        throw new Error('Invalid token type');
+    }
+};
 // passport.use(new FacebookStrategy({
 //     clientID: process.env.FACEBOOK_APP_ID,
 //     clientSecret: process.env.FACEBOOK_APP_SECRET,
@@ -103,10 +113,30 @@ passport.use(new FacebookStrategy({
 
         if (user) {
             const token = createToken(user._id);
-            req.res.cookie("jwt", token, {
-                maxAge: 3600000,
-                httpOnly: true,
-                secure: true
+            // req.res.cookie("jwt", token, {
+            //     maxAge: 3600000,
+            //     httpOnly: true,
+            //     secure: true
+            // });\
+            // req.res.cookie('accessToken', token, {
+            //     maxAge: 3600000,
+            //     httpOnly: true,
+            //     secure: true,
+            //     sameSite: 'Lax',
+            // });
+            const accessToken = generateToken(existingUser, 'access', 1);
+            const refreshToken = generateToken(existingUser, 'refresh', 1);
+            const refreshTokenRecord = new RefreshToken({
+                userId: existingUser._id,
+                token: refreshToken,
+                expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+            });
+
+            await refreshTokenRecord.save();
+            req.res.cookie('accessToken', accessToken, {
+                httpOnly: false,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Lax',
             });
             return done(null, user);
         } else {
