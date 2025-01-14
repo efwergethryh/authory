@@ -22,13 +22,16 @@ m_connect();
 //     credentials: true 
 // }));
 const allowedOrigins = [
-    'http://145.223.34.195',
+    'https://145.223.34.195',
     'http://localhost:3000',
 ];
 
 
 app.use(cors({
-    origin: '*',  // Allow all origins for debugging
+    origin: [
+        'https://145.223.34.195',
+        'http://localhost:3000',
+    ],  // Allow all origins for debugging
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   }));
@@ -56,13 +59,16 @@ const options = {
     key: fs.readFileSync('/etc/letsencrypt/live/scholagram.com/privkey.pem'),  // Private key
     cert: fs.readFileSync('/etc/letsencrypt/live/scholagram.com/fullchain.pem'),  // Full certificate chain
 };
-const server = http.createServer(options,app);
+const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "https://scholagram.com",
+        origin: [
+            'https://145.223.34.195',
+            'http://localhost:3000',
+        ],
         methods: ["GET", "POST","DELETE","PUT"],
-        credentials:true
+        
     }   
 });
 require('./Sockets/paperConversationSocket')(io);
