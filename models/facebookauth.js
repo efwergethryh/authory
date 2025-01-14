@@ -85,7 +85,7 @@ async function generateUserId() {
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "https://scholagram.com/pages/callback",
+    callbackURL: "https://scholagram.com/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'emails', 'photos'],
     scope: ['email'], 
     passReqToCallback: true
@@ -97,10 +97,8 @@ passport.use(new FacebookStrategy({
     const email = profile.emails && profile.emails[0] ? profile.emails[0].value : null; 
     const picture = profile.photos && profile.photos[0] ? profile.photos[0].value : null;
     const userId =await  generateUserId()
-    console.log(profile);
     
     try {
-        // Check if the user already exists in the database
         let user = await User.findOne({ facebookId });
 
         if (user) {
