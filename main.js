@@ -21,10 +21,7 @@ m_connect();
 //     origin: 'http://localhost:3000',
 //     credentials: true 
 // }));
-const allowedOrigins = [
-    'https://145.223.34.195',
-    'http://localhost:3000',
-];
+
 
 
 app.use(cors({
@@ -55,10 +52,7 @@ app.use('/', viewsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/', apisRouter); 
 
-const options = {
-    key: fs.readFileSync('/etc/letsencrypt/live/scholagram.com/privkey.pem'),  // Private key
-    cert: fs.readFileSync('/etc/letsencrypt/live/scholagram.com/fullchain.pem'),  // Full certificate chain
-};
+
 const server = http.createServer(app);
 
 const io = new Server(server, {
