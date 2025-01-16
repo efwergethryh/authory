@@ -8,7 +8,7 @@ body {
     display: flex;
     flex-direction: row;
     height: 200vh;
-    overflow-y: hidden;
+    overflow-y: scroll;
 }
 .circle-button {
     width: 30px;
@@ -45,16 +45,16 @@ body {
 } */
 .view-post {
     width: 90%;
-    height: 38%;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     background-color: white;
     padding: 3vw;
     border-radius: 20px;
     font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
-    position: relative;
+    position: absolute;
     align-self: center;
-    top: -26%;
+    top: 9%;
     margin-left: 3%;
     align-items: center;
     overflow-y: auto;
@@ -70,7 +70,7 @@ body {
 ul li section {
     display: none;
     width: 95%;
-    height: 6.5vw;
+    height: fit-content;
     overflow-y: auto;
     margin-top: 1vw;
     margin-left: 3vw;

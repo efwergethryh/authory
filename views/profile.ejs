@@ -9,7 +9,13 @@
 </head>
 
 <body>
+    
     <input id="user-data" hidden value='<%- JSON.stringify(user) %>'>
+    <div class="circle-button" onclick="goBack()">
+        <svg style="position: relative; z-index: 15; right: -16%; bottom: -13%;" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-left " viewBox="0 0 34 34" role="img">
+           <path d="m15 18-6-6 6-6"></path>
+        </svg>
+     </div>
     <div id="name-popup" data-testid="content-container"
         class="sc-aXZVg iturQS bg-white rounded max-h-[70vh] overflow-auto max-w-full min-w-[350px] undefined"
         aria-modal="true">

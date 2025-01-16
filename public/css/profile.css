@@ -2484,7 +2484,27 @@ svg:not(:root).svg-inline--fa {
     }
     
 }
-
+.circle-button {
+    width: 30px;
+    height: 30px;
+    background-color: #F5F7FA;
+    border: 1px solid #D3D8DE;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    position: relative;
+    top: 10%;
+    z-index: 50;
+    left: 2%;
+    transition: left 0.3s ease;
+}
+.circle-button:hover {
+    background-color: #E2E8F0;
+    /* Slightly darker on hover */
+}
 .gzWfrf {
     box-sizing: border-box;
     margin: 0px;

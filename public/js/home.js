@@ -282,7 +282,7 @@ async function buildmessagecontent(message) {
 
 
     messageContent += `
-            <div class="message-info">
+            <div class="message-info" ondbclick="reply('${message.m._id}', '${message.m.text.replace(/'/g, "\\'")}')">
                 <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender.user[0]).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.user[0].profile_picture ? sender.user[0].profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
                 <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.m.sender === userId ? 'sent' : 'received'}" >
                     ${img}
@@ -296,7 +296,6 @@ async function buildmessagecontent(message) {
                                 <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
                     `}
                     
-                    <i style ="${isImage ? "display:none" : "display:block"} class="fa-solid fa-reply" onclick="reply('${message.m._id}', '${message.m.text.replace(/'/g, "\\'")}')"></i>
                 </div>
             </div>
 `;
@@ -817,9 +816,10 @@ async function goTopost(id, n_id) {
         window.location.href = `/posts/${id}`
     }
 }
-function reply(id, message) {
+function reply( message) {
 
-
+    console.log('message',message);
+    message = JSON.parse(message)
     reset_reply();
     const message_container = document.getElementById('messaging-container');
     let file = ``
@@ -847,7 +847,9 @@ function reply(id, message) {
     reply_content.id = 'reply-content'
     const message_content = document.createElement('p');
     message_content.id = `message_content`;
-    message_content.textContent = message_content.textContent = isImage
+    console.log('message text',message.text);
+    
+    message_content.textContent  = isImage
         ? `${message.text}`
         : isFile && message.text !== ''
             ? `,${message.text}`
@@ -864,17 +866,17 @@ function reply(id, message) {
     closeButton.id = 'close-button';
     closeButton.className = 'fa-solid fa-xmark close-button';
     closeButton.onclick = function () {
-        reset_reply(id);
+        reset_reply(message.id);
     };
 
 
     isreply = true;
-    replyTo = id;
+    replyTo = message._id;
     console.log('ReplyTo:', replyTo, 'isreply:', isreply);
+    reply_content.appendChild(closeButton);
+    message_container.prepend(reply_content);
 
-    message_container.appendChild(reply_content);
-
-    message_container.appendChild(closeButton);
+    
 
 }
 
@@ -2396,12 +2398,11 @@ async function send_message(type) {
             : (captions && captions.value.trim() !== '')
                 ? captions.value
                 : '';
-        console.log('text', text);
 
         formData.append('text', text);
 
         formData.append('isreply', isreply ? 'true' : 'false');
-
+        formData.append('replyTo',replyTo)
         const fileInput = document.getElementById('image-input');
         const imageInput = document.getElementById('file-input');
 
@@ -3569,13 +3570,12 @@ async function show_Single_conversation(user_id) {
                     console.log(message_history);
                     message_history.innerHTML = message_content;
 
-                    messages.forEach(message => {
-                        const messageInfo = document.getElementById(`message-info-${message._id}`);
-                        console.log(messageInfo);
-                        messageInfo.addEventListener('dblclick', function () {
-                            reply(message._id, message);
-                        });
-                    });
+                    // messages.forEach(message => {
+                    //     const messageInfo = document.getElementById(`message-info-${message._id}`);
+                    //     messageInfo.addEventListener('dblclick', function () {
+                    //         reply(message._id, message);
+                    //     });
+                    // });
                 } catch (err) {
                     console.log(err);
                 }
@@ -3910,10 +3910,12 @@ async function buildMessageContent(messages, userId) {
 
 
         }
-
+        console.log('message',message);
+        
         if (message.isreply && message.replyTo) {
             const originalMessage = messages.find(m => m._id.toString() === message.replyTo.toString());
-
+            console.log('reply message',originalMessage);
+            
             if (originalMessage) {
                 replyContent = `
                     <div class="reply-info">
@@ -3946,26 +3948,106 @@ async function buildMessageContent(messages, userId) {
         } else {
             path = `/profile_images/non-picture.jpg`
         }
-        console.log('isfile', isfile);
-
-        message_content += `    
-            <div id="message-info-${message._id}" class="${isfile ? "message-info isfile" : "message-info"}" style="${isImage ? "margin-bottom:1%;margin-top: 2%;" : "10px"}">
-                <img onclick="event.stopPropagation();  showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"  src="${path}"  class="sender-image" />
-                <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.sender === userId ? 'sent' : 'received'}" >
+        let messageInfo = `
+        <div id="message-info-${message._id}" 
+             class="${isfile ? "message-info isfile" : "message-info"}" 
+             style="${isImage ? "margin-bottom:1%;margin-top: 2%;" : "margin: 10px"}"
+             ondblclick="reply( '${JSON.stringify(message).replace(/"/g, '&quot;')}')"
+             >
+             
+            ${message.senderDetails._id === userId ? `
+                <div style="${isImage ? "padding:0px;" : "padding:4px 15px;"}"  
+                     class="message sent">
+                     
                     ${img}
-                    ${replyContent} 
-                    ${isImage ? `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
-                    <span class='${message.isreply ? "message-text reply" : "message-text"}'>${message.text ? message.text : ""}</span>`
-                : `
-                    <span class='${message.isreply ? "message-text reply" : "message-text"}'>${message.text ? message.text : ""}</span>
-
-                    <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
+                    ${isImage ? `
+                        <span class="imageTime">${formattedDate}</span>
+                        <span class="${message.isreply ? "message-text reply" : "message-text"}">
+                            ${message.text || ""}
+                        </span>` : `
+                        <span class="${message.isreply ? "message-text reply" : "message-text"}">
+                            ${message.text || ""}
+                        </span>
                     `}
+                    ${replyContent}
+                    <span class="time">${formattedDate}</span>
+
                     
-                    <i style ="${isImage ? "display:none" : "display:block"} class="fa-solid fa-reply" onclick="reply('${message._id}', '${message.text ? message.text.replace(/'/g, "\\'") : ""}')"></i>
+                    
+                    
                 </div>
-            </div>
-            `;
+                <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"  
+                     src="${path}"  
+                     class="sender-image" />
+            ` : `
+                <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"  
+                     src="${path}"  
+                     class="sender-image" />
+                     
+                <div style="${isImage ? "padding:0px;" : "padding:4px 15px;"}"  
+                     class="message received">
+                     
+                    ${img}
+                    ${isImage ? `
+                        <span class="imageTime">${formattedDate}</span>
+                        <span class="${message.isreply ? "message-text reply" : "message-text"}">
+                            ${message.text || ""}
+                        </span>` : `
+                        <span class="${message.isreply ? "message-text reply" : "message-text"}">
+                            ${message.text || ""}
+                        </span>
+                        
+                    `}
+                    ${replyContent}
+                    <span class="time">${formattedDate}</span>
+                    
+                    
+                    
+                </div>
+            `}
+        </div>
+    `;
+    
+        // `
+        // ${message.senderDetails._id === userId ? `
+        //     <div id="message-info-${message._id}" class="${isfile ? "message-info isfile" : "message-info"}" style="${isImage ? "margin-bottom:1%;margin-top: 2%;" : "10px"}">
+        //         <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.senderDetails._id === userId ? 'sent' : 'received'}" >
+        //             ${img}
+        //             ${replyContent} 
+        //             ${isImage ? `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
+        //             <span class='${message.isreply ? "message-text reply" : "message-text"}'>${message.text ? message.text : ""}</span>`
+        //         : `
+        //             <span class='${message.isreply ? "message-text reply" : "message-text"}'>${message.text ? message.text : ""}</span>
+
+        //             <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
+        //             `}
+                    
+        //             <i style ="${isImage ? "display:none" : "display:block"} class="fa-solid fa-reply" onclick="reply('${message._id}', '${message.text ? message.text.replace(/'/g, "\\'") : ""}')"></i>
+        //         </div>
+        //         <img onclick="event.stopPropagation();  showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"  src="${path}"  class="sender-image" />
+
+        //     </div>
+        //     ` : `
+        //     <div id="message-info-${message._id}" class="${isfile ? "message-info isfile" : "message-info"}" style="${isImage ? "margin-bottom:1%;margin-top: 2%;" : "10px"}">
+        //         <img onclick="event.stopPropagation();  showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"  src="${path}"  class="sender-image" />
+        //         <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.senderDetails._id === userId ? 'sent' : 'received'}" >
+        //             ${img}
+        //             ${replyContent} 
+        //             ${isImage ? `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
+        //             <span class='${message.isreply ? "message-text reply" : "message-text"}'>${message.text ? message.text : ""}</span>`
+        //         : `
+        //             <span class='${message.isreply ? "message-text reply" : "message-text"}'>${message.text ? message.text : ""}</span>
+
+        //             <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
+        //             `}
+                    
+        //             <i style ="${isImage ? "display:none" : "display:block"} class="fa-solid fa-reply" onclick="reply('${message._id}', '${message.text ? message.text.replace(/'/g, "\\'") : ""}')"></i>
+        //         </div>
+        //     </div>
+        //     `}
+        // `
+        
+        message_content +=messageInfo ;
 
     }
 

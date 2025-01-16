@@ -1518,14 +1518,14 @@ button[id="join"] {
 }
 
 .messaging-container.toggled {
-    padding-top: 5%;
+    padding-top:2%;
 }
 
 
 
 .reply-info {
     margin-right: 10px;
-    margin-top: 17%;
+    margin-top: 11%;
     position: relative;
     left: -1%;
     background-color: #c8f492;
@@ -1536,8 +1536,8 @@ button[id="join"] {
 
 .reply {
     position: relative;
-    top: -1.5vw;
-    left: -2vw;
+    /* top: -1.5vw; */
+    left: -2%;
 }
 
 .message i {
@@ -2444,19 +2444,28 @@ p#file-frame {
     line-height: 1.5;
     overflow-wrap: normal;
 }
-
 .reply-content {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    top: 4vw;
+    width: 100%;
+    align-items: center;
+}
+
+/* .reply-content {
     display: flex;
     flex-direction: row;
     position: relative;
     top: -2vw;
     gap: 1vw;
-}
+} */
 
 .messaging-components {
     display: flex;
     flex-direction: row;
     width: 100%;
+    z-index: 50;
 }
 
 .messaging-container i {
@@ -2578,8 +2587,9 @@ p#file-frame {
 .message.sent {
     background-color: #effdde;
     align-self: flex-end;
-
+    margin-right: 1%;
     position: relative;
+    margin-left: auto;
 }
 
 .message-history .message-info:last-child .message.sent::before,
@@ -2595,7 +2605,14 @@ p#file-frame {
     background-attachment: fixed;
     border-bottom-right-radius: 17px;
 }
-
+.message-history .message-info:last-child .message.sent::before{
+    transform: rotateY(180deg);
+    right: -2%;
+}
+.message-history .message-info:last-child .message.sent::after{
+    transform: rotateY(180deg);
+    right: -7%!important;
+}
 .message-history .message-info:last-child .message.sent::after,
 .message-history .message-info:last-child .message.received::after {
     content: "";
@@ -2780,7 +2797,7 @@ p#file-frame {
     display: block;
     word-break: normal;
     margin-left: 6%;
-    margin-top: 7%;
+    margin-top: 0%;
     position: relative;
     align-self: start;
 }
@@ -2806,9 +2823,10 @@ p#message_content {
 }
 
 #close-button {
-    position: absolute;
-    top: 0vw;
-    left: 67vw;
+    position: relative;
+    top: -5vw;
+    align-self: center;
+    margin-left: auto;
 }
 
 #send-message.active {

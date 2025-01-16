@@ -45,26 +45,29 @@ document.addEventListener('DOMContentLoaded', function () {
         const icon = titleContainer.querySelector('.list-icon');
         const adjust_span = titleContainer.querySelector('span')
         adjust_span.contentEditable = false
-        
+        title.contentEditable = false
         const post_text = document.getElementById('post-text')
         console.log('direction',post_text.getAttribute('direction'));
         const direction = post_text.getAttribute('dir') || post_text.dir;
-        console.log(direction);
-        
+        const section = li.querySelector('section')
         if(post_text.getAttribute('direction') ==='rtl'){
+
             view_post_h1.style.alignSelf = 'end'
+            section.style.marginLeft = '0%'
+
+            section.style.marginRight = '5%'
+
             Customicon = '◀'
         }else{
             view_post_h1.style.alignSelf = 'start'
             Customicon = '▶'
         }
-        const section = li.querySelector('section')
+        
         section.style.display = 'none'
         section.style.height = '100%'
         section.contentEditable = false
         icon.addEventListener('click', function () {
             // Toggle the icon text
-            console.log(Customicon);
             
             icon.textContent = icon.textContent === '▼' ? Customicon : '▼';
             
