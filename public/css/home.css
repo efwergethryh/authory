@@ -1531,6 +1531,7 @@ button[id="join"] {
     background-color: #c8f492;
     border-radius: 5px;
     padding: 2.5%;
+    width: 96%  ;
     cursor: pointer;
 }
 
@@ -2450,6 +2451,7 @@ p#file-frame {
     position: relative;
     top: 4vw;
     width: 100%;
+    padding-left: 2%;
     align-items: center;
 }
 

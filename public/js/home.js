@@ -265,7 +265,6 @@ async function buildmessagecontent(message) {
 
 
         const originalMessage = messages.find(m => {
-            console.log('result', message.m.replyTo.toString() === m._id.toString());
 
             return message.m.replyTo.toString() === m._id.toString()
         });
@@ -1545,13 +1544,16 @@ async function addListeners() {
         if (response.ok) {
 
             const data = await response.json()
-
+            
             let content = ''
             if (data.joinedpapers.length == 0) {
                 content = translations.sidebar.no_joined_papers
             } else {
                 data.joinedpapers.forEach(paper => {
-                    content += `
+                    if (!paper) {
+                        
+                    } else {
+                        content += `
                  <div id="${paper._id}" class="paper-line">
                     <div class="paperinfo">
                         <i id="joined-paper" class="fas fa-file"></i>
@@ -1574,6 +1576,8 @@ async function addListeners() {
                     </div>
             </div>
                 `
+                    }
+                    
 
                 })
 
@@ -3310,7 +3314,6 @@ function handleScroll() {
     const message_history = document.getElementById('message-history'); // For cross-browser compatibility
     const isAtBottom = message_history.scrollHeight - message_history.scrollTop === message_history.clientHeight;
     const scrollButton = document.querySelector('.scroll-button')
-    console.log('Bottom', isAtBottom);
 
     if (!isAtBottom) {
         scrollButton.style.display = 'flex';
@@ -3910,11 +3913,11 @@ async function buildMessageContent(messages, userId) {
 
 
         }
-        console.log('message',message);
+        // console.log('message',message);
         
         if (message.isreply && message.replyTo) {
             const originalMessage = messages.find(m => m._id.toString() === message.replyTo.toString());
-            console.log('reply message',originalMessage);
+            // console.log('reply message',originalMessage);
             
             if (originalMessage) {
                 replyContent = `
@@ -4356,7 +4359,29 @@ async function applyTranslations() {
     // })
 }
 
-function control_sendButton(value) {
+// function control_sendButton(value,event) {
+//     document.removeEventListener('keydown',controlEnter);
+//     document.addEventListener('keydown', controlEnter);
+// }
+function createControlEnter(value) {
+    return function(event) {
+        controlEnter(value, event);
+    };
+}
+let currentHandler
+function control_sendButton(value, event) {
+    // Remove the previous handler, if any
+    if (currentHandler) {
+        document.removeEventListener('keydown', currentHandler);
+    }
+
+    // Create a new handler with the current value
+    currentHandler = createControlEnter(value);
+
+    // Add the new handler
+    document.addEventListener('keydown', currentHandler);
+}   
+async function controlEnter(value,event){
     const text = document.getElementById('message-input');
     const sendButton = document.getElementById('send-message');
     console.log('text', text, 'send button', sendButton);
@@ -4382,29 +4407,17 @@ function control_sendButton(value) {
 
 
     });
-    document.removeEventListener('keydown',async function (event) {
-        if (event.key === 'Enter') { // Correct the key check
-            console.log('event', event.key);
 
-            if (text.value.trim() !== "") { // Ensure there is text to send
-                await send_message(value);
-                text.value = ''; // Clear the input field
-                sendButton.classList.remove('active'); // Reset button state
-                sendButton.style.pointerEvents = 'none'; // Disable clicking
-            }
-        }
-    });
-    document.addEventListener('keydown', async function (event) {
-        if (event.key === 'Enter') { // Correct the key check
+    if (event.key === 'Enter') { // Correct the key check
+        console.log('event', event.key);
 
-            if (text.value.trim() !== "") { // Ensure there is text to send
-                await send_message(value);
-                text.value = ''; // Clear the input field
-                sendButton.classList.remove('active'); // Reset button state
-                sendButton.style.pointerEvents = 'none'; // Disable clicking
-            }
+        if (text.value.trim() !== "") { // Ensure there is text to send
+            await send_message(value);
+            text.value = ''; // Clear the input field
+            sendButton.classList.remove('active'); // Reset button state
+            sendButton.style.pointerEvents = 'none'; // Disable clicking
         }
-    });
+    }
 }
 async function load_f_conversations() {
     const response = await fetch('/api/get-friendconversations');
