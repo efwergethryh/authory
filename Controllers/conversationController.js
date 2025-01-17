@@ -284,8 +284,8 @@ const add_conversation = async (req, res) => {
     const body = req.body
     const { title, type, members, paper_id } = req.body;
     
-    const paper = await get_paper(paper_id, req = null, res = null)
-    console.log('paper',paper);
+    const paper = await get_paper(paper_id)
+    // console.log('paper',paper);
     try {
 
         let conv;
@@ -323,7 +323,7 @@ const add_conversation = async (req, res) => {
                     }
                 )
             }
-            conv.save()
+           await conv.save()
 
 
             res.status(200).json({ message: 'conversation created successfully', conv, paper })

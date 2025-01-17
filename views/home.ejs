@@ -18,10 +18,10 @@
         <%- include('./layouts/topBar') %>
 
 
-            <form class="add-conversation" id="add_conversation" action="" enctype="multipart/form-data">
+            <form onclick="event.stopPropagation();" class="add-conversation" id="add_conversation" action="" enctype="multipart/form-data">
                 <i class="fa"></i>
                 <h3>Create a new conversation</h3>
-                <input type="text" id="title" name="title" placeholder="Enter conversation name" required>
+                <input type="text" onclick="event.stopPropagation(); " id="title" name="title" placeholder="Enter conversation name" required>
                 <div class="avatar-upload">
                     <input type="file" hidden id="conversation_picture" name="conv_pic" accept="image/*" />
                     <label for="conversation_picture" id="avatar-label" class="avatar-button">

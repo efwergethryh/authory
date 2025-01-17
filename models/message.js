@@ -17,8 +17,7 @@ const messageSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'messages',
             default: null,
-            required:false  // This field will store the ID of the original message being replied to
-          },
+        },
         type:{
             type:String,
             

@@ -6,7 +6,7 @@ let isreply = false
 let notificationCount = 0;
 const userId = document.getElementById('user-id').value;
 const mainfield = document.getElementById('user-mainfield').value;
-let replyTo;
+let replyTo = null;
 let conv_id;
 let paperId;
 let userMainfield = 'All'
@@ -23,7 +23,7 @@ const scrollbutton = `
 let members = new Set();
 let tags = new Set();
 const spinner = document.getElementById('loading-spinner')
-const fileSend = '<i id="clip" onclick="show_options()"class="fa-solid fa-paperclip"></i>'
+const fileSend = '<i id="clip" onclick="event.preventDefault(); event.stopPropagation(); show_options()"class="fa-solid fa-paperclip"></i>'
 const popups = [
     document.getElementById('startpaper-popup'),
     document.getElementById('yourpapers-popup'),
@@ -235,7 +235,6 @@ async function buildmessagecontent(message) {
     let img = '';
     let fileUrl
     let fileExtension
-    console.log('real time isreply ', message.m.isreply, 'real time replyTo ', message.m.replyTo);
     if (message.m.fileUrl) {
 
         fileUrl = message.m.fileUrl;
@@ -282,21 +281,46 @@ async function buildmessagecontent(message) {
 
     messageContent += `
             <div class="message-info" ondbclick="reply('${message.m._id}', '${message.m.text.replace(/'/g, "\\'")}')">
-                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender.user[0]).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.user[0].profile_picture ? sender.user[0].profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
+            ${message.m.sender === userId ? `
+                
                 <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.m.sender === userId ? 'sent' : 'received'}" >
                     ${img}
                     ${replyContent} 
                     ${isImage
-            ? `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
+                ? `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
                                 <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>`
 
-            : `
+                : `
+                                <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>
+                                <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
+                    `}
+                    
+                </div>
+                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender.user[0]).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.user[0].profile_picture ? sender.user[0].profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
+
+            </div>
+                ` :
+            `
+                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender.user[0]).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.user[0].profile_picture ? sender.user[0].profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
+                
+                <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.m.sender === userId ? 'sent' : 'received'}" >
+                    ${img}
+                    ${replyContent} 
+                    ${isImage
+                ?
+                `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
+                                <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>`
+
+                : `
                                 <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>
                                 <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
                     `}
                     
                 </div>
             </div>
+                `
+        }
+                
 `;
 
     return messageContent;
@@ -815,9 +839,9 @@ async function goTopost(id, n_id) {
         window.location.href = `/posts/${id}`
     }
 }
-function reply( message) {
+function reply(message) {
 
-    console.log('message',message);
+    console.log('message', message);
     message = JSON.parse(message)
     reset_reply();
     const message_container = document.getElementById('messaging-container');
@@ -846,9 +870,9 @@ function reply( message) {
     reply_content.id = 'reply-content'
     const message_content = document.createElement('p');
     message_content.id = `message_content`;
-    console.log('message text',message.text);
-    
-    message_content.textContent  = isImage
+    console.log('message text', message.text);
+
+    message_content.textContent = isImage
         ? `${message.text}`
         : isFile && message.text !== ''
             ? `,${message.text}`
@@ -875,7 +899,7 @@ function reply( message) {
     reply_content.appendChild(closeButton);
     message_container.prepend(reply_content);
 
-    
+
 
 }
 
@@ -1073,7 +1097,7 @@ async function addListeners() {
             mainContent.innerHTML = popups[index].innerHTML;
             popups[index].style.display = 'none';
             // popups[index].remove()
-            
+
             if (popups[index].id === 'startpaper-popup') {
                 const startpaper = mainContent.querySelector('.startpaper-popup')
                 // dropdowns.forEach(function (dropdown) {
@@ -1083,7 +1107,7 @@ async function addListeners() {
                 //     const optionsList = startpaper.querySelector(`#${dropdown.optionsid}`);
                 //     const options = optionsList.querySelectorAll('li');
                 //     console.log('inputElement',inputElement);
-                    
+
                 //     inputElement.addEventListener('focus', function () {
                 //         container.classList.toggle('open');
                 //     });
@@ -1106,31 +1130,31 @@ async function addListeners() {
                     const container = startpaper.querySelector(`#${dropdown.containerid}`);
                     const optionsList = startpaper.querySelector(`#${dropdown.optionsid}`);
                     const options = optionsList.querySelectorAll('li');
-                    
-                    
-                
+
+
+
                     // Open dropdown when input is focused
                     inputElement.addEventListener('focus', function () {
                         container.classList.add('open');
                     });
-                
-                    
+
+
                     options.forEach(function (option) {
                         option.addEventListener('click', function () {
-                           
+
                             inputElement.value = this.textContent;
                             container.classList.remove('open');
                         });
                     });
-                
-                    
+
+
                     document.addEventListener('click', function (e) {
                         if (!container.contains(e.target) && e.target !== inputElement) {
                             container.classList.remove('open');
                         }
                     });
                 });
-                
+
                 const create_paper = startpaper.querySelector('#start_create')
                 const inputField = startpaper.querySelector('#tags');
                 const overlay = startpaper.querySelector('#tags-overlay');
@@ -1544,14 +1568,14 @@ async function addListeners() {
         if (response.ok) {
 
             const data = await response.json()
-            
+
             let content = ''
             if (data.joinedpapers.length == 0) {
                 content = translations.sidebar.no_joined_papers
             } else {
                 data.joinedpapers.forEach(paper => {
                     if (!paper) {
-                        
+
                     } else {
                         content += `
                  <div id="${paper._id}" class="paper-line">
@@ -1577,7 +1601,7 @@ async function addListeners() {
             </div>
                 `
                     }
-                    
+
 
                 })
 
@@ -2388,8 +2412,9 @@ function hide_spinner() {
 }
 
 async function send_message(type) {
-    // const text = document.getElementById('message-input').value;
-
+    // const text = document.getElementById('message-input').value; 
+    console.log('value',type);
+    
 
     try {
         const formData = new FormData();
@@ -2406,7 +2431,10 @@ async function send_message(type) {
         formData.append('text', text);
 
         formData.append('isreply', isreply ? 'true' : 'false');
-        formData.append('replyTo',replyTo)
+        if (replyTo !== null && replyTo !== undefined) {
+            formData.append('replyTo', replyTo); // Append only valid ObjectId
+        } else {
+        }
         const fileInput = document.getElementById('image-input');
         const imageInput = document.getElementById('file-input');
 
@@ -2425,6 +2453,8 @@ async function send_message(type) {
             //     replyTo: replyTo
             // })
         }).then(res => res.json()).then(async data => {
+            const text = document.getElementById('message-input');
+            text.value = '';
             if (messages) {
                 messages.push(data.newMessage)
             }
@@ -2487,6 +2517,7 @@ async function send_message(type) {
 
                     })
                 })
+
                 reset_reply()
             }
             else if (type == 'subchat') {
@@ -2528,8 +2559,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const data = await response.json();
-            console.log('Conversation data:', data);
-
+            if (response.ok) {
+                document.querySelector('.add-conversation').style.display = 'none'
+            }
             // Check if data and conv exist
             if (data.conv) {
                 // Get the chats container
@@ -3051,8 +3083,8 @@ async function get_conversation(id, type) {
     show_spinner();
 
     try {
-        
-           
+
+
         loadMessages(id, false)
 
         join_conversation(id);
@@ -3063,7 +3095,7 @@ async function get_conversation(id, type) {
             // Ensure messaging-container is added only once
             let chat_body = document.getElementById('chat-body');
             let message_history = document.getElementById('message-history');
-            
+
             if (!chat_body) {
                 chat_body = document.createElement('div')
                 chat_body.className = 'chat-body'
@@ -3076,7 +3108,7 @@ async function get_conversation(id, type) {
                 message_history.id = 'message-history'
                 chat_body.append(message_history)
             }
-        
+
             if (!document.getElementById('messaging-container')) {
                 chat_body.innerHTML += `
                     <div id="messaging-container" class="messaging-container">
@@ -3093,9 +3125,9 @@ async function get_conversation(id, type) {
             if (response.ok) {
                 const data = await response.json();
                 const chats = document.querySelector('.chat-container');
-                message_history.innerHTML =''
+                message_history.innerHTML = ''
                 let Chatcontent = '';
-        
+
                 Chatcontent = `
                         <div class="chatInfo" style="display:flex">
                             <a onclick="close_conversation()">
@@ -3107,16 +3139,16 @@ async function get_conversation(id, type) {
                             <img src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
                         </div>
                 `;
-        
+
                 chats.innerHTML += Chatcontent;
             }
         }
-        
+
         document.getElementById('message-history').onscroll = () => {
             handleScroll()
         };
         inputListeners(`${type}`)
-        control_sendButton();
+        control_sendButton(`${type}`);
         scrollToBottom()
 
 
@@ -3785,7 +3817,6 @@ async function conversation_layout(user_id) {
     }
 }
 async function send_to_friend(user_id) {
-    console.log('global', replyTo, isreply);
 
     const formData = new FormData();
     const messageInput = document.getElementById('message-input');
@@ -3810,7 +3841,7 @@ async function send_to_friend(user_id) {
         body: formData  // Send FormData instead of JSON
     }).then(response => response.json()).then(async data => {
         console.log(data);
-        console.log('global', replyTo, isreply);
+
         const userid = data.friendConversation.receiver;
 
         if (messages) {
@@ -3914,11 +3945,11 @@ async function buildMessageContent(messages, userId) {
 
         }
         // console.log('message',message);
-        
+
         if (message.isreply && message.replyTo) {
             const originalMessage = messages.find(m => m._id.toString() === message.replyTo.toString());
             // console.log('reply message',originalMessage);
-            
+
             if (originalMessage) {
                 replyContent = `
                     <div class="reply-info">
@@ -4010,7 +4041,7 @@ async function buildMessageContent(messages, userId) {
             `}
         </div>
     `;
-    
+
         // `
         // ${message.senderDetails._id === userId ? `
         //     <div id="message-info-${message._id}" class="${isfile ? "message-info isfile" : "message-info"}" style="${isImage ? "margin-bottom:1%;margin-top: 2%;" : "10px"}">
@@ -4024,7 +4055,7 @@ async function buildMessageContent(messages, userId) {
 
         //             <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
         //             `}
-                    
+
         //             <i style ="${isImage ? "display:none" : "display:block"} class="fa-solid fa-reply" onclick="reply('${message._id}', '${message.text ? message.text.replace(/'/g, "\\'") : ""}')"></i>
         //         </div>
         //         <img onclick="event.stopPropagation();  showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"  src="${path}"  class="sender-image" />
@@ -4043,14 +4074,14 @@ async function buildMessageContent(messages, userId) {
 
         //             <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
         //             `}
-                    
+
         //             <i style ="${isImage ? "display:none" : "display:block"} class="fa-solid fa-reply" onclick="reply('${message._id}', '${message.text ? message.text.replace(/'/g, "\\'") : ""}')"></i>
         //         </div>
         //     </div>
         //     `}
         // `
-        
-        message_content +=messageInfo ;
+
+        message_content += messageInfo;
 
     }
 
@@ -4058,17 +4089,19 @@ async function buildMessageContent(messages, userId) {
 }
 
 function show_options() {
-
+    event.preventDefault()
     document.getElementById('options-popup').style.display = 'block';
-
+    document.addEventListener('click', () => {
+        document.getElementById('options-popup').style.display = 'none';
+    })
 }
 // Global event handler functions
-const imageInputHandler = (event,value) => {
+const imageInputHandler = (event, value) => {
     initializeFile(value);
     processImage(event);
 };
 
-const fileInputHandler = (event,value) => {
+const fileInputHandler = (event, value) => {
     initializeFile(value);
     processFile(event);
 };
@@ -4092,8 +4125,8 @@ function inputListeners(value) {
 
     // Add new event listeners
     console.log("Adding new event listeners...");
-    imageInput.addEventListener('change', (event)=>{imageInputHandler(event,value)});
-    fileInput.addEventListener('change', (event)=>{fileInputHandler(event,value)});
+    imageInput.addEventListener('change', (event) => { imageInputHandler(event, value) });
+    fileInput.addEventListener('change', (event) => { fileInputHandler(event, value) });
 
     // Verify that event listeners were added correctly
     console.log("Event listeners added!");
@@ -4250,6 +4283,7 @@ async function loadTranslation() {
         method: "GET"
     });
     const translations = await response.json();
+    const topBar  =document.getElementById('dashboard-setting')
     document.getElementById('home').querySelector('.header span').textContent = translations.topBar.home
     document.getElementById('new-paper').textContent = translations.newPaper.label;
     document.getElementById('join-paper').textContent = translations.joinPaper.label;
@@ -4267,14 +4301,23 @@ async function loadTranslation() {
 
     document.getElementById('start_paper_button').textContent = translations.newPaper.dropdowns.startPaper;
     document.getElementById('your-papers-button').textContent = translations.newPaper.dropdowns.yourPapers;
+    document.querySelector('.yourpapers-label').textContent = translations.newPaper.dropdowns.yourPapers;
+    document.querySelector('.startpapers-label').textContent = translations.newPaper.label;
+    document.querySelector('.searchpapers-label').textContent = translations.joinPaper.searchpaper;
+    document.querySelector('.notifications-label').textContent = translations.sidebar.notifications;
 
     document.getElementById('searchpapers-button').textContent = translations.sidebar.search;
     document.getElementById('joined-papers-button').textContent = translations.joinPaper.dropdowns.joinedPapers;
-
+    document.querySelector('.joined-label').textContent = translations.joinPaper.dropdowns.joinedPapers;
     document.getElementById('search-friends-button').textContent = translations.sidebar.search;
     document.getElementById('your-friends-button').textContent = translations.friends.dropdowns.yourfriends;
     document.getElementById('home-setting').textContent = translations.topBar.home
-    document.getElementById('dashboard-setting').textContent = translations.topBar.dashboard
+    if(topBar){
+        topBar.textContent = translations.topBar.dashboard
+    }   
+    document.querySelector('.searchfriends-label').textContent = translations.friends.searchfriends;
+    document.querySelector('.yourfriends-label').textContent = translations.friends.dropdowns.yourfriends;
+
     document.getElementById('language-setting').textContent = translations.topBar.language
     document.getElementById('editProfile-setting').textContent = translations.topBar.editProfile
     document.getElementById('sign-out').textContent = translations.topBar.signOut
@@ -4364,12 +4407,12 @@ async function applyTranslations() {
 //     document.addEventListener('keydown', controlEnter);
 // }
 function createControlEnter(value) {
-    return function(event) {
+    return function (event) {
         controlEnter(value, event);
     };
 }
 let currentHandler
-function control_sendButton(value, event) {
+function control_sendButton(value) {
     // Remove the previous handler, if any
     if (currentHandler) {
         document.removeEventListener('keydown', currentHandler);
@@ -4380,11 +4423,10 @@ function control_sendButton(value, event) {
 
     // Add the new handler
     document.addEventListener('keydown', currentHandler);
-}   
-async function controlEnter(value,event){
+}
+async function controlEnter(value, event) {
     const text = document.getElementById('message-input');
     const sendButton = document.getElementById('send-message');
-    console.log('text', text, 'send button', sendButton);
     text.removeEventListener('input', function () {
         if (text.value.trim() !== "") {
             sendButton.classList.add('active');
@@ -4413,7 +4455,7 @@ async function controlEnter(value,event){
 
         if (text.value.trim() !== "") { // Ensure there is text to send
             await send_message(value);
-            text.value = ''; // Clear the input field
+            // Clear the input field
             sendButton.classList.remove('active'); // Reset button state
             sendButton.style.pointerEvents = 'none'; // Disable clicking
         }
@@ -4466,26 +4508,7 @@ async function load_conversation(id) {
     const response = await fetch(`/api/conversation/${id}`);
 
     if (response.ok) {
-        // const data = await response.json();
-        // const chats = document.querySelector('.chat-container');
-        // document.getElementById('message-history').innerHTML =''
-        // let Chatcontent = '';
-
-        // Chatcontent = `
-        //         <div class="chatInfo" style="display:flex">
-        //             <a onclick="close_conversation()">
-        //                 Close
-        //             </a>
-        //             <span style="font-weight:700;">
-        //                 ${data.conversation.conv_title}
-        //             </span>
-        //             <img src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
-        //         </div>
-        // `;
-
-        // chats.innerHTML += Chatcontent;
-
-        // get_conversation(data.conversation._id, 'private')
+        
     } else {
         chats.innerHTML = `Error loading your conversations`;
     }

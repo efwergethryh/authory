@@ -125,7 +125,7 @@ p#user-name {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     left: -30%;
     transition: left 0.3s ease;
-    overflow: auto;
+    overflow: scroll;
 }
 
 /* Define the size and style of the scrollbar */
@@ -1689,7 +1689,7 @@ button[id="send_message"] {
 
 .chat-container {
     width: 100%;
-    height: 100%;
+    height: 97%;
     background: url('/images/Background.svg') no-repeat;
     background-size: cover;
     position: relative;
@@ -2020,6 +2020,7 @@ p#file-frame {
     position: relative;
     left: -10%;
     height: 100%;
+    width:109%;
     margin: 0;
     padding: 0;
     flex-grow: 1;
@@ -2088,6 +2089,7 @@ p#file-frame {
     transition: background-color 0.3s;
     cursor: pointer;
     border-bottom: 1px solid rgb(218, 218, 218);
+    width: 91%;
 }
 
 .conversation-item i {
@@ -2579,7 +2581,7 @@ p#file-frame {
     font-size: 14px;
     position: relative;
     top: 1vh;
-    max-width: 19.5%;
+    max-width: 11.5%;
 }
 
 
@@ -2621,7 +2623,7 @@ p#file-frame {
     position: absolute;
     z-index: 1;
     bottom: 0;
-    right: 100%;
+    /* right: 100%; */
     width: 10px;
     height: 20px;
     background: url("/images/Background.svg");
@@ -3870,7 +3872,7 @@ div:focus {
         height: 44px;
     }
     .message-text{
-        top: -2vw;
+        top: 0;
     }
     .add-conversation {
         
