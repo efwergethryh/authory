@@ -219,7 +219,7 @@ p#user-name {
     display: flex;
     align-items: center;
     /* Center items vertically */
-    padding: 7% 0 7% 20px;
+    padding: 3% 0 3% 20px;
     /* Adjust padding with space for the border */
     color: #a3b2bd;
     text-decoration: none;
@@ -474,7 +474,7 @@ i[id="icon"] {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 7% 0 7% 20px;
+    padding: 3% 0 3% 20px;
     color: #a3b2bd;
     text-decoration: none;
     font-size: 18px;
@@ -2602,7 +2602,7 @@ p#file-frame {
     position: absolute;
     z-index: 0;
     bottom: 0;
-    right: 93%;
+    right: 89%;
     height: 16px;
     width: 17px;
     background: inherit;
@@ -2623,7 +2623,7 @@ p#file-frame {
     position: absolute;
     z-index: 1;
     bottom: 0;
-    /* right: 100%; */
+    right: 100%;
     width: 10px;
     height: 20px;
     background: url("/images/Background.svg");
