@@ -19,28 +19,28 @@ async function generatePaperId() {
 
     return uniqueId;
 }
-const create_paper =async (req, res) => {
+const create_paper = async (req, res) => {
     try {
-        
+
         const id = res.locals.user._id;
 
         const body = req.body;
         const { type_of_study, project_branch, title, we_need, tags, language } = body;
-        console.log('body',body);
-        
+        console.log('body', body);
+
         const paperId = await generatePaperId()
         const paper = new Paper({
-            _id:`${paperId}`,
+            _id: `${paperId}`,
             type_of_study,
             title,
             we_need,
             tags,
-            main_field:project_branch,
+            main_field: project_branch,
             user_id: id,
             language
         });
         await paper.save()
-            
+
         res.status(200).json({ message: 'Paper added', paper })
     } catch (e) {
         res.status(500).json({ messsage: `Something went wrong ${e}` })
@@ -51,7 +51,7 @@ const get_papers = async (user_id = null, res = null) => {
         if (res) {
             user_id = res.locals.user._id;
             const papers = await Paper.find({ user_id }).exec();
-             return res.json({ papers });
+            return res.json({ papers });
         } else if (user_id) {
             const papers = await Paper.find({ user_id });
             return papers;
@@ -72,7 +72,7 @@ const search_papers = async (req, res) => {
         const { title, we_need, main_field, id, language } = req.body;
         const myId = res.locals.user._id;
 
-        
+
         let query = {};
 
         if (title) {
@@ -95,21 +95,21 @@ const search_papers = async (req, res) => {
 
         // Execute the query
 
-        console.log('query',query);
-        
+        console.log('query', query);
+
         let papers = await Paper.find(query);
 
-        let joinedPapers =new Set()
-        
+        let joinedPapers = new Set()
+
         for (let paper of papers) {
             const joinedPaper = await JoinedPaper.find({ paper_id: paper._id, user_id: myId });
             if (joinedPaper.length > 0) {
                 joinedPapers.add(paper._id.toString());  // Add paper._id to the Set if the user has joined
             }
         }
-        console.log('joined papers',joinedPapers);
-        joinedPapers  = Array.from(joinedPapers)
-        res.status(200).json({ papers,joinedPapers});
+        console.log('joined papers', joinedPapers);
+        joinedPapers = Array.from(joinedPapers)
+        res.status(200).json({ papers, joinedPapers });
     } catch (error) {
         console.error('Error searching papers:', error);
         res.status(500).json({ message: 'Error searching papers' });
@@ -121,7 +121,7 @@ const get_paper = async (paper_id = null, req = null, res = null) => {
 
         if (req) {
             // Extract paper_id from the request parameters
-            paper_id = req.params.paper_id; 
+            paper_id = req.params.paper_id;
 
             // Use lean() if you want a plain JavaScript object instead of a Mongoose Document
             paper = await Paper.findById(paper_id).lean().exec();
@@ -132,7 +132,7 @@ const get_paper = async (paper_id = null, req = null, res = null) => {
                 return res.json({ paper });
             }
         } else if (paper_id) {
-            
+
             paper = await Paper.findById(paper_id);
 
             if (!paper) {
@@ -149,7 +149,7 @@ const get_paper = async (paper_id = null, req = null, res = null) => {
             console.error(err);
         }
     }
-};  
+};
 
 
 const join_paper = async (req, res) => {
@@ -185,26 +185,26 @@ const join_paper = async (req, res) => {
 };
 
 const get_joined_paper = async (user_id = null, req = null, res = null) => {
-    
+
     try {
-        
-        
+
+
         // Determine user_id from request locals if not provided
         if (!user_id && res) {
             user_id = res.locals.user._id;
-            
+
 
         }
-        
+
         if (!user_id) {
             throw new Error('User ID is required.');
         }
-        
-        
+
+
         // Fetch joined paper IDs for the user
         const joinedpapers = await JoinedPaper.find({ user_id });
         // console.log('user ID',user_id,'joinedpapers',joinedpapers);
-        
+
         const paperIds = joinedpapers.map((jp) => jp.paper_id); // Assuming `paper_id` field contains the ID
 
         // Fetch papers using Promise.all
@@ -214,7 +214,7 @@ const get_joined_paper = async (user_id = null, req = null, res = null) => {
                 return await get_paper(paper_id); // Directly call get_paper if it returns a promise
             })
         );
-        
+
         if (res) {
             return res.json({ joinedpapers: joinedpapersData });
         }
@@ -230,6 +230,23 @@ const get_joined_paper = async (user_id = null, req = null, res = null) => {
         } else {
             return 'Error fetching joined papers';
         }
+    }
+};
+const tag_paper = async (req, res) => {
+    const { tag } = req.params;
+
+    try {
+        // Find papers containing the specified tag
+        const papers = await Paper.find({ tags: tag });
+
+        if (papers.length === 0) {
+            return res.status(404).json({ message: 'No papers found for the specified tag.' });
+        }
+
+        res.json(papers);
+    } catch (error) {
+        console.error('Error fetching papers by tag:', error);
+        res.status(500).json({ message: 'Internal server error.' });
     }
 };
 
@@ -328,4 +345,5 @@ module.exports = {
     , update_paper
     , delete_user_from_paper
     , joined_papers_users
+    ,tag_paper
 }

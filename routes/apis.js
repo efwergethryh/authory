@@ -116,7 +116,7 @@ router.use(authMiddleware([1,2,3]));
 
 
 router.get('/users/:user_type', userController.get_users);
-router.post('/get-user', userController.get_user);
+router.post('/get-user', userController.get_user); 
 router.post('/new-conversation', uploadConversation.single('conv_pic'), conversationController.add_conversation);
 router.post('/search-papers', paperController.search_papers);
 router.post('/send-message/:conversation_id',uploadFile.single('file'), conversationController.send_message);
@@ -146,7 +146,7 @@ router.get('/get-request', requestController.get_requests);
 router.get('/get-joined-users/:paper_id',paperController.joined_papers_users);
 router.get('/posts',postController.get_posts)
 router.get('/posts/:post_id',postController.get_post)
-
+router.get('/papers/:tag',paperController.tag_paper)
 // Delete Routes
 router.delete('/delete-paper/:paper_id',paperController.delete_paper);
 router.delete('/delete-user-from-paper/:paper_id',paperController.delete_user_from_paper);

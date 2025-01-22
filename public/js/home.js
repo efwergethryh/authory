@@ -9,6 +9,13 @@ const mainfield = document.getElementById('user-mainfield').value;
 let replyTo = null;
 let conv_id;
 let paperId;
+const circular_spinner = `
+<div id="loadingSpinner" class="loadingio-spinner-eclipse-nq4q5u6dq7r" style="display: none;">
+  <div class="ldio-x2uulkbinbj">
+    <div></div>
+  </div>
+</div>
+`
 let userMainfield = 'All'
 let currentlang = sessionStorage.getItem('lang') || 'en'
 
@@ -207,8 +214,8 @@ async function loadPosts() {
 
 async function buildmessagecontent(message) {
     const sender = await get_user(message.m.sender);
-    console.log('sender',sender);
-    
+    console.log('sender', sender);
+
     let messageContent = '';
     console.log('received message', message);
 
@@ -1018,6 +1025,71 @@ async function buildNotifications(notifications) {
 //         console.error('Error fetching notifications:', error);
 //     }
 // });
+async function showPapers(tag) {
+    try {
+        const paperContainer =  document.querySelector('.papersContainer')
+        // Update the DOM with generated content
+        paperContainer.style.display ='flex'
+        paperContainer.innerHTML = circular_spinner
+        const response = await fetch(`/api/papers/${tag}`, {
+            method: "GET",
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            let content ='';
+
+            content =`
+            <strong><span style="font-size:large" class="tag">${tag}</span></strong>
+            `
+            if (data.papers.length === 0) {
+                content = translations.sidebar.no_papers;
+            } else {
+                data.papers.forEach(paper => {
+                    content += `
+                    
+                    <div id="${paper._id}" class="paper-line">
+                        <div class="paperinfo">
+                            <i id="joined-paper" class="fas fa-file"></i>
+                            <span class="paper-title"><strong>${paper.title}</strong></span>
+                            <span class="dash"><strong>-</strong></span>
+                            <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
+                            <span class="dash"><strong>-</strong></span>
+                            <strong id="need">We Need:</strong>
+                            <span class="dash"><strong>-</strong></span>
+                            <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
+                            <span class="dash"><strong>-</strong></span>
+                            <span class="paper-branch"><strong>${paper.main_field}</strong></span>
+                            <span class="dash"><strong>-</strong></span>
+                            <span class="paper-branch"><strong>${paper.language}</strong></span>
+                            <span class="dash"><strong>-</strong></span>
+                            <span id="${paper._id}" class="paper-branch"><strong>${paper._id}</strong></span>
+                            <div class="paper-tags">
+                                <strong>
+                                    ${paper.tags.map(tag => `<strong><span class="tag">${tag}</span></strong>`).join('')}
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="button-container">
+                            <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
+                            <div class="divider"></div>
+                            <i id="gear" class="gear fa-solid fa-bars"></i>
+                        </div>
+                    </div>`;
+                });
+            }
+            paperContainer.innerHTML = content;
+
+            document.addEventListener('click',()=>{
+                paperContainer.style.display ='none'
+            })
+        } else {
+            console.error('Failed to fetch papers:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error fetching papers:', error);
+    }
+}
 
 function closeConversation() {
     const mainContent = document.getElementById('maincontent')
@@ -1060,6 +1132,7 @@ async function loadNotifications() {
     Nskip += data.Notifications.length;
     return notificationsContainer
 }
+
 async function addListeners() {
 
     const cancel = document.getElementById('cancel');
@@ -1454,6 +1527,12 @@ async function addListeners() {
                     <span class="paper-branch"><strong>${paper.language}</strong></span>
                     <span class="dash"><strong>-</strong></span>
                     <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
+                     <div class="paper-tags">
+                        <strong>
+                        ${paper.tags.map(tag => `<strong><span onclick ="showPapers('${tag}'); event.stopPropagation();" class="tag">${tag}</span></strong>`).join('')}
+
+                        </strong>
+                    </div>
                 </div>
                 <div class="button-container">
                     <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
@@ -1466,7 +1545,6 @@ async function addListeners() {
             })
             const paperscontainer = mainContent.querySelector('.yourpapers-container')
 
-            console.log('paperscontainer', paperscontainer);
 
             paperscontainer.innerHTML = content
 
@@ -1599,6 +1677,8 @@ async function addListeners() {
                         <div class="divider"></div>
                         <i id="gear" class="gear fa-solid fa-bars"></i>
                     </div>
+
+
             </div>
                 `
                     }
@@ -3774,7 +3854,7 @@ async function conversation_layout(user) {
                 let sidebar = document.getElementById('sidebar')
 
                 sidebar.innerHTML = sideBarContent
-                
+
             })
         } else {
             // toggleSidebar();
@@ -4544,8 +4624,8 @@ function createControlEnter(value, id = null) {
 }
 let currentHandler
 function control_sendButton(value, id = null) {
-    console.log('id',id);
-    
+    console.log('id', id);
+
     // Remove the previous handler, if any
     if (currentHandler) {
         document.removeEventListener('keydown', currentHandler);
@@ -4556,8 +4636,8 @@ function control_sendButton(value, id = null) {
     document.addEventListener('keydown', currentHandler);
 }
 async function controlEnter(value, event, id = null) {
-    console.log('id',id);
-    
+    console.log('id', id);
+
     const text = document.getElementById('message-input');
     const sendButton = document.getElementById('send-message');
     text.removeEventListener('input', function () {
@@ -4611,10 +4691,10 @@ async function load_f_conversations() {
         for (const conversation of data.f_conversations) {
 
 
-            console.log('conversation',conversation);
-            
-            let user = conversation.receiverInfo[0]||conversation.senderInfo[0];
-            
+            console.log('conversation', conversation);
+
+            let user = conversation.receiverInfo[0] || conversation.senderInfo[0];
+
             if (user._id === userId) {
                 user = conversation.senderInfo[0]
             }
@@ -4924,7 +5004,14 @@ async function show_search_result(Paperdata) {
                         <span class="paper-branch"><strong>${paper.language}</strong></span>
                         <span class="dash"><strong>-</strong></span>
                         <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
+                        <div class="paper-tags">
+                            <strong>
+                                ${paper.tags.map(tag => `<strong><span onclick ="showPapers('${tag}'); event.stopPropagation();" class="tag">${tag}</span></strong>`).join('')}
+                            </strong>
+                        </div>
+                        
                     </div>
+                </div>
                     ${joinButton}
                 </div>
         `;
