@@ -14,7 +14,8 @@
     "no_joined_papers": "No joined papers yet",
     "no_papers": "You don't have any papers",
     "delete": "delete",
-    "no_notifications":"You don't have any notifications"
+    "no_notifications": "You don't have any notifications",
+    "paper_added": "Paper has been added your papers"
   },
   "popupLabels": {
     "publishPost": "publish",
@@ -111,10 +112,10 @@
     "settings": "Settings",
     "home": "Home",
     "dashboard": "dashboard",
-    "editProfile":"Edit profile",
-    "language":"language",
-    "ar":"Arabic",
-    "en":"English"
+    "editProfile": "Edit profile",
+    "language": "language",
+    "ar": "Arabic",
+    "en": "English"
   },
   "settingsPopup": {
     "chooseLanguage": "Choose language"
@@ -123,7 +124,7 @@
     "label": "Create paper",
     "dropdowns": {
       "startPaper": "start a paper",
-      "yourPapers": "your papers" 
+      "yourPapers": "your papers"
     }
   },
   "yourPapers": {
@@ -137,8 +138,8 @@
     "searchpaper": "Search papers",
     "joinButton": "Join",
     "enterButton": "Enter",
-    "accept":"accept",
-    "reject":"reject",
+    "accept": "accept",
+    "reject": "reject",
     "advancedSearch": {
       "searchPapers": "Search papers by title ...",
       "label": "Advanced search",
@@ -157,7 +158,7 @@
     "dropdowns": {
       "yourfriends": "Your friends"
     },
-    "searchfriends":"Search people",
+    
     "searchFriends": "Phone number, name, email",
     "sendFriendMessage": "Send a message"
   },
@@ -171,6 +172,6 @@
     "mention-in-welcome": "Mentioned you in welcome chat",
     "reply": " Replied to you in chat",
     "default": "You have a new notification",
-    "decline_request":"Declined your request to join the paper"
+    "decline_request": "Declined your request to join the paper"
   }
 }

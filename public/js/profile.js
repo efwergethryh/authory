@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     lastNameInput.value = user.lastName
     emailInput.value = user.email
     uni_selection.value = user.university
+    country_selection.value = user.country
     document.addEventListener('click', async function (e) {
         const nameTab = e.target.closest('#name-tab');
         const emailTab = e.target.closest('#email-tab');
@@ -205,7 +206,7 @@ function displayPopup(id) {
         })
         // Adding the click event listener for the save button
         saveButton.removeEventListener('click', updateProfileField);
-        saveButton.addEventListener('click', updateProfileField);
+        saveButton.addEventListener('click', () => updateProfileField(popup));
 
 
     }
@@ -265,8 +266,11 @@ async function updateProfileField(popup) {
         const data = await response.json();
 
         if (response.ok) {
-            console.log(`Updated successfully:`, data);
+            
             display_message(data.message);
+            popup.style.display ='none'
+            const overlay = document.querySelector('.overlay');
+            overlay.style.display ='none'
         } else {
             console.error('Error updating:', display_error(data.message, popup) || "Unknown error");
         }

@@ -15,8 +15,8 @@
     "delete":"حذف",
     "no_joined_papers":"لم تنضم الى بحوث",
     "no_papers":"لا تملك اي أبحاث",
-    "no_notifications":"لا يوجد اشعارات"
-    
+    "no_notifications":"لا يوجد اشعارات",
+    "paper_added":"تمت اضافة البحث الى ابحاثك"
   },
   "popupLabels": {
     "publishPost": "نشر منشور",

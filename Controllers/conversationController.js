@@ -171,13 +171,13 @@ const get_message = async (req, res) => {
         const messages = await message.aggregate([
             {
                 $lookup: {
-                    from: "users", // Name of the users collection
-                    localField: "sender", // Field in messages collection
-                    foreignField: "_id", // Corresponding field in users collection
-                    as: "senderDetails", // Alias for the joined data
+                    from: "users", 
+                    localField: "sender", 
+                    foreignField: "_id", 
+                    as: "senderDetails", 
                 },
             },
-            { $unwind: "$senderDetails" }, // Flatten senderDetails
+            { $unwind: "$senderDetails" }, 
             {
                 $match: 
                
@@ -217,7 +217,7 @@ const get_message = async (req, res) => {
             { $skip: skip },
             { $limit: limit },
         ]);
-        console.log('filter:',filter,'\n----------------------\n', 'messages', messages);
+        
 
         return res.json({ messages });
     } catch (error) {
@@ -229,7 +229,8 @@ const get_message = async (req, res) => {
 const send_message = async (req, res) => {
 
     try {
-        const id = res.locals.user._id
+        const user = res.locals.user
+        const id = user._id
         const { conversation_id } = req.params
         const { isreply, replyTo } = req.body
         const conversation = await Conversation.findById(conversation_id)
@@ -250,7 +251,7 @@ const send_message = async (req, res) => {
 
         const paper = await get_paper(conversation.paper_id)
 
-        res.json({ message: 'success', newMessage, members, conversation, paper })
+        res.json({ message: 'success',user, newMessage, members, conversation, paper })
     } catch (err) {
         console.log(err);
 

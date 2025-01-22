@@ -106,14 +106,17 @@ const router = express.Router();
 //,upload_post.single('post-image')
 router.post('/reset-password', authController.change_password)
 router.post('/resetPassword', authController.resetPassword);
-router.post('/get-user', userController.get_user);
+
 router.post('/create-owner',userController.createOwner)
 router.get('/universities/:value', userController.fetchUniversities);
 
 //post routes
 router.use(authMiddleware([1,2,3]));
 
+
+
 router.get('/users/:user_type', userController.get_users);
+router.post('/get-user', userController.get_user);
 router.post('/new-conversation', uploadConversation.single('conv_pic'), conversationController.add_conversation);
 router.post('/search-papers', paperController.search_papers);
 router.post('/send-message/:conversation_id',uploadFile.single('file'), conversationController.send_message);

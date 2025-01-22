@@ -8,7 +8,7 @@ const sendMessageTofriend = async (req, res) => {
     try {
 
         const { text } = req.body
-        console.log(req.body);
+        console.log('req body',req.body);
         const id = res.locals.user._id
         const { receiver_id } = req.params
         const { isreply, replyTo } = req.body
@@ -75,23 +75,82 @@ const getFriendConversation = async (req, res) => {
 }
 const getFriendConversations = async (req, res) => {
     try {
-
-
-        const myId = res.locals.user._id
-
-        const f_conversations = await FriendsConversation.find({
-            $or: [
-                { receiver: myId },
-                { sender: myId }
-            ],
-        })
-        console.log('f_conversations',f_conversations);
-        
-        res.json({ f_conversations })
-
+        const myId = res.locals.user._id;
+    
+    
+        const f_conversations = await FriendsConversation.aggregate([
+            {
+                $match: {
+                    $or: [
+                        { receiver: myId },
+                        { sender: myId }
+                    ]
+                }
+            },
+            {
+                $lookup: {
+                    from: 'users', 
+                    localField: 'receiver',
+                    foreignField: '_id',
+                    as: 'receiverInfo'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'users', 
+                    localField: 'sender',
+                    foreignField: '_id',
+                    as: 'senderInfo'
+                }
+            },
+            {
+                $addFields: {
+                    receiverInfo: {
+                        $map: {
+                            input: '$receiverInfo',
+                            as: 'receiver',
+                            in: {
+                                _id: '$$receiver._id',
+                                name: '$$receiver.name',
+                                email: '$$receiver.email',
+                                profile_picture: '$$receiver.profile_picture'
+                            }
+                        }
+                    },
+                    senderInfo: {
+                        $map: {
+                            input: '$senderInfo',
+                            as: 'sender',
+                            in: {
+                                _id: '$$sender._id',
+                                name: '$$sender.name',
+                                email: '$$sender.email',
+                                profile_picture: '$$sender.profile_picture'
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    receiverInfo: 1,
+                    senderInfo: 1,
+                    createdAt: 1,
+                    updatedAt: 1
+                }
+            }
+        ]);
+    
+    
+        res.json({ f_conversations });
     } catch (error) {
-        console.log(error);
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
+    
+    
+
 }
 module.exports = {
     sendMessageTofriend,

@@ -29,8 +29,6 @@ const popups = [
     document.getElementById('yourpapers-popup'),
     document.getElementById('searchpapers-popup'),
     document.getElementById('joinedpapers-popup'),
-    document.getElementById('searchfriends-popup'),
-    document.getElementById('yourfriends-popup'),
     document.getElementById('notifications_popup')
 ];
 const popup_buttons = [
@@ -38,8 +36,6 @@ const popup_buttons = [
     document.getElementById('your-papers-button'),
     document.getElementById('searchpapers-button'),
     document.getElementById('joined-papers-button'),
-    document.getElementById('search-friends-button'),
-    document.getElementById('your-friends-button'),
     document.getElementById('notifications-button')
 ];
 const dropdowns = [
@@ -91,7 +87,6 @@ window.onload = async () => {
 
 }
 function display_Message(message) {
-    console.log('Message', message);
     try {
         // Check if the message is valid
         if (!message || typeof message !== 'string') {
@@ -117,7 +112,7 @@ function display_Message(message) {
 
                 popup_message.classList.remove('show');
             }, 0);
-        }, 1000);
+        }, 2000);
 
     } catch (error) {
         console.error('Error displaying message:', error.message);
@@ -212,6 +207,8 @@ async function loadPosts() {
 
 async function buildmessagecontent(message) {
     const sender = await get_user(message.m.sender);
+    console.log('sender',sender);
+    
     let messageContent = '';
     console.log('received message', message);
 
@@ -282,10 +279,10 @@ async function buildmessagecontent(message) {
     messageContent += `
             <div class="message-info" ondbclick="reply('${message.m._id}', '${message.m.text.replace(/'/g, "\\'")}')">
             ${message.m.sender === userId ? `
-                
+
                 <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.m.sender === userId ? 'sent' : 'received'}" >
                     ${img}
-                    ${replyContent} 
+                    ${replyContent}
                     ${isImage
                 ? `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
                                 <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>`
@@ -294,18 +291,18 @@ async function buildmessagecontent(message) {
                                 <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>
                                 <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
                     `}
-                    
+
                 </div>
-                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender.user[0]).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.user[0].profile_picture ? sender.user[0].profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
+                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender.users[0]).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.users[0].profile_picture ? sender.users[0].profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
 
             </div>
                 ` :
             `
-                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender.user[0]).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.user[0].profile_picture ? sender.user[0].profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
-                
+                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender.users[0]).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.users[0].profile_picture ? sender.users[0].profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
+
                 <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.m.sender === userId ? 'sent' : 'received'}" >
                     ${img}
-                    ${replyContent} 
+                    ${replyContent}
                     ${isImage
                 ?
                 `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
@@ -315,12 +312,12 @@ async function buildmessagecontent(message) {
                                 <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>
                                 <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
                     `}
-                    
+
                 </div>
             </div>
                 `
         }
-                
+
 `;
 
     return messageContent;
@@ -334,9 +331,9 @@ function showProfile(user) {
         <img id="profile_image" src="/profile_images/${user.profile_picture ? user.profile_picture : 'non-picture.jpg'}" alt="Sender Image" class="sender-image" />
         <p id="user-name">${user.name}</p>
         <label>Phone number</label>
-        
+
         ${user.phoneHidden == false ? `
-            
+
             <p> ${user._id}</p>` : ""}
         <label>E-mail</label>
         <p> ${user.email}</p>
@@ -604,7 +601,7 @@ async function display_notification(data) {
         // const user = await get_user(data.data.sender);
 
         document.getElementById('notifications-container').innerHTML += `
-            
+
             <div  class="notification unread" onclick="handleNotificationClick('${data.data.type}', ${JSON.stringify(data.conversation)})">
                 <div  class="notificationInfo>
                     <div id class="image-comb">
@@ -623,12 +620,12 @@ async function display_notification(data) {
                                     : data.data.type === "reply" ? `${data.data.user.name} ${translations.notification_message.reply}`
                                         : `${translations.notification_message.default}`
             }</p>
-            
+
         `;
     } else {
 
         document.getElementById('notifications-container').innerHTML += `
-            
+
                 <div id="${data.data.type === 'join-request' ? `notification-${data.data.notification._id}` : ""}" class="notification unread" onclick="handleNotificationClick('${data.data.type}', ${JSON.stringify(data.conversation)})">
                     <div  class="notificationInfo">
                         <div id class="image-comb">
@@ -672,9 +669,9 @@ async function display_notification(data) {
                 </a>
             </div>
             ${postHtml}
-            
+
             </div>
-            
+
         `;
     }
 
@@ -968,7 +965,7 @@ async function buildNotifications(notifications) {
 
 
         return `
-            <div id="notification-${notification._id}" class="${notification.read ? 'notification' : 'notification unread'}" 
+            <div id="notification-${notification._id}" class="${notification.read ? 'notification' : 'notification unread'}"
                     onclick="handleNotificationClick('${notification.type}',${JSON.stringify(notification).replace(/"/g, '&quot;')})">
                 <div class="notificationInfo">
                     <div class="image-comb">
@@ -977,7 +974,7 @@ async function buildNotifications(notifications) {
                     </div>
                     <p>
 
-                    
+
                 ${notification.type === "accept-request" ? `${notification.sender_info.name} ${translations.notification_message.accept_request} "${notification.paper_info.title}" `
                 : notification.type === "private" ? `${notification.sender_info.name} ${translations.notification_message.private}`
                     : notification.type === "message" ? `${notification.sender_info.name} ${translations.notification_message.message}`
@@ -1001,7 +998,7 @@ async function buildNotifications(notifications) {
                     ${translations.joinPaper.reject}
                 </a>
             </div>
-                ${notification.type === 'new-post' ? postHtml : ""}           
+                ${notification.type === 'new-post' ? postHtml : ""}
             </div>
         `;
     });
@@ -1019,7 +1016,7 @@ async function buildNotifications(notifications) {
 
 //     } catch (error) {
 //         console.error('Error fetching notifications:', error);
-//     }    
+//     }
 // });
 
 function closeConversation() {
@@ -1064,7 +1061,7 @@ async function loadNotifications() {
     return notificationsContainer
 }
 async function addListeners() {
-    console.log('adding listeners');
+
     const cancel = document.getElementById('cancel');
     const confirm_delete = document.getElementById('confirm-delete');
     const edit_paper = document.querySelector('.edit-paper')
@@ -1080,6 +1077,7 @@ async function addListeners() {
 
     const translations = await loadTranslation()
     popup_buttons.forEach((button, index) => {
+        console.log('button', button);
 
         button.removeEventListener('click', togglePopup);
         button.addEventListener('click', togglePopup);
@@ -1163,7 +1161,7 @@ async function addListeners() {
                     console.log('inputValue', inputValue);
                     let overlayText = '';
 
-                    const tagRegex = /#[a-zA-Z0-9-_]+(?=\s|$)/g;
+                    const tagRegex = /#[a-zA-Z0-9-_\u0600-\u06FF]+(?=\s|$)/g;
                     const matches = inputValue.match(tagRegex);
                     console.log('tags', tags);
 
@@ -1181,8 +1179,16 @@ async function addListeners() {
                             overlayText += `<span><strong>${word}</strong></span> `;
                         }
                     });
-
-                    overlay.innerHTML = overlayText;
+                    if (inputField.value.trim() === '') {
+                        // Hide or clear the overlay when input is empty
+                        overlay.innerHTML = ''; // Clear content
+                        overlay.style.display = 'none'; // Optionally hide the overlay
+                    } else {
+                        // Show and update the overlay as needed
+                        overlay.style.display = 'block';
+                        overlay.innerHTML = overlayText;
+                    }
+                    // overlay.innerHTML = overlayText;
                 });
 
                 create_paper.addEventListener('click', async function (e) {
@@ -1192,7 +1198,6 @@ async function addListeners() {
                     const project_branch = startpaper.querySelector('#project_branch').value;
                     const paper_title = startpaper.querySelector('#paper_title').value;
                     const language = startpaper.querySelector('#start-language-input').value;
-
                     tags = Array.from(tags);
 
                     await fetch('/api/create-paper', {
@@ -1215,8 +1220,7 @@ async function addListeners() {
                             form.append('members', Array.from(members));
                             form.append('conv_pic', 'welcome.png');
                             form.append('title', 'welcome chat');
-                            console.log('data', data);
-                            display_Message(data.message)
+
 
                             const response = await fetch('/api/new-conversation', {
                                 method: 'POST',
@@ -1225,11 +1229,11 @@ async function addListeners() {
 
                             if (response.ok) {
                                 const data = await response.json()
-                                console.log('Data', data);
-
+                                display_Message(translations.sidebar.paper_added)
                             }
                         }).catch(error => {
-                            display_Message(data.message)
+                            console.log('error', error);
+
                         });
                 });
             }
@@ -1319,11 +1323,12 @@ async function addListeners() {
                 console.log('searchfriends-popup');
                 const searchPopup = mainContent.querySelector('.searchfriends-popup')
                 const friend_search = searchPopup.querySelector('#friend-search')
+
                 friend_search.addEventListener('click', async function (e) {
                     e.preventDefault();
 
                     const friend_search_input = searchPopup.querySelector('#friend-search-input').value;
-
+                    let friendChats = searchPopup.querySelector('#friendChats')
                     try {
                         // Execute fetch request
                         const response = await fetch('/api/get-user', {
@@ -1335,7 +1340,6 @@ async function addListeners() {
                         });
 
                         const data = await response.json();
-                        console.log('data', data);
 
                         let content = "";
                         const friend_result = mainContent.querySelector('#friend-result');
@@ -1349,18 +1353,18 @@ async function addListeners() {
                                         <div class="paperinfo">
                                             <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(u).replace(/"/g, '&quot;')}')" src="/profile_images/${u.profile_picture}" alt="Profile Picture">
                                             <span class="paper-title"><strong>${u.name}</strong></span>
-                                            
+
                                             ${u.phoneHidden == false ? `
                                                 <span class="dash"><strong>-</strong></span>
                                                 <span class="paper-study"><strong>${u._id}</strong></span>` : ""}
                                         </div>
                                         <button class="friend-message" id="send-friend-message" onclick="show_Single_conversation('${u._id}')">send a message</button>
-                                    </div>  
+                                    </div>
                                 `;
                             });
                         }
 
-                        friend_result.innerHTML = content;
+                        friendChats.innerHTML = content;
                         const translations = await loadTranslation()
 
                         const friendButtons = document.querySelectorAll('.friend-message')
@@ -1427,10 +1431,7 @@ async function addListeners() {
         });
 
         if (response.ok) {
-
             const data = await response.json()
-            console.log('papers', data.papers.length);
-
             let content = ''
             if (data.papers.length === 0) {
                 content = translations.sidebar.no_papers
@@ -1613,46 +1614,46 @@ async function addListeners() {
             hide_spinner()
         }
     })
-    document.getElementById('your-friends-button').addEventListener('click', async function () {
-        show_spinner()
-        const response = await fetch('/api/users/1', {
-            method: "GET"
-        });
-        if (response.ok) {
+    // document.getElementById('your-friends-button').addEventListener('click', async function () {
+    //     show_spinner()
+    //     const response = await fetch('/api/users/1', {
+    //         method: "GET"
+    //     });
+    //     if (response.ok) {
 
-            const data = await response.json()
-            console.log(data);
-            let content = ''
-            if (data.users.length == 0) {
-                content = 'No friends yet'
-            } else {
-                data.users.forEach(user => {
-                    content += `
-                    
-                        <div onclick="show_Single_conversation('${user._id}')" class="friend-info">
-                            <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(user).replace(/"/g, '&quot;')}')"  src="/profile_images/${user.profile_picture}" alt="Profile Picture">
-                            <span>
-                            ${user.name}
-                            </span>
-                        
-                            <span>
-                            ${user.phoneHidden == false ? `
-                                <span class="dash"><strong>-</strong></span>
-                                <span class="paper-study"><strong>${user._id}</strong></span>` : ""}
-                            </span>
-                        </div>
-                    
-                `
+    //         const data = await response.json()
+    //         console.log(data);
+    //         let content = ''
+    //         if (data.users.length == 0) {
+    //             content = 'No friends yet'
+    //         } else {
+    //             data.users.forEach(user => {
+    //                 content += `
 
-                })
-            }
-            const paperscontainer = mainContent.querySelector('.yourfriends-container')
+    //                     <div onclick="show_Single_conversation('${user._id}')" class="friend-info">
+    //                         <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(user).replace(/"/g, '&quot;')}')"  src="/profile_images/${user.profile_picture}" alt="Profile Picture">
+    //                         <span>
+    //                         ${user.name}
+    //                         </span>
+
+    //                         <span>
+    //                         ${user.phoneHidden == false ? `
+    //                             <span class="dash"><strong>-</strong></span>
+    //                             <span class="paper-study"><strong>${user._id}</strong></span>` : ""}
+    //                         </span>
+    //                     </div>
+
+    //             `
+
+    //             })
+    //         }
+    //         const paperscontainer = mainContent.querySelector('.yourfriends-container')
 
 
-            paperscontainer.innerHTML = content
-            hide_spinner()
-        }
-    })
+    //         paperscontainer.innerHTML = content
+    //         hide_spinner()
+    //     }
+    // })
     create_paper.addEventListener('click', async () => {
 
         document.querySelector('.startpapers-label').textContent = translations.newPaper.label;
@@ -1694,13 +1695,13 @@ async function addListeners() {
     joinedPapers.addEventListener('click', async () => {
         document.querySelector('.joined-label').textContent = translations.joinPaper.dropdowns.joinedPapers;
     })
-    searchFriends.addEventListener('click', async () => {
-        document.querySelector('.searchfriends-label').textContent = translations.friends.searchfriends;
-        document.getElementById('friend-search').textContent = translations.sidebar.search
-    })
-    yourFriends.addEventListener('click', async () => {
-        document.querySelector('.yourfriends-label').textContent = translations.friends.dropdowns.yourfriends;
-    })
+    // searchFriends.addEventListener('click', async () => {
+    //     document.querySelector('.searchfriends-label').textContent = translations.friends.searchfriends;
+    //     document.getElementById('friend-search').textContent = translations.sidebar.search
+    // })
+    // yourFriends.addEventListener('click', async () => {
+    //     document.querySelector('.yourfriends-label').textContent = translations.friends.dropdowns.yourfriends;
+    // })
     cancel.addEventListener('click', function () {
         confirm_delete.style.display = 'none';
     });
@@ -1910,7 +1911,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     // Get the container and sublist within the clicked link
                     const toggleContainer = this.querySelector('.toggle-tab-container, .toggle-tab-container-2, .toggle-tab-container-3, .toggle-tab-container-4');
-                    const sublist = this.querySelector('.sublist, .sublist-2, .sublist-3, .sublist-4');
+                    const sublist = this.querySelector('.sublist, .sublist-2');
 
                     toggleContainer.classList.toggle('active');
 
@@ -2106,11 +2107,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         <span class="dash"><strong>-</strong></span>
                         <span class="paper-tags" id="${paper._id}"><strong>${paper._id}</strong></span>
                     </div>
-                    <div class="button-container">
-                        <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
-                        <div class="divider"></div>
-                        <i id="gear" class="gear fa-solid fa-bars"></i>
-                    </div>
+                    <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
+
             </div>
                 `
 
@@ -2142,7 +2140,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         data.users.forEach(user => {
                             content += `
-                    
+
                         <div onclick="show_Single_conversation('${user._id}')" class="friend-info">
                             <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(user).replace(/"/g, '&quot;')}')"  src="/profile_images/${user.profile_picture}" alt="Profile Picture">
                             <span>
@@ -2153,7 +2151,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             ${user._id}
                             </span>
                         </div>
-                    
+
                 `
 
                         })
@@ -2303,64 +2301,64 @@ document.addEventListener('DOMContentLoaded', function () {
                 toggleSidebar()
                 const newPopup = mainContent.querySelector('.searchfriends-popup')
 
-                const friend_search = newPopup.querySelector('#friend-search')
+                // const friend_search = newPopup.querySelector('#friend-search')
 
-                friend_search.addEventListener('click', async function (e) {
-                    e.preventDefault();
+                // friend_search.addEventListener('click', async function (e) {
+                //     e.preventDefault();
 
-                    const friend_search_input = newPopup.querySelector('#friend-search-input').value;
+                //     const friend_search_input = newPopup.querySelector('#friend-search-input').value;
 
-                    try {
-                        const response = await fetch('/api/get-user', {
-                            headers: { 'Content-Type': 'application/json' },
-                            method: "POST",
-                            body: JSON.stringify({
-                                query: friend_search_input
-                            })
-                        });
+                //     try {
+                //         const response = await fetch('/api/get-user', {
+                //             headers: { 'Content-Type': 'application/json' },
+                //             method: "POST",
+                //             body: JSON.stringify({
+                //                 query: friend_search_input
+                //             })
+                //         });
 
-                        const data = await response.json();
+                //         const data = await response.json();
 
-                        let content = "";
-                        const friend_result = newPopup.querySelector('#friend-result');
+                //         let content = "";
+                //         const friend_result = newPopup.querySelector('#friend-result');
 
-                        if (data.user.length == 0) {
-                            friend_result.innerHTML = `<p> No matches</p>`;
-                        } else {
-                            data.user.forEach(u => {
-                                content += `
-                                    <div class="paper-line">
-                                        <div class="paperinfo">
-                                            <img onclick="showProfile('${JSON.stringify(u).replace(/"/g, '&quot;')}')" src="/profile_images/${u.profile_picture}" alt="Profile Picture">
-                                            <span class="paper-title"><strong>${u.name}</strong></span>
-                                            <span class="dash"><strong>-</strong></span>
-                                            ${u.phoneHidden == false ? `
-                                                <span class="dash"><strong>-</strong></span>
-                                                <span class="paper-study"><strong>${u._id}</strong></span>` : ""}
-                                        </div>
-                                        <button class="friend-message" id="send-friend-message" onclick="show_Single_conversation('${u._id}')">send a message</button>
-                                    </div>
-                                `;
-                            });
-                        }
+                //         if (data.user.length == 0) {
+                //             friend_result.innerHTML = `<p> No matches</p>`;
+                //         } else {
+                //             data.user.forEach(u => {
+                //                 content += `
+                //                     <div class="paper-line">
+                //                         <div class="paperinfo">
+                //                             <img onclick="showProfile('${JSON.stringify(u).replace(/"/g, '&quot;')}')" src="/profile_images/${u.profile_picture}" alt="Profile Picture">
+                //                             <span class="paper-title"><strong>${u.name}</strong></span>
+                //                             <span class="dash"><strong>-</strong></span>
+                //                             ${u.phoneHidden == false ? `
+                //                                 <span class="dash"><strong>-</strong></span>
+                //                                 <span class="paper-study"><strong>${u._id}</strong></span>` : ""}
+                //                         </div>
+                //                         <button class="friend-message" id="send-friend-message" onclick="show_Single_conversation('${u._id}')">send a message</button>
+                //                     </div>
+                //                 `;
+                //             });
+                //         }
 
-                        friend_result.innerHTML = content;
-                        const translations = await loadTranslation()
+                //         friend_result.innerHTML = content;
+                //         const translations = await loadTranslation()
 
-                        const friendButtons = document.querySelectorAll('.friend-message')
-                        console.log('friends buttons', friendButtons);
+                //         const friendButtons = document.querySelectorAll('.friend-message')
+                //         console.log('friends buttons', friendButtons);
 
-                        friendButtons.forEach(button => {
-                            button.textContent = translations.friends.sendFriendMessage;
-                        })
-                    } catch (err) {
-                        console.error('Error during fetch:', err);
-                        // You can handle any errors here
-                    } finally {
-                        // Hide spinner after everything is done
+                //         friendButtons.forEach(button => {
+                //             button.textContent = translations.friends.sendFriendMessage;
+                //         })
+                //     } catch (err) {
+                //         console.error('Error during fetch:', err);
+                //         // You can handle any errors here
+                //     } finally {
+                //         // Hide spinner after everything is done
 
-                    }
-                });
+                //     }
+                // });
             })
             yourFriends.addEventListener('click', async () => {
                 document.querySelector('.yourfriends-label').textContent = translations.friends.dropdowns.yourfriends;
@@ -2412,9 +2410,9 @@ function hide_spinner() {
 }
 
 async function send_message(type) {
-    // const text = document.getElementById('message-input').value; 
-    console.log('value',type);
-    
+    // const text = document.getElementById('message-input').value;
+    console.log('value', type);
+
 
     try {
         const formData = new FormData();
@@ -2564,10 +2562,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             // Check if data and conv exist
             if (data.conv) {
-                // Get the chats container
                 const chats = document.getElementById('chats');
 
-                // Create conversation content
                 const content = `
                     <div class="conversation-item" onclick="get_conversation('${data.conv._id}')">
                         <img src="/conversation_images/${data.conv.conv_pic}" alt="${data.conv.conv_title}" />
@@ -2575,7 +2571,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
 
-                // Find the 'add conversation' button
+
                 const addButton = document.querySelector('.plus-sign');
 
 
@@ -2757,7 +2753,7 @@ async function edit_paper(id) {
                      <div id="update-typeofstudy-container" class="institute-container">
                         <input type="text" id="update_type_of_study" name="country-innerInput" aria-label="Country"
                            autocomplete="off" class="styled-input" value="${data.paper.type_of_study}">
-                        <div class="icon-container">    
+                        <div class="icon-container">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                               stroke-linejoin="round" class="feather feather-chevron-down">
@@ -3316,7 +3312,7 @@ async function buildConversations(paper_UserId, paper_id) {
                     <img src="/conversation_images/${conversation.conv_pic}" alt="${conversation.conv_title}"/>
                     <h3>${conversation.conv_title}</h3>
                     <div class="new-notification" id="private-new-${conversation._id}">
-                    </div>  
+                    </div>
                 </div>
             `;
         }
@@ -3324,8 +3320,8 @@ async function buildConversations(paper_UserId, paper_id) {
 
         console.log('queue', notificationQueue);
         conversationContent += `
-            <div class="plus-sign" 
-                onclick="add_conversation('${paper_id}'); event.preventDefault(); event.stopPropagation()" 
+            <div class="plus-sign"
+                onclick="add_conversation('${paper_id}'); event.preventDefault(); event.stopPropagation()"
                 style="${String(paper_UserId) === String(userId) ? 'display: block;' : 'display: none;'}">
                 <i class="fa-solid fa-plus"></i>
             </div>
@@ -3376,15 +3372,15 @@ async function show_conversation(paper_id) {
                 <div id="chats-view" class="chats-view">
                     <div id="chats-container" class="chats-plus">
                         <div id="chats" class="chat">
-                        
-                        </div>  
+
+                        </div>
                     </div>
                 </div>
                 `: ""
             }
-            
+
             <div id="chat-body" class="chat-body">
-                ${scrollbutton} 
+                ${scrollbutton}
                 <div id="message-history" class="message-history"></div>
             </div>
         </div>
@@ -3402,16 +3398,16 @@ async function show_conversation(paper_id) {
                     <div id="chats-view" class="chats-view">
                         <div id="chats-container" class="chats-plus">
                             <div id="chats" class="chat">
-                                
-                            </div>  
+
+                            </div>
                         </div>
-                        
+
                     </div>
                     <a id="exit_conversations">
                         <i class="fa-solid fa-arrow-left-long" style="margin-left: 8px;"></i>
                         <p style="margin: 0;">Exit conversations</p>
-                    </a> 
-                </div> 
+                    </a>
+                </div>
             `
 
             const chatsView = document.getElementById('chats')
@@ -3426,7 +3422,7 @@ async function show_conversation(paper_id) {
                 <div id="head" class="header">
                 <i class="fas fa-home"></i>
                 <span class="text-only">Home</span>
-                
+
                 </div>
             </a>
         </li>
@@ -3511,7 +3507,7 @@ async function show_conversation(paper_id) {
                <!-- <i id="paper-3" class="fa-solid fa-user-group"></i> -->
                <i class="fa-solid fa-comment"></i>
                <span id="chat-tab" class="text toggle-item">Public chat</span>
-               
+
             </div>
          </a>
       </li>
@@ -3522,7 +3518,7 @@ async function show_conversation(paper_id) {
             <div id="head" class="header">
                <i class="fa-solid fa-bell"></i>
                <span id="notifications" class="text-only">Notifications</span>
-               
+
                </span>
             </div>
             <div id="newNotification" class="new-notfication"></div>
@@ -3552,115 +3548,87 @@ async function show_conversation(paper_id) {
 
 
 }
-async function show_Single_conversation(user_id) {
+async function load_f_messages(conversation_Id, user_id) {
     try {
-        show_spinner(); // Ensure spinner is shown at the start
+        let chat = document.querySelector('.chat')
+        console.log('chats', chat);
 
-        conversation_type = 'friend';
-        let content = "";
-        const mainContent = document.querySelector('.mainContent');
-        isreply = false;
-        replyTo = null;
-        mainContent.style.display = 'block'
-        // mainContent.className +=' conversation'
-        mainContent.classList.add('conversation')
-        const response = await fetch(`/api/get-friendconversation/${user_id}`, { method: 'GET' });
-        const data = await response.json();
+        const messagesResponse = await fetch(`/api/messages/${conversation_Id}?skip=${cskip}&limit=${climit}`, { method: 'GET' });
+        if (!messagesResponse.ok) throw new Error("Failed to fetch messages");
 
-        let conversation_Id;
+        const messagesData = await messagesResponse.json();
+        let message_content = "";
 
-        if (!data.f_conversation) {
 
-            content = await conversation_layout(user_id);
-            mainContent.innerHTML = content;
 
-            load_f_conversations()
-            control_sendButton('private')
-            inputListeners('private')
+
+        const message_history = document.getElementById('message-history');
+        if (messagesData.messages.length === 0) {
+            message_history.innerHTML = `<p>No Messages</p>`;
         } else {
-            conversation_Id = data.f_conversation._id;
+            // Build and render message content
+            const messages = messagesData.messages.reverse();
+            message_content = await buildMessageContent(messages, user_id);
+            message_history.insertAdjacentHTML('afterbegin', message_content);
+            document.querySelector('.mainContent').classList.add('conversation')
+            message_history.classList.add('singleconversation');
 
-            const messagesResponse = await fetch(`/api/messages/${conversation_Id}`, { method: 'GET' });
-            const messagesData = await messagesResponse.json();
-
-            let message_content = "";
-
-            content = await conversation_layout(user_id);
-            mainContent.innerHTML = content;
-
-            load_f_conversations()
-
-            control_sendButton('private')
-            // inputListeners('private')
-            const message_history = document.getElementById('message-history');
-            if (messagesData.messages.length === 0) {
-                message_history.innerHTML = `
-                    <p> No Messages</p>
-                `;
-            } else {
-                try {
-                    messages = messagesData.messages;
-                    message_content = await buildMessageContent(messagesData.messages, messagesData.userId);
-
-                    console.log(message_history);
-                    message_history.innerHTML = message_content;
-
-                    // messages.forEach(message => {
-                    //     const messageInfo = document.getElementById(`message-info-${message._id}`);
-                    //     messageInfo.addEventListener('dblclick', function () {
-                    //         reply(message._id, message);
-                    //     });
-                    // });
-                } catch (err) {
-                    console.log(err);
-                }
+            const message = document.querySelector('.message-history .message-info:last-child .message.sent');
+            const messagereceived = document.querySelector('.message-history .message-info:last-child .message.received');
+            if (message) {
+                message.classList.add('singleconversation');
             }
+
+            if (messagereceived) {
+                messagereceived.classList.add('singleconversation');
+            }
+            scrollToBottom()
         }
-
-        popups.forEach(popup => {
-            popup.style.display = 'none';
-        });
-
-        toggleSidebar();
-    } catch (error) {
-        console.error('Error fetching conversation:', error);
-    } finally {
-        hide_spinner(); // Hide spinner after everything is done
+    } catch (err) {
+        console.error("Error loading messages:", err);
     }
 }
-
-async function conversation_layout(user_id) {
+async function updateUserInfo(user) {
+    user = JSON.parse(user)
+    let content = await conversation_layout(user)
+    mainContent.innerHTML = content;
+    searchFunctionality()
+    control_sendButton('friend', user._id)
+}
+async function conversation_layout(user) {
     try {
-
-        console.log('Entering conversation_layout for user:', user_id);
-        const user = await get_user(user_id);
-        console.log('User data received:', user);
+        const translations = await loadTranslation()
+        // user = JSON.parse(user)
         let content = '';
-        const rec_name = user.user[0].name;
-        const rec_img = user.user[0].profile_picture;
-
+        const rec_name = user.name;
+        const rec_img = user.profile_picture;
+        const chats = document.getElementById('friendChats')
         content += `
         <div class="chat-container">
+        
                 <div class="userinfo">
-                    <img src="/profile_images/${rec_img}" alt="Profile Picture">
+                    <img src="/profile_images/${rec_img}" alt="">
                     <span>
                         ${rec_name}
                     </span>
+                    
                 </div>
                 ${!isMobile() ? `
-                    <div id="chats-view" style="top:-10%" class="chats-view">    
-                        <div id="friendChats" class="chat">
-                            
+                    <div id="chats-view" style="top:-10%" class="chats-view">
+                        <div class="search-container">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends}">
                         </div>
+                        ${chats.outerHTML}
                     </div>
                     `: ""}
                 <div id="chat-body" class="chat-body">
                     <div id="message-history" class="message-history"></div>
                     <div id="messaging-container" class="messaging-container">
                         <div class="messaging-components">
-                            ${fileSend}                            
+                            ${fileSend}
                             <input type="text" id="message-input" placeholder="write a message">
-                            <i id="send-message" onclick="send_to_friend('${user_id}')" class="fa-solid fa-paper-plane"></i>
+                            <i id="send-message" onclick="send_to_friend('${user._id}')" class="fa-solid fa-paper-plane"></i>
                         </div>
                     </div>
                 </div>
@@ -3674,16 +3642,16 @@ async function conversation_layout(user_id) {
                     <div id="chats-view" class="chats-view">
                         <div id="chats-container" class="chats-plus">
                             <div id="chats" class="chat">
-                                
-                            </div>  
+
+                            </div>
                         </div>
-                        
+
                     </div>
                     <a id="exit_conversations">
                         <i class="fa-solid fa-arrow-left-long" style="margin-left: 8px;"></i>
                         <p style="margin: 0;">Exit conversations</p>
-                    </a> 
-                </div> 
+                    </a>
+                </div>
             `
 
             const chatsView = document.getElementById('chats')
@@ -3698,7 +3666,7 @@ async function conversation_layout(user_id) {
                 <div id="head" class="header">
                 <i class="fas fa-home"></i>
                 <span class="text-only">Home</span>
-                
+
                 </div>
             </a>
         </li>
@@ -3783,7 +3751,7 @@ async function conversation_layout(user_id) {
                <!-- <i id="paper-3" class="fa-solid fa-user-group"></i> -->
                <i class="fa-solid fa-comment"></i>
                <span id="chat-tab" class="text toggle-item">Public chat</span>
-               
+
             </div>
          </a>
       </li>
@@ -3794,7 +3762,7 @@ async function conversation_layout(user_id) {
             <div id="head" class="header">
                <i class="fa-solid fa-bell"></i>
                <span id="notifications" class="text-only">Notifications</span>
-               
+
                </span>
             </div>
             <div id="newNotification" class="new-notfication"></div>
@@ -3806,9 +3774,10 @@ async function conversation_layout(user_id) {
                 let sidebar = document.getElementById('sidebar')
 
                 sidebar.innerHTML = sideBarContent
+                
             })
         } else {
-            toggleSidebar();
+            // toggleSidebar();
         }
         return content;
     } catch (error) {
@@ -3816,13 +3785,174 @@ async function conversation_layout(user_id) {
         return '';
     }
 }
+async function friend_messages(user_id) {
+    try {
+        const response = await fetch(`/api/get-friendconversation/${user_id}`, { method: 'GET' });
+        if (!response.ok) throw new Error("Failed to fetch friend conversation");
+
+        const data = await response.json();
+        let conversation_Id;
+        cskip = 0; // Reset batch loading
+        let friendChats = `
+             <div id="chats-view" style="top:-10%" class="chats-view">
+                <div class="search-container">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends}">
+                </div>
+                
+            </div>
+            `
+        if (!data.f_conversation) {
+            // No conversation exists
+            content = await conversation_layout(user_id);
+            mainContent.innerHTML = content;
+
+            document.getElementById('chats-view').innerHTML += friendChats
+            control_sendButton('private');
+            inputListeners('private');
+        } else {
+            // Existing conversation
+            conversation_Id = data.f_conversation._id;
+            document.getElementById('chats-view').innerHTML += friendChats
+
+            await load_f_messages(conversation_Id, user_id); // Load messages
+            // await load_f_conversations(); 
+
+            control_sendButton('friend', user_id);
+
+            document.querySelector('.mainContent').classList.add('conversation');
+
+        }
+    } catch (err) {
+        console.error("Error in friend_messages:", err);
+    }
+}
+
+async function show_Single_conversation() {
+    try {
+        show_spinner(); // Ensure spinner is shown at the start
+        const translations = await loadTranslation()
+        conversation_type = 'friend';
+        let content = "";
+        const mainContent = document.querySelector('.mainContent');
+        isreply = false;
+        replyTo = null;
+        mainContent.style.display = 'block'
+        // mainContent.className +=' conversation'
+        mainContent.classList.add('conversation')
+
+
+
+        let chatContent = `
+        <div class="chat-container">
+                
+                ${!isMobile() ? `
+                    <div id="chats-view" class="chats-view">
+                    <div class="search-container">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends} ">
+                    </div>
+                        <div id="friendChats" class="chat">
+
+                        </div>
+                    </div>
+                    `: ""}
+                <div id="chat-body" class="chat-body">
+                    <div id="message-history" class="message-history"></div>
+                    
+                </div>
+        </div>
+        `
+        mainContent.innerHTML = chatContent
+        searchFunctionality()
+
+
+        popups.forEach(popup => {
+            popup.style.display = 'none';
+        });
+
+        toggleSidebar();
+    } catch (error) {
+        console.error('Error fetching conversation:', error);
+    } finally {
+        hide_spinner(); // Hide spinner after everything is done
+    }
+}
+// {}
+
+async function searchFunctionality() {
+    let chatsView = document.querySelector('.chats-view')
+    let chatResults = await load_f_conversations()
+    const friend_search_input = chatsView.querySelector('#friend-search-input');
+    const friendsChats = chatsView.querySelector('.chat')
+    friend_search_input.addEventListener('input', async function (e) {
+        e.preventDefault();
+
+        if (this.value === '') {
+            console.log('empty');
+
+            friendsChats.innerHTML = chatResults;
+        }
+        else {
+            try {
+                const response = await fetch('/api/get-user', {
+                    headers: { 'Content-Type': 'application/json' },
+                    method: "POST",
+                    body: JSON.stringify({
+                        query: this.value
+                    })
+                });
+
+                const data = await response.json();
+                console.log('data', data);
+
+                let content = "";
+
+                if (data.users.length == 0) {
+                    console.log('empty');
+
+                    content.innerHTML = `<p> No matches</p>`;
+                } else {
+
+                    data.users.forEach(u => {
+                        console.log('user', u);
+
+                        content += `
+                            <div id="conversationItem" 
+                                onclick="updateUserInfo('${JSON.stringify(u).replace(/"/g, '&quot;')}'); 
+                                        ${u.f_conversation && u.f_conversation._id ? `load_f_messages('${u.f_conversation._id}', '${u._id}')` : ''}" 
+                                class="conversation-item">
+                                <img src="/profile_images/${u.profile_picture}" alt="${u.name}"/>
+                                <h3>${u.name}</h3>
+                                <div class="new-notification" id="private-new-${u._id}">
+                                </div>
+                            </div>`;
+                    });
+                }
+
+                friendsChats.innerHTML = content;
+                const translations = await loadTranslation()
+
+                // const friendButtons = document.querySelectorAll('.friend-message')
+
+                // friendButtons.forEach(button => {
+                //     button.textContent = translations.friends.sendFriendMessage;
+                // })
+            } catch (err) {
+                console.log('error', err);
+
+
+            } finally {
+
+            }
+        }
+    });
+}
 async function send_to_friend(user_id) {
 
     const formData = new FormData();
     const messageInput = document.getElementById('message-input');
     const text = messageInput ? messageInput.value : '';
-
-
     formData.append('text', text);
 
     formData.append('isreply', isreply ? 'true' : 'false');
@@ -3840,7 +3970,6 @@ async function send_to_friend(user_id) {
         method: 'POST',
         body: formData  // Send FormData instead of JSON
     }).then(response => response.json()).then(async data => {
-        console.log(data);
 
         const userid = data.friendConversation.receiver;
 
@@ -3862,7 +3991,7 @@ async function send_to_friend(user_id) {
             socket.emit("send-notification", { message: data.message, receiver: userid, type: isreply ? 'reply' : '', user: data.user, conversation: data.friendConversation });
         });
         reset_reply();
-
+        scrollToBottom()
     }).catch(error => {
         console.error('Error sending message:', error);
     });
@@ -3907,7 +4036,7 @@ function openImage(url) {
     }, 20);
 }
 
-async function buildMessageContent(messages, userId) {
+async function buildMessageContent(messages) {
     let message_content = '';
 
     for (const message of messages) {
@@ -3982,17 +4111,19 @@ async function buildMessageContent(messages, userId) {
         } else {
             path = `/profile_images/non-picture.jpg`
         }
+        console.log('is equal ', message.senderDetails._id === userId, '\n', message.senderDetails._id, '\n', userId);
+
         let messageInfo = `
-        <div id="message-info-${message._id}" 
-             class="${isfile ? "message-info isfile" : "message-info"}" 
+        <div id="message-info-${message._id}"
+             class="${isfile ? "message-info isfile" : "message-info"}"
              style="${isImage ? "margin-bottom:1%;margin-top: 2%;" : "margin: 10px"}"
              ondblclick="reply( '${JSON.stringify(message).replace(/"/g, '&quot;')}')"
              >
-             
+            
             ${message.senderDetails._id === userId ? `
-                <div style="${isImage ? "padding:0px;" : "padding:4px 15px;"}"  
+                <div style="${isImage ? "padding:0px;" : "padding:4px 15px;"}"
                      class="message sent">
-                     
+
                     ${img}
                     ${isImage ? `
                         <span class="imageTime">${formattedDate}</span>
@@ -4006,21 +4137,21 @@ async function buildMessageContent(messages, userId) {
                     ${replyContent}
                     <span class="time">${formattedDate}</span>
 
-                    
-                    
-                    
+
+
+
                 </div>
-                <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"  
-                     src="${path}"  
+                <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"
+                     src="${path}"
                      class="sender-image" />
             ` : `
-                <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"  
-                     src="${path}"  
+                <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"
+                     src="${path}"
                      class="sender-image" />
-                     
-                <div style="${isImage ? "padding:0px;" : "padding:4px 15px;"}"  
+
+                <div style="${isImage ? "padding:0px;" : "padding:4px 15px;"}"
                      class="message received">
-                     
+
                     ${img}
                     ${isImage ? `
                         <span class="imageTime">${formattedDate}</span>
@@ -4030,13 +4161,13 @@ async function buildMessageContent(messages, userId) {
                         <span class="${message.isreply ? "message-text reply" : "message-text"}">
                             ${message.text || ""}
                         </span>
-                        
+
                     `}
                     ${replyContent}
                     <span class="time">${formattedDate}</span>
-                    
-                    
-                    
+
+
+
                 </div>
             `}
         </div>
@@ -4047,7 +4178,7 @@ async function buildMessageContent(messages, userId) {
         //     <div id="message-info-${message._id}" class="${isfile ? "message-info isfile" : "message-info"}" style="${isImage ? "margin-bottom:1%;margin-top: 2%;" : "10px"}">
         //         <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.senderDetails._id === userId ? 'sent' : 'received'}" >
         //             ${img}
-        //             ${replyContent} 
+        //             ${replyContent}
         //             ${isImage ? `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
         //             <span class='${message.isreply ? "message-text reply" : "message-text"}'>${message.text ? message.text : ""}</span>`
         //         : `
@@ -4066,7 +4197,7 @@ async function buildMessageContent(messages, userId) {
         //         <img onclick="event.stopPropagation();  showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"  src="${path}"  class="sender-image" />
         //         <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.senderDetails._id === userId ? 'sent' : 'received'}" >
         //             ${img}
-        //             ${replyContent} 
+        //             ${replyContent}
         //             ${isImage ? `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
         //             <span class='${message.isreply ? "message-text reply" : "message-text"}'>${message.text ? message.text : ""}</span>`
         //         : `
@@ -4210,7 +4341,7 @@ function processImage(event) {
 //     </div>
 //     <div class="frame-buttons">
 
-//         <a id="cancel-frame">cancel</a>   
+//         <a id="cancel-frame">cancel</a>
 //         <input placeholder="Add caption">
 //         <button onclick="">Send</button>
 //     </div>
@@ -4283,7 +4414,7 @@ async function loadTranslation() {
         method: "GET"
     });
     const translations = await response.json();
-    const topBar  =document.getElementById('dashboard-setting')
+    const topBar = document.getElementById('dashboard-setting')
     document.getElementById('home').querySelector('.header span').textContent = translations.topBar.home
     document.getElementById('new-paper').textContent = translations.newPaper.label;
     document.getElementById('join-paper').textContent = translations.joinPaper.label;
@@ -4309,12 +4440,12 @@ async function loadTranslation() {
     document.getElementById('searchpapers-button').textContent = translations.sidebar.search;
     document.getElementById('joined-papers-button').textContent = translations.joinPaper.dropdowns.joinedPapers;
     document.querySelector('.joined-label').textContent = translations.joinPaper.dropdowns.joinedPapers;
-    document.getElementById('search-friends-button').textContent = translations.sidebar.search;
-    document.getElementById('your-friends-button').textContent = translations.friends.dropdowns.yourfriends;
+    // document.getElementById('search-friends-button').textContent = translations.sidebar.search;
+    // document.getElementById('your-friends-button').textContent = translations.friends.dropdowns.yourfriends;
     document.getElementById('home-setting').textContent = translations.topBar.home
-    if(topBar){
+    if (topBar) {
         topBar.textContent = translations.topBar.dashboard
-    }   
+    }
     document.querySelector('.searchfriends-label').textContent = translations.friends.searchfriends;
     document.querySelector('.yourfriends-label').textContent = translations.friends.dropdowns.yourfriends;
 
@@ -4362,8 +4493,8 @@ async function applyTranslations() {
     document.getElementById('searchpapers-button').textContent = translations.sidebar.search;
     document.getElementById('joined-papers-button').textContent = translations.joinPaper.dropdowns.joinedPapers;
 
-    document.getElementById('search-friends-button').textContent = translations.sidebar.search;
-    document.getElementById('your-friends-button').textContent = translations.friends.dropdowns.yourfriends;
+    // document.getElementById('search-friends-button').textContent = translations.sidebar.search;
+    // document.getElementById('your-friends-button').textContent = translations.friends.dropdowns.yourfriends;
 
     // create paper popup
     document.getElementById('paper_title').placeholder = translations.startPaper.placeholder;
@@ -4393,7 +4524,7 @@ async function applyTranslations() {
     document.getElementById('search').textContent = translations.joinPaper.advancedSearch.search;
 
 
-    // friends 
+    // friends
     document.getElementById('friend-search-input').placeholder = translations.friends.searchFriends;
     document.getElementById('friend-search').textContent = translations.joinPaper.advancedSearch.search;
     // const friendButtons = document.querySelectorAll('.friend-message')
@@ -4406,25 +4537,27 @@ async function applyTranslations() {
 //     document.removeEventListener('keydown',controlEnter);
 //     document.addEventListener('keydown', controlEnter);
 // }
-function createControlEnter(value) {
+function createControlEnter(value, id = null) {
     return function (event) {
-        controlEnter(value, event);
+        controlEnter(value, event, id);
     };
 }
 let currentHandler
-function control_sendButton(value) {
+function control_sendButton(value, id = null) {
+    console.log('id',id);
+    
     // Remove the previous handler, if any
     if (currentHandler) {
         document.removeEventListener('keydown', currentHandler);
     }
 
-    // Create a new handler with the current value
-    currentHandler = createControlEnter(value);
+    currentHandler = createControlEnter(value, id);
 
-    // Add the new handler
     document.addEventListener('keydown', currentHandler);
 }
-async function controlEnter(value, event) {
+async function controlEnter(value, event, id = null) {
+    console.log('id',id);
+    
     const text = document.getElementById('message-input');
     const sendButton = document.getElementById('send-message');
     text.removeEventListener('input', function () {
@@ -4454,16 +4587,17 @@ async function controlEnter(value, event) {
         console.log('event', event.key);
 
         if (text.value.trim() !== "") { // Ensure there is text to send
-            await send_message(value);
+            value === 'friend' ? await send_to_friend(id) : await send_message(value);
             // Clear the input field
             sendButton.classList.remove('active'); // Reset button state
             sendButton.style.pointerEvents = 'none'; // Disable clicking
         }
     }
 }
+
 async function load_f_conversations() {
     const response = await fetch('/api/get-friendconversations');
-
+    let Chatcontent = '';
     if (response.ok) {
         const data = await response.json();
         let chats = document.getElementById('friendChats');
@@ -4471,44 +4605,44 @@ async function load_f_conversations() {
             chats = document.createElement('div')
             chats.id = 'friendChats'
             chats.className = 'chat'
-
             chats.style.top = '-9%'
-
             document.getElementById('chats-view').append(chats)
         }
-        let Chatcontent = '';
-
-
         for (const conversation of data.f_conversations) {
-            const personId = userId === conversation.sender ? conversation.receiver : conversation.sender
-            const userObject = await get_user(personId);
-            const user = userObject.user[0];
-            console.log('convesation', conversation);
 
+
+            console.log('conversation',conversation);
+            
+            let user = conversation.receiverInfo[0]||conversation.senderInfo[0];
+            
+            if (user._id === userId) {
+                user = conversation.senderInfo[0]
+            }
             Chatcontent += `
-                <div id="conversationItem" onclick="get_conversation('${conversation._id}')" class="conversation-item">
+                <div id="conversationItem" onclick="updateUserInfo('${JSON.stringify(user).replace(/"/g, '&quot;')}');load_f_messages('${conversation._id}','${user._id}')" class="conversation-item">
                     <img src="/profile_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
                     <h3>${user.name}</h3>
-                    <div class="new-notification" id="private-new-${conversation._id}">
-                    </div>  
+                    
                 </div>
                 `;
         }
 
-        // Update innerHTML once all content is ready
+
+
         chats.innerHTML = Chatcontent;
 
 
     } else {
         document.getElementById('friendChats').innerHTML = `Error loading your conversations`;
     }
+    return Chatcontent
 }
 
 async function load_conversation(id) {
     const response = await fetch(`/api/conversation/${id}`);
 
     if (response.ok) {
-        
+
     } else {
         chats.innerHTML = `Error loading your conversations`;
     }
@@ -4640,7 +4774,7 @@ async function show_public_conversation() {
             <div id="chat-body" class="chat-body">
                 ${scrollbutton}
                 <div id="message-history" class="message-history">
-                
+
                 </div>
                 <div id="messaging-container" class="messaging-container">
                 <div class="messaging-components">
@@ -4772,8 +4906,8 @@ async function show_search_result(Paperdata) {
                 <button onclick="join_paper('${paper._id}')" id="join-paper-${paper._id}" class="join-button">Join</button>
                 `
             }
-            content += `    
-            
+            content += `
+
                 <div class="paper-line">
                     <div class="paperinfo">
                         <i id="joined-paper" class="fas fa-file"></i>
@@ -4804,6 +4938,7 @@ friend_search.addEventListener('click', async function (e) {
     e.preventDefault();
 
     // Show spinner immediately
+
 
 
     const friend_search_input = document.getElementById('friend-search-input').value;

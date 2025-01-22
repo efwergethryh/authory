@@ -1265,7 +1265,7 @@ async function edit_post(id) {
             // Reset overlayText on each input event and rebuild it
             overlayText = '';
 
-            const tagRegex = /#[a-zA-Z0-9-_]+(?=\s|$)/g;
+            const tagRegex = /#[a-zA-Z0-9-_\u0600-\u06FF]+(?=\s|$)/g;
             const matches = update_tags_value.match(tagRegex); // Match the tags using regex
 
             tags.clear(); // Clear the tags set before re-adding them

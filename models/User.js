@@ -26,6 +26,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    bio:{
+        type:String,
+        default:"Hi everyone"
+    },
     email: {
         type: String,
         required: true,

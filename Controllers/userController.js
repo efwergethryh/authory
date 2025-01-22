@@ -6,21 +6,68 @@ require('dotenv').config()
 const bcrypt = require('bcrypt')
 const get_user = async (req, res) => {
     try {
-        let searchCriteria = []
-        const { query } = req.body
-        console.log(query);
+        let searchCriteria = [];
+        const { query } = req.body;
 
-        // if (mongoose.Types.ObjectId.isValid(query)) {
-        //     searchCriteria.push({  });
-        // }
-        searchCriteria.push({ _id: query }, { email: query }, { name: query },{ firstName: query },{ lastName: query });
-        console.log('criteria',searchCriteria);
-        
-        const user = await User.find({ $or: searchCriteria }).select('-password');
-        console.log("User", user);
+        const myId = res.locals.user._id
+        // Create search criteria
+        searchCriteria.push(
+            { _id: (query) }, // Valid ObjectId
+            { email: query },
+            { name: query },
+            { firstName: query },
+            { lastName: query }
+        );
 
-        res.status(200).json({ user })
-    } catch (error) {
+        // Remove invalid criteria (e.g., null _id if query is not an ObjectId)
+        searchCriteria = searchCriteria.filter(criterion => Object.values(criterion)[0]);
+
+
+        // Aggregation pipeline 
+        const users = await User.aggregate([
+            {
+                $match: {
+                    $or: searchCriteria
+                },// Match the specific user
+            },
+            {
+                $lookup: {
+                    from: "friendsconversations",
+                    let: { userId: { $toString: "$_id" },myId:{$toString:"$myId"} }, // Convert user _id to string
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $or: [
+                                        { $and: [ { $eq: ["$sender", "$$userId"] }, { $eq: ["$receiver", myId] } ] },
+                                        { $and: [ { $eq: ["$receiver", "$$userId"] }, { $eq: ["$sender", myId] } ] }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    as: "f_conversation"
+                },
+                
+            },
+            {
+                $unwind: {
+                    path: "$f_conversation", // Extract the first element of the array
+                    preserveNullAndEmptyArrays: true // Keep users without matching conversations
+                }
+            }
+
+            
+
+
+        ]);
+
+
+        console.log("Users with f_conversations:", users);
+
+        res.status(200).json({ users });
+    }
+    catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Error finding your friend!' });
     }
@@ -175,12 +222,17 @@ const set_admin = async (req, res) => {
     }
 }
 const fetchUniversities = async (req, res) => {
-    const { value } = req.params; 
-    console.log('value',value);
-    
+    const { value } = req.params;
+
     try {
+        let apiResponse
         // Make the GET request using Axios
-        const apiResponse = await axios.get(`http://universities.hipolabs.com/search?country=${value}`);
+        if (value !== '') {
+            apiResponse = await axios.get(`http://universities.hipolabs.com/search?country=${value}`);
+
+        } else {
+            apiResponse = await axios.get(`http://universities.hipolabs.com/search`);
+        }
 
         // Axios automatically parses the response as JSON, so no need for .json()
         const data = apiResponse.data;
@@ -194,17 +246,17 @@ const fetchUniversities = async (req, res) => {
 }
 
 const update_profile = async (req, res) => {
-    console.log('req',req.file);
+    console.log('req', req.file);
     try {
         const userId = req.user._id; // Assuming `req.user` contains logged-in user's details
         let { fieldsToUpdate } = req.body; // Destructure fieldsToUpdate from the request body
-    
-        
+
+
         if (!fieldsToUpdate || fieldsToUpdate.length === 0) {
             return res.status(400).json({ message: "No updates provided" });
         }
-    
-        const allowedFields = ['firstName', 'lastName', 'email', 'name','country','university', 'profile_picture'];
+
+        const allowedFields = ['firstName', 'lastName', 'email', 'name', 'country', 'university', 'profile_picture'];
         const userUpdates = {};
         fieldsToUpdate = fieldsToUpdate ? JSON.parse(fieldsToUpdate) : [];
 
@@ -220,34 +272,34 @@ const update_profile = async (req, res) => {
             }
         });
         if (req.file) {
-            console.log('req.file',req.file.filename)
+            console.log('req.file', req.file.filename)
             // Assuming the file field is called 'profile_picture'
             if (allowedFields.includes('profile_picture')) {
-               
-                userUpdates.profile_picture =req.file.filename; // Add file path to updates
+
+                userUpdates.profile_picture = req.file.filename; // Add file path to updates
             }
         }
-        console.log('user updates',userUpdates);
-        
+        console.log('user updates', userUpdates);
+
         if (Object.keys(userUpdates).length === 0) {
             return res.status(400).json({ message: "No valid updates provided" });
         }
-    
+
         const updatedUser = await User.findByIdAndUpdate(
             userId,
             { $set: userUpdates }, // Apply updates
             { new: true } // Return the updated document
         );
-    
+
         if (!updatedUser) {
             return res.status(404).json({ message: "User not found" });
         }
-    
+
         res.status(200).json({
             message: "Profile updated successfully",
             user: updatedUser,
         });
-    }     
+    }
     catch (error) {
         console.error("Error updating profile:", error);
         res.status(500).json({ message: "Internal server error" });
@@ -277,16 +329,16 @@ const change_password = async (req, res) => {
     }
 
 }
-const update_phone = async (req,res)=>{
+const update_phone = async (req, res) => {
     try {
-        const {value} = req.body
-        console.log('body',req.body);
-        
+        const { value } = req.body
+        console.log('body', req.body);
+
         const userId = res.locals.user._id
-        console.log('value',value);
-        
-        const user =await User.findByIdAndUpdate(userId,{
-            phoneHidden:value=='public'?false:true
+        console.log('value', value);
+
+        const user = await User.findByIdAndUpdate(userId, {
+            phoneHidden: value == 'public' ? false : true
         })
         return res.status(200).json({ message: "Updated sucessfully" });
     } catch (error) {
