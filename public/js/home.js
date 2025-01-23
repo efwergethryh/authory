@@ -147,7 +147,7 @@ async function get_Post(post_id) {
         return null;
     }
 }
-
+    
 async function loadPosts() {
     try {
         const response = await fetch(`/api/posts?skip=${skip}&limit=${limit}`, {
@@ -160,12 +160,15 @@ async function loadPosts() {
             let content = "";
 
             for (const post of data.posts) {
+                console.log('post',post);
+                
                 content += `
                     <div class="css-sh7anr-StyledBox">
                         <p class="css-gkrxgl-StyledText">${post.title}</p>
                         <a class="css-1k7990c-StyledButton" href="/posts/${post._id}">
                             Go to post
                         </a>
+                        
                     </div>`;
             }
 

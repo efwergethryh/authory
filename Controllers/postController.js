@@ -32,6 +32,23 @@ const create_post = async (req, res) => {
 
     }
 }
+const tag_post = async (req, res) => {
+    const { tag } = req.params;
+
+    try {
+        // Find papers containing the specified tag
+        const posts = await Post.find({ tags: tag });
+
+        if (posts.length === 0) {
+            return res.status(404).json({ message: 'No papers found for the specified tag.' });
+        }
+
+        res.json(posts);
+    } catch (error) {
+        console.error('Error fetching papers by tag:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+};
 const get_posts = async (req, res) => {
     try {
         const { skip = 0, limit = 12 } = req.query; 
@@ -98,5 +115,6 @@ const update_post = async (req, res) => {
 }
 module.exports = {
     create_post, get_posts, delete_posts, get_post,
-    update_post
+    update_post,
+    tag_post
 }

@@ -7,6 +7,9 @@
 </head>
 
 <body>
+    <div class="postsContainer">
+   
+    </div>
     <div class="circle-button" onclick="goBack()">
         <svg style="position: relative; z-index: 15; right: -16%; bottom: -13%;" xmlns="http://www.w3.org/2000/svg"
            fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -21,6 +24,13 @@
         </h1>
         <div >
             <%- post.content %>
+        </div>
+        <div class="post-tags" >
+            <% post.tags.forEach(tag => { %>
+                <strong>
+                    <span  onclick="showPosts('<%= tag %>')"><%= tag %></span>
+                </strong>
+            <% }); %>
         </div>
     </div>
     <script src="/js/post.js"></script>

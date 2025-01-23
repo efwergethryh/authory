@@ -699,7 +699,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                             const tags_input = document.getElementById('tags');
 
                             let overlayText = '';
-                            const tags = new Set();
 
                             tags_input.addEventListener("input", function () {
                                 const update_tags_value = tags_input.value.trim();
@@ -1737,13 +1736,15 @@ async function new_post() {
         document.getElementById('post-text').contentEditable = false;
 
         // Prepare form data
+        tags = Array.from(tags);
+
         const formData = new FormData();
         const contentElement =  document.getElementById('post-text')
         contentElement.setAttribute('direction', `${direction}`);
         contentElement.id = 'post-text'
         formData.append("content",contentElement.outerHTML);
         formData.append("title", document.getElementById('post-title').value);
-
+        formData.append('tags',tags)
         selectedFiles.forEach(file => {
 
             formData.append('post-image', file);

@@ -1691,7 +1691,7 @@ button[id="send_message"] {
 .chat-container {
     width: 100%;
     height: 97%;
-    background: url('/images/Background.svg') no-repeat;
+    /* background: url('/images/Background.svg') no-repeat; */
     background-size: cover;
     position: relative;
     left: 0;
@@ -2357,7 +2357,7 @@ p#file-frame {
 }
 
 .css-1k7990c-StyledButton {
-
+    
     border: 1px solid rgb(163, 178, 189);
     margin: 0px;
     text-transform: none;
@@ -2657,7 +2657,7 @@ p#file-frame {
     right: 100%;
     width: 10px;
     height: 20px;
-    background: url("/images/Background.svg");
+    /* background: url("/images/Background.svg"); */
     background-size: contain;
     border-bottom-right-radius: 10px;
     z-index: 0;

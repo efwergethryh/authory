@@ -146,6 +146,8 @@ router.get('/get-request', requestController.get_requests);
 router.get('/get-joined-users/:paper_id',paperController.joined_papers_users);
 router.get('/posts',postController.get_posts)
 router.get('/posts/:post_id',postController.get_post)
+router.get('/posts/:tag',postController.tag_post)
+
 router.get('/papers/:tag',paperController.tag_paper)
 // Delete Routes
 router.delete('/delete-paper/:paper_id',paperController.delete_paper);
