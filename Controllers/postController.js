@@ -48,6 +48,7 @@ const tag_post = async (req, res) => {
         console.error('Error fetching papers by tag:', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
+   
 };
 const get_posts = async (req, res) => {
     try {

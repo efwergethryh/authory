@@ -26,10 +26,10 @@
             <%- post.content %>
         </div>
         <div class="post-tags" >
-            <% post.tags.forEach(tag => { %>
+            <% tags.forEach(tag => { %>
                 <strong>
                     <span  onclick="showPosts('<%= tag %>')"><%= tag %></span>
-                </strong>
+                </strong>   
             <% }); %>
         </div>
     </div>

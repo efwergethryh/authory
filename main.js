@@ -2,6 +2,8 @@ const express = require('express');
 const viewsRouter = require('./routes/views');
 const authRouter = require('./routes/authRoutes');
 const apisRouter = require('./routes/apis');
+const admin_ownerRoutes = require('./routes/admin&ownerRoutes');
+const OwnerRoutes = require('./routes/OwnerRouters');
 const app = express();
 const { Server } = require('socket.io');
 const cors = require('cors');
@@ -16,11 +18,7 @@ const fs = require('fs');
 // Database connection
 m_connect();
 
-// Middleware setup
-// app.use(cors({
-//     origin: 'http://localhost:3000',
-//     credentials: true 
-// }));
+
 
 
 
@@ -51,7 +49,8 @@ app.use(express.static('public'));
 app.use('/', viewsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/', apisRouter); 
-
+app.use('/api/owner',OwnerRoutes)
+app.use('/api/admin',admin_ownerRoutes)
 
 const server = http.createServer(app);
 

@@ -86,24 +86,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function showPosts(tag) {
     try {
+        console.log('tag',tag);
+        
         const potsContainer =  document.querySelector('.postsContainer')
         // Update the DOM with generated content
         potsContainer.style.display ='flex'
-        const response = await fetch(`/api/posts/${tag}`, {
+        const response = await fetch(`/api/tag-posts/${encodeURIComponent(tag)}`, {
             method: "GET",
         });
         
         if (response.ok) {
-            const data = await response.json();
+            const posts = await response.json();
             let content ='';
 
             content =`
             <strong><span style="font-size:large" class="tag">${tag}</span></strong>
             `
-            if (data.posts.length === 0) {
+            if (posts.length === 0) {
                 content = translations.sidebar.no_papers;
             } else {
-                data.posts.forEach(post => {
+                posts.forEach(post => {
                     content += `
                     
                     <div class="css-sh7anr-StyledBox">

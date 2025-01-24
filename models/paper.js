@@ -15,7 +15,7 @@ const paperSchema = new mongoose.Schema({
     title: { type: String, required: true },
     we_need: { type: String, required: true },
     language:{
-        type:String,
+        type:String,required: true
     },
     tags: {
         type: [String],
@@ -26,6 +26,16 @@ const paperSchema = new mongoose.Schema({
             message: 'Tags must be unique.',
         },
     },
+    description:{
+        type:String,
+        validate: {
+            validator: function (v) {
+                return v.length <= 200; // Replace 100 with your limit
+            },
+            message: props => `Description exceeds the maximum length of 200 characters!`,
+        },
+        required: true  
+    }
     // project_branch: { type: String, required: true },
 });
 

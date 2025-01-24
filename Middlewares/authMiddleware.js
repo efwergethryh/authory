@@ -5,9 +5,8 @@ const User = require('../models/User'); // Adjust the path as necessary
 require('dotenv').config()
 // Middleware function to verify JWT
 const authMiddleware =(allowedRoles)=> async (req, res, next) => {
-    if (req.originalUrl ==='/api/universities/') {
-        return next(); // Skip authMiddleware for this route
-    }        
+    console.log('roles',allowedRoles, 'of url',req.originalUrl);
+    
     const token = req.cookies?.accessToken;
     
     if (!token) {

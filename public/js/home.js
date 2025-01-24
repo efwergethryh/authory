@@ -147,7 +147,7 @@ async function get_Post(post_id) {
         return null;
     }
 }
-    
+
 async function loadPosts() {
     try {
         const response = await fetch(`/api/posts?skip=${skip}&limit=${limit}`, {
@@ -160,8 +160,7 @@ async function loadPosts() {
             let content = "";
 
             for (const post of data.posts) {
-                console.log('post',post);
-                
+
                 content += `
                     <div class="css-sh7anr-StyledBox">
                         <p class="css-gkrxgl-StyledText">${post.title}</p>
@@ -1030,25 +1029,31 @@ async function buildNotifications(notifications) {
 // });
 async function showPapers(tag) {
     try {
-        const paperContainer =  document.querySelector('.papersContainer')
+        console.log('tag', tag);
+
+        const paperContainer = document.querySelector('.papersContainer')
         // Update the DOM with generated content
-        paperContainer.style.display ='flex'
+        paperContainer.style.display = 'flex'
         paperContainer.innerHTML = circular_spinner
-        const response = await fetch(`/api/papers/${tag}`, {
+        let url = `/api/tag-papers/${encodeURIComponent(tag)}`
+        console.log('url',url);
+        
+        const response = await fetch(url, {
             method: "GET",
         });
-        
-        if (response.ok) {
-            const data = await response.json();
-            let content ='';
 
-            content =`
+        if (response.ok) {
+            const papers = await response.json(); 
+            
+            let content = '';
+
+            content = `
             <strong><span style="font-size:large" class="tag">${tag}</span></strong>
             `
-            if (data.papers.length === 0) {
+            if (papers.length === 0) {
                 content = translations.sidebar.no_papers;
             } else {
-                data.papers.forEach(paper => {
+                papers.forEach(paper => {
                     content += `
                     
                     <div id="${paper._id}" class="paper-line">
@@ -1083,8 +1088,8 @@ async function showPapers(tag) {
             }
             paperContainer.innerHTML = content;
 
-            document.addEventListener('click',()=>{
-                paperContainer.style.display ='none'
+            document.addEventListener('click', () => {
+                paperContainer.style.display = 'none'
             })
         } else {
             console.error('Failed to fetch papers:', response.statusText);
@@ -1272,6 +1277,8 @@ async function addListeners() {
                     const we_need = startpaper.querySelector('#we_need').value;
                     const type_of_study = startpaper.querySelector('#type_of_study').value;
                     const project_branch = startpaper.querySelector('#project_branch').value;
+                    const description = startpaper.querySelector('#description').value;
+
                     const paper_title = startpaper.querySelector('#paper_title').value;
                     const language = startpaper.querySelector('#start-language-input').value;
                     tags = Array.from(tags);
@@ -1286,6 +1293,7 @@ async function addListeners() {
                             we_need,
                             tags,
                             language,
+                            description
                         }),
                     })
                         .then((res) => res.json())
@@ -1530,6 +1538,9 @@ async function addListeners() {
                     <span class="paper-branch"><strong>${paper.language}</strong></span>
                     <span class="dash"><strong>-</strong></span>
                     <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
+                    <br>
+                    <span style="${paper.description?"display:block":"display:none"}" class="description"><strong>${paper.description}</strong></span>
+
                      <div class="paper-tags">
                         <strong>
                         ${paper.tags.map(tag => `<strong><span onclick ="showPapers('${tag}'); event.stopPropagation();" class="tag">${tag}</span></strong>`).join('')}
@@ -2034,6 +2045,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         content = translations.sidebar.no_papers
                     }
                     data.papers.forEach(paper => {
+                        console.log('paper',paper);
+                        
                         content += `
              <div id="${paper._id}" class="paper-line">
                 <div class="paperinfo">
@@ -2051,7 +2064,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span class="paper-branch"><strong>${paper.language}</strong></span>
                     <span class="dash"><strong>-</strong></span>
                     <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
+
                 </div>
+
+                    <span id="description"class="paper-branch"><strong>${paper.description}</strong></span>
+
                 <div class="button-container">
                     <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
                     <div class="divider"></div>
@@ -5007,6 +5024,8 @@ async function show_search_result(Paperdata) {
                         <span class="paper-branch"><strong>${paper.language}</strong></span>
                         <span class="dash"><strong>-</strong></span>
                         <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
+                        <span id="description"class="paper-branch"><strong>${paper.description}</strong></span>
+
                         <div class="paper-tags">
                             <strong>
                                 ${paper.tags.map(tag => `<strong><span onclick ="showPapers('${tag}'); event.stopPropagation();" class="tag">${tag}</span></strong>`).join('')}

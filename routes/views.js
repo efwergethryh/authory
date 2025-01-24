@@ -3,6 +3,8 @@ const viewsRouter = require('../Controllers/viewsController');
 const userController = require('../Controllers/userController');
 const { authMiddleware } = require('../Middlewares/authMiddleware');
 const validateResetToken = require('../Middlewares/resetValidation');
+// const paperController = require('../Controllers/papersController');
+// const postController = require('../Contr')
 const router = express.Router();
 const passport = require('passport');
 const User = require('../models/User');
@@ -32,6 +34,7 @@ router.get('/auth/facebook/callback',passport.authenticate('facebook', {
     }),
 
 );
+
 
 router.get('/', viewsRouter.landing);
 router.get('/translations/:lang', viewsRouter.get_translation);

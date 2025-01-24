@@ -1,7 +1,7 @@
 const Paper = require('../models/paper');
 const JoinedPaper = require('../models/joined_papers');
 const Conversation = require('../models/conversation');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose')    
 
 async function generatePaperId() {
     let uniqueId;
@@ -25,9 +25,9 @@ const create_paper = async (req, res) => {
         const id = res.locals.user._id;
 
         const body = req.body;
-        const { type_of_study, project_branch, title, we_need, tags, language } = body;
-        console.log('body', body);
-
+        const { type_of_study, project_branch, title, we_need, tags, language, description } = body;
+        console.log('description',description);
+        
         const paperId = await generatePaperId()
         const paper = new Paper({
             _id: `${paperId}`,
@@ -37,7 +37,8 @@ const create_paper = async (req, res) => {
             tags,
             main_field: project_branch,
             user_id: id,
-            language
+            language,
+            description
         });
         await paper.save()
 
@@ -234,11 +235,16 @@ const get_joined_paper = async (user_id = null, req = null, res = null) => {
 };
 const tag_paper = async (req, res) => {
     const { tag } = req.params;
+    console.log('tag',tag);
 
     try {
-        // Find papers containing the specified tag
-        const papers = await Paper.find({ tags: tag });
 
+        // Find papers containing the specified tag
+        const papers = await Paper.find({
+            tags: { $eq: tag }
+        });
+        console.log('papers',papers);
+        
         if (papers.length === 0) {
             return res.status(404).json({ message: 'No papers found for the specified tag.' });
         }

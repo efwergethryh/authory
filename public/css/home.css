@@ -688,7 +688,7 @@ i[id="icon"] {
 
 .startpaper-popup,
 .edit-paper {
-    height: 50%;
+    height: fit-content;
     z-index: 10;
     top: 12%;
 }
@@ -982,7 +982,7 @@ a#cancel {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     margin: 0;
     width: 95%;
-    height: 5vw;
+    height: fit-content;
 }
 
 /* .paper-line {
@@ -1019,6 +1019,7 @@ a#cancel {
     font-size: 90%;
     /* Font size for readability */
     color: #3078D8;
+    font-weight: 600;
     /* Text color */
 }
 
@@ -1046,7 +1047,7 @@ a#cancel {
     /* Make it unclickable */
     color: #000000;
     caret-color: #000000;
-
+    z-index: 20;
     white-space: pre-wrap;
     overflow: hidden;
     padding: 8px;
@@ -1055,7 +1056,7 @@ a#cancel {
 }
 
 #tags,
-#update-tags {
+#update-tags, #description {
     background: transparent;
     /* Make input transparent */
     position: relative;
@@ -1066,7 +1067,9 @@ a#cancel {
     outline: none;
     color: transparent;
 }
-
+#description{
+    color: black;
+}
 .is-tag {
     color: #3078D8;
     cursor: pointer;
@@ -1083,12 +1086,16 @@ a#cancel {
 .paper-study,
 .paper-we-need,
 .paper-branch,
+.description
 .paper-tags {
     flex: none;
     white-space: nowrap;
 
 }
-
+.description{
+    max-width: 97%;
+    font-weight: 400!important;
+}
 .paperinfo {
     text-overflow: ellipsis;
     width: 100%;

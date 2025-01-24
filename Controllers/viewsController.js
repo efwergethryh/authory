@@ -26,15 +26,17 @@ const view_post = async (req, res) => {
         if(!post){
             res.redirect('/pages/notfound')
         }
-
-        res.render('post', { post })
+        const tags = Array.isArray(post.tags) ? post.tags : post.tags.split(',');
+        console.log('tags',tags);
+        
+        res.render('post', {post ,tags })
     } catch (error) {
         res.render('errorPage')
     }
 }
 const register_view = (req, res) => {
     res.render('register');
-};``
+};
 const dashboard = (req, res) => {
     res.render('dashboard')
 }
