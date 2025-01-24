@@ -465,7 +465,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-
+function display_error(message, popup) {
+    const error = document.createElement('p')
+    error.style.color = 'red'
+    error.textContent = message
+    popup.append(error)
+}
 async function accept_request(paper_id, user_id) {
     await fetch(`/api/accept-request/${paper_id}`, {
         headers: {
@@ -1036,15 +1041,15 @@ async function showPapers(tag) {
         paperContainer.style.display = 'flex'
         paperContainer.innerHTML = circular_spinner
         let url = `/api/tag-papers/${encodeURIComponent(tag)}`
-        console.log('url',url);
-        
+        console.log('url', url);
+
         const response = await fetch(url, {
             method: "GET",
         });
 
         if (response.ok) {
-            const papers = await response.json(); 
-            
+            const papers = await response.json();
+
             let content = '';
 
             content = `
@@ -1179,31 +1184,7 @@ async function addListeners() {
 
             if (popups[index].id === 'startpaper-popup') {
                 const startpaper = mainContent.querySelector('.startpaper-popup')
-                // dropdowns.forEach(function (dropdown) {
 
-                //     const inputElement = startpaper.querySelector(`#${dropdown.inputId}`);
-                //     const container = startpaper.querySelector(`#${dropdown.containerid}`);
-                //     const optionsList = startpaper.querySelector(`#${dropdown.optionsid}`);
-                //     const options = optionsList.querySelectorAll('li');
-                //     console.log('inputElement',inputElement);
-
-                //     inputElement.addEventListener('focus', function () {
-                //         container.classList.toggle('open');
-                //     });
-
-                //     options.forEach(function (option) {
-                //         option.addEventListener('click', function () {
-                //             inputElement.value = this.textContent;
-                //             container.classList.remove('open');
-                //         });
-                //     });
-
-                //     document.addEventListener('click', function (e) {
-                //         if (!container.contains(e.target) && e.target !== inputElement) {
-                //             container.classList.remove('open');
-                //         }
-                //     });
-                // });
                 dropdowns.forEach(function (dropdown) {
                     const inputElement = startpaper.querySelector(`#${dropdown.inputId}`);
                     const container = startpaper.querySelector(`#${dropdown.containerid}`);
@@ -1282,8 +1263,10 @@ async function addListeners() {
                     const paper_title = startpaper.querySelector('#paper_title').value;
                     const language = startpaper.querySelector('#start-language-input').value;
                     tags = Array.from(tags);
-
-                    await fetch('/api/create-paper', {
+                    let response
+                    //    try {
+                    // try {
+                    response = await fetch('/api/create-paper', {
                         headers: { 'Content-Type': 'application/json' },
                         method: 'POST',
                         body: JSON.stringify({
@@ -1296,29 +1279,48 @@ async function addListeners() {
                             description
                         }),
                     })
-                        .then((res) => res.json())
-                        .then(async (data) => {
-                            const form = new FormData();
-                            form.append('type', 'private');
-                            form.append('paper_id', data.paper._id);
-                            form.append('members', Array.from(members));
-                            form.append('conv_pic', 'welcome.png');
-                            form.append('title', 'welcome chat');
+                    if (response.ok) {
+
+                    }
+                    else {
+                        try {
+                            // Try to parse the response for error details
+                            const errorData = await response.json();
+                            const errorMessage = errorData.message || "An error occurred"; // Use a default message if none provided
+                            display_error(errorMessage, startpaper);
+                        } catch (parseError) {
+                            // Fallback for non-JSON errors
+                            // console.error("Error parsing error response:", parseError);
+                            display_error(parseError, startpaper);
+                        }
+                        return;
+                    }
 
 
-                            const response = await fetch('/api/new-conversation', {
-                                method: 'POST',
-                                body: form,
-                            })
+                    const data = await response.json()
+                    if (data.paper) {
+                        const form = new FormData();
+                        form.append('type', 'private');
+                        form.append('paper_id', data.paper._id);
+                        form.append('members', Array.from(members));
+                        form.append('conv_pic', 'welcome.png');
+                        form.append('title', 'welcome chat');
 
-                            if (response.ok) {
-                                const data = await response.json()
-                                display_Message(translations.sidebar.paper_added)
-                            }
-                        }).catch(error => {
-                            console.log('error', error);
 
-                        });
+                        const res = await fetch('/api/new-conversation', {
+                            method: 'POST',
+                            body: form,
+                        })
+
+                        if (res.ok) {
+                            display_Message(translations.sidebar.paper_added)
+                        }
+                    } else {
+
+                    }
+                   
+
+
                 });
             }
             if (popups[index].id === 'searchpapers-popup') {
@@ -1539,7 +1541,7 @@ async function addListeners() {
                     <span class="dash"><strong>-</strong></span>
                     <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
                     <br>
-                    <span style="${paper.description?"display:block":"display:none"}" class="description"><strong>${paper.description}</strong></span>
+                    <span style="${paper.description ? "display:block" : "display:none"}" class="description"><strong>${paper.description}</strong></span>
 
                      <div class="paper-tags">
                         <strong>
@@ -2045,8 +2047,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         content = translations.sidebar.no_papers
                     }
                     data.papers.forEach(paper => {
-                        console.log('paper',paper);
-                        
+                        console.log('paper', paper);
+
                         content += `
              <div id="${paper._id}" class="paper-line">
                 <div class="paperinfo">
