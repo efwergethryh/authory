@@ -60,7 +60,8 @@ async function post_api(api, formData) {
             formData.forEach((value, key) => {
                 jsonFormData[key] = value;
             });
-
+            console.log('form darta',jsonFormData);
+            
             response = await fetch(api, {
                 method: 'POST',
                 body: JSON.stringify(jsonFormData),
@@ -316,7 +317,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 e.preventDefault();
                 const formData = new FormData(log_in_form);
 
-                formData.append('type', user_type)
+                // formData.append('type', user_type)
                 for (const [k, v] of formData.entries()) {
                     console.log(k, ':', v);
                 }

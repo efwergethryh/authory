@@ -390,6 +390,34 @@ async function get_user(query) {
     const data = await response.json();  // Await the parsing of the JSON
     return data;  // Return the parsed data
 }
+const signout = async () => {
+    try {
+        const response = await fetch('/api/signout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            // Clear client-side authentication data
+            const cookies = document.cookie.split(';');
+
+            // Loop through and clear each one
+            for (let cookie of cookies) {
+                const eqPos = cookie.indexOf('=');
+                const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+            }
+
+            window.location.href = '/pages/login';
+        } else {
+            console.error("Failed to sign out");
+        }
+    } catch (error) {
+        console.error("Error:", error.message);
+    }
+};
 document.addEventListener('DOMContentLoaded', async () => {
     if (isMobile()) {
 
@@ -403,6 +431,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             button.addEventListener('click', toggleSidebar)
         })
     }
+    document.getElementById('sign-out').addEventListener('click', async function () {
+
+        await signout()
+
+
+    })
     await loadTranslation()
     const toggleLinks = document.querySelectorAll('.toggle-link');
     const fonts = document.querySelectorAll('.fonts-list a');

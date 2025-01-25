@@ -1221,8 +1221,8 @@ a#cancel {
 #advanced_button {
     position: relative;
     left: 1%;
-    width: 29px;
-    height: 29px;
+    width: 27px;
+    height: 27px;
 }
 
 .advancedsearch-container {
@@ -1443,7 +1443,7 @@ button[id="delete-user-from-paper"] {
     background-color: white;
 }
 
-a#enter {
+a#enter ,.join-button{
     display: inline-block;
     border: 0px;
     margin-top: 1.5%;
@@ -1469,7 +1469,17 @@ a#enter:hover,
 #gear:hover {
     color: gainsboro;
 }
-
+.join-button,.enter-button  {
+    background: rgb(4, 122, 136);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 1%;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.14286;
+    font-weight: 700;
+}
 button[id="search"],
 button[id="friend-search"] {
     display: inline-block;

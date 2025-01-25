@@ -572,21 +572,23 @@ async function display_notification(data) {
             ? 'fas fa-file'
             : data.data.type === "new-post"
                 ? 'fas fa-home'
-                : data.data.type === "accept-request"
-                    ? 'fa-solid fa-handshake'
-                    : data.data.type === "decline-request"
+                : data.data.type === "dufp"
+                    ? 'fas fa-ban'
+                    : data.data.type === "accept-request"
                         ? 'fa-solid fa-handshake'
-                        : data.data.type === "private"
-                            ? 'fa-solid fa-comment'
-                            : data.data.type === "mention-in-public"
+                        : data.data.type === "decline-request"
+                            ? 'fa-solid fa-handshake'
+                            : data.data.type === "private"
                                 ? 'fa-solid fa-comment'
-                                : data.data.type === "mention-in-welcome"
+                                : data.data.type === "mention-in-public"
                                     ? 'fa-solid fa-comment'
-                                    : data.data.type === "reply"
+                                    : data.data.type === "mention-in-welcome"
                                         ? 'fa-solid fa-comment'
-                                        : data.data.type === "accept"
-                                            ? 'fa-solid fa-handshake'
-                                            : 'fa-solid fa-bell';
+                                        : data.data.type === "reply"
+                                            ? 'fa-solid fa-comment'
+                                            : data.data.type === "accept"
+                                                ? 'fa-solid fa-handshake'
+                                                : 'fa-solid fa-bell';
 
     if (post) {
         postHtml = `
@@ -652,26 +654,16 @@ async function display_notification(data) {
                 : data.data.type === "accept-request" ? `${data.data.user.name} ${translations.notification_message.accept_request} `
                     : data.data.type === "private" ? `${data.data.user.name} ${translations.notification_message.private}`
                         : data.data.type === "public" ? `${data.data.user.name} ${translations.notification_message.public}`
-                            : data.data.type === "decline-request" ? `${data.data.user.name} ${translations.notification_message.decline_request}`
-                                : data.data.type === "new-post" ? `${data.data.user.name} ${translations.notification_message.newPost}`
-                                    : data.data.type === "join-request" ? `${data.data.user.name} ${translations.notification_message.join_request}`
-                                        : data.data.type === "private" ? `${data.data.user.name} ${translations.notification_message.private}`
-                                            : data.data.type === "mention-in-public" ? `${data.data.user.name} ${translations.notification_message.mention_in_public}`
-                                                : data.data.type === "mention-in-welcome" ? `${data.data.user.name} ${translations.notification_message.mention_in_welcome}`
-                                                    : data.data.type === "reply" ? `${data.data.user.name} ${translations.notification_message.reply}`
-                                                        : `${translations.notification_message.default}`
-            //             data.data.type === "message" ? `${data.data.user.name} sent you a message`
-            // : data.data.type === "join-request" ? `${data.data.user.name} requested to join your paper`
-            //     : data.data.type === "private" ? `${data.data.user.name} new private message`
-            //         : data.data.type === "public" ? `${vuser.name} new public message`
-            //             : data.data.type === "decline-request" ? `${data.data.user.name} Declined your request to join the paper`
-            //                 : data.data.type === "new-post" ? `${data.data.user.name} posted a new post`
-            //                     : data.data.type === "mention-in-public" ? `${data.data.user.name} mentioned you in public chat`
-            //                         : data.data.type === "public" ? `${data.data.user.name} sent a message in public chat`
-            //                             : data.data.type === "mention-in-welcome" ? `${data.data.user.name} mentioned you in welcome chat`
-            //                                 : data.data.type === "reply" ? `${data.data.user.name} replied to you in private`
-            //                                     : data.data.type === "accept" ? `your request to join the paper has been approved`
-            //                                         : "You have a new notification"
+                            : data.data.type === "dufp" ? `${data.data.user.name} ${translations.notification_message.dufp}`
+                                : data.data.type === "decline-request" ? `${data.data.user.name} ${translations.notification_message.decline_request}`
+                                    : data.data.type === "new-post" ? `${data.data.user.name} ${translations.notification_message.newPost}`
+                                        : data.data.type === "join-request" ? `${data.data.user.name} ${translations.notification_message.join_request}`
+                                            : data.data.type === "private" ? `${data.data.user.name} ${translations.notification_message.private}`
+                                                : data.data.type === "mention-in-public" ? `${data.data.user.name} ${translations.notification_message.mention_in_public}`
+                                                    : data.data.type === "mention-in-welcome" ? `${data.data.user.name} ${translations.notification_message.mention_in_welcome}`
+                                                        : data.data.type === "reply" ? `${data.data.user.name} ${translations.notification_message.reply}`
+                                                            : `${translations.notification_message.default}`
+            
             }</p>
                     </div>
             <div class="request-buttons" style="display:flex">
@@ -760,7 +752,6 @@ const signAsadmin = async () => {
     }
 };
 async function handleNotificationClick(notificationType, notification) {
-    console.log('notification', JSON.stringify(notification));
 
     switch (notificationType) {
         case "message":
@@ -918,6 +909,8 @@ function reply(message) {
 async function buildNotifications(notifications) {
     const translations = await loadTranslation()
 
+    console.log("DUFP Message:", translations.notification_message.dufp);
+
     let content = "";
     if (notifications.length === 0) {
         content = translations.sidebar.no_notifications
@@ -925,31 +918,34 @@ async function buildNotifications(notifications) {
     }
 
     const notificationPromises = notifications.map(async (notification) => {
-        console.log('type', notification.type);
+        console.log('Notification', notification.type);
+
         const backgroundSize = notification.type === "message"
-            ? 'fa-solid fa-comment'
+            ? 'fas fa-comment'
             : notification.type === "join-request"
                 ? 'fas fa-file'
                 : notification.type === "new-post"
                     ? 'fas fa-home'
                     : notification.type === "accept-request"
-                        ? 'fa-solid fa-handshake'
-                        : notification.type === "public"
-                            ? 'fa-solid fa-comment'
-                            : notification.type === "decline-request"
+                        ? 'fas fa-handshake'
 
-                                ? 'fa-solid fa-handshake'
+                        : notification.type === "public"
+                            ? 'fas fa-comment'
+                            : notification.type === "decline-request"
+                                ? 'fas fa-handshake'
                                 : notification.type === "private"
-                                    ? 'fa-solid fa-comment'
+                                    ? 'fas fa-comment'
                                     : notification.type === "mention-in-public"
-                                        ? 'fa-solid fa-comment'
+                                        ? 'fas fa-comment'
                                         : notification.type === "mention-in-welcome"
-                                            ? 'fa-solid fa-comment'
+                                            ? 'fas fa-comment'
                                             : notification.type === "reply"
-                                                ? 'fa-solid fa-comment'
-                                                : notification.type === "accept"
-                                                    ? 'fa-solid fa-handshake'
-                                                    : 'fa-solid fa-bell';
+                                                ? 'fas fa-comment'
+                                                : notification.type === "dufp"
+                                                    ? 'fa-solid fa-user-slash'
+                                                    : notification.type === "accept"
+                                                        ? 'fas fa-handshake'
+                                                        : 'fas fa-bell';
 
         const profilePicture = notification.sender_info.profile_picture;
 
@@ -965,7 +961,7 @@ async function buildNotifications(notifications) {
 
 
         let post = notification.post_info
-        console.log('Notification', notification, 'post', post);
+
         let postHtml = `
         <div class="request-buttons">
             <a class="css-1k7990c-StyledButton" onclick="goTopost('${notification.post_id}','${notification._id}')">
@@ -979,7 +975,7 @@ async function buildNotifications(notifications) {
 
 
         return `
-            <div id="notification-${notification._id}" class="${notification.read ? 'notification' : 'notification unread'}"
+            <div id="notification-${notification._id}" class="notification"
                     onclick="handleNotificationClick('${notification.type}',${JSON.stringify(notification).replace(/"/g, '&quot;')})">
                 <div class="notificationInfo">
                     <div class="image-comb">
@@ -993,10 +989,10 @@ async function buildNotifications(notifications) {
                 : notification.type === "private" ? `${notification.sender_info.name} ${translations.notification_message.private}`
                     : notification.type === "message" ? `${notification.sender_info.name} ${translations.notification_message.message}`
                         : notification.type === "public" ? `${notification.sender_info.name} ${translations.notification_message.public}`
-                            : notification.type === "decline-request" ? `${notification.sender_info.name} ${translations.notification_message.decline_request} "${notification.paper_info.title}"`
-                                : notification.type === "new-post" ? `${notification.sender_info.name} ${translations.notification_message.newPost}`
-                                    : notification.type === "join-request" ? `${notification.sender_info.name} ${translations.notification_message.join_request}`
-                                        : notification.type === "private" ? `${notification.sender_info.name} ${translations.notification_message.private}`
+                            : notification.type === "dufp" ? `${notification.sender_info.name} ${translations.notification_message.dufp} "${notification.paper_info.title}"`
+                                : notification.type === "decline-request" ? `${notification.sender_info.name} ${translations.notification_message.decline_request} "${notification.paper_info.title}"`
+                                    : notification.type === "new-post" ? `${notification.sender_info.name} ${translations.notification_message.newPost}`
+                                        : notification.type === "join-request" ? `${notification.sender_info.name} ${translations.notification_message.join_request}`
                                             : notification.type === "mention-in-public" ? `${notification.sender_info.name} ${translations.notification_message.mention_in_public}`
                                                 : notification.type === "mention-in-welcome" ? `${notification.sender_info.name} ${translations.notification_message.mention_in_welcome}`
                                                     : notification.type === "reply" ? `${notification.sender_info.name} ${translations.notification_message.reply}`
@@ -1123,7 +1119,6 @@ async function loadNotifications() {
     let content = await buildNotifications(data.Notifications);
 
     const notificationsContainer = mainContent.querySelector('.notifications-container')
-    console.log('notificationContainer', notificationsContainer);
 
     notificationsContainer.innerHTML += content;
     let loadNotificationsBtn = document.getElementById('loadMoreNotifications')
@@ -1289,8 +1284,6 @@ async function addListeners() {
                             const errorMessage = errorData.message || "An error occurred"; // Use a default message if none provided
                             display_error(errorMessage, startpaper);
                         } catch (parseError) {
-                            // Fallback for non-JSON errors
-                            // console.error("Error parsing error response:", parseError);
                             display_error(parseError, startpaper);
                         }
                         return;
@@ -1306,7 +1299,6 @@ async function addListeners() {
                         form.append('conv_pic', 'welcome.png');
                         form.append('title', 'welcome chat');
 
-
                         const res = await fetch('/api/new-conversation', {
                             method: 'POST',
                             body: form,
@@ -1318,7 +1310,7 @@ async function addListeners() {
                     } else {
 
                     }
-                   
+
 
 
                 });
@@ -2722,14 +2714,13 @@ async function showUsers() {
 async function buildUsers(userIds) {
     let content = '';
 
-    console.log('ids', userIds);
+
     if (userIds.length == 0) {
         content = "No users have joined your paper yet!"
     }
     for (const userid of userIds) {
         const u = await get_user(userid);
-        const user = u.user[0] // Await the async function
-        console.log('user', user);
+        const user = u.users[0] // Await the async function
         let profilePicture = user.profile_picture;
         let isExternal;
         let imageSrc;
@@ -2766,8 +2757,28 @@ async function delete_userPaper(user_id) {
         body: JSON.stringify({
             user_id
         })
-    }).then(res => res.json()).then(data => {
+    }).then(res => res.json()).then(async data => {
 
+        await fetch(`/api/notify/${user_id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                type: 'dufp',
+                paper_id: paperId
+            })
+        }).then(res => res.json()).then(data => {
+            // delete_notification(notification_id)
+            socket.emit("send-notification", {
+
+                receiver: user_id,
+                user: data.user,
+                type: 'dufp',
+                paper: data.paper
+            });
+
+        })
         hide_spinner()
     })
 
@@ -5026,7 +5037,7 @@ async function show_search_result(Paperdata) {
                         <span class="paper-branch"><strong>${paper.language}</strong></span>
                         <span class="dash"><strong>-</strong></span>
                         <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
-                        <span id="description"class="paper-branch"><strong>${paper.description}</strong></span>
+                        <span id="description" class="description"><strong>${paper.description}</strong></span>
 
                         <div class="paper-tags">
                             <strong>
@@ -5035,8 +5046,9 @@ async function show_search_result(Paperdata) {
                         </div>
                         
                     </div>
-                </div>
                     ${joinButton}
+                </div>
+                    
                 </div>
         `;
         })

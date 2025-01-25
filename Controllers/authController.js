@@ -151,7 +151,6 @@ const login = async (req, res) => {
             user_type: type === "Owner" ? 3 : type === "Admin" ? 2 : type === "User" ? 1 : '',
             email: email
         });
-        console.log('user',user);
         
         if (!user) {
             return res.status(404).json({ message: 'Account not found' });
