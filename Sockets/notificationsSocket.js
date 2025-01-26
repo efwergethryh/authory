@@ -28,10 +28,12 @@ module.exports = (io) => {
             }
         });
         socket.on('send-notification', (data) => {
+            console.log('data',data);
+            
             try {
                 if (data.receiver) {
                     console.log('send notification data', data);
-
+                    
                     socket.to(users[data.receiver]).emit('receive-notification', { data })
 
                 } else {

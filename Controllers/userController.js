@@ -63,7 +63,6 @@ const get_user = async (req, res) => {
         ]);
 
 
-        console.log("Users with f_conversations:", users);
 
         res.status(200).json({ users });
     }

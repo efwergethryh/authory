@@ -59,8 +59,12 @@ module.exports = (io) => {
             socket.join('public-room')
         })
         socket.on('send-to-public-room', async (data) => {
+            console.log('data',data.user);
+            
+            
             if (data.message.mainfield == '') {
-                await io.to('public-room').emit('receive-message', { m: data.message.m });
+                
+                await io.to('public-room').emit('receive-message', { m: data.message.m, user: data.message.sender });
             }
 
             else {
@@ -69,7 +73,7 @@ module.exports = (io) => {
 
                     if (data.message.mainfield === profession) {
 
-                        await socket.to(socketId).emit('receive-message', { m: data.message.m });
+                        await socket.to(socketId).emit('receive-message', { m: data.message.m,user:data.user });
                     }
                 }
 

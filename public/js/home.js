@@ -215,9 +215,9 @@ async function loadPosts() {
 
 
 async function buildmessagecontent(message) {
-    const sender = await get_user(message.m.sender);
-    console.log('sender', sender);
-
+    const sender = message.m.sender
+    
+    
     let messageContent = '';
     console.log('received message', message);
 
@@ -302,12 +302,12 @@ async function buildmessagecontent(message) {
                     `}
 
                 </div>
-                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender.users[0]).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.users[0].profile_picture ? sender.users[0].profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
+                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.profile_picture ? sender.profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
 
             </div>
                 ` :
             `
-                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender.users[0]).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.users[0].profile_picture ? sender.users[0].profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
+                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.profile_picture ? sender.profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
 
                 <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.m.sender === userId ? 'sent' : 'received'}" >
                     ${img}
@@ -411,8 +411,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     socket.on('receive-message', async (message) => {
-
-
+        // console.log('data',data);
+        // const {user,message} = data
+        // console.log('message',message,'user',user);
+        
         if (message) {
             let chatHistory = document.getElementById('message-history');
 
@@ -424,9 +426,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     socket.on('receive-notification', async (data) => {
-        console.log(data);
-
+        console.log('data',data);
+        
+        const redDot = document.getElementById('newNotification')
+        console.log('reddot',redDot);
+        notificationCount += 1
+        redDot.textContent = notificationCount
+        redDot.style.display = 'flex'
         display_notification(data)
+        
     });
     socket.on('receive-notification-fromconversation', async (data) => {
         console.log(data);
@@ -494,7 +502,7 @@ async function accept_request(paper_id, user_id) {
                 paper_id: paper_id
             })
         }).then(res => res.json()).then(data => {
-
+            
             socket.emit("send-notification", {
 
                 receiver: user_id,
@@ -546,13 +554,10 @@ async function decline_request(paper_id, user_id) {
 }
 async function display_notification(data) {
     const translations = await loadTranslation()
-    console.log('Notification data', data, 'type', data.data.type);
-    const redDot = document.getElementById('newNotification')
-    notificationCount += 1
-    redDot.textContent = notificationCount
+    
+    
     const u = await get_user(data.sender)
-    user = u.user[0]
-    console.log('user', user);
+    user = u.users[0]
     let postHtml = ''
     let profilePicture = user.profile_picture;
     let isExternal;
@@ -681,7 +686,7 @@ async function display_notification(data) {
         `;
     }
 
-    redDot.style.display = 'flex'
+    
 
     const notifications = document.querySelectorAll('.notification');
 
@@ -1158,7 +1163,6 @@ async function addListeners() {
 
     const translations = await loadTranslation()
     popup_buttons.forEach((button, index) => {
-        console.log('button', button);
 
         button.removeEventListener('click', togglePopup);
         button.addEventListener('click', togglePopup);
@@ -1606,7 +1610,6 @@ async function addListeners() {
                         paper_settings.style.display = 'flex';
                         paper_settings.style.top = `${newTop}vw`;
                         // Set the new top for this paper
-                        console.log('boundings dimensions', rect);
 
                     }
                 });
@@ -2504,16 +2507,11 @@ function hide_spinner() {
 }
 
 async function send_message(type) {
-    // const text = document.getElementById('message-input').value;
-    console.log('value', type);
-
-
+    
     try {
         const formData = new FormData();
         const messageInput = document.getElementById('message-input');
         const captions = document.querySelector('.file-frame .frame-buttons input')
-
-
         const text = (messageInput && messageInput.value.trim() !== '')
             ? messageInput.value
             : (captions && captions.value.trim() !== '')
@@ -2539,12 +2537,9 @@ async function send_message(type) {
             method: "POST",
 
             body: formData
-            // JSON.stringify({
-            //     text: text,
-            //     isreply: isreply,
-            //     replyTo: replyTo
-            // })
+           
         }).then(res => res.json()).then(async data => {
+            
             const text = document.getElementById('message-input');
             text.value = '';
             if (messages) {
@@ -2555,7 +2550,7 @@ async function send_message(type) {
             const paper = data.paper
             if (type == 'public') {
 
-                socket.emit("send-to-public-room", { message: { m: data.newMessage, id: conv_id, mainfield } })
+                socket.emit("send-to-public-room", { message: { m: data.newMessage,sender:data.user, id: conv_id, mainfield } })
                 await fetch(`/api/notify-all`, {
                     method: "POST",
                     headers: {
@@ -2568,20 +2563,18 @@ async function send_message(type) {
                 }).then(res => res.json()).then(data => {
                     socket.emit("notify-publicgroup", {
                         message: data.message,
-                        sender: data.sender,
+                        sender: data.user,
                         notifiedUsers: data.notifiedUsers,
                         type: "public",
                         mainfield: userMainfield
                     });
-                    // socket.emit("notify-publicgroup", { message: data.message, user: data.user, conversation: data.friendConversation });
                 })
                 reset_reply()
 
             } else if (type == "private") {
-                console.log('in private');
-                socket.emit("send-message", { message: { m: data.newMessage, id: conv_id } })
+                socket.emit("send-message", { message: { m: data.newMessage,user:data.user, id: conv_id } })
 
-                console.log(data.members, data);
+                
                 data.members.forEach(async member => {
 
                     await fetch(`/api/notify/${member}`, {
@@ -4817,7 +4810,7 @@ function join_paper(paper_id) {
         }).
             then(res => res.json()).
             then(async data => {
-                console.log(data);
+                console.log('receiver data',data);
                 const receiver = data.request.receiver
                 const paper = data.paper
 
@@ -4837,6 +4830,7 @@ function join_paper(paper_id) {
                     })
                 }).then(res => res.json()).then(data => {
 
+                    console.log('notification data',data);
 
 
                     socket.emit("send-notification", {

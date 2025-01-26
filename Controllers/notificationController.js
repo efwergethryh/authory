@@ -134,7 +134,6 @@ const get_notifications = async (req, res) => {
         ]);
         
         // const Notifications = await notification.find({ user_id: user._id }).sort({ read: 1, createdAt: -1 }).skip(skip).limit(parseInt(limit));
-        console.log('my notifications', Notifications);
 
         res.json({ Notifications })
     } catch (error) {
@@ -146,7 +145,6 @@ const get_notification = async (req, res) => {
     try {
         const { userId } = req.params
         const Notification = await notification.findOne({ user_id: userId });
-        console.log('my notifications', Notification);
 
         res.json({ Notification })
     } catch (error) {
