@@ -8,7 +8,6 @@ const sendMessageTofriend = async (req, res) => {
     try {
 
         const { text } = req.body
-        console.log('req body',req.body);
         const id = res.locals.user._id
         const { receiver_id } = req.params
         const { isreply, replyTo } = req.body

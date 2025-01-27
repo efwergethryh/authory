@@ -2544,7 +2544,7 @@ p#file-frame {
 
 .message-history {
     width: 139%;
-    height: 115%;
+    height: 126%;
     overflow-x: hidden;
     overflow-y: scroll;
     padding: 1%;
@@ -2557,7 +2557,8 @@ p#file-frame {
 .message-history.singleconversation{
     width: 98% !important;
     /* height: 100%; */
-    top: -41%;
+    top: -26%;
+    height: 107%;
 }
 #sent_file {
     color: black;
@@ -2607,7 +2608,7 @@ p#file-frame {
     font-size: 14px;
     position: relative;
     top: 1vh;
-    max-width: 11.5%;
+    max-width: 24.5%;
 }
 
 

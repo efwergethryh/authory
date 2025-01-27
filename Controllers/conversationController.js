@@ -205,11 +205,13 @@ const get_message = async (req, res) => {
                     replyTo: 1,
                     fileUrl: 1,
                     isreply: 1,
+
                     "senderDetails.name": 1,
                     "senderDetails.email": 1,
                     "senderDetails.profession": 1,
                     "senderDetails._id": 1,
                     "senderDetails.country": 1,
+                    "senderDetails.profile_picture": 1,
                     
                 },
             },

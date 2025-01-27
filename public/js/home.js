@@ -60,12 +60,12 @@ const chatContainer = document.querySelector('.chat-container');
 // const advancedSearch = document.querySelector('.advancedsearch-container');
 const toggleButton = document.getElementById('advanced_button');
 // const search_button = document.getElementById('search')
-const socket = io(API_BASE_URL, {
+const socket = io(localhostAPI, {
     transports: ['polling', 'websocket'],
     query: {
         userId: userId,
     }
-});
+}); 
 let Nskip = 0
 let Nlimit = 12
 let skip = 0;
@@ -215,7 +215,11 @@ async function loadPosts() {
 
 
 async function buildmessagecontent(message) {
-    const sender = message.m.sender
+    console.log('message',message);
+    
+    let sender = await get_user(message.m.sender)
+    sender=  sender.users[0]
+    console.log('user',sender);
     
     
     let messageContent = '';
@@ -283,8 +287,19 @@ async function buildmessagecontent(message) {
             `;
         }
     }
-
-
+    const profilePicture = sender.profile_picture
+    let imageSrc;
+    let isExternal;
+    console.log('profile pic',profilePicture);
+    
+    if (profilePicture) {
+        isExternal = profilePicture.startsWith("http");
+        imageSrc = isExternal
+            ? profilePicture
+            : `/profile_images/${profilePicture}`;
+    } else {
+        imageSrc = 'profile_images/non-picture'
+    }
     messageContent += `
             <div class="message-info" ondbclick="reply('${message.m._id}', '${message.m.text.replace(/'/g, "\\'")}')">
             ${message.m.sender === userId ? `
@@ -307,7 +322,7 @@ async function buildmessagecontent(message) {
             </div>
                 ` :
             `
-                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.profile_picture ? sender.profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
+                <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender).replace(/"/g, '&quot;')}')" src=${imageSrc} alt=""  class="sender-image" />
 
                 <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.m.sender === userId ? 'sent' : 'received'}" >
                     ${img}
@@ -502,14 +517,17 @@ async function accept_request(paper_id, user_id) {
                 paper_id: paper_id
             })
         }).then(res => res.json()).then(data => {
-            
+            console.log('data',data);
+
             socket.emit("send-notification", {
 
                 receiver: user_id,
                 user: data.user,
                 type: 'accept-request',
-
                 paper: data.paper
+            },()=>{
+                console.log('data.message',data);
+                
             });
 
         })
@@ -553,6 +571,8 @@ async function decline_request(paper_id, user_id) {
     })
 }
 async function display_notification(data) {
+    console.log('notification',data);
+    
     const translations = await loadTranslation()
     
     
@@ -997,7 +1017,7 @@ async function buildNotifications(notifications) {
                             : notification.type === "dufp" ? `${notification.sender_info.name} ${translations.notification_message.dufp} "${notification.paper_info.title}"`
                                 : notification.type === "decline-request" ? `${notification.sender_info.name} ${translations.notification_message.decline_request} "${notification.paper_info.title}"`
                                     : notification.type === "new-post" ? `${notification.sender_info.name} ${translations.notification_message.newPost}`
-                                        : notification.type === "join-request" ? `${notification.sender_info.name} ${translations.notification_message.join_request}`
+                                        : notification.type === "join-request" ? `${notification.sender_info.name} ${translations.notification_message.join_request} "${notification.paper_info.title}"`
                                             : notification.type === "mention-in-public" ? `${notification.sender_info.name} ${translations.notification_message.mention_in_public}`
                                                 : notification.type === "mention-in-welcome" ? `${notification.sender_info.name} ${translations.notification_message.mention_in_welcome}`
                                                     : notification.type === "reply" ? `${notification.sender_info.name} ${translations.notification_message.reply}`
@@ -1120,7 +1140,6 @@ async function loadNotifications() {
     const data = await response.json();
     console.log('notifications', data);
 
-    // Build the notifications content and update the DOM
     let content = await buildNotifications(data.Notifications);
 
     const notificationsContainer = mainContent.querySelector('.notifications-container')
@@ -1668,30 +1687,35 @@ async function addListeners() {
 
                     } else {
                         content += `
-                 <div id="${paper._id}" class="paper-line">
-                    <div class="paperinfo">
-                        <i id="joined-paper" class="fas fa-file"></i>
-                        <span class="paper-title"><strong>${paper.title}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-branch"><strong>${paper.project_branch}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-tags"><strong>${paper.language}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-tags" id="${paper._id}"><strong>${paper._id}</strong></span>
-                    </div>
-                    <div class="button-container">
-                        <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
-                        <div class="divider"></div>
-                        <i id="gear" class="gear fa-solid fa-bars"></i>
-                    </div>
+             <div id="${paper._id}" class="paper-line">
+                <div class="paperinfo">
+                    <i id="joined-paper" class="fas fa-file"></i>
+                    <span class="paper-title"><strong>${paper.title}</strong></span>
+                    <span class="dash"><strong>-</strong></span>
+                    <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
+                    <span class="dash"><strong>-</strong></span>
+                    <strong id="need">We Need:</strong>
+                    <span class="dash"><strong>-</strong></span>
+                    <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
+                    <span class="dash"><strong>-</strong></span>
+                    <span class="paper-branch"><strong>${paper.main_field}</strong></span>
+                    <span class="dash"><strong>-</strong></span>
+                    <span class="paper-branch"><strong>${paper.language}</strong></span>
+                    <span class="dash"><strong>-</strong></span>
+                    <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
+                    <br>
+                    <span style="${paper.description ? "display:block" : "display:none"}" class="description"><strong>${paper.description}</strong></span>
 
+                     <div class="paper-tags">
+                        <strong>
+                        ${paper.tags.map(tag => `<strong><span onclick ="showPapers('${tag}'); event.stopPropagation();" class="tag">${tag}</span></strong>`).join('')}
 
-            </div>
-                `
+                        </strong>
+                    </div>
+                </div>
+                <button  onclick="show_conversation('${paper._id}')" class="join-button">Enter</button>
+        </div>
+            `
                     }
 
 
@@ -2597,6 +2621,9 @@ async function send_message(type) {
                             conversation: data.conversation,
                             type: isreply ? 'reply' : '',
                             paper: paper
+                        },()=>{
+                            console.log('data.message',data.message);
+                            
                         });
 
 
@@ -2652,7 +2679,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const chats = document.getElementById('chats');
 
                 const content = `
-                    <div class="conversation-item" onclick="get_conversation('${data.conv._id}')">
+                    <div class="conversation-item" onclick="get_conversation('${data.conv._id}','private')">
                         <img src="/conversation_images/${data.conv.conv_pic}" alt="${data.conv.conv_title}" />
                         <h3>${data.conv.conv_title}</h3>
                     </div>
@@ -3210,7 +3237,9 @@ async function get_conversation(id, type) {
                 message_history.id = 'message-history'
                 chat_body.append(message_history)
             }
-
+            message_history.classList.add('singleconversation');
+            mainContent.classList.add('conversation')
+           
             if (!document.getElementById('messaging-container')) {
                 chat_body.innerHTML += `
                     <div id="messaging-container" class="messaging-container">
@@ -3250,7 +3279,7 @@ async function get_conversation(id, type) {
             handleScroll()
         };
         inputListeners(`${type}`)
-        control_sendButton(`${type}`);
+        control_sendButton(`${type}`,null);
         scrollToBottom()
 
 
@@ -3414,7 +3443,7 @@ async function buildConversations(paper_UserId, paper_id) {
 
         for (const conversation of data.conversations) {
             conversationContent += `
-                <div id="conversationItem" onclick="get_conversation('${conversation._id}')" class="conversation-item">
+                <div id="conversationItem" onclick="get_conversation('${conversation._id}','private')" class="conversation-item">
                     <img src="/conversation_images/${conversation.conv_pic}" alt="${conversation.conv_title}"/>
                     <h3>${conversation.conv_title}</h3>
                     <div class="new-notification" id="private-new-${conversation._id}">
@@ -3470,7 +3499,7 @@ async function show_conversation(paper_id) {
         const paperData = await paperResponse.json();
         const paper_userId = paperData.paper.user_id;
 
-        const content = await buildConversations(paper_userId, paper_id);
+        const content = await buildConversations(paper_userId, paper_id);``
         mainContent.innerHTML = `
         <div class="chat-container">
             ${!isMobile() ?
@@ -3491,6 +3520,8 @@ async function show_conversation(paper_id) {
             </div>
         </div>
         `;
+        document.getElementById('message-history').classList.add('singleconversation');
+        document.getElementById('maincontent').classList.add('conversation')
         if (!isMobile()) {
             const chatsView = document.getElementById('chats')
 
@@ -3640,7 +3671,7 @@ async function show_conversation(paper_id) {
         } else {
             toggleSidebar();
         }
-
+        
     } catch (err) {
         console.error('Error fetching paper details:', err);
     } finally {
@@ -3651,7 +3682,7 @@ async function show_conversation(paper_id) {
     popups.forEach(popup => {
         popup.style.display = 'none';
     });
-
+    control_sendButton('private',null)
 
 }
 async function load_f_messages(conversation_Id, user_id) {
@@ -4206,7 +4237,8 @@ async function buildMessageContent(messages) {
         ].includes(fileExtension);
         let image = message.senderDetails.profile_picture
         // console.log('image', image, 'message', message);
-
+        console.log('sender ',message.senderDetails,'image',image);
+        
         let path
         if (image) {
             if (image.startsWith('http')) {
@@ -4644,14 +4676,17 @@ async function applyTranslations() {
 //     document.addEventListener('keydown', controlEnter);
 // }
 function createControlEnter(value, id = null) {
+    console.log('value',value);
+
     return function (event) {
         controlEnter(value, event, id);
     };
 }
 let currentHandler
 function control_sendButton(value, id = null) {
-    console.log('id', id);
 
+    console.log('value',value);
+    
     // Remove the previous handler, if any
     if (currentHandler) {
         document.removeEventListener('keydown', currentHandler);
@@ -4662,7 +4697,7 @@ function control_sendButton(value, id = null) {
     document.addEventListener('keydown', currentHandler);
 }
 async function controlEnter(value, event, id = null) {
-    console.log('id', id);
+    console.log('id', id,'value',value);
 
     const text = document.getElementById('message-input');
     const sendButton = document.getElementById('send-message');
@@ -4807,8 +4842,7 @@ function join_paper(paper_id) {
             headers: {
                 "Content-Type": "application/json"
             }
-        }).
-            then(res => res.json()).
+        }).then(res => res.json()).
             then(async data => {
                 console.log('receiver data',data);
                 const receiver = data.request.receiver
@@ -4828,22 +4862,30 @@ function join_paper(paper_id) {
                         type: 'join-request',
                         paper_id: paper_id
                     })
-                }).then(res => res.json()).then(data => {
-
-                    console.log('notification data',data);
-
-
+                }).then(res => res.json())
+                .then(data => {
+            
+                    if (!data.message || !data.user) {
+                        console.error('Invalid data structure:', data);
+                        return;
+                    }
+            
                     socket.emit("send-notification", {
                         message: data.message,
-                        receiver,
+                        receiver:receiver,
                         user: data.user,
                         type: 'join-request',
                         notification: data.Notification,
                         conversation: data.conversation,
                         paper: paper
+                    }, () => {
+                        console.log('data.message', data.message);
                     });
-
                 })
+                .catch(error => {
+                    console.error('Fetch error or invalid JSON:', error);
+                });
+            
             });
 
 

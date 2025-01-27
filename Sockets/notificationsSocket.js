@@ -28,13 +28,14 @@ module.exports = (io) => {
             }
         });
         socket.on('send-notification', (data) => {
-            console.log('data',data);
+            console.log('data send-notification',data);
             
             try {
                 if (data.receiver) {
-                    console.log('send notification data', data);
                     
-                    socket.to(users[data.receiver]).emit('receive-notification', { data })
+                    console.log('send notification data', data);
+
+                    socket.to(users[data.receiver].socketId).emit('receive-notification', { data })
 
                 } else {
 
@@ -47,8 +48,7 @@ module.exports = (io) => {
             console.log('data', data);
 
             if (data.receiver) {
-                console.log('sending notificaiont to user', users[data.receiver])
-                socket.to(users[data.receiver]).emit('receive-notification-fromconversation', { data })
+                socket.to(users[data.receiver].socketId).emit('receive-notification-fromconversation', { data })
 
             } else {
 
