@@ -65,7 +65,7 @@ const socket = io(API_BASE_URL, {
     query: {
         userId: userId,
     }
-}); 
+});
 let Nskip = 0
 let Nlimit = 12
 let skip = 0;
@@ -215,13 +215,13 @@ async function loadPosts() {
 
 
 async function buildmessagecontent(message) {
-    console.log('message',message);
-    
+    console.log('message', message);
+
     let sender = await get_user(message.m.sender)
-    sender=  sender.users[0]
-    console.log('user',sender);
-    
-    
+    sender = sender.users[0]
+    console.log('user', sender);
+
+
     let messageContent = '';
     console.log('received message', message);
 
@@ -290,8 +290,8 @@ async function buildmessagecontent(message) {
     const profilePicture = sender.profile_picture
     let imageSrc;
     let isExternal;
-    console.log('profile pic',profilePicture);
-    
+    console.log('profile pic', profilePicture);
+
     if (profilePicture) {
         isExternal = profilePicture.startsWith("http");
         imageSrc = isExternal
@@ -429,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // console.log('data',data);
         // const {user,message} = data
         // console.log('message',message,'user',user);
-        
+
         if (message) {
             let chatHistory = document.getElementById('message-history');
 
@@ -441,15 +441,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     socket.on('receive-notification', async (data) => {
-        console.log('data',data);
-        
+        console.log('data', data);
+
         const redDot = document.getElementById('newNotification')
-        console.log('reddot',redDot);
+        console.log('reddot', redDot);
         notificationCount += 1
         redDot.textContent = notificationCount
         redDot.style.display = 'flex'
         display_notification(data)
-        
+
     });
     socket.on('receive-notification-fromconversation', async (data) => {
         console.log(data);
@@ -517,7 +517,7 @@ async function accept_request(paper_id, user_id) {
                 paper_id: paper_id
             })
         }).then(res => res.json()).then(data => {
-            console.log('data',data);
+            console.log('data', data);
 
             socket.emit("send-notification", {
 
@@ -525,9 +525,9 @@ async function accept_request(paper_id, user_id) {
                 user: data.user,
                 type: 'accept-request',
                 paper: data.paper
-            },()=>{
-                console.log('data.message',data);
-                
+            }, () => {
+                console.log('data.message', data);
+
             });
 
         })
@@ -571,11 +571,11 @@ async function decline_request(paper_id, user_id) {
     })
 }
 async function display_notification(data) {
-    console.log('notification',data);
-    
+    console.log('notification', data);
+
     const translations = await loadTranslation()
-    
-    
+
+
     const u = await get_user(data.sender)
     user = u.users[0]
     let postHtml = ''
@@ -688,7 +688,7 @@ async function display_notification(data) {
                                                     : data.data.type === "mention-in-welcome" ? `${data.data.user.name} ${translations.notification_message.mention_in_welcome}`
                                                         : data.data.type === "reply" ? `${data.data.user.name} ${translations.notification_message.reply}`
                                                             : `${translations.notification_message.default}`
-            
+
             }</p>
                     </div>
             <div class="request-buttons" style="display:flex">
@@ -706,7 +706,7 @@ async function display_notification(data) {
         `;
     }
 
-    
+
 
     const notifications = document.querySelectorAll('.notification');
 
@@ -1848,93 +1848,588 @@ async function addListeners() {
     });
 
 }
-// function initializeAdvancedSearch(popupElement) {
-//     const advancedSearch = popupElement.querySelector('.advancedsearch-container');
-//     const toggleButton = popupElement.querySelector('#advanced_button');
-//     const search_button = popupElement.querySelector('#search')
-//     document.addEventListener('click', async function (e) {
-//         // const targetId = e.target.id || e.target.closest('#advanced_button, #search')?.id;
-//         // console.log('id', e.target);
+async function addExitListeners() {
+    //Reattach listeners after they are cleared
 
-//         toggleButton.addEventListener('click', function () {
-//             const papersdropdowns = [
-//                 { inputId: 'paper_we_need', containerid: 'paper-weneed-container', optionsid: 'paper-weneed-list' },
-//                 { inputId: 'language-input', containerid: 'language-container', optionsid: 'language-list' },
-//                 { inputId: 'paper_project_branch', containerid: 'paper-projectbranch-container', optionsid: 'paper-projectbranch-list' },
-//             ];
-//             console.log(document.querySelector('.advancedsearch-container'));
+    const translations = await loadTranslation()
+    const sideBarContent = `
+            <ul id="sidebar-content">
+        <li>
+        <a id="home" href="#">
+
+        <div id="head" class="header">
+        <i class="fas fa-home"></i>
+        <span class="text-only">Home</span>
+
+        </div>
+        </a>
+        </li>
+        <li>
+        <a  class="toggle-link" id="paper-toggle" href="">
+        <div class="toggle-tab-container">
+        <div id="head" class="header">
+        <i id="paper" class="fas fa-file"></i>
+        <span id="new-paper" class="text toggle-item">Create paper</span>
+        <div id="create-newNotification" class="new-notfication"></div>
+        <span class="tab-icon">
+            <div class="create-dropdown">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
+                viewBox="0 0 34 34" role="img">
+                <path d="m15 18 6 6-6 6"></path>
+                </svg>
+            </div>
+        </span>
+
+        </div>
+        <ul class="sublist">
+        <li id="start_paper_button">Start a paper</li>
+        <li id="your-papers-button">Your papers</li>
+        </ul>
+        </div>
+        </a>
+        </li>
+        <li>
+        <a class="toggle-link" id="paper-toggle-2" href="">
+        <div class="toggle-tab-container-2">
+        <div id="head" class="header">
+        <i id="paper-2" class="fa-solid fa-handshake"></i>
+        <span id="join-paper" class="text toggle-item">Join papers</span>
+        <div id="join-paperNotification" class="new-notfication"></div>
+
+        <span class="tab-icon">
+            <div class="create-dropdown">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
+                viewBox="0 0 34 34" role="img">
+                <path d="m15 18 6 6-6 6"></path>
+                </svg>
+            </div>
+        </span>
+        </div>
+        <ul class="sublist-2">
+        <li id="searchpapers-button">Search </li>
+        <li id="joined-papers-button">already joined</li>
+        </ul>
+        </div>
+        </a>
+        </li>
+        <li>
+        <a class="toggle-link" onclick="show_Single_conversation()" id="paper-toggle-4" href="">
+        <div class="toggle-tab-container-4">
+        <div id="head" class="header">
+        <i id="paper-3" class="fa-solid fa-user-group"></i>
+        <span id="friends-tab" class="text toggle-item">friends</span>
+        
+        </div>
+
+        </div>
+        </a>
+        <li>
+        <a onclick="show_public_conversation()" href="#" id="chat">
+        <!-- <i class="fa-solid fa-comment"></i>
+        <span class="text-only">Public chat</span> -->
+        <div id="head" class="header">
+        <!-- <i id="paper-3" class="fa-solid fa-user-group"></i> -->
+        <i class="fa-solid fa-comment"></i>
+        <span id="chat-tab" class="text toggle-item">Public chat</span>
+
+        </div>
+        </a>
+        </li>
+        <li id="notifications-button">
+        <a href="#">
+        <!-- <i class="fa-solid fa-bell"></i>
+        <span class="text-only">Notifications</span> -->
+        <div id="head" class="header">
+        <i class="fa-solid fa-bell"></i>
+        <span id="notifications" class="text-only">Notifications</span>
+
+        </span>
+        </div>
+        <div id="newNotification" class="new-notfication"></div>
+        </a>
+        </li>
+        </ul>
+        `
+
+    let sidebar = document.getElementById('sidebar')
+
+    sidebar.innerHTML = sideBarContent
+
+    document.getElementById('home').addEventListener('click', async function () {
+        skip = 0;
+        let mainContent = document.getElementById('maincontent')
+
+        mainContent.innerHTML = ''
+        await loadPosts();
+        applyTranslations();
+        toggleSidebar()
+    })
+    const notifications_button = document.getElementById('notifications-button')
+    notifications_button.addEventListener('click', async function () {
+        document.querySelector('.notifications-label').textContent = translations.sidebar.notifications;
+        const notificationsContainer = mainContent.querySelector(".notifications-container")
+        const container = await loadNotifications();
+        mainContent.innerHTML = `<div class="notifications-label">${translations.sidebar.notifications}</div>`
+        notificationsContainer.innerHTML += container.outerHTML
+        toggleSidebar()
+    });
+
+    const cancel = document.getElementById('cancel');
+    const confirm_delete = document.getElementById('confirm-delete');
+    const edit_paper = document.querySelector('.edit-paper')
+    const editclose = document.getElementById('closeedit')
+    const users_to_delete = document.getElementById('users-to-delete')
+    const create_paper = document.getElementById('start_paper_button')
+    const searchPapers = document.getElementById('searchpapers-button')
+    const yourPapers = document.getElementById('your-papers-button')
+    const joinedPapers = document.getElementById('joined-papers-button')
+    // const searchFriends = document.getElementById('search-friends-button')
+    // const yourFriends = document.getElementById('your-friends-button')
+    const toggleLinks = document.querySelectorAll('.toggle-link');
+
+    toggleLinks.forEach(toggleLink => {
+        toggleLink.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default anchor click behavior
+            // Check if the clicked element is a sublist item
+            if (event.target.tagName.toLowerCase() === 'li') {
+                return; // Do nothing if a sublist item is clicked
+            }
+            // Get the container and sublist within the clicked link
+            const toggleContainer = this.querySelector('.toggle-tab-container, .toggle-tab-container-2, .toggle-tab-container-3, .toggle-tab-container-4');
+            const sublist = this.querySelector('.sublist, .sublist-2');
+
+            toggleContainer.classList.toggle('active');
+
+            if (toggleContainer.classList.contains('active')) {
+                sublist.style.maxHeight = sublist.scrollHeight + "px";
+                sublist.style.paddingTop = "3px"; // Add padding when active
+            } else {
+                sublist.style.maxHeight = "0";
+                sublist.style.paddingTop = "0"; // Remove padding when collapsed
+            }
+
+            // Rotate the icon inside the tab-icon class
+            const tabIcon = this.querySelector('.tab-icon svg');
+            if (tabIcon) {
+                if (toggleContainer.classList.contains('active')) {
+                    tabIcon.style.transform = 'rotate(180deg)';
+                } else {
+                    tabIcon.style.transform = 'rotate(0deg)';
+                }
+            }
+        });
+    });
+    document.getElementById('your-papers-button').addEventListener('click', async function () {
+
+        show_spinner()
+        const response = await fetch('/api/papers', {
+            method: "GET"
+        });
+
+        if (response.ok) {
+
+            const data = await response.json()
+            console.log('papers', data.papers.length);
+
+            let content = ''
+            if (data.papers.length === 0) {
+                content = translations.sidebar.no_papers
+            }
+            data.papers.forEach(paper => {
+
+                content += `
+     <div id="${paper._id}" class="paper-line">
+        <div class="paperinfo">
+            <i id="joined-paper" class="fas fa-file"></i>
+            <span class="paper-title"><strong>${paper.title}</strong></span>
+            <span class="dash"><strong>-</strong></span>
+            <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
+            <span class="dash"><strong>-</strong></span>
+            <strong id="need">We Need:</strong>
+            <span class="dash"><strong>-</strong></span>
+            <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
+            <span class="dash"><strong>-</strong></span>
+            <span class="paper-branch"><strong>${paper.main_field}</strong></span>
+            <span class="dash"><strong>-</strong></span>
+            <span class="paper-branch"><strong>${paper.language}</strong></span>
+            <span class="dash"><strong>-</strong></span>
+            <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
+            <br>
+            <span style="${paper.description ? "display:block" : "display:none"}" class="description"><strong>${paper.description}</strong></span>
+
+             <div class="paper-tags">
+                <strong>
+                ${paper.tags.map(tag => `<strong><span onclick ="showPapers('${tag}'); event.stopPropagation();" class="tag">${tag}</span></strong>`).join('')}
+
+                </strong>
+            </div>
+        </div>
+        <button  onclick="show_conversation('${paper._id}')" class="join-button">Enter</button>
+</div>
+    `
+
+            })
+            const paperscontainer = document.querySelector('.yourpapers-container')
 
 
-//             toggleButton.classList.toggle('toggled')
-//             advancedSearch.classList.toggle('show')
+            paperscontainer.innerHTML = content
+            mainContent.innerHTML = `<div class="yourpapers-label" id="joined">${translations.newPaper.dropdowns.yourPapers}</div>`
+            mainContent.innerHTML += paperscontainer.outerHTML
+            const paper_settings = document.getElementById('paper-settings');
+            const confirm_delete = document.getElementById('confirm-delete');
+            const firstPaperLine = document.querySelector('.paper-line:first-child');
 
-//             papersdropdowns.forEach(function (dropdown) {
-//                 const inputElement = document.getElementById(dropdown.inputId);
-//                 const container = document.getElementById(dropdown.containerid);
-//                 const optionsList = document.getElementById(dropdown.optionsid);
-//                 const options = optionsList.querySelectorAll('li');
+            const etnerButtons = document.querySelectorAll('.button-container a')
+
+            etnerButtons.forEach(button => {
+                button.textContent = translations.yourPapers.enter;
+            })
+            document.getElementById('editPaper').querySelector('p').textContent = translations.yourPapers.editPaper;
+            document.getElementById('delete-user-from-paper').querySelector('p').textContent = translations.yourPapers.deleteUser;
+            document.getElementById('deletePaper').querySelector('p').textContent = translations.yourPapers.deletePaper;
 
 
-//                 inputElement.addEventListener('click', function () {
-//                     container.classList.toggle('open'); // Toggle the open class
-//                 });
+            data.papers.forEach(function (paper) {
+                const paperLine = paperscontainer.querySelector(`#\\3${paper._id.charAt(0)} ${paper._id.slice(1)}`);
+                console.log('paper line', paperLine);
 
-//                 options.forEach(function (option) {
-//                     option.addEventListener('click', function () {
-//                         inputElement.value = this.textContent;
-//                         container.classList.remove('open');
-//                     });
-//                 });
+                const gear = paperLine.querySelector('.gear');
+                const parentPaperElement = document.getElementById(`${paper._id}`);
 
-//                 document.addEventListener('click', function (e) {
-//                     if (!container.contains(e.target) && e.target !== inputElement) {
-//                         container.classList.remove('open');
-//                     }
-//                 });
-//             });
-//         })
-//         search_button.addEventListener('click', function () {
-//             show_spinner()
-//             let content = ''
-//             const title = document.getElementById('paper-title').value
-//             const projectbranch = document.getElementById('paper_project_branch').value
-//             const we_need = document.getElementById('paper_we_need').value
-//             const language = document.getElementById('language-input').value
-//             const id = document.getElementById('ID').value
-//             const paper_result = document.getElementById('paper-result')
-//             const paper_data = JSON.stringify({
-//                 title,
-//                 id,
-//                 projectbranch,
-//                 we_need,
-//                 language,
-//             })
 
-//             try {
-//                 content = await show_search_result(paper_data)
 
-//                 paper_result.innerHTML = content;
-//                 paper_result.classList.add('active')
-//                 const translations = await loadTranslation()
-//                 const joinButtons = document.querySelectorAll('.join-button')
-//                 const enterButtons = document.querySelectorAll('.enter-button')
-//                 joinButtons.forEach(button => {
-//                     button.textContent = translations.joinPaper.joinButton
-//                 })
-//                 enterButtons.forEach(button => {
-//                     button.textContent = translations.joinPaper.enterButton
-//                 })
-//             } catch (error) {
-//                 console.log(error);
+                gear.addEventListener('click', function () {
+                    const paperLine = gear.closest('.paper-line');
+                    paperId = paperLine.id;
 
-//             }
-//             finally {
-//                 hide_spinner()
-//             }
-//         })
+                    if (paper_settings) {
+                        paper_settings.style.display = 'none'
+                    }
+                    if (paperLine === firstPaperLine) {
+                        paper_settings.style.display = 'flex';
+                        paper_settings.style.top = `13vw`;  // Set top for the first element
+                    } else {
+                        const rect = parentPaperElement.getBoundingClientRect();
+                        const viewportHeight = window.innerHeight;
+                        const viewportWidth = window.innerWidth;
+                        let newTop = ((rect.top + rect.height) / viewportWidth) * 100; // Position directly below the parent element
 
-//     })
-// }
+                        // Calculate how many elements are before the clicked paperLine
+                        // const allPapers = document.querySelectorAll('.paper-line');
+                        // const index = Array.from(allPapers).indexOf(paperLine);  // Get the index of the clicked paper
+                        const maxAllowedTop = viewportHeight - paper_settings.offsetHeight - 10; // 10px padding from bottom
+                        if (newTop > maxAllowedTop) {
+                            newTop = maxAllowedTop;
+                        }
+                        // Set the top value based on the index (each paper adds 6vw to the top)
+                        // let newTop = 13 + (index * 6);  // 13vw + 6vw per paper
+                        paper_settings.style.display = 'flex';
+                        paper_settings.style.top = `${newTop}vw`;
+                        // Set the new top for this paper
+                        console.log('boundings dimensions', rect);
+
+                    }
+                });
+
+
+
+            });
+            const deletePaper = document.getElementById('deletePaper');
+            const editPaper = document.getElementById('editPaper');
+            const dufp = document.getElementById('delete-user-from-paper')
+
+
+            deletePaper.addEventListener('click', function () {
+                confirm_delete.querySelector('p').textContent = translations.sidebar.confirm_delete
+                confirm_delete.style.display = 'flex';
+                document.getElementById('cancel').textContent = translations.sidebar.cancel;
+                document.getElementById('confirm').textContent = translations.sidebar.confirm;
+
+            });
+            editPaper.addEventListener('click', async function () {
+                await edit_paper(paperId)
+                document.getElementById('update-project-branch').querySelector('label').textContent = translations.startPaper.projectBranch;
+                document.getElementById('update-weneed-container').querySelector('label').textContent = translations.startPaper.we_need;
+                document.getElementById('update-language-container').querySelector('label').textContent = translations.startPaper.language;
+                document.getElementById('update-typeof-study-container').querySelector('label').textContent = translations.startPaper.type_of_study;
+                document.getElementById('update-tags-container').querySelector('label').textContent = translations.startPaper.tags.label;
+                document.getElementById('update_paper').textContent = translations.startPaper.update;
+
+            })
+            dufp.addEventListener('click', async function (e) {
+                e.preventDefault()
+                await showUsers()
+                document.getElementById('deleteUserFromPaper').textContent = translations.sidebar.delete;
+
+            })
+            hide_spinner()
+            toggleSidebar()
+        }
+    })
+
+    document.getElementById('joined-papers-button').addEventListener('click', async function () {
+
+        show_spinner()
+        const response = await fetch('/api/joinedPapers', {
+            method: "GET"
+        });
+        if (response.ok) {
+
+            const data = await response.json()
+
+            let content = ''
+            if (data.joinedpapers.length == 0) {
+                content = translations.sidebar.no_joined_papers
+            } else {
+                data.joinedpapers.forEach(paper => {
+                    content += `
+         <div id="${paper._id}" class="paper-line">
+            <div class="paperinfo">
+                <i id="joined-paper" class="fas fa-file"></i>
+                <span class="paper-title"><strong>${paper.title}</strong></span>
+                <span class="dash"><strong>-</strong></span>
+                <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
+                <span class="dash"><strong>-</strong></span>
+                <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
+                <span class="dash"><strong>-</strong></span>
+                <span class="paper-branch"><strong>${paper.project_branch}</strong></span>
+                <span class="dash"><strong>-</strong></span>
+                <span class="paper-tags"><strong>${paper.language}</strong></span>
+                <span class="dash"><strong>-</strong></span>
+                <span class="paper-tags" id="${paper._id}"><strong>${paper._id}</strong></span>
+            </div>
+            <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
+
+    </div>
+        `
+
+                })
+
+            }
+            const Joinedpaperscontainer = document.querySelector('.joinedpapers-container')
+            console.log(Joinedpaperscontainer);
+            mainContent.innerHTML = `<div class="joined-label" id="joined">${translations.joinPaper.dropdowns.joinedPapers}</div>`
+            Joinedpaperscontainer.innerHTML = content
+            mainContent.innerHTML += Joinedpaperscontainer.outerHTML
+            toggleSidebar()
+            hide_spinner()
+
+        }
+    })
+    // document.getElementById('your-friends-button').addEventListener('click', async function () {
+    //     show_spinner()
+    //     const response = await fetch('/api/users/1', {
+    //         method: "GET"
+    //     });
+    //     if (response.ok) {
+
+    //         const data = await response.json()
+    //         console.log(data);
+    //         let content = ''
+    //         if (data.users.length == 0) {
+    //             content = 'No friends yet'
+    //         } else {
+    //             data.users.forEach(user => {
+    //                 content += `
+
+    //             <div onclick="show_Single_conversation('${user._id}')" class="friend-info">
+    //                 <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(user).replace(/"/g, '&quot;')}')"  src="/profile_images/${user.profile_picture}" alt="Profile Picture">
+    //                 <span>
+    //                 ${user.name}
+    //                 </span>
+    //                 <span style="text-decoration:none;">-</span>
+    //                 <span>
+    //                 ${user._id}
+    //                 </span>
+    //             </div>
+
+    //     `
+
+    //             })
+    //         }
+    //         const firendsContainer = document.querySelector('.yourfriends-container')
+
+    //         mainContent.innerHTML = `<div class="yourfriends-label" id="joined">${translations.friends.dropdowns.yourfriends}</div>`
+    //         firendsContainer.innerHTML = content
+    //         mainContent.innerHTML += firendsContainer.outerHTML
+    //         toggleSidebar()
+    //         hide_spinner()
+    //     }
+    // })
+    create_paper.addEventListener('click', async () => {
+        document.querySelector('.startpapers-label').textContent = translations.newPaper.label;
+        document.getElementById('paper_title').placeholder = translations.startPaper.placeholder;
+        document.getElementById('project_branch').placeholder = translations.startPaper.projectBranch;
+        document.getElementById('type_of_study').placeholder = translations.startPaper.type_of_study;
+        document.getElementById('we_need').placeholder = translations.startPaper.we_need;
+        document.getElementById('start-language-input').placeholder = translations.startPaper.language;
+        document.getElementById('tags').placeholder = translations.startPaper.tags.placeholder;
+        document.getElementById('start_create').textContent = translations.startPaper.publish;
+
+        document.getElementById('project-branch').querySelector('label').textContent = translations.startPaper.projectBranch;
+        document.getElementById('we-need-container').querySelector('label').textContent = translations.startPaper.we_need;
+        document.getElementById('lang-container').querySelector('label').textContent = translations.startPaper.language;
+        document.getElementById('study-container').querySelector('label').textContent = translations.startPaper.type_of_study;
+        document.getElementById('tags-container').querySelector('label').textContent = translations.startPaper.tags.label;
+        mainContent.innerHTML = `<div class="startpapers-label">${translations.newPaper.label}</div>`
+        mainContent.innerHTML += document.querySelector('.startpaper-popup').outerHTML
+        toggleSidebar()
+    })
+    searchPapers.addEventListener('click', async () => {
+
+        document.querySelector('.searchpapers-label').textContent = translations.joinPaper.searchpaper;
+
+        document.getElementById('advanced').textContent = translations.joinPaper.advancedSearch.label;
+        document.getElementById('paper-title').placeholder = translations.joinPaper.advancedSearch.searchPapers;
+
+        document.getElementById('ID').placeholder = translations.joinPaper.advancedSearch.paperId;
+        document.getElementById('paper_project_branch').placeholder = translations.joinPaper.advancedSearch.paperBranch;
+        document.getElementById('language-input').placeholder = translations.joinPaper.advancedSearch.paperLang;
+        document.getElementById('paper_we_need').placeholder = translations.joinPaper.advancedSearch.we_need;
+        document.getElementById('search').textContent = translations.joinPaper.advancedSearch.search;
+        mainContent.innerHTML = `<div class="searchpapers-label">${translations.joinPaper.searchpaper}</div>`
+        mainContent.innerHTML += document.querySelector('.searchpapers-popup').outerHTML
+        toggleSidebar()
+        const newPopup = mainContent.querySelector('.searchpapers-popup');
+        // initializeAdvancedSearch(newPopup)
+        const advancedSearch = newPopup.querySelector('.advancedsearch-container');
+        const toggleButton = newPopup.querySelector('#advanced_button');
+        const search_button = newPopup.querySelector('#search')
+        toggleButton.addEventListener('click', async function () {
+            const papersdropdowns = [
+                { inputId: 'paper_we_need', containerid: 'paper-weneed-container', optionsid: 'paper-weneed-list' },
+                { inputId: 'language-input', containerid: 'language-container', optionsid: 'language-list' },
+                { inputId: 'paper_project_branch', containerid: 'paper-projectbranch-container', optionsid: 'paper-projectbranch-list' },
+            ];
+            console.log(document.querySelector('.advancedsearch-container'));
+
+
+            toggleButton.classList.toggle('toggled')
+            advancedSearch.classList.toggle('show')
+
+            papersdropdowns.forEach(function (dropdown) {
+                const inputElement = document.getElementById(dropdown.inputId);
+                const container = document.getElementById(dropdown.containerid);
+                const optionsList = document.getElementById(dropdown.optionsid);
+                const options = optionsList.querySelectorAll('li');
+
+
+                inputElement.addEventListener('click', function () {
+                    container.classList.toggle('open'); // Toggle the open class
+                });
+
+                options.forEach(function (option) {
+                    option.addEventListener('click', function () {
+                        inputElement.value = this.textContent;
+                        container.classList.remove('open');
+                    });
+                });
+
+                document.addEventListener('click', function (e) {
+                    if (!container.contains(e.target) && e.target !== inputElement) {
+                        container.classList.remove('open');
+                    }
+                });
+            });
+        })
+        search_button.addEventListener('click', async function () {
+            show_spinner()
+            let content = ''
+            const title = newPopup.querySelector('#paper-title').value
+            const projectbranch = newPopup.querySelector('#paper_project_branch').value
+            const we_need = newPopup.querySelector('#paper_we_need').value
+            const language = newPopup.querySelector('#language-input').value
+            const id = newPopup.querySelector('#ID').value
+            const paper_result = newPopup.querySelector('#paper-result')
+            const paper_data = JSON.stringify({
+                title,
+                id,
+                projectbranch,
+                we_need,
+                language,
+            })
+
+            try {
+                content = await show_search_result(paper_data)
+
+                paper_result.innerHTML = content;
+                paper_result.classList.add('active')
+                const translations = await loadTranslation()
+                const joinButtons = document.querySelectorAll('.join-button')
+                const enterButtons = document.querySelectorAll('.enter-button')
+                joinButtons.forEach(button => {
+                    button.textContent = translations.joinPaper.joinButton
+                })
+                enterButtons.forEach(button => {
+                    button.textContent = translations.joinPaper.enterButton
+                })
+            } catch (error) {
+                console.log(error);
+
+            }
+            finally {
+                hide_spinner()
+            }
+        })
+
+    })
+    notifications_button.addEventListener('click', async function () {
+        document.querySelector('.notifications-label').textContent = translations.sidebar.notifications;
+        loadNotifications();
+        toggleSidebar()
+    });
+    yourPapers.addEventListener('click', async () => {
+        document.querySelector('.yourpapers-label').textContent = translations.newPaper.dropdowns.yourPapers;
+    })
+    joinedPapers.addEventListener('click', async () => {
+        document.querySelector('.joined-label').textContent = translations.joinPaper.dropdowns.joinedPapers;
+    })
+    // searchFriends.addEventListener('click', async () => {
+    //     document.querySelector('.searchfriends-label').textContent = translations.friends.searchfriends;
+    //     document.getElementById('friend-search').textContent = translations.sidebar.search
+    //     mainContent.innerHTML = `<div class="searchfriends-label">${translations.friends.searchfriends}</div>`
+    //     mainContent.innerHTML += document.querySelector('.searchfriends-popup').outerHTML
+    //     toggleSidebar()
+    //     const newPopup = mainContent.querySelector('.searchfriends-popup')
+
+
+    // })
+    // yourFriends.addEventListener('click', async () => {
+    //     document.querySelector('.yourfriends-label').textContent = translations.friends.dropdowns.yourfriends;
+
+    // })
+    cancel.addEventListener('click', function () {
+        confirm_delete.style.display = 'none';
+    });
+    document.addEventListener('click', function (event) {
+
+        const paper_settings = document.getElementById('paper-settings');
+        if (paper_settings && paper_settings.style.display === 'flex') {
+
+            if (!paper_settings.contains(event.target) && !event.target.classList.contains('gear')) {
+                paper_settings.style.display = 'none';
+            }
+        }
+        if (users_to_delete && users_to_delete.style.display === 'flex') {
+
+            if (!users_to_delete.contains(event.target) && !event.target.classList.contains('gear')) {
+                users_to_delete.style.display = 'none';
+            }
+        }
+
+
+    });
+    document.addEventListener('click', function (event) {
+        if (edit_paper && edit_paper.style.display === 'block') {
+            // Check if the clicked element is outside edit_paper and not the editclose button itself
+            if (!edit_paper.contains(event.target) && event.target !== editclose) {
+                edit_paper.style.display = 'none'; // Assign the 'none' value to hide it
+            }
+        }
+    });
+}
 document.addEventListener('DOMContentLoaded', function () {
     // const inputField = document.getElementById('tags');
     const seen = localStorage.getItem('hasSeenWelcomePopup')
@@ -1983,537 +2478,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // console.log('target', target.id);
 
         if (exitConversations) {
-            const translations = await loadTranslation()
-
-            document.getElementById('home').addEventListener('click', async function () {
-                skip = 0;
-                let mainContent = document.getElementById('maincontent')
-
-                mainContent.innerHTML = ''
-                await loadPosts();
-                applyTranslations();
-                toggleSidebar()
-            })
-            const notifications_button = document.getElementById('notifications-button')
-            notifications_button.addEventListener('click', async function () {
-                document.querySelector('.notifications-label').textContent = translations.sidebar.notifications;
-                const notificationsContainer = mainContent.querySelector(".notifications-container")
-                const container = await loadNotifications();
-                mainContent.innerHTML = `<div class="notifications-label">${translations.sidebar.notifications}</div>`
-                notificationsContainer.innerHTML += container.outerHTML
-                toggleSidebar()
-            });
-
-            const cancel = document.getElementById('cancel');
-            const confirm_delete = document.getElementById('confirm-delete');
-            const edit_paper = document.querySelector('.edit-paper')
-            const editclose = document.getElementById('closeedit')
-            const users_to_delete = document.getElementById('users-to-delete')
-            const create_paper = document.getElementById('start_paper_button')
-            const searchPapers = document.getElementById('searchpapers-button')
-            const yourPapers = document.getElementById('your-papers-button')
-            const joinedPapers = document.getElementById('joined-papers-button')
-            const searchFriends = document.getElementById('search-friends-button')
-            const yourFriends = document.getElementById('your-friends-button')
-            const toggleLinks = document.querySelectorAll('.toggle-link');
-
-            toggleLinks.forEach(toggleLink => {
-                toggleLink.addEventListener('click', function (event) {
-                    event.preventDefault(); // Prevent the default anchor click behavior
-                    // Check if the clicked element is a sublist item
-                    if (event.target.tagName.toLowerCase() === 'li') {
-                        return; // Do nothing if a sublist item is clicked
-                    }
-                    // Get the container and sublist within the clicked link
-                    const toggleContainer = this.querySelector('.toggle-tab-container, .toggle-tab-container-2, .toggle-tab-container-3, .toggle-tab-container-4');
-                    const sublist = this.querySelector('.sublist, .sublist-2');
-
-                    toggleContainer.classList.toggle('active');
-
-                    if (toggleContainer.classList.contains('active')) {
-                        sublist.style.maxHeight = sublist.scrollHeight + "px";
-                        sublist.style.paddingTop = "3px"; // Add padding when active
-                    } else {
-                        sublist.style.maxHeight = "0";
-                        sublist.style.paddingTop = "0"; // Remove padding when collapsed
-                    }
-
-                    // Rotate the icon inside the tab-icon class
-                    const tabIcon = this.querySelector('.tab-icon svg');
-                    if (tabIcon) {
-                        if (toggleContainer.classList.contains('active')) {
-                            tabIcon.style.transform = 'rotate(180deg)';
-                        } else {
-                            tabIcon.style.transform = 'rotate(0deg)';
-                        }
-                    }
-                });
-            });
-            document.getElementById('your-papers-button').addEventListener('click', async function () {
-
-                show_spinner()
-                const response = await fetch('/api/papers', {
-                    method: "GET"
-                });
-
-                if (response.ok) {
-
-                    const data = await response.json()
-                    console.log('papers', data.papers.length);
-
-                    let content = ''
-                    if (data.papers.length === 0) {
-                        content = translations.sidebar.no_papers
-                    }
-                    data.papers.forEach(paper => {
-                        console.log('paper', paper);
-
-                        content += `
-             <div id="${paper._id}" class="paper-line">
-                <div class="paperinfo">
-                    <i id="joined-paper" class="fas fa-file"></i>
-                    <span class="paper-title"><strong>${paper.title}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
-                    <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
-                    <strong id="need">We Need:</strong>
-                    <span class="dash"><strong>-</strong></span>
-                    <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
-                    <span class="paper-branch"><strong>${paper.project_branch}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
-                    <span class="paper-branch"><strong>${paper.language}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
-                    <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
-
-                </div>
-
-                    <span id="description"class="paper-branch"><strong>${paper.description}</strong></span>
-
-                <div class="button-container">
-                    <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
-                    <div class="divider"></div>
-                    <i id="gear" class="gear fa-solid fa-bars"></i>
-                </div>
-        </div>
-`
-
-                    })
-                    const paperscontainer = document.querySelector('.yourpapers-container')
-
-                    console.log('paperscontainer', paperscontainer);
-
-                    paperscontainer.innerHTML = content
-                    mainContent.innerHTML = `<div class="yourpapers-label" id="joined">${translations.newPaper.dropdowns.yourPapers}</div>`
-                    mainContent.innerHTML += paperscontainer.outerHTML
-                    const paper_settings = document.getElementById('paper-settings');
-                    const confirm_delete = document.getElementById('confirm-delete');
-                    const paperLines = document.querySelectorAll('.paper-line');
-                    const firstPaperLine = document.querySelector('.paper-line:first-child');
-
-                    const etnerButtons = document.querySelectorAll('.button-container a')
-
-                    etnerButtons.forEach(button => {
-                        button.textContent = translations.yourPapers.enter;
-                    })
-                    document.getElementById('editPaper').querySelector('p').textContent = translations.yourPapers.editPaper;
-                    document.getElementById('delete-user-from-paper').querySelector('p').textContent = translations.yourPapers.deleteUser;
-                    document.getElementById('deletePaper').querySelector('p').textContent = translations.yourPapers.deletePaper;
-
-
-                    data.papers.forEach(function (paper) {
-                        const paperLine = document.getElementById(`${paper._id}`)
-                        const gear = paperLine.querySelector('.gear');
-                        const parentPaperElement = document.getElementById(`${paper._id}`);
-
-
-
-                        gear.addEventListener('click', function () {
-                            const paperLine = gear.closest('.paper-line');
-                            paperId = paperLine.id;
-
-                            if (paper_settings) {
-                                paper_settings.style.display = 'none'
-                            }
-                            if (paperLine === firstPaperLine) {
-                                paper_settings.style.display = 'flex';
-                                paper_settings.style.top = `13vw`;  // Set top for the first element
-                            } else {
-                                const rect = parentPaperElement.getBoundingClientRect();
-                                const viewportHeight = window.innerHeight;
-                                const viewportWidth = window.innerWidth;
-                                let newTop = ((rect.top + rect.height) / viewportWidth) * 100; // Position directly below the parent element
-
-                                // Calculate how many elements are before the clicked paperLine
-                                // const allPapers = document.querySelectorAll('.paper-line');
-                                // const index = Array.from(allPapers).indexOf(paperLine);  // Get the index of the clicked paper
-                                const maxAllowedTop = viewportHeight - paper_settings.offsetHeight - 10; // 10px padding from bottom
-                                if (newTop > maxAllowedTop) {
-                                    newTop = maxAllowedTop;
-                                }
-                                // Set the top value based on the index (each paper adds 6vw to the top)
-                                // let newTop = 13 + (index * 6);  // 13vw + 6vw per paper
-                                paper_settings.style.display = 'flex';
-                                paper_settings.style.top = `${newTop}vw`;
-                                // Set the new top for this paper
-                                console.log('boundings dimensions', rect);
-
-                            }
-                        });
-
-
-
-                    });
-                    const deletePaper = document.getElementById('deletePaper');
-                    const editPaper = document.getElementById('editPaper');
-                    const dufp = document.getElementById('delete-user-from-paper')
-
-
-                    deletePaper.addEventListener('click', function () {
-                        confirm_delete.querySelector('p').textContent = translations.sidebar.confirm_delete
-                        confirm_delete.style.display = 'flex';
-                        document.getElementById('cancel').textContent = translations.sidebar.cancel;
-                        document.getElementById('confirm').textContent = translations.sidebar.confirm;
-
-                    });
-                    editPaper.addEventListener('click', async function () {
-                        await edit_paper(paperId)
-                        document.getElementById('update-project-branch').querySelector('label').textContent = translations.startPaper.projectBranch;
-                        document.getElementById('update-weneed-container').querySelector('label').textContent = translations.startPaper.we_need;
-                        document.getElementById('update-language-container').querySelector('label').textContent = translations.startPaper.language;
-                        document.getElementById('update-typeof-study-container').querySelector('label').textContent = translations.startPaper.type_of_study;
-                        document.getElementById('update-tags-container').querySelector('label').textContent = translations.startPaper.tags.label;
-                        document.getElementById('update_paper').textContent = translations.startPaper.update;
-
-                    })
-                    dufp.addEventListener('click', async function (e) {
-                        e.preventDefault()
-                        await showUsers()
-                        document.getElementById('deleteUserFromPaper').textContent = translations.sidebar.delete;
-
-                    })
-                    hide_spinner()
-                    toggleSidebar()
-                }
-            })
-
-            document.getElementById('joined-papers-button').addEventListener('click', async function () {
-
-                show_spinner()
-                const response = await fetch('/api/joinedPapers', {
-                    method: "GET"
-                });
-                if (response.ok) {
-
-                    const data = await response.json()
-
-                    let content = ''
-                    if (data.joinedpapers.length == 0) {
-                        content = translations.sidebar.no_joined_papers
-                    } else {
-                        data.joinedpapers.forEach(paper => {
-                            content += `
-                 <div id="${paper._id}" class="paper-line">
-                    <div class="paperinfo">
-                        <i id="joined-paper" class="fas fa-file"></i>
-                        <span class="paper-title"><strong>${paper.title}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-branch"><strong>${paper.project_branch}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-tags"><strong>${paper.language}</strong></span>
-                        <span class="dash"><strong>-</strong></span>
-                        <span class="paper-tags" id="${paper._id}"><strong>${paper._id}</strong></span>
-                    </div>
-                    <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
-
-            </div>
-                `
-
-                        })
-
-                    }
-                    const Joinedpaperscontainer = document.querySelector('.joinedpapers-container')
-                    console.log(Joinedpaperscontainer);
-                    mainContent.innerHTML = `<div class="joined-label" id="joined">${translations.joinPaper.dropdowns.joinedPapers}</div>`
-                    Joinedpaperscontainer.innerHTML = content
-                    mainContent.innerHTML += Joinedpaperscontainer.outerHTML
-                    toggleSidebar()
-                    hide_spinner()
-
-                }
-            })
-            document.getElementById('your-friends-button').addEventListener('click', async function () {
-                show_spinner()
-                const response = await fetch('/api/users/1', {
-                    method: "GET"
-                });
-                if (response.ok) {
-
-                    const data = await response.json()
-                    console.log(data);
-                    let content = ''
-                    if (data.users.length == 0) {
-                        content = 'No friends yet'
-                    } else {
-                        data.users.forEach(user => {
-                            content += `
-
-                        <div onclick="show_Single_conversation('${user._id}')" class="friend-info">
-                            <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(user).replace(/"/g, '&quot;')}')"  src="/profile_images/${user.profile_picture}" alt="Profile Picture">
-                            <span>
-                            ${user.name}
-                            </span>
-                            <span style="text-decoration:none;">-</span>
-                            <span>
-                            ${user._id}
-                            </span>
-                        </div>
-
-                `
-
-                        })
-                    }
-                    const firendsContainer = document.querySelector('.yourfriends-container')
-
-                    mainContent.innerHTML = `<div class="yourfriends-label" id="joined">${translations.friends.dropdowns.yourfriends}</div>`
-                    firendsContainer.innerHTML = content
-                    mainContent.innerHTML += firendsContainer.outerHTML
-                    toggleSidebar()
-                    hide_spinner()
-                }
-            })
-            create_paper.addEventListener('click', async () => {
-                document.querySelector('.startpapers-label').textContent = translations.newPaper.label;
-                document.getElementById('paper_title').placeholder = translations.startPaper.placeholder;
-                document.getElementById('project_branch').placeholder = translations.startPaper.projectBranch;
-                document.getElementById('type_of_study').placeholder = translations.startPaper.type_of_study;
-                document.getElementById('we_need').placeholder = translations.startPaper.we_need;
-                document.getElementById('start-language-input').placeholder = translations.startPaper.language;
-                document.getElementById('tags').placeholder = translations.startPaper.tags.placeholder;
-                document.getElementById('start_create').textContent = translations.startPaper.publish;
-
-                document.getElementById('project-branch').querySelector('label').textContent = translations.startPaper.projectBranch;
-                document.getElementById('we-need-container').querySelector('label').textContent = translations.startPaper.we_need;
-                document.getElementById('lang-container').querySelector('label').textContent = translations.startPaper.language;
-                document.getElementById('study-container').querySelector('label').textContent = translations.startPaper.type_of_study;
-                document.getElementById('tags-container').querySelector('label').textContent = translations.startPaper.tags.label;
-                mainContent.innerHTML = `<div class="startpapers-label">${translations.newPaper.label}</div>`
-                mainContent.innerHTML += document.querySelector('.startpaper-popup').outerHTML
-                toggleSidebar()
-            })
-            searchPapers.addEventListener('click', async () => {
-
-                document.querySelector('.searchpapers-label').textContent = translations.joinPaper.searchpaper;
-
-                document.getElementById('advanced').textContent = translations.joinPaper.advancedSearch.label;
-                document.getElementById('paper-title').placeholder = translations.joinPaper.advancedSearch.searchPapers;
-
-                document.getElementById('ID').placeholder = translations.joinPaper.advancedSearch.paperId;
-                document.getElementById('paper_project_branch').placeholder = translations.joinPaper.advancedSearch.paperBranch;
-                document.getElementById('language-input').placeholder = translations.joinPaper.advancedSearch.paperLang;
-                document.getElementById('paper_we_need').placeholder = translations.joinPaper.advancedSearch.we_need;
-                document.getElementById('search').textContent = translations.joinPaper.advancedSearch.search;
-                mainContent.innerHTML = `<div class="searchpapers-label">${translations.joinPaper.searchpaper}</div>`
-                mainContent.innerHTML += document.querySelector('.searchpapers-popup').outerHTML
-                toggleSidebar()
-                const newPopup = mainContent.querySelector('.searchpapers-popup');
-                // initializeAdvancedSearch(newPopup)
-                const advancedSearch = newPopup.querySelector('.advancedsearch-container');
-                const toggleButton = newPopup.querySelector('#advanced_button');
-                const search_button = newPopup.querySelector('#search')
-                toggleButton.addEventListener('click', async function () {
-                    const papersdropdowns = [
-                        { inputId: 'paper_we_need', containerid: 'paper-weneed-container', optionsid: 'paper-weneed-list' },
-                        { inputId: 'language-input', containerid: 'language-container', optionsid: 'language-list' },
-                        { inputId: 'paper_project_branch', containerid: 'paper-projectbranch-container', optionsid: 'paper-projectbranch-list' },
-                    ];
-                    console.log(document.querySelector('.advancedsearch-container'));
-
-
-                    toggleButton.classList.toggle('toggled')
-                    advancedSearch.classList.toggle('show')
-
-                    papersdropdowns.forEach(function (dropdown) {
-                        const inputElement = document.getElementById(dropdown.inputId);
-                        const container = document.getElementById(dropdown.containerid);
-                        const optionsList = document.getElementById(dropdown.optionsid);
-                        const options = optionsList.querySelectorAll('li');
-
-
-                        inputElement.addEventListener('click', function () {
-                            container.classList.toggle('open'); // Toggle the open class
-                        });
-
-                        options.forEach(function (option) {
-                            option.addEventListener('click', function () {
-                                inputElement.value = this.textContent;
-                                container.classList.remove('open');
-                            });
-                        });
-
-                        document.addEventListener('click', function (e) {
-                            if (!container.contains(e.target) && e.target !== inputElement) {
-                                container.classList.remove('open');
-                            }
-                        });
-                    });
-                })
-                search_button.addEventListener('click', async function () {
-                    show_spinner()
-                    let content = ''
-                    const title = newPopup.querySelector('#paper-title').value
-                    const projectbranch = newPopup.querySelector('#paper_project_branch').value
-                    const we_need = newPopup.querySelector('#paper_we_need').value
-                    const language = newPopup.querySelector('#language-input').value
-                    const id = newPopup.querySelector('#ID').value
-                    const paper_result = newPopup.querySelector('#paper-result')
-                    const paper_data = JSON.stringify({
-                        title,
-                        id,
-                        projectbranch,
-                        we_need,
-                        language,
-                    })
-
-                    try {
-                        content = await show_search_result(paper_data)
-
-                        paper_result.innerHTML = content;
-                        paper_result.classList.add('active')
-                        const translations = await loadTranslation()
-                        const joinButtons = document.querySelectorAll('.join-button')
-                        const enterButtons = document.querySelectorAll('.enter-button')
-                        joinButtons.forEach(button => {
-                            button.textContent = translations.joinPaper.joinButton
-                        })
-                        enterButtons.forEach(button => {
-                            button.textContent = translations.joinPaper.enterButton
-                        })
-                    } catch (error) {
-                        console.log(error);
-
-                    }
-                    finally {
-                        hide_spinner()
-                    }
-                })
-
-            })
-            notifications_button.addEventListener('click', async function () {
-                document.querySelector('.notifications-label').textContent = translations.sidebar.notifications;
-                loadNotifications();
-                toggleSidebar()
-            });
-            yourPapers.addEventListener('click', async () => {
-                document.querySelector('.yourpapers-label').textContent = translations.newPaper.dropdowns.yourPapers;
-            })
-            joinedPapers.addEventListener('click', async () => {
-                document.querySelector('.joined-label').textContent = translations.joinPaper.dropdowns.joinedPapers;
-            })
-            searchFriends.addEventListener('click', async () => {
-                document.querySelector('.searchfriends-label').textContent = translations.friends.searchfriends;
-                document.getElementById('friend-search').textContent = translations.sidebar.search
-                mainContent.innerHTML = `<div class="searchfriends-label">${translations.friends.searchfriends}</div>`
-                mainContent.innerHTML += document.querySelector('.searchfriends-popup').outerHTML
-                toggleSidebar()
-                const newPopup = mainContent.querySelector('.searchfriends-popup')
-
-                // const friend_search = newPopup.querySelector('#friend-search')
-
-                // friend_search.addEventListener('click', async function (e) {
-                //     e.preventDefault();
-
-                //     const friend_search_input = newPopup.querySelector('#friend-search-input').value;
-
-                //     try {
-                //         const response = await fetch('/api/get-user', {
-                //             headers: { 'Content-Type': 'application/json' },
-                //             method: "POST",
-                //             body: JSON.stringify({
-                //                 query: friend_search_input
-                //             })
-                //         });
-
-                //         const data = await response.json();
-
-                //         let content = "";
-                //         const friend_result = newPopup.querySelector('#friend-result');
-
-                //         if (data.user.length == 0) {
-                //             friend_result.innerHTML = `<p> No matches</p>`;
-                //         } else {
-                //             data.user.forEach(u => {
-                //                 content += `
-                //                     <div class="paper-line">
-                //                         <div class="paperinfo">
-                //                             <img onclick="showProfile('${JSON.stringify(u).replace(/"/g, '&quot;')}')" src="/profile_images/${u.profile_picture}" alt="Profile Picture">
-                //                             <span class="paper-title"><strong>${u.name}</strong></span>
-                //                             <span class="dash"><strong>-</strong></span>
-                //                             ${u.phoneHidden == false ? `
-                //                                 <span class="dash"><strong>-</strong></span>
-                //                                 <span class="paper-study"><strong>${u._id}</strong></span>` : ""}
-                //                         </div>
-                //                         <button class="friend-message" id="send-friend-message" onclick="show_Single_conversation('${u._id}')">send a message</button>
-                //                     </div>
-                //                 `;
-                //             });
-                //         }
-
-                //         friend_result.innerHTML = content;
-                //         const translations = await loadTranslation()
-
-                //         const friendButtons = document.querySelectorAll('.friend-message')
-                //         console.log('friends buttons', friendButtons);
-
-                //         friendButtons.forEach(button => {
-                //             button.textContent = translations.friends.sendFriendMessage;
-                //         })
-                //     } catch (err) {
-                //         console.error('Error during fetch:', err);
-                //         // You can handle any errors here
-                //     } finally {
-                //         // Hide spinner after everything is done
-
-                //     }
-                // });
-            })
-            yourFriends.addEventListener('click', async () => {
-                document.querySelector('.yourfriends-label').textContent = translations.friends.dropdowns.yourfriends;
-
-            })
-            cancel.addEventListener('click', function () {
-                confirm_delete.style.display = 'none';
-            });
-            document.addEventListener('click', function (event) {
-
-                const paper_settings = document.getElementById('paper-settings');
-                if (paper_settings && paper_settings.style.display === 'flex') {
-
-                    if (!paper_settings.contains(event.target) && !event.target.classList.contains('gear')) {
-                        paper_settings.style.display = 'none';
-                    }
-                }
-                if (users_to_delete && users_to_delete.style.display === 'flex') {
-
-                    if (!users_to_delete.contains(event.target) && !event.target.classList.contains('gear')) {
-                        users_to_delete.style.display = 'none';
-                    }
-                }
-
-
-            });
-            document.addEventListener('click', function (event) {
-                if (edit_paper && edit_paper.style.display === 'block') {
-                    // Check if the clicked element is outside edit_paper and not the editclose button itself
-                    if (!edit_paper.contains(event.target) && event.target !== editclose) {
-                        edit_paper.style.display = 'none'; // Assign the 'none' value to hide it
-                    }
-                }
-            });
+            await addExitListeners()
         }
     })
 
@@ -2531,7 +2496,7 @@ function hide_spinner() {
 }
 
 async function send_message(type) {
-    
+
     try {
         const formData = new FormData();
         const messageInput = document.getElementById('message-input');
@@ -2561,9 +2526,9 @@ async function send_message(type) {
             method: "POST",
 
             body: formData
-           
+
         }).then(res => res.json()).then(async data => {
-            
+
             const text = document.getElementById('message-input');
             text.value = '';
             if (messages) {
@@ -2574,7 +2539,7 @@ async function send_message(type) {
             const paper = data.paper
             if (type == 'public') {
 
-                socket.emit("send-to-public-room", { message: { m: data.newMessage,sender:data.user, id: conv_id, mainfield } })
+                socket.emit("send-to-public-room", { message: { m: data.newMessage, sender: data.user, id: conv_id, mainfield } })
                 await fetch(`/api/notify-all`, {
                     method: "POST",
                     headers: {
@@ -2596,9 +2561,9 @@ async function send_message(type) {
                 reset_reply()
 
             } else if (type == "private") {
-                socket.emit("send-message", { message: { m: data.newMessage,user:data.user, id: conv_id } })
+                socket.emit("send-message", { message: { m: data.newMessage, user: data.user, id: conv_id } })
 
-                
+
                 data.members.forEach(async member => {
 
                     await fetch(`/api/notify/${member}`, {
@@ -2621,9 +2586,9 @@ async function send_message(type) {
                             conversation: data.conversation,
                             type: isreply ? 'reply' : '',
                             paper: paper
-                        },()=>{
-                            console.log('data.message',data.message);
-                            
+                        }, () => {
+                            console.log('data.message', data.message);
+
                         });
 
 
@@ -3239,7 +3204,7 @@ async function get_conversation(id, type) {
             }
             message_history.classList.add('singleconversation');
             mainContent.classList.add('conversation')
-           
+
             if (!document.getElementById('messaging-container')) {
                 chat_body.innerHTML += `
                     <div id="messaging-container" class="messaging-container">
@@ -3279,7 +3244,7 @@ async function get_conversation(id, type) {
             handleScroll()
         };
         inputListeners(`${type}`)
-        control_sendButton(`${type}`,null);
+        control_sendButton(`${type}`, null);
         scrollToBottom()
 
 
@@ -3499,7 +3464,7 @@ async function show_conversation(paper_id) {
         const paperData = await paperResponse.json();
         const paper_userId = paperData.paper.user_id;
 
-        const content = await buildConversations(paper_userId, paper_id);``
+        const content = await buildConversations(paper_userId, paper_id); ``
         mainContent.innerHTML = `
         <div class="chat-container">
             ${!isMobile() ?
@@ -3522,12 +3487,12 @@ async function show_conversation(paper_id) {
         `;
         document.getElementById('message-history').classList.add('singleconversation');
         document.getElementById('maincontent').classList.add('conversation')
+        document.querySelector('.scroll-button').top ='64%'
         if (!isMobile()) {
             const chatsView = document.getElementById('chats')
 
             chatsView.innerHTML += content;
         }
-        // mainContent.classList.add('conversation')
         if (isMobile()) {
 
             document.querySelector('.sidebar').innerHTML = `
@@ -3614,28 +3579,16 @@ async function show_conversation(paper_id) {
          </a>
       </li>
       <li>
-         <a class="toggle-link" id="paper-toggle-4" href="">
+         <a class="toggle-link" onclick="show_Single_conversation()" id="paper-toggle-4" href="">
             <div class="toggle-tab-container-4">
                <div id="head" class="header">
                   <i id="paper-3" class="fa-solid fa-user-group"></i>
                   <span id="friends-tab" class="text toggle-item">friends</span>
-                  <span class="tab-icon">
-                     <div class="create-dropdown">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-                           stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
-                           viewBox="0 0 34 34" role="img">
-                           <path d="m15 18 6 6-6 6"></path>
-                        </svg>
-                     </div>
-                  </span>
+                  
                </div>
-               <ul class="sublist-4">
-                  <li id="search-friends-button">Search </li>
-                  <li id="your-friends-button">Your friends</li>
-               </ul>
+               
             </div>
          </a>
-      </li>
       <li>
          <a onclick="show_public_conversation()" href="#" id="chat">
             <!-- <i class="fa-solid fa-comment"></i>
@@ -3671,7 +3624,7 @@ async function show_conversation(paper_id) {
         } else {
             toggleSidebar();
         }
-        
+
     } catch (err) {
         console.error('Error fetching paper details:', err);
     } finally {
@@ -3682,23 +3635,18 @@ async function show_conversation(paper_id) {
     popups.forEach(popup => {
         popup.style.display = 'none';
     });
-    control_sendButton('private',null)
-
+    control_sendButton('private', null)
+    document.querySelector('.scroll-button').style.top ='64%'
 }
 async function load_f_messages(conversation_Id, user_id) {
     try {
         let chat = document.querySelector('.chat')
-        console.log('chats', chat);
 
         const messagesResponse = await fetch(`/api/messages/${conversation_Id}?skip=${cskip}&limit=${climit}`, { method: 'GET' });
         if (!messagesResponse.ok) throw new Error("Failed to fetch messages");
 
         const messagesData = await messagesResponse.json();
         let message_content = "";
-
-
-
-
         const message_history = document.getElementById('message-history');
         if (messagesData.messages.length === 0) {
             message_history.innerHTML = `<p>No Messages</p>`;
@@ -3730,6 +3678,7 @@ async function updateUserInfo(user) {
     let content = await conversation_layout(user)
     mainContent.innerHTML = content;
     searchFunctionality()
+    load_f_conversations()
     control_sendButton('friend', user._id)
 }
 async function conversation_layout(user) {
@@ -3742,7 +3691,7 @@ async function conversation_layout(user) {
         const chats = document.getElementById('friendChats')
         content += `
         <div class="chat-container">
-        
+                
                 <div class="userinfo">
                     <img src="/profile_images/${rec_img}" alt="">
                     <span>
@@ -3776,13 +3725,17 @@ async function conversation_layout(user) {
 
             document.querySelector('.sidebar').innerHTML = `
                 <div class="chats-mobile">
+
                     <div id="chats-view" class="chats-view">
+                        <div class="search-container">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends}">
+                        </div>
                         <div id="chats-container" class="chats-plus">
-                            <div id="chats" class="chat">
+                            <div id="friendChats" class="chat">
 
                             </div>
                         </div>
-
                     </div>
                     <a id="exit_conversations">
                         <i class="fa-solid fa-arrow-left-long" style="margin-left: 8px;"></i>
@@ -3858,28 +3811,16 @@ async function conversation_layout(user) {
          </a>
       </li>
       <li>
-         <a class="toggle-link" id="paper-toggle-4" href="">
+         <a class="toggle-link" onclick="show_Single_conversation()" id="paper-toggle-4" href="">
             <div class="toggle-tab-container-4">
                <div id="head" class="header">
                   <i id="paper-3" class="fa-solid fa-user-group"></i>
                   <span id="friends-tab" class="text toggle-item">friends</span>
-                  <span class="tab-icon">
-                     <div class="create-dropdown">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-                           stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
-                           viewBox="0 0 34 34" role="img">
-                           <path d="m15 18 6 6-6 6"></path>
-                        </svg>
-                     </div>
-                  </span>
+                  
                </div>
-               <ul class="sublist-4">
-                  <li id="search-friends-button">Search </li>
-                  <li id="your-friends-button">Your friends</li>
-               </ul>
+               
             </div>
          </a>
-      </li>
       <li>
          <a onclick="show_public_conversation()" href="#" id="chat">
             <!-- <i class="fa-solid fa-comment"></i>
@@ -3979,29 +3920,67 @@ async function show_Single_conversation() {
         mainContent.classList.add('conversation')
 
 
+        let chats = `
+        ${!isMobile() ? `
+            <div id="chats-view" class="chats-view">
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends} ">
+            </div>
+                <div id="friendChats" class="chat">
 
-        let chatContent = `
-        <div class="chat-container">
+                </div>
+            </div>
+            `: `
+            <div class="chats-mobile">
                 
-                ${!isMobile() ? `
-                    <div id="chats-view" class="chats-view">
+                <div id="chats-view" class="chats-view">
                     <div class="search-container">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends} ">
                     </div>
+                    <div id="chats-container" class="chats-plus">
                         <div id="friendChats" class="chat">
 
                         </div>
                     </div>
-                    `: ""}
-                <div id="chat-body" class="chat-body">
-                    <div id="message-history" class="message-history"></div>
-                    
+
                 </div>
+                <a id="exit_conversations" onclick="addExitListeners()">
+                    <i class="fa-solid fa-arrow-left-long" style="margin-left: 8px;"></i>
+                    <p style="margin: 0;">Exit conversations</p>
+                </a>
+            </div>
+            
+            `}
+        `
+        let chatContent = `
+        <div class="chat-container">
+               ${chats} 
         </div>
         `
-        mainContent.innerHTML = chatContent
-        searchFunctionality()
+
+        if (isMobile()) {
+            mainContent.innerHTML = `
+            <div class="chat-container">
+             
+            </div>
+            `
+            document.getElementById('sidebar').innerHTML = chats
+            document.getElementById('sidebar').addEventListener('click', async function (event) {
+                const exitConversations = event.target.closest('#exit_conversations');
+
+                // console.log('target', target.id);
+
+                if (exitConversations) {
+                    await addExitListeners()
+                }
+            })
+        }
+        else {
+            mainContent.innerHTML = chatContent
+
+        }
 
 
         popups.forEach(popup => {
@@ -4009,6 +3988,7 @@ async function show_Single_conversation() {
         });
 
         toggleSidebar();
+        searchFunctionality()
     } catch (error) {
         console.error('Error fetching conversation:', error);
     } finally {
@@ -4019,9 +3999,15 @@ async function show_Single_conversation() {
 
 async function searchFunctionality() {
     let chatsView = document.querySelector('.chats-view')
+
     let chatResults = await load_f_conversations()
-    const friend_search_input = chatsView.querySelector('#friend-search-input');
+    let friend_search_input = chatsView.querySelector('#friend-search-input');
     const friendsChats = chatsView.querySelector('.chat')
+    if(!friend_search_input){
+        friend_search_input = document.createElement('input')
+        friend_search_input.id = 'friend-search-input'
+        friend_search_input.className ='search-input'
+    }
     friend_search_input.addEventListener('input', async function (e) {
         e.preventDefault();
 
@@ -4070,11 +4056,7 @@ async function searchFunctionality() {
                 friendsChats.innerHTML = content;
                 const translations = await loadTranslation()
 
-                // const friendButtons = document.querySelectorAll('.friend-message')
 
-                // friendButtons.forEach(button => {
-                //     button.textContent = translations.friends.sendFriendMessage;
-                // })
             } catch (err) {
                 console.log('error', err);
 
@@ -4237,8 +4219,8 @@ async function buildMessageContent(messages) {
         ].includes(fileExtension);
         let image = message.senderDetails.profile_picture
         // console.log('image', image, 'message', message);
-        console.log('sender ',message.senderDetails,'image',image);
-        
+        console.log('sender ', message.senderDetails, 'image', image);
+
         let path
         if (image) {
             if (image.startsWith('http')) {
@@ -4553,12 +4535,46 @@ async function loadTranslation() {
     });
     const translations = await response.json();
     const topBar = document.getElementById('dashboard-setting')
-    document.getElementById('home').querySelector('.header span').textContent = translations.topBar.home
-    document.getElementById('new-paper').textContent = translations.newPaper.label;
-    document.getElementById('join-paper').textContent = translations.joinPaper.label;
-    document.getElementById('notifications').textContent = translations.sidebar.notifications;
-    document.getElementById('chat-tab').textContent = translations.sidebar.publicChat;
-    document.getElementById('friends-tab').textContent = translations.friends.label;
+    const homeElement = document.getElementById('home');
+    if (homeElement) {
+        const headerSpan = homeElement.querySelector('.header span');
+        if (headerSpan) {
+            headerSpan.textContent = translations?.topBar?.home || 'Default Home';
+        }
+    }
+
+    const newPaperElement = document.getElementById('new-paper');
+    if (newPaperElement) {
+        newPaperElement.textContent = translations?.newPaper?.label || 'Default New Paper';
+    }
+
+    const joinPaperElement = document.getElementById('join-paper');
+    if (joinPaperElement) {
+        joinPaperElement.textContent = translations?.joinPaper?.label || 'Default Join Paper';
+    }
+
+    const notificationsElement = document.getElementById('notifications');
+    if (notificationsElement) {
+        notificationsElement.textContent = translations?.sidebar?.notifications || 'Default Notifications';
+    }
+
+    const chatTabElement = document.getElementById('chat-tab');
+    if (chatTabElement) {
+        chatTabElement.textContent = translations?.sidebar?.publicChat || 'Default Chat';
+    }
+
+    const friendsTabElement = document.getElementById('friends-tab');
+    if (friendsTabElement) {
+        friendsTabElement.textContent = translations?.friends?.label || 'Default Friends';
+    }
+
+    // document.getElementById('home')?.querySelector('.header span')?.textContent = translations?.topBar?.home || 'Default Home';
+    // document.getElementById('new-paper')?.textContent = translations?.newPaper?.label || 'Default New Paper';
+    // document.getElementById('join-paper')?.textContent = translations?.joinPaper?.label || 'Default Join Paper';
+    // document.getElementById('notifications')?.textContent = translations?.sidebar?.notifications || 'Default Notifications';
+    // document.getElementById('chat-tab')?.textContent = translations?.sidebar?.publicChat || 'Default Chat';
+    // document.getElementById('friends-tab')?.textContent = translations?.friends?.label || 'Default Friends';
+
     const postButtons = document.querySelectorAll('.css-1k7990c-StyledButton')
     postButtons.forEach(button => {
         button.textContent = translations.sidebar.goTopost
@@ -4567,31 +4583,127 @@ async function loadTranslation() {
     // document.getElementById('settings').textContent = translations.topBar.settings
     document.getElementById('home-setting').textContent = translations.topBar.home
 
+    const startPaperButton = document.getElementById('start_paper_button');
+    if (startPaperButton) {
+        startPaperButton.textContent = translations?.newPaper?.dropdowns?.startPaper || 'Start Paper';
+    }
 
-    document.getElementById('start_paper_button').textContent = translations.newPaper.dropdowns.startPaper;
-    document.getElementById('your-papers-button').textContent = translations.newPaper.dropdowns.yourPapers;
-    document.querySelector('.yourpapers-label').textContent = translations.newPaper.dropdowns.yourPapers;
-    document.querySelector('.startpapers-label').textContent = translations.newPaper.label;
-    document.querySelector('.searchpapers-label').textContent = translations.joinPaper.searchpaper;
-    document.querySelector('.notifications-label').textContent = translations.sidebar.notifications;
+    const yourPapersButton = document.getElementById('your-papers-button');
+    if (yourPapersButton) {
+        yourPapersButton.textContent = translations?.newPaper?.dropdowns?.yourPapers || 'Your Papers';
+    }
 
-    document.getElementById('searchpapers-button').textContent = translations.sidebar.search;
-    document.getElementById('joined-papers-button').textContent = translations.joinPaper.dropdowns.joinedPapers;
-    document.querySelector('.joined-label').textContent = translations.joinPaper.dropdowns.joinedPapers;
+    const yourPapersLabel = document.querySelector('.yourpapers-label');
+    if (yourPapersLabel) {
+        yourPapersLabel.textContent = translations?.newPaper?.dropdowns?.yourPapers || 'Your Papers';
+    }
+
+    const startPapersLabel = document.querySelector('.startpapers-label');
+    if (startPapersLabel) {
+        startPapersLabel.textContent = translations?.newPaper?.label || 'Start Papers';
+    }
+
+    const searchPapersLabel = document.querySelector('.searchpapers-label');
+    if (searchPapersLabel) {
+        searchPapersLabel.textContent = translations?.joinPaper?.searchpaper || 'Search Papers';
+    }
+
+    const notificationsLabel = document.querySelector('.notifications-label');
+    if (notificationsLabel) {
+        notificationsLabel.textContent = translations?.sidebar?.notifications || 'Notifications';
+    }
+
+    const searchPapersButton = document.getElementById('searchpapers-button');
+    if (searchPapersButton) {
+        searchPapersButton.textContent = translations?.sidebar?.search || 'Search';
+    }
+
+    const joinedPapersButton = document.getElementById('joined-papers-button');
+    if (joinedPapersButton) {
+        joinedPapersButton.textContent = translations?.joinPaper?.dropdowns?.joinedPapers || 'Joined Papers';
+    }
+
+    const joinedLabel = document.querySelector('.joined-label');
+    if (joinedLabel) {
+        joinedLabel.textContent = translations?.joinPaper?.dropdowns?.joinedPapers || 'Joined Papers';
+    }
+
+    // Uncomment if needed, ensuring elements exist before modifying them
+    // const searchFriendsButton = document.getElementById('search-friends-button');
+    // if (searchFriendsButton) {
+    //     searchFriendsButton.textContent = translations?.sidebar?.search || 'Search Friends';
+    // }
+
+    // const yourFriendsButton = document.getElementById('your-friends-button');
+    // if (yourFriendsButton) {
+    //     yourFriendsButton.textContent = translations?.friends?.dropdowns?.yourfriends || 'Your Friends';
+    // }
+
+    const homeSetting = document.getElementById('home-setting');
+    if (homeSetting) {
+        homeSetting.textContent = translations?.topBar?.home || 'Home';
+    }
+
+
+    // document.getElementById('start_paper_button').textContent = translations.newPaper.dropdowns.startPaper;
+    // document.getElementById('your-papers-button').textContent = translations.newPaper.dropdowns.yourPapers;
+    // document.querySelector('.yourpapers-label').textContent = translations.newPaper.dropdowns.yourPapers;
+    // document.querySelector('.startpapers-label').textContent = translations.newPaper.label;
+    // document.querySelector('.searchpapers-label').textContent = translations.joinPaper.searchpaper;
+    // document.querySelector('.notifications-label').textContent = translations.sidebar.notifications;
+
+    // document.getElementById('searchpapers-button').textContent = translations.sidebar.search;
+    // document.getElementById('joined-papers-button').textContent = translations.joinPaper.dropdowns.joinedPapers;
+    // document.querySelector('.joined-label').textContent = translations.joinPaper.dropdowns.joinedPapers;
     // document.getElementById('search-friends-button').textContent = translations.sidebar.search;
     // document.getElementById('your-friends-button').textContent = translations.friends.dropdowns.yourfriends;
     document.getElementById('home-setting').textContent = translations.topBar.home
     if (topBar) {
         topBar.textContent = translations.topBar.dashboard
     }
-    document.querySelector('.searchfriends-label').textContent = translations.friends.searchfriends;
-    document.querySelector('.yourfriends-label').textContent = translations.friends.dropdowns.yourfriends;
+    // document.querySelector('.searchfriends-label').textContent = translations.friends.searchfriends;
+    // document.querySelector('.yourfriends-label').textContent = translations.friends.dropdowns.yourfriends;
 
-    document.getElementById('language-setting').textContent = translations.topBar.language
-    document.getElementById('editProfile-setting').textContent = translations.topBar.editProfile
-    document.getElementById('sign-out').textContent = translations.topBar.signOut
-    document.getElementById('ar').textContent = translations.topBar.ar
-    document.getElementById('en').textContent = translations.topBar.en
+    // document.getElementById('language-setting').textContent = translations.topBar.language
+    // document.getElementById('editProfile-setting').textContent = translations.topBar.editProfile
+    // document.getElementById('sign-out').textContent = translations.topBar.signOut
+    // document.getElementById('ar').textContent = translations.topBar.ar
+    // document.getElementById('en').textContent = translations.topBar.en
+    const searchFriendsLabel = document.querySelector('.searchfriends-label');
+    if (searchFriendsLabel) {
+        searchFriendsLabel.textContent = translations?.friends?.searchfriends || 'Search Friends';
+    }
+
+    const yourFriendsLabel = document.querySelector('.yourfriends-label');
+    if (yourFriendsLabel) {
+        yourFriendsLabel.textContent = translations?.friends?.dropdowns?.yourfriends || 'Your Friends';
+    }
+
+    const languageSetting = document.getElementById('language-setting');
+    if (languageSetting) {
+        languageSetting.textContent = translations?.topBar?.language || 'Language';
+    }
+
+    const editProfileSetting = document.getElementById('editProfile-setting');
+    if (editProfileSetting) {
+        editProfileSetting.textContent = translations?.topBar?.editProfile || 'Edit Profile';
+    }
+
+    const signOut = document.getElementById('sign-out');
+    if (signOut) {
+        signOut.textContent = translations?.topBar?.signOut || 'Sign Out';
+    }
+
+    const ar = document.getElementById('ar');
+    if (ar) {
+        ar.textContent = translations?.topBar?.ar || 'Arabic';
+    }
+
+    const en = document.getElementById('en');
+    if (en) {
+        en.textContent = translations?.topBar?.en || 'English';
+    }
+
     return translations
 
 }
@@ -4676,7 +4788,7 @@ async function applyTranslations() {
 //     document.addEventListener('keydown', controlEnter);
 // }
 function createControlEnter(value, id = null) {
-    console.log('value',value);
+    console.log('value', value);
 
     return function (event) {
         controlEnter(value, event, id);
@@ -4685,8 +4797,8 @@ function createControlEnter(value, id = null) {
 let currentHandler
 function control_sendButton(value, id = null) {
 
-    console.log('value',value);
-    
+    console.log('value', value);
+
     // Remove the previous handler, if any
     if (currentHandler) {
         document.removeEventListener('keydown', currentHandler);
@@ -4697,7 +4809,7 @@ function control_sendButton(value, id = null) {
     document.addEventListener('keydown', currentHandler);
 }
 async function controlEnter(value, event, id = null) {
-    console.log('id', id,'value',value);
+    console.log('id', id, 'value', value);
 
     const text = document.getElementById('message-input');
     const sendButton = document.getElementById('send-message');
@@ -4747,12 +4859,13 @@ async function load_f_conversations() {
             chats.id = 'friendChats'
             chats.className = 'chat'
             chats.style.top = '-9%'
-            document.getElementById('chats-view').append(chats)
+            if (document.getElementById('chats-view')) {
+                document.getElementById('sidebar').append(chats)
+            }
         }
         for (const conversation of data.f_conversations) {
 
 
-            console.log('conversation', conversation);
 
             let user = conversation.receiverInfo[0] || conversation.senderInfo[0];
 
@@ -4760,7 +4873,7 @@ async function load_f_conversations() {
                 user = conversation.senderInfo[0]
             }
             Chatcontent += `
-                <div id="conversationItem" onclick="updateUserInfo('${JSON.stringify(user).replace(/"/g, '&quot;')}');load_f_messages('${conversation._id}','${user._id}')" class="conversation-item">
+                <div id="conversationItem" onclick="updateUserInfo('${JSON.stringify(user).replace(/"/g, '&quot;')}');load_f_messages('${conversation._id}','${user._id}'); toggleSidebar()" class="conversation-item">
                     <img src="/profile_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
                     <h3>${user.name}</h3>
                     
@@ -4844,7 +4957,7 @@ function join_paper(paper_id) {
             }
         }).then(res => res.json()).
             then(async data => {
-                console.log('receiver data',data);
+                console.log('receiver data', data);
                 const receiver = data.request.receiver
                 const paper = data.paper
 
@@ -4863,29 +4976,29 @@ function join_paper(paper_id) {
                         paper_id: paper_id
                     })
                 }).then(res => res.json())
-                .then(data => {
-            
-                    if (!data.message || !data.user) {
-                        console.error('Invalid data structure:', data);
-                        return;
-                    }
-            
-                    socket.emit("send-notification", {
-                        message: data.message,
-                        receiver:receiver,
-                        user: data.user,
-                        type: 'join-request',
-                        notification: data.Notification,
-                        conversation: data.conversation,
-                        paper: paper
-                    }, () => {
-                        console.log('data.message', data.message);
+                    .then(data => {
+
+                        if (!data.message || !data.user) {
+                            console.error('Invalid data structure:', data);
+                            return;
+                        }
+
+                        socket.emit("send-notification", {
+                            message: data.message,
+                            receiver: receiver,
+                            user: data.user,
+                            type: 'join-request',
+                            notification: data.Notification,
+                            conversation: data.conversation,
+                            paper: paper
+                        }, () => {
+                            console.log('data.message', data.message);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Fetch error or invalid JSON:', error);
                     });
-                })
-                .catch(error => {
-                    console.error('Fetch error or invalid JSON:', error);
-                });
-            
+
             });
 
 

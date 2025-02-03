@@ -2538,6 +2538,7 @@ p#file-frame {
     background-color: transparent;
     top: -70%;
     left: 30%;
+    z-index: -10;
     padding-bottom: 10px;
 
 }
@@ -2554,11 +2555,15 @@ p#file-frame {
     left: 3%;
     flex-direction: column;
 }
-.message-history.singleconversation{
+.message-history.singleconversation {
     width: 98% !important;
-    /* height: 100%; */
-    top: -26%;
-    height: 107%;
+    top: -37%;
+    height: 115%;
+    z-index: -6;
+    overflow-y: scroll;
+}
+.singleconv-button{
+    top:64%;
 }
 #sent_file {
     color: black;
@@ -3154,7 +3159,7 @@ div:focus {
         width: 100%;
         font-size: x-large;
     }
-
+    
     .university-dropdown-options,
     .institute-dropdown-options,
     .education-dropdown-options {
@@ -3527,7 +3532,11 @@ div:focus {
         display: flex;
         align-items: center;
 
-    }   
+    }  
+    .papersContainer {
+        left: 4%;
+        width: 92%;
+    } 
     .openedImage img {
         width: fit-content;
         max-width: 76%;
