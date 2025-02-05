@@ -869,7 +869,8 @@ async function goTopost(id, n_id) {
 function reply(message) {
 
     console.log('message', message);
-    message = JSON.parse(message)
+    message = JSON.parse(decodeURIComponent(message));
+    // message = JSON.parse(message)
     reset_reply();
     const message_container = document.getElementById('messaging-container');
     let file = ``
@@ -3487,7 +3488,7 @@ async function show_conversation(paper_id) {
         `;
         document.getElementById('message-history').classList.add('singleconversation');
         document.getElementById('maincontent').classList.add('conversation')
-        document.querySelector('.scroll-button').top ='64%'
+        document.querySelector('.scroll-button').top = '64%'
         if (!isMobile()) {
             const chatsView = document.getElementById('chats')
 
@@ -3636,7 +3637,7 @@ async function show_conversation(paper_id) {
         popup.style.display = 'none';
     });
     control_sendButton('private', null)
-    document.querySelector('.scroll-button').style.top ='64%'
+    document.querySelector('.scroll-button').style.top = '64%'
 }
 async function load_f_messages(conversation_Id, user_id) {
     try {
@@ -3713,7 +3714,7 @@ async function conversation_layout(user) {
                     <div id="messaging-container" class="messaging-container">
                         <div class="messaging-components">
                             ${fileSend}
-                            <input type="text" id="message-input" placeholder="write a message">
+                            <textarea id="message-input" placeholder="write a message"></textarea>
                             <i id="send-message" onclick="send_to_friend('${user._id}')" class="fa-solid fa-paper-plane"></i>
                         </div>
                     </div>
@@ -4003,10 +4004,10 @@ async function searchFunctionality() {
     let chatResults = await load_f_conversations()
     let friend_search_input = chatsView.querySelector('#friend-search-input');
     const friendsChats = chatsView.querySelector('.chat')
-    if(!friend_search_input){
+    if (!friend_search_input) {
         friend_search_input = document.createElement('input')
         friend_search_input.id = 'friend-search-input'
-        friend_search_input.className ='search-input'
+        friend_search_input.className = 'search-input'
     }
     friend_search_input.addEventListener('input', async function (e) {
         e.preventDefault();
@@ -4219,7 +4220,6 @@ async function buildMessageContent(messages) {
         ].includes(fileExtension);
         let image = message.senderDetails.profile_picture
         // console.log('image', image, 'message', message);
-        console.log('sender ', message.senderDetails, 'image', image);
 
         let path
         if (image) {
@@ -4231,13 +4231,13 @@ async function buildMessageContent(messages) {
         } else {
             path = `/profile_images/non-picture.jpg`
         }
-        console.log('is equal ', message.senderDetails._id === userId, '\n', message.senderDetails._id, '\n', userId);
 
         let messageInfo = `
         <div id="message-info-${message._id}"
              class="${isfile ? "message-info isfile" : "message-info"}"
              style="${isImage ? "margin-bottom:1%;margin-top: 2%;" : "margin: 10px"}"
-             ondblclick="reply( '${JSON.stringify(message).replace(/"/g, '&quot;')}')"
+             ondblclick="reply(&quot;${encodeURIComponent(JSON.stringify(message))}&quot;)"
+
              >
             
             ${message.senderDetails._id === userId ? `
@@ -4256,9 +4256,6 @@ async function buildMessageContent(messages) {
                     `}
                     ${replyContent}
                     <span class="time">${formattedDate}</span>
-
-
-
 
                 </div>
                 <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"
@@ -4293,45 +4290,7 @@ async function buildMessageContent(messages) {
         </div>
     `;
 
-        // `
-        // ${message.senderDetails._id === userId ? `
-        //     <div id="message-info-${message._id}" class="${isfile ? "message-info isfile" : "message-info"}" style="${isImage ? "margin-bottom:1%;margin-top: 2%;" : "10px"}">
-        //         <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.senderDetails._id === userId ? 'sent' : 'received'}" >
-        //             ${img}
-        //             ${replyContent}
-        //             ${isImage ? `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
-        //             <span class='${message.isreply ? "message-text reply" : "message-text"}'>${message.text ? message.text : ""}</span>`
-        //         : `
-        //             <span class='${message.isreply ? "message-text reply" : "message-text"}'>${message.text ? message.text : ""}</span>
-
-        //             <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
-        //             `}
-
-        //             <i style ="${isImage ? "display:none" : "display:block"} class="fa-solid fa-reply" onclick="reply('${message._id}', '${message.text ? message.text.replace(/'/g, "\\'") : ""}')"></i>
-        //         </div>
-        //         <img onclick="event.stopPropagation();  showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"  src="${path}"  class="sender-image" />
-
-        //     </div>
-        //     ` : `
-        //     <div id="message-info-${message._id}" class="${isfile ? "message-info isfile" : "message-info"}" style="${isImage ? "margin-bottom:1%;margin-top: 2%;" : "10px"}">
-        //         <img onclick="event.stopPropagation();  showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"  src="${path}"  class="sender-image" />
-        //         <div style ="${isImage ? "padding:0px;" : "padding:4px 15px "}"  class="message ${message.senderDetails._id === userId ? 'sent' : 'received'}" >
-        //             ${img}
-        //             ${replyContent}
-        //             ${isImage ? `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
-        //             <span class='${message.isreply ? "message-text reply" : "message-text"}'>${message.text ? message.text : ""}</span>`
-        //         : `
-        //             <span class='${message.isreply ? "message-text reply" : "message-text"}'>${message.text ? message.text : ""}</span>
-
-        //             <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
-        //             `}
-
-        //             <i style ="${isImage ? "display:none" : "display:block"} class="fa-solid fa-reply" onclick="reply('${message._id}', '${message.text ? message.text.replace(/'/g, "\\'") : ""}')"></i>
-        //         </div>
-        //     </div>
-        //     `}
-        // `
-
+        
         message_content += messageInfo;
 
     }
@@ -4788,7 +4747,6 @@ async function applyTranslations() {
 //     document.addEventListener('keydown', controlEnter);
 // }
 function createControlEnter(value, id = null) {
-    console.log('value', value);
 
     return function (event) {
         controlEnter(value, event, id);
@@ -4823,6 +4781,9 @@ async function controlEnter(value, event, id = null) {
         }
 
 
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+
     });
     text.addEventListener('input', function () {
         if (text.value.trim() !== "") {
@@ -4832,8 +4793,13 @@ async function controlEnter(value, event, id = null) {
             sendButton.classList.remove('active');
             sendButton.style.pointerEvents = 'none'; // Disable clicking
         }
-
-
+        const maxHeight = 300;
+        if (this.scrollHeight <= maxHeight) {
+            this.style.height = this.scrollHeight + 'px';
+          } else {
+            this.style.height = maxHeight + 'px';
+            this.style.overflowY = 'auto'; // Add a scrollbar if content exceeds maxHeight
+          }
     });
 
     if (event.key === 'Enter') { // Correct the key check
@@ -4843,7 +4809,8 @@ async function controlEnter(value, event, id = null) {
             value === 'friend' ? await send_to_friend(id) : await send_message(value);
             // Clear the input field
             sendButton.classList.remove('active'); // Reset button state
-            sendButton.style.pointerEvents = 'none'; // Disable clicking
+            sendButton.style.pointerEvents = 'none';
+            text.style.height ='4vw' // Disable clicking
         }
     }
 }
@@ -5041,7 +5008,7 @@ async function show_public_conversation() {
                 <div id="messaging-container" class="messaging-container">
                 <div class="messaging-components">
                     ${fileSend}
-                    <input type="text" id="message-input" placeholder="write a message">
+                    <textarea id="message-input" placeholder="write a message"></textarea>
                     <i id="send-message" onclick="send_message('public')" class="fa-solid fa-paper-plane"></i>
                 </div>
             </div>

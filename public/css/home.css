@@ -2512,7 +2512,7 @@ p#file-frame {
     color: rgba(255, 255, 255, 0.596);
 }
 
-.messaging-container input {
+.messaging-container textarea {
     width: 87%;
     /* Adjust width for the input field */
     background-color: white;
@@ -2521,13 +2521,14 @@ p#file-frame {
     border-radius: 30px;
     color: rgb(0, 0, 0);
     padding: 10px;
-    /* Add padding for better look */
+    height: 4vw;
     margin-left: 10px;
+    /* max-width: 80%; */
+    word-break: break-word;
     margin-right: 10px;
-    /* Add some margin */
 }
 
-.messaging-container input:focus {
+.messaging-container textarea:focus {
     outline: none;
 }
 
@@ -2871,10 +2872,15 @@ p#file-frame {
 }
 
 p#message_content {
-    text-wrap: nowrap;
     color: #000000;
+    max-width: 500px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    direction: rtl;
+    text-align: right;
+    unicode-bidi: plaintext;
 }
-
 #send-message {
     opacity: 0.5;
     pointer-events: none;
@@ -4895,6 +4901,7 @@ input {
         hyphens: none;
     }
 }
+
 
 .css-1fa6sju-StyledDivider {
     border-right: 1px solid rgb(133, 211, 220);
