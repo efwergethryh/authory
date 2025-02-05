@@ -4792,6 +4792,7 @@ async function controlEnter(value, event, id = null) {
         } else {
             sendButton.classList.remove('active');
             sendButton.style.pointerEvents = 'none'; // Disable clicking
+            text.style.height ='4vw' // Disable clicking
         }
         const maxHeight = 300;
         if (this.scrollHeight <= maxHeight) {
@@ -4803,7 +4804,6 @@ async function controlEnter(value, event, id = null) {
     });
 
     if (event.key === 'Enter') { // Correct the key check
-        console.log('event', event.key);
 
         if (text.value.trim() !== "") { // Ensure there is text to send
             value === 'friend' ? await send_to_friend(id) : await send_message(value);

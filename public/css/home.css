@@ -3404,11 +3404,11 @@ div:focus {
         top: 94%;
     }
 
-    .messaging-container input,
+    .messaging-container textarea,
     .search-container input {
         font-size: xx-large;
     }
-
+    
     #friend-search,
     #search {
         font-size: xx-large;
@@ -3529,7 +3529,9 @@ div:focus {
     body {
         width: 100%;
     }
-
+    .messaging-container textarea{
+        height: 44px;
+    }
     .openedImage {
 
 
