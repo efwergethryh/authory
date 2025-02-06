@@ -3203,7 +3203,7 @@ async function get_conversation(id, type) {
                 message_history.id = 'message-history'
                 chat_body.append(message_history)
             }
-            message_history.classList.add('singleconversation');
+            !isMobile?message_history.classList.add('singleconversation'):"";
             mainContent.classList.add('conversation')
 
             if (!document.getElementById('messaging-container')) {
@@ -3486,13 +3486,15 @@ async function show_conversation(paper_id) {
             </div>
         </div>
         `;
-        document.getElementById('message-history').classList.add('singleconversation');
+        
+
         document.getElementById('maincontent').classList.add('conversation')
         document.querySelector('.scroll-button').top = '64%'
         if (!isMobile()) {
             const chatsView = document.getElementById('chats')
 
             chatsView.innerHTML += content;
+            document.getElementById('message-history').classList.add('singleconversation');
         }
         if (isMobile()) {
 
@@ -3641,8 +3643,7 @@ async function show_conversation(paper_id) {
 }
 async function load_f_messages(conversation_Id, user_id) {
     try {
-        let chat = document.querySelector('.chat')
-
+        
         const messagesResponse = await fetch(`/api/messages/${conversation_Id}?skip=${cskip}&limit=${climit}`, { method: 'GET' });
         if (!messagesResponse.ok) throw new Error("Failed to fetch messages");
 
@@ -3657,7 +3658,7 @@ async function load_f_messages(conversation_Id, user_id) {
             message_content = await buildMessageContent(messages, user_id);
             message_history.insertAdjacentHTML('afterbegin', message_content);
             document.querySelector('.mainContent').classList.add('conversation')
-            message_history.classList.add('singleconversation');
+            !isMobile()?message_history.classList.add('singleconversation'):"";
 
             const message = document.querySelector('.message-history .message-info:last-child .message.sent');
             const messagereceived = document.querySelector('.message-history .message-info:last-child .message.received');
