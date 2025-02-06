@@ -3676,6 +3676,8 @@ async function load_f_messages(conversation_Id, user_id) {
 }
 async function updateUserInfo(user) {
     user = JSON.parse(user)
+    console.log('user',user);
+    
     let content = await conversation_layout(user)
     mainContent.innerHTML = content;
     searchFunctionality()
@@ -3691,42 +3693,42 @@ async function conversation_layout(user) {
         const rec_img = user.profile_picture;
         const chats = document.getElementById('friendChats')
         content += `
-        <div class="chat-container">
-                
-                <div class="userinfo">
-                    <img src="/profile_images/${rec_img}" alt="">
-                    <span>
-                        ${rec_name}
-                    </span>
+            <div class="chat-container">
                     
-                </div>
-                ${!isMobile() ? `
-                    <div id="chats-view" style="top:-10%" class="chats-view">
-                        <div class="search-container">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends}">
-                        </div>
-                        ${chats.outerHTML}
+                    <div class="userinfo">
+                        <img src="/profile_images/${rec_img}" alt="">
+                        <span>
+                            ${rec_name}
+                        </span>   
                     </div>
-                    `: ""}
-                <div id="chat-body" class="chat-body">
-                    <div id="message-history" class="message-history"></div>
-                    <div id="messaging-container" class="messaging-container">
-                        <div class="messaging-components">
-                            ${fileSend}
-                            <textarea id="message-input" placeholder="write a message"></textarea>
-                            <i id="send-message" onclick="send_to_friend('${user._id}')" class="fa-solid fa-paper-plane"></i>
+                    ${!isMobile() ? `
+                        <div id="chats-view" style="top:-10%" class="chats-view">
+                            <div class="search-container">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends}">
+                            </div>
+                            ${chats.outerHTML}
+                        </div>
+                        `:``}
+                    <div id="chat-body" class="chat-body">
+                    
+                        <div id="message-history" class="message-history"></div>
+                            <div id="messaging-container" class="messaging-container">
+                                <div class="messaging-components">
+                                    ${fileSend}
+                                    <textarea id="message-input" placeholder="write a message"></textarea>
+                                    <i id="send-message" onclick="send_to_friend('${user._id}')" class="fa-solid fa-paper-plane"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-        </div>
+            </div>
         `;
 
         if (isMobile()) {
 
             document.querySelector('.sidebar').innerHTML = `
                 <div class="chats-mobile">
-
                     <div id="chats-view" class="chats-view">
                         <div class="search-container">
                             <i class="fa-solid fa-magnifying-glass"></i>
@@ -3744,9 +3746,8 @@ async function conversation_layout(user) {
                     </a>
                 </div>
             `
-
-            const chatsView = document.getElementById('chats')
-            chatsView.innerHTML += content;
+            // const chatsView = document.getElementById('chats')
+            // chatsView.innerHTML += content;
             document.getElementById('exit_conversations').addEventListener('click', function () {
 
                 const sideBarContent = `
