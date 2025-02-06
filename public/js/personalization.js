@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
             async function getUniversities() {
                 unidropdown.innerHTML = ''
                 let url = ''
-                url = `http://localhost:3000/api/universities/${searchInput.value}`;
+                url = `/api/universities/${searchInput.value}`;
 
                 const response = await fetch(url)
 
