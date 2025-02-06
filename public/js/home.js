@@ -803,7 +803,6 @@ async function handleNotificationClick(notificationType, notification) {
             break;
         case "public":
             show_public_conversation()
-
         default:
             console.log("Unknown notification type");
     }
@@ -3203,7 +3202,7 @@ async function get_conversation(id, type) {
                 message_history.id = 'message-history'
                 chat_body.append(message_history)
             }
-            !isMobile?message_history.classList.add('singleconversation'):"";
+            !isMobile()?message_history.classList.add('singleconversation'):"";
             mainContent.classList.add('conversation')
 
             if (!document.getElementById('messaging-container')) {
