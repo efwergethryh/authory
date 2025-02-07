@@ -3657,7 +3657,7 @@ async function load_f_messages(conversation_Id, user_id) {
             message_content = await buildMessageContent(messages, user_id);
             message_history.insertAdjacentHTML('afterbegin', message_content);
             document.querySelector('.mainContent').classList.add('conversation')
-            !isMobile()?message_history.classList.add('singleconversation'):"";
+            
 
             const message = document.querySelector('.message-history .message-info:last-child .message.sent');
             const messagereceived = document.querySelector('.message-history .message-info:last-child .message.received');

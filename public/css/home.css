@@ -47,8 +47,9 @@ body {
 .userProfile p {
     background-color: #ddf5f7;
     border-radius: 10px;
+    max-width: 100%;
+    word-break: break-word;
 }
-
 p#user-name {
     align-self: center;
     font-size: larger;
