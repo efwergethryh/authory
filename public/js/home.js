@@ -2434,7 +2434,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // const inputField = document.getElementById('tags');
     const seen = localStorage.getItem('hasSeenWelcomePopup')
     const welcomePopup = document.getElementById('welcome-popup')
+    if (!seen) {
 
+    }
     if (isMobile()) {
 
         document.getElementById('sidebar').classList.add('closed')
@@ -3202,7 +3204,6 @@ async function get_conversation(id, type) {
                 message_history.id = 'message-history'
                 chat_body.append(message_history)
             }
-            !isMobile()?message_history.classList.add('singleconversation'):"";
             mainContent.classList.add('conversation')
 
             if (!document.getElementById('messaging-container')) {
@@ -3485,7 +3486,7 @@ async function show_conversation(paper_id) {
             </div>
         </div>
         `;
-        
+
 
         document.getElementById('maincontent').classList.add('conversation')
         document.querySelector('.scroll-button').top = '64%'
@@ -3493,8 +3494,8 @@ async function show_conversation(paper_id) {
             const chatsView = document.getElementById('chats')
 
             chatsView.innerHTML += content;
-            document.getElementById('message-history').classList.add('singleconversation');
         }
+
         if (isMobile()) {
 
             document.querySelector('.sidebar').innerHTML = `
@@ -3642,7 +3643,7 @@ async function show_conversation(paper_id) {
 }
 async function load_f_messages(conversation_Id, user_id) {
     try {
-        
+
         const messagesResponse = await fetch(`/api/messages/${conversation_Id}?skip=${cskip}&limit=${climit}`, { method: 'GET' });
         if (!messagesResponse.ok) throw new Error("Failed to fetch messages");
 
@@ -3657,7 +3658,7 @@ async function load_f_messages(conversation_Id, user_id) {
             message_content = await buildMessageContent(messages, user_id);
             message_history.insertAdjacentHTML('afterbegin', message_content);
             document.querySelector('.mainContent').classList.add('conversation')
-            
+
 
             const message = document.querySelector('.message-history .message-info:last-child .message.sent');
             const messagereceived = document.querySelector('.message-history .message-info:last-child .message.received');
@@ -3676,10 +3677,12 @@ async function load_f_messages(conversation_Id, user_id) {
 }
 async function updateUserInfo(user) {
     user = JSON.parse(user)
-    console.log('user',user);
-    
+    console.log('user', user);
+
     let content = await conversation_layout(user)
     mainContent.innerHTML = content;
+    !isMobile() ? document.getElementById('message-history').classList.add('singleconversation') : "";
+
     searchFunctionality()
     load_f_conversations()
     control_sendButton('friend', user._id)
@@ -3709,7 +3712,7 @@ async function conversation_layout(user) {
                             </div>
                             ${chats.outerHTML}
                         </div>
-                        `:``}
+                        `: ``}
                     <div id="chat-body" class="chat-body">
                     
                         <div id="message-history" class="message-history"></div>
@@ -4291,7 +4294,7 @@ async function buildMessageContent(messages) {
         </div>
     `;
 
-        
+
         message_content += messageInfo;
 
     }
@@ -4793,15 +4796,15 @@ async function controlEnter(value, event, id = null) {
         } else {
             sendButton.classList.remove('active');
             sendButton.style.pointerEvents = 'none'; // Disable clicking
-            text.style.height ='4vw' // Disable clicking
+            text.style.height = '4vw' // Disable clicking
         }
         const maxHeight = 300;
         if (this.scrollHeight <= maxHeight) {
             this.style.height = this.scrollHeight + 'px';
-          } else {
+        } else {
             this.style.height = maxHeight + 'px';
             this.style.overflowY = 'auto'; // Add a scrollbar if content exceeds maxHeight
-          }
+        }
     });
 
     if (event.key === 'Enter') { // Correct the key check
@@ -4811,7 +4814,7 @@ async function controlEnter(value, event, id = null) {
             // Clear the input field
             sendButton.classList.remove('active'); // Reset button state
             sendButton.style.pointerEvents = 'none';
-            text.style.height ='4vw' // Disable clicking
+            text.style.height = '4vw' // Disable clicking
         }
     }
 }
@@ -4848,9 +4851,6 @@ async function load_f_conversations() {
                 </div>
                 `;
         }
-
-
-
         chats.innerHTML = Chatcontent;
 
 
