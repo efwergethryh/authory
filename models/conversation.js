@@ -20,7 +20,16 @@ const conversationSchema = new mongoose.Schema({
     },
     paper_id: { type: String, ref: 'paper' }
 });
-    
+conversationSchema.post('findOneAndDelete', async function (doc) {
+    if (doc) {
+        try {
+            await message.deleteMany({ conversation_id: doc._id });
+            console.log(`Messages deleted for conversation: ${doc._id}`);
+        } catch (error) {
+            console.error("Error deleting messages:", error);
+        }
+    }
+});    
 conversationSchema.pre('remove', async function (next) {
     try {
         await message.deleteMany({ conversation: this._id });
