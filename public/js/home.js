@@ -2429,12 +2429,11 @@ async function addExitListeners() {
     });
 }
 document.addEventListener('DOMContentLoaded', function () {
-    // const inputField = document.getElementById('tags');
     const seen = localStorage.getItem('hasSeenWelcomePopup')
+    
+    
     const welcomePopup = document.getElementById('welcome-popup')
-    if (!seen) {
-
-    }
+    
     if (isMobile()) {
 
         document.getElementById('sidebar').classList.add('closed')
@@ -2447,7 +2446,10 @@ document.addEventListener('DOMContentLoaded', function () {
             button.addEventListener('click', toggleSidebar)
         })
     }
-    if (!seen) {
+    if (seen===null) {
+        console.log('null localStorage');
+        console.log('welcome popup',welcomePopup);
+        
         if (welcomePopup) {
             welcomePopup.style.display = 'flex'
 
@@ -3646,7 +3648,6 @@ async function load_f_messages(conversation_Id, user_id) {
         if (!messagesResponse.ok) throw new Error("Failed to fetch messages");
 
         const messagesData = await messagesResponse.json();
-        console.log('messages',messages);
         
         let message_content = "";
         const message_history = document.getElementById('message-history');

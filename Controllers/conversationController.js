@@ -178,24 +178,7 @@ const get_message = async (req, res) => {
                 },
             },
             { $unwind: "$senderDetails" }, 
-            // {
-            //     $match: 
-               
-            //     filter == "All" ?
-            //         {
-            //             conversation_id: new mongoose.Types.ObjectId(id),
-            //         } : {
-            //             conversation_id: new mongoose.Types.ObjectId(id),
-            //             // "senderDetails.profession": filter,
-            //             $or: [
-            //                 { "senderDetails.main_field": filter }, // Messages from users with the specified profession
-            //                 { sender: myId } 
-            //             ]
-            //         }
-                
-
-
-            // },
+           
             {
                 $match: filter !== "All" && filter ? { 
                     $or: [
