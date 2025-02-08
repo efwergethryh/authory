@@ -2,6 +2,7 @@ const { default: mongoose } = require('mongoose');
 const FriendsConversation = require('../models/friendConversation');
 const message = require('../models/message')
 const axios = require('axios');
+const Conversation = require('../models/conversation');
 
 const sendMessageTofriend = async (req, res) => {
 
@@ -12,11 +13,12 @@ const sendMessageTofriend = async (req, res) => {
         console.log('rec id', receiver_id);
 
         const { isreply, replyTo } = req.body
-        const existing = await FriendsConversation.findOne({
+        const existing = await Conversation.findOne({
             $or: [{
+                type:"friend",
                 sender: receiver_id, receiver: id
             },
-            { receiver: receiver_id, sender: id }
+            {type:"friend", receiver: receiver_id, sender: id }
         ]
         })
         const file = req.file
@@ -40,10 +42,11 @@ const sendMessageTofriend = async (req, res) => {
         }
         else {
 
-            friendConversation = new FriendsConversation(
+            friendConversation = new Conversation(
                 {
                     receiver: receiver_id,
-                    sender: id
+                    sender: id,
+                    type:"friend"
                 }
             );
             console.log('new freind Conversation', friendConversation);
@@ -86,7 +89,7 @@ const getFriendConversations = async (req, res) => {
 
         console.log();
 
-        const f_conversations = await FriendsConversation.aggregate([
+        const f_conversations = await Conversation.aggregate([
 
             {
                 $lookup: {
@@ -107,8 +110,8 @@ const getFriendConversations = async (req, res) => {
             {
                 $match: {
                     $or: [
-                        { 'sender': myId },  // userId is the _id of the user you're querying for
-                        { 'receiver': myId }
+                        {type: "friend", 'sender': myId },  // userId is the _id of the user you're querying for
+                        { type: "friend",'receiver': myId }
                     ]
                 }
             },
@@ -218,6 +221,7 @@ const getFriendConversations = async (req, res) => {
 
 
 }
+
 module.exports = {
     sendMessageTofriend,
     getFriendConversations,

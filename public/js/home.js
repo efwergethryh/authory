@@ -2345,6 +2345,7 @@ async function addExitListeners() {
                 title,
                 id,
                 projectbranch,
+                projectbranch,
                 we_need,
                 language,
             })
