@@ -14,9 +14,9 @@ const sendMessageTofriend = async (req, res) => {
         const { isreply, replyTo } = req.body
         const existing = await FriendsConversation.findOne({
             $or: [{
-                sender: receiver_id, receiver: receiver_id
+                sender: receiver_id, receiver: id
             },
-            { receiver: receiver_id, sender: receiver_id }
+            { receiver: receiver_id, sender: id }
         ]
         })
         const file = req.file
