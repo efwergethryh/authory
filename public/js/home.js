@@ -4834,24 +4834,29 @@ async function load_f_conversations() {
                 document.getElementById('sidebar').append(chats)
             }
         }
-        for (const conversation of data.f_conversations) {
-
-
-
-            let user = conversation.receiverInfo[0] || conversation.senderInfo[0];
-
-            if (user._id === userId) {
-                user = conversation.senderInfo[0]
-            }
-            Chatcontent += `
-                <div id="conversationItem" onclick="updateUserInfo('${JSON.stringify(user).replace(/"/g, '&quot;')}');load_f_messages('${conversation._id}','${user._id}'); toggleSidebar()" class="conversation-item">
-                    <img src="/profile_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
-                    <h3>${user.name}</h3>
-                    
-                </div>
-                `;
+        if(data.f_conversations.length===0){
+            Chatcontent ='<p>No conversations yet</p>'
         }
-        chats.innerHTML = Chatcontent;
+        else{
+            for (const conversation of data.f_conversations) {
+
+
+
+                let user = conversation.receiverInfo[0] || conversation.senderInfo[0];
+    
+                if (user._id === userId) {
+                    user = conversation.senderInfo[0]
+                }
+                Chatcontent += `
+                    <div id="conversationItem" onclick="updateUserInfo('${JSON.stringify(user).replace(/"/g, '&quot;')}');load_f_messages('${conversation._id}','${user._id}'); toggleSidebar()" class="conversation-item">
+                        <img src="/profile_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
+                        <h3>${user.name}</h3>
+                        
+                    </div>
+                    `;
+            }
+            chats.innerHTML = Chatcontent;
+        }
 
 
     } else {
