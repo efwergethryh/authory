@@ -16,7 +16,7 @@ const circular_spinner = `
   </div>
 </div>
 `
-let userMainfield = 'All'
+let userMainfield ;
 let currentlang = sessionStorage.getItem('lang') || 'en'
 
 const scrollbutton = `
@@ -60,7 +60,7 @@ const chatContainer = document.querySelector('.chat-container');
 // const advancedSearch = document.querySelector('.advancedsearch-container');
 const toggleButton = document.getElementById('advanced_button');
 // const search_button = document.getElementById('search')
-const socket = io(API_BASE_URL, {
+const socket = io(localhostAPI, {
     transports: ['polling', 'websocket'],
     query: {
         userId: userId,
@@ -3206,13 +3206,14 @@ async function get_conversation(id, type) {
                 chat_body.append(message_history)
             }
             mainContent.classList.add('conversation')
+            !isMobile() ? document.getElementById('message-history').classList.add('paperconversation') : "";
 
             if (!document.getElementById('messaging-container')) {
                 chat_body.innerHTML += `
                     <div id="messaging-container" class="messaging-container">
                         <div class="messaging-components">
                             ${fileSend}
-                            <input type="text" id="message-input" placeholder="write a message">
+                            <textarea id="message-input" placeholder="write a message"></textarea>
                             <i id="send-message" onclick="send_message('private')" class="fa-solid fa-paper-plane"></i>
                         </div>
                     </div>
@@ -3644,8 +3645,8 @@ async function show_conversation(paper_id) {
 }
 async function load_f_messages(conversation_Id, user_id) {
     try {
-
-        const messagesResponse = await fetch(`/api/messages/${conversation_Id}?skip=${cskip}&limit=${climit}`, { method: 'GET' });
+        cskip =0
+        const messagesResponse = await fetch(`/api/friend-messages/${conversation_Id}?skip=${cskip}&limit=${climit}`, { method: 'GET' });
         if (!messagesResponse.ok) throw new Error("Failed to fetch messages");
 
         const messagesData = await messagesResponse.json();
@@ -3877,7 +3878,7 @@ async function friend_messages(user_id) {
 
         const data = await response.json();
         let conversation_Id;
-        cskip = 0; // Reset batch loading
+        skip = 0; // Reset batch loading
         let friendChats = `
              <div id="chats-view" style="top:-10%" class="chats-view">
                 <div class="search-container">
@@ -3899,7 +3900,7 @@ async function friend_messages(user_id) {
             // Existing conversation
             conversation_Id = data.f_conversation._id;
             document.getElementById('chats-view').innerHTML += friendChats
-
+            
             await load_f_messages(conversation_Id, user_id); // Load messages
             // await load_f_conversations(); 
 
@@ -4006,7 +4007,7 @@ async function show_Single_conversation() {
 
 async function searchFunctionality() {
     let chatsView = document.querySelector('.chats-view')
-
+    
     let chatResults = await load_f_conversations()
     let friend_search_input = chatsView.querySelector('#friend-search-input');
     const friendsChats = chatsView.querySelector('.chat')
@@ -4822,6 +4823,7 @@ async function controlEnter(value, event, id = null) {
 }
 
 async function load_f_conversations() {
+    
     const response = await fetch('/api/get-friendconversations');
     let Chatcontent = '';
     if (response.ok) {
@@ -4850,7 +4852,7 @@ async function load_f_conversations() {
                     user = conversation.senderInfo[0]
                 }
                 Chatcontent += `
-                    <div id="conversationItem" onclick="updateUserInfo('${JSON.stringify(user).replace(/"/g, '&quot;')}');load_f_messages('${conversation._id}','${user._id}'); toggleSidebar()" class="conversation-item">
+                    <div id="conversationItem" onclick="updateUserInfo('${JSON.stringify(user).replace(/"/g, '&quot;')}');load_f_messages('${conversation._id}','${user._id}'); ${isMobile()?toggleSidebar():""}" class="conversation-item">
                         <img src="/profile_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
                         <h3>${user.name}</h3>
                         
@@ -4998,7 +5000,7 @@ function clear_convrsation() {
 }
 
 async function show_public_conversation() {
-
+    userMainfield ='All'
     cskip = 0
     popups.forEach(popup => {
         popup.style.display = 'none';
@@ -5040,7 +5042,7 @@ async function show_public_conversation() {
     chatHistory.style.left = '-40%'
     chatHistory.style.top = '100%'
     input.style.width = '94%'
-    await get_conversation(conv_id, 'public', 'All')
+    await get_conversation(conv_id, 'public')
     document.getElementById('filter').addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation()

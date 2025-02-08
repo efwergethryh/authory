@@ -2585,7 +2585,13 @@ p#file-frame {
     z-index: -6;
     overflow-y: scroll;
 }
-
+.message-history.paperconversation {
+    width: 98% !important;
+    top: -31%;
+    height: 115%;
+    z-index: -6;
+    overflow-y: scroll;
+}
 .singleconv-button {
     top: 64%;
 }

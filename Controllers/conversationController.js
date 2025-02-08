@@ -14,27 +14,33 @@ const get_message = async (req, res) => {
     const limit = parseInt(req.query.limit, 10) || 10;
     const myId = res.locals.user._id
     const filter = req.query.mainfield || ""; // Filter by profession
-    
+    const { type } = req.query
+
     try {
         const messages = await message.aggregate([
             {
                 $lookup: {
-                    from: "users", 
-                    localField: "sender", 
-                    foreignField: "_id", 
-                    as: "senderDetails", 
+                    from: "users",
+                    localField: "sender",
+                    foreignField: "_id",
+                    as: "senderDetails",
                 },
             },
-            { $unwind: "$senderDetails" }, 
-           
+            { $unwind: "$senderDetails" },
+
             {
-                $match: filter !== "All" && filter ? { 
+                $match: filter !== "All" ? { conversation_id: new mongoose.Types.ObjectId(id), } 
+                : filter !== "All" && filter ? {
+
                     $or: [
                         { "senderDetails.main_field": filter }, // Messages from users with the specified profession
-                        { sender: new mongoose.Types.ObjectId(myId) } // Include messages sent by the logged-in user
-                    ] 
-                } : {}
+                        // Include messages sent by the logged-in user
+                    ]
+                } : {
+                    conversation_id: new mongoose.Types.ObjectId(id)
+                }
             },
+
             {
                 $project: {
                     text: 1,
@@ -50,14 +56,15 @@ const get_message = async (req, res) => {
                     "senderDetails._id": 1,
                     "senderDetails.country": 1,
                     "senderDetails.profile_picture": 1,
-                    
+
                 },
             },
             { $sort: { createdAt: -1 } }, // Sort by date
             { $skip: skip },
             { $limit: limit },
         ]);
-        
+
+        console.log('type', type, 'filter', filter);
 
         return res.json({ messages });
     } catch (error) {
@@ -77,7 +84,7 @@ const send_message = async (req, res) => {
         const members = conversation.members
         console.log('body', req.body);
         const file = req.file
-        
+
         const body = req.body
         const newMessage = new message({
             text: body.text,
@@ -85,13 +92,13 @@ const send_message = async (req, res) => {
             conversation_id,
             isreply,
             replyTo,
-            fileUrl:file ? file.originalname : null
+            fileUrl: file ? file.originalname : null
         })
         await newMessage.save();
 
         const paper = await get_paper(conversation.paper_id)
 
-        res.json({ message: 'success',user, newMessage, members, conversation, paper })
+        res.json({ message: 'success', user, newMessage, members, conversation, paper })
     } catch (err) {
         console.log(err);
 
@@ -124,7 +131,7 @@ const add_conversation = async (req, res) => {
     const f = req.file;
     const body = req.body
     const { title, type, members, paper_id } = req.body;
-    
+
     const paper = await get_paper(paper_id)
     // console.log('paper',paper);
     try {
@@ -164,7 +171,7 @@ const add_conversation = async (req, res) => {
                     }
                 )
             }
-           await conv.save()
+            await conv.save()
 
 
             res.status(200).json({ message: 'conversation created successfully', conv, paper })

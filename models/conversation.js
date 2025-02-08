@@ -7,7 +7,8 @@ const conversationSchema = new mongoose.Schema({
         ref: 'users',  // Referencing 'users' collection
         required: true  // This field is mandatory
     },
-
+    receiver: { type:String, ref: 'users'},
+    sender:{ type: String, ref: 'users'},
     conv_pic: {
         type: String,
         default: null

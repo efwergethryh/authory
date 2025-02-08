@@ -1,8 +1,8 @@
-const { default: mongoose } = require('mongoose');
 const FriendsConversation = require('../models/friendConversation');
 const message = require('../models/message')
 const axios = require('axios');
 const Conversation = require('../models/conversation');
+const mongoose = require('mongoose')
 
 const sendMessageTofriend = async (req, res) => {
 
@@ -14,16 +14,16 @@ const sendMessageTofriend = async (req, res) => {
 
         const { isreply, replyTo } = req.body
         const existing = await Conversation.findOne({
+            type: "friend",
             $or: [{
-                type:"friend",
+
                 sender: receiver_id, receiver: id
             },
-            {type:"friend", receiver: receiver_id, sender: id }
-        ]
+            {receiver: receiver_id, sender: id }
+            ]
         })
         const file = req.file
         let friendConversation;
-        console.log('existing freind Conversation', existing);
 
         if (existing) {
 
@@ -46,7 +46,7 @@ const sendMessageTofriend = async (req, res) => {
                 {
                     receiver: receiver_id,
                     sender: id,
-                    type:"friend"
+                    type: "friend"
                 }
             );
             console.log('new freind Conversation', friendConversation);
@@ -109,9 +109,10 @@ const getFriendConversations = async (req, res) => {
             },
             {
                 $match: {
+                    type: "friend",
                     $or: [
-                        {type: "friend", 'sender': myId },  // userId is the _id of the user you're querying for
-                        { type: "friend",'receiver': myId }
+                        { 'sender': myId },  // userId is the _id of the user you're querying for
+                        { 'receiver': myId }
                     ]
                 }
             },
@@ -221,9 +222,63 @@ const getFriendConversations = async (req, res) => {
 
 
 }
+const get_message = async (req, res) => {
+    const { conversation_id } = req.params; // conversation ID
+    const skip = parseInt(req.query.skip, 10) || 0;
+    const limit = parseInt(req.query.limit, 10) || 10;
 
+    const myId = res.locals.user._id
+    try {
+        const messages = await message.aggregate([
+           
+
+            {
+                $match: {
+                    conversation_id: new mongoose.Types.ObjectId(conversation_id),
+                    
+                  },
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "sender",
+                    foreignField: "_id",
+                    as: "senderDetails",
+                },
+            },
+            { $unwind: "$senderDetails" },
+            {
+                $project: {
+                    text: 1,
+                    conversation_id: 1,
+                    createdAt: 1,
+                    replyTo: 1,
+                    fileUrl: 1,
+                    isreply: 1,
+
+                    "senderDetails.name": 1,
+                    "senderDetails.email": 1,
+                    "senderDetails.profession": 1,
+                    "senderDetails._id": 1,
+                    "senderDetails.country": 1,
+                    "senderDetails.profile_picture": 1,
+
+                },
+            },
+            { $sort: { createdAt: -1 } }, // Sort by date
+            { $skip: skip },
+            { $limit: limit },
+        ]);
+        
+
+        return res.json({ messages });
+    } catch (error) {
+        console.error("Error in get_message controller:", error);
+        return res.status(500).json({ message: "An error occurred" });
+    }
+};
 module.exports = {
     sendMessageTofriend,
     getFriendConversations,
-    getFriendConversation
+    getFriendConversation, get_message
 }
