@@ -4807,7 +4807,7 @@ async function controlEnter(value, event, id = null) {
         }
     });
 
-    if (event.key === 'Enter') { // Correct the key check
+    if (event.key === 'Enter') { 
 
         if (text.value.trim() !== "") { // Ensure there is text to send
             value === 'friend' ? await send_to_friend(id) : await send_message(value);

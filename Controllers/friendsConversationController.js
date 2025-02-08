@@ -15,6 +15,7 @@ const sendMessageTofriend = async (req, res) => {
         let friendConversation;
 
         if (existing) {
+            console.log('freind Conversation', existing);
 
             friendConversation = existing
             const Message = new message({
@@ -77,14 +78,7 @@ const getFriendConversations = async (req, res) => {
     
     
         const f_conversations = await FriendsConversation.aggregate([
-            {
-                $match: {
-                    $or: [
-                        { receiver: myId },
-                        { sender: myId }
-                    ]
-                }
-            },
+           
             {
                 $lookup: {
                     from: 'users', 
@@ -101,6 +95,15 @@ const getFriendConversations = async (req, res) => {
                     as: 'senderInfo'
                 }
             },
+            {
+                $match: {
+                    $or: [
+                        { 'sender': '6760' },  // userId is the _id of the user you're querying for
+                        { 'receiver': '6760' }
+                    ]
+                }
+            },
+            
             {
                 $addFields: {
                     receiverInfo: {
@@ -129,6 +132,7 @@ const getFriendConversations = async (req, res) => {
                     }
                 }
             },
+            
             {
                 $project: {
                     _id: 1,
@@ -140,7 +144,8 @@ const getFriendConversations = async (req, res) => {
             }
         ]);
     
-    
+        console.log('friend conversations',f_conversations);
+        
         res.json({ f_conversations });
     } catch (error) {
         console.error('Error:', error);
