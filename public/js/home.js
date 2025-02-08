@@ -87,6 +87,11 @@ async function applyPendingNotifications(conversation_id) {
     }
 
 }
+// async function checkUnreadNotifications(){
+//     const response = await fetch(`/api/notifications?skip=${Nskip}&limit=${Nlimit}`, {
+//         method: "GET"
+//     });
+// }
 socket.emit('join-public-room')
 window.onload = async () => {
     await loadPosts();
@@ -1045,14 +1050,7 @@ async function buildNotifications(notifications) {
     return content;
 }
 
-// document.addEventListener('DOMContentLoaded', async function () {
-//     try {
-//         const translations = await loadTranslation()
 
-//     } catch (error) {
-//         console.error('Error fetching notifications:', error);
-//     }
-// });
 async function showPapers(tag) {
     try {
         console.log('tag', tag);
@@ -3648,6 +3646,8 @@ async function load_f_messages(conversation_Id, user_id) {
         if (!messagesResponse.ok) throw new Error("Failed to fetch messages");
 
         const messagesData = await messagesResponse.json();
+        console.log('messages',messages);
+        
         let message_content = "";
         const message_history = document.getElementById('message-history');
         if (messagesData.messages.length === 0) {
