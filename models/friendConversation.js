@@ -7,9 +7,7 @@ const friendConversationSchema = new mongoose.Schema(
         sender:{ type: String, ref: 'users', required: true },
     }
 )
-
-const FriendsConversation = new mongoose.model('FriendsConversation', friendConversationSchema)
-FriendsConversation.post('findOneAndDelete', async function (doc) {
+friendConversationSchema.post('findOneAndDelete', async function (doc) {
     if (doc) {
         try {
             await message.deleteMany({ conversation_id: doc._id });
@@ -19,4 +17,6 @@ FriendsConversation.post('findOneAndDelete', async function (doc) {
         }
     }
 });
+const FriendsConversation = new mongoose.model('FriendsConversation', friendConversationSchema)
+
 module.exports = FriendsConversation
