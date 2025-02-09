@@ -3922,8 +3922,11 @@ div:focus {
         overflow-y: auto;
         overflow-x: hidden;
         top: 13%;
+        
     }
-
+    .edit-paper{
+        left: 14%   ;
+    }
     .css-gkrxgl-StyledText {
         max-width: 58%;
         word-break: break-word;

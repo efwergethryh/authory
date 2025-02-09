@@ -16,7 +16,7 @@ const circular_spinner = `
   </div>
 </div>
 `
-let userMainfield ;
+let userMainfield;
 let currentlang = sessionStorage.getItem('lang') || 'en'
 
 const scrollbutton = `
@@ -1136,12 +1136,16 @@ async function loadNotifications() {
     });
 
     const data = await response.json();
-    console.log('notifications', data);
 
     let content = await buildNotifications(data.Notifications);
 
-    const notificationsContainer = mainContent.querySelector('.notifications-container')
-
+    let notificationsContainer = mainContent.querySelector('.notifications-container')
+    if (!notificationsContainer) {
+        notificationsContainer = document.createElement('div')
+        notificationsContainer.id = 'notifications-container'
+        notificationsContainer.className = 'notifications-container'
+        mainContent.append(notificationsContainer)
+    }
     notificationsContainer.innerHTML += content;
     let loadNotificationsBtn = document.getElementById('loadMoreNotifications')
     if (!loadNotificationsBtn) {
@@ -1167,7 +1171,6 @@ async function addListeners() {
 
     const cancel = document.getElementById('cancel');
     const confirm_delete = document.getElementById('confirm-delete');
-    const edit_paper = document.querySelector('.edit-paper')
     const editclose = document.getElementById('closeedit')
     const users_to_delete = document.getElementById('users-to-delete')
     const create_paper = document.getElementById('start_paper_button')
@@ -1950,11 +1953,28 @@ async function addExitListeners() {
         </li>
         </ul>
         `
-
+    
     let sidebar = document.getElementById('sidebar')
 
     sidebar.innerHTML = sideBarContent
-
+    // mainContent.innerHTML=`
+    // <div id="paper-settings" class="paper-settings">
+    //             <ul>
+    //                 <a id="editPaper">
+    //                     <i class="fa-solid fa-pen"></i>
+    //                     <p>Edit paper</p>
+    //                 </a>
+    //                 <a id="delete-user-from-paper">
+    //                     <i class="fa-solid fa-user-xmark"></i>
+    //                     <p>Delete a user from paper</p>
+    //                 </a>
+    //                 <a id="deletePaper">
+    //                     <i class="fa-solid fa-trash" style="color: red;"></i>
+    //                     <p style="color: red;">Delete paper</p>
+    //                 </a>
+    //             </ul>
+    //         </div>
+    // `
     document.getElementById('home').addEventListener('click', async function () {
         skip = 0;
         let mainContent = document.getElementById('maincontent')
@@ -1975,10 +1995,8 @@ async function addExitListeners() {
     });
 
     const cancel = document.getElementById('cancel');
-    const confirm_delete = document.getElementById('confirm-delete');
-    const edit_paper = document.querySelector('.edit-paper')
-    const editclose = document.getElementById('closeedit')
-    const users_to_delete = document.getElementById('users-to-delete')
+    // const confirm_delete = document.getElementById('confirm-delete');
+    
     const create_paper = document.getElementById('start_paper_button')
     const searchPapers = document.getElementById('searchpapers-button')
     const yourPapers = document.getElementById('your-papers-button')
@@ -2025,146 +2043,310 @@ async function addExitListeners() {
         const response = await fetch('/api/papers', {
             method: "GET"
         });
-
         if (response.ok) {
-
-            const data = await response.json()
+            const data = await response.json();
             console.log('papers', data.papers.length);
-
-            let content = ''
+        
+            let content = '';
             if (data.papers.length === 0) {
-                content = translations.sidebar.no_papers
+                content = translations.sidebar.no_papers;
             }
+        
             data.papers.forEach(paper => {
-
                 content += `
-     <div id="${paper._id}" class="paper-line">
-        <div class="paperinfo">
-            <i id="joined-paper" class="fas fa-file"></i>
-            <span class="paper-title"><strong>${paper.title}</strong></span>
-            <span class="dash"><strong>-</strong></span>
-            <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
-            <span class="dash"><strong>-</strong></span>
-            <strong id="need">We Need:</strong>
-            <span class="dash"><strong>-</strong></span>
-            <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
-            <span class="dash"><strong>-</strong></span>
-            <span class="paper-branch"><strong>${paper.main_field}</strong></span>
-            <span class="dash"><strong>-</strong></span>
-            <span class="paper-branch"><strong>${paper.language}</strong></span>
-            <span class="dash"><strong>-</strong></span>
-            <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
-            <br>
-            <span style="${paper.description ? "display:block" : "display:none"}" class="description"><strong>${paper.description}</strong></span>
-
-             <div class="paper-tags">
-                <strong>
-                ${paper.tags.map(tag => `<strong><span onclick ="showPapers('${tag}'); event.stopPropagation();" class="tag">${tag}</span></strong>`).join('')}
-
-                </strong>
-            </div>
-        </div>
-        <button  onclick="show_conversation('${paper._id}')" class="join-button">Enter</button>
-</div>
-    `
-
-            })
-            const paperscontainer = document.querySelector('.yourpapers-container')
-
-
-            paperscontainer.innerHTML = content
-            mainContent.innerHTML = `<div class="yourpapers-label" id="joined">${translations.newPaper.dropdowns.yourPapers}</div>`
-            mainContent.innerHTML += paperscontainer.outerHTML
-            const paper_settings = document.getElementById('paper-settings');
-            const confirm_delete = document.getElementById('confirm-delete');
-            const firstPaperLine = document.querySelector('.paper-line:first-child');
-
-            const etnerButtons = document.querySelectorAll('.button-container a')
-
-            etnerButtons.forEach(button => {
+                <div id="${paper._id}" class="paper-line">
+                    <div class="paperinfo">
+                        <i id="joined-paper" class="fas fa-file"></i>
+                        <span class="paper-title"><strong>${paper.title}</strong></span>
+                        <span class="dash"><strong>-</strong></span>
+                        <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
+                        <span class="dash"><strong>-</strong></span>
+                        <strong id="need">We Need:</strong>
+                        <span class="dash"><strong>-</strong></span>
+                        <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
+                        <span class="dash"><strong>-</strong></span>
+                        <span class="paper-branch"><strong>${paper.main_field}</strong></span>
+                        <span class="dash"><strong>-</strong></span>
+                        <span class="paper-branch"><strong>${paper.language}</strong></span>
+                        <span class="dash"><strong>-</strong></span>
+                        <span id="${paper._id}" class="paper-branch"><strong>${paper._id}</strong></span>
+                        <br>
+                        <span style="${paper.description ? "display:block" : "display:none"}" class="description"><strong>${paper.description}</strong></span>
+        
+                        <div class="paper-tags">
+                            <strong>
+                            ${paper.tags.map(tag => `<strong><span onclick ="showPapers('${tag}'); event.stopPropagation();" class="tag">${tag}</span></strong>`).join('')}
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
+                        <div class="divider"></div>
+                        <i style ="color:white"class="gear fa-solid fa-bars"></i>
+                    </div>
+                </div>
+                `;
+            });
+        
+            let paperscontainer = document.querySelector('.yourpapers-container');
+            if (!paperscontainer){
+                paperscontainer = document.createElement('div')
+                paperscontainer.className ='yourpapers-container'
+            }
+            // Clear mainContent first
+            mainContent.innerHTML = `<div class="yourpapers-label" id="joined">${translations.newPaper.dropdowns.yourPapers}</div>`;
+        
+            // Insert the new papers container
+            paperscontainer.innerHTML = content;
+            mainContent.appendChild(paperscontainer);
+        
+            // Re-add paper settings (prevents losing it)
+            let paper_settings = document.getElementById('paper-settings');
+            if (!paper_settings) {
+                paper_settings = document.createElement('div');
+                paper_settings.id = 'paper-settings';
+                paper_settings.className = 'paper-settings';
+                paper_settings.innerHTML = `<ul>
+                    <a id="editPaper">
+                        <i class="fa-solid fa-pen"></i>
+                        <p>Edit paper</p>
+                    </a>
+                    <a id="delete-user-from-paper">
+                        <i class="fa-solid fa-user-xmark"></i>
+                        <p>Delete a user from paper</p>
+                    </a>
+                    <a id="deletePaper">
+                        <i class="fa-solid fa-trash" style="color: red;"></i>
+                        <p style="color: red;">Delete paper</p>
+                    </a>
+                </ul>`;
+                document.body.appendChild(paper_settings);
+            }
+            const edit_paperButton = paper_settings.querySelector('.edit-paper')
+            const editclose = paper_settings.querySelector('#closeedit')
+            const users_to_delete = document.getElementById('users-to-delete')
+            // Update button labels
+            document.querySelectorAll('.button-container a').forEach(button => {
                 button.textContent = translations.yourPapers.enter;
-            })
+            });
+        
+            // Fix edit/delete translations
             document.getElementById('editPaper').querySelector('p').textContent = translations.yourPapers.editPaper;
             document.getElementById('delete-user-from-paper').querySelector('p').textContent = translations.yourPapers.deleteUser;
             document.getElementById('deletePaper').querySelector('p').textContent = translations.yourPapers.deletePaper;
-
-
-            data.papers.forEach(function (paper) {
-                const paperLine = paperscontainer.querySelector(`#\\3${paper._id.charAt(0)} ${paper._id.slice(1)}`);
-                console.log('paper line', paperLine);
-
+        
+            // Add event listeners for paper settings menu
+            data.papers.forEach(paper => {
+                const paperLine = document.getElementById(paper._id);
                 const gear = paperLine.querySelector('.gear');
-                const parentPaperElement = document.getElementById(`${paper._id}`);
-
-
-
+        
                 gear.addEventListener('click', function () {
                     const paperLine = gear.closest('.paper-line');
                     paperId = paperLine.id;
-
-                    if (paper_settings) {
-                        paper_settings.style.display = 'none'
+        
+                    paper_settings.style.display = 'none';
+        
+                    const rect = paperLine.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight;
+                    let newTop = rect.top + rect.height + 10; // Position below element
+        
+                    // Ensure the menu stays within viewport
+                    const maxAllowedTop = viewportHeight - paper_settings.offsetHeight - 10;
+                    if (newTop > maxAllowedTop) {
+                        newTop = maxAllowedTop;
                     }
-                    if (paperLine === firstPaperLine) {
-                        paper_settings.style.display = 'flex';
-                        paper_settings.style.top = `13vw`;  // Set top for the first element
-                    } else {
-                        const rect = parentPaperElement.getBoundingClientRect();
-                        const viewportHeight = window.innerHeight;
-                        const viewportWidth = window.innerWidth;
-                        let newTop = ((rect.top + rect.height) / viewportWidth) * 100; // Position directly below the parent element
-
-                        // Calculate how many elements are before the clicked paperLine
-                        // const allPapers = document.querySelectorAll('.paper-line');
-                        // const index = Array.from(allPapers).indexOf(paperLine);  // Get the index of the clicked paper
-                        const maxAllowedTop = viewportHeight - paper_settings.offsetHeight - 10; // 10px padding from bottom
-                        if (newTop > maxAllowedTop) {
-                            newTop = maxAllowedTop;
-                        }
-                        // Set the top value based on the index (each paper adds 6vw to the top)
-                        // let newTop = 13 + (index * 6);  // 13vw + 6vw per paper
-                        paper_settings.style.display = 'flex';
-                        paper_settings.style.top = `${newTop}vw`;
-                        // Set the new top for this paper
-                        console.log('boundings dimensions', rect);
-
-                    }
+        
+                    paper_settings.style.display = 'flex';
+                    paper_settings.style.top = `${newTop}px`; 
                 });
-
-
-
             });
-            const deletePaper = document.getElementById('deletePaper');
-            const editPaper = document.getElementById('editPaper');
-            const dufp = document.getElementById('delete-user-from-paper')
-
-
-            deletePaper.addEventListener('click', function () {
-                confirm_delete.querySelector('p').textContent = translations.sidebar.confirm_delete
+        
+            // Handle delete confirmation
+            document.getElementById('deletePaper').addEventListener('click', function () {
+                const confirm_delete = document.getElementById('confirm-delete');
+                confirm_delete.querySelector('p').textContent = translations.sidebar.confirm_delete;
                 confirm_delete.style.display = 'flex';
                 document.getElementById('cancel').textContent = translations.sidebar.cancel;
                 document.getElementById('confirm').textContent = translations.sidebar.confirm;
-
             });
-            editPaper.addEventListener('click', async function () {
-                await edit_paper(paperId)
+        
+            // Handle edit paper
+            document.getElementById('editPaper').addEventListener('click', async function () {
+                await edit_paper(paperId);
                 document.getElementById('update-project-branch').querySelector('label').textContent = translations.startPaper.projectBranch;
                 document.getElementById('update-weneed-container').querySelector('label').textContent = translations.startPaper.we_need;
                 document.getElementById('update-language-container').querySelector('label').textContent = translations.startPaper.language;
                 document.getElementById('update-typeof-study-container').querySelector('label').textContent = translations.startPaper.type_of_study;
                 document.getElementById('update-tags-container').querySelector('label').textContent = translations.startPaper.tags.label;
                 document.getElementById('update_paper').textContent = translations.startPaper.update;
-
-            })
-            dufp.addEventListener('click', async function (e) {
-                e.preventDefault()
-                await showUsers()
+            });
+        
+            // Handle delete user from paper
+            document.getElementById('delete-user-from-paper').addEventListener('click', async function (e) {
+                e.preventDefault();
+                await showUsers();
                 document.getElementById('deleteUserFromPaper').textContent = translations.sidebar.delete;
-
-            })
-            hide_spinner()
-            toggleSidebar()
+            });
+        
+            hide_spinner();
+            toggleSidebar();
         }
+        
+    //     if (response.ok) {
+
+    //         const data = await response.json()
+    //         console.log('papers', data.papers.length);
+
+    //         let content = ''
+    //         if (data.papers.length === 0) {
+    //             content = translations.sidebar.no_papers
+    //         }
+
+    //         data.papers.forEach(paper => {
+
+    //             content += `
+    //  <div id="${paper._id}" class="paper-line">
+    //     <div class="paperinfo">
+    //         <i id="joined-paper" class="fas fa-file"></i>
+    //         <span class="paper-title"><strong>${paper.title}</strong></span>
+    //         <span class="dash"><strong>-</strong></span>
+    //         <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
+    //         <span class="dash"><strong>-</strong></span>
+    //         <strong id="need">We Need:</strong>
+    //         <span class="dash"><strong>-</strong></span>
+    //         <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
+    //         <span class="dash"><strong>-</strong></span>
+    //         <span class="paper-branch"><strong>${paper.main_field}</strong></span>
+    //         <span class="dash"><strong>-</strong></span>
+    //         <span class="paper-branch"><strong>${paper.language}</strong></span>
+    //         <span class="dash"><strong>-</strong></span>
+    //         <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
+    //         <br>
+    //         <span style="${paper.description ? "display:block" : "display:none"}" class="description"><strong>${paper.description}</strong></span>
+
+    //          <div class="paper-tags">
+    //             <strong>
+    //             ${paper.tags.map(tag => `<strong><span onclick ="showPapers('${tag}'); event.stopPropagation();" class="tag">${tag}</span></strong>`).join('')}
+
+    //             </strong>
+    //         </div>
+    //     </div>
+    //     <div class="button-container">
+    //         <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
+    //         <div class="divider"></div>
+    //         <i id="gear" class="gear fa-solid fa-bars"></i>
+    //     </div>
+    //     </div>
+    // `
+
+    //         })
+    //         const paperscontainer = document.querySelector('.yourpapers-container')
+    //         const paper_settings = document.createElement('div');
+    //         paper_settings.innerHTML = `<ul>
+    //                 <a id="editPaper">
+    //                     <i class="fa-solid fa-pen"></i>
+    //                     <p>Edit paper</p>
+    //                 </a>
+    //                 <a id="delete-user-from-paper">
+    //                     <i class="fa-solid fa-user-xmark"></i>
+    //                     <p>Delete a user from paper</p>
+    //                 </a>
+    //                 <a id="deletePaper">
+    //                     <i class="fa-solid fa-trash" style="color: red;"></i>
+    //                     <p style="color: red;">Delete paper</p>
+    //                 </a>
+    //             </ul>`
+    //         paper_settings.id='paper-settings'
+    //         paper_settings.className='paper-settings'
+    //         mainContent.append(paper_settings)
+    //         const confirm_delete = document.getElementById('confirm-delete');
+    //         paperscontainer.innerHTML = content
+    //         mainContent.innerHTML = `<div class="yourpapers-label" id="joined">${translations.newPaper.dropdowns.yourPapers}</div>`
+    //         mainContent.innerHTML += paperscontainer.outerHTML
+    //         // mainContent.appendChild(paperscontainer);
+    //         const firstPaperLine = document.querySelector('.paper-line:first-child');
+
+    //         const etnerButtons = document.querySelectorAll('.button-container a')
+
+    //         etnerButtons.forEach(button => {
+    //             button.textContent = translations.yourPapers.enter;
+    //         })
+    //         document.getElementById('editPaper').querySelector('p').textContent = translations.yourPapers.editPaper;
+    //         document.getElementById('delete-user-from-paper').querySelector('p').textContent = translations.yourPapers.deleteUser;
+    //         document.getElementById('deletePaper').querySelector('p').textContent = translations.yourPapers.deletePaper;
+
+
+    //         data.papers.forEach(function (paper) {
+    //             const paperLine = paperscontainer.querySelector(`#\\3${paper._id.charAt(0)} ${paper._id.slice(1)}`);
+
+    //             const gear = paperLine.querySelector('.gear');
+    //             const parentPaperElement = document.getElementById(`${paper._id}`);
+
+    //             gear.addEventListener('click', function () {
+    //                 const paperLine = gear.closest('.paper-line');
+    //                 paperId = paperLine.id;
+
+    //                 if (paper_settings) {
+    //                     paper_settings.style.display = 'none'
+    //                 }
+    //                 if (paperLine === firstPaperLine) {
+    //                     paper_settings.style.display = 'flex';
+    //                     paper_settings.style.top = `13vw`;  // Set top for the first element
+    //                 } else {
+    //                     const rect = parentPaperElement.getBoundingClientRect();
+    //                     const viewportHeight = window.innerHeight;
+    //                     const viewportWidth = window.innerWidth;
+    //                     let newTop = ((rect.top + rect.height) / viewportWidth) * 100; // Position directly below the parent element
+
+
+    //                     const maxAllowedTop = viewportHeight - paper_settings.offsetHeight - 10; // 10px padding from bottom
+    //                     if (newTop > maxAllowedTop) {
+    //                         newTop = maxAllowedTop;
+    //                     }
+    //                     // Set the top value based on the index (each paper adds 6vw to the top)
+    //                     // let newTop = 13 + (index * 6);  // 13vw + 6vw per paper
+    //                     paper_settings.style.display = 'flex';
+    //                     paper_settings.style.top = `${newTop}vw`;
+    //                     // Set the new top for this paper
+    //                     console.log('boundings dimensions', rect);
+
+    //                 }
+    //             });
+
+
+
+    //         });
+    //         const deletePaper = document.getElementById('deletePaper');
+    //         const editPaper = document.getElementById('editPaper');
+    //         const dufp = document.getElementById('delete-user-from-paper')
+
+
+    //         deletePaper.addEventListener('click', function () {
+    //             confirm_delete.querySelector('p').textContent = translations.sidebar.confirm_delete
+    //             confirm_delete.style.display = 'flex';
+    //             document.getElementById('cancel').textContent = translations.sidebar.cancel;
+    //             document.getElementById('confirm').textContent = translations.sidebar.confirm;
+
+    //         });
+    //         editPaper.addEventListener('click', async function () {
+    //             await edit_paper(paperId)
+    //             document.getElementById('update-project-branch').querySelector('label').textContent = translations.startPaper.projectBranch;
+    //             document.getElementById('update-weneed-container').querySelector('label').textContent = translations.startPaper.we_need;
+    //             document.getElementById('update-language-container').querySelector('label').textContent = translations.startPaper.language;
+    //             document.getElementById('update-typeof-study-container').querySelector('label').textContent = translations.startPaper.type_of_study;
+    //             document.getElementById('update-tags-container').querySelector('label').textContent = translations.startPaper.tags.label;
+    //             document.getElementById('update_paper').textContent = translations.startPaper.update;
+
+    //         })
+    //         dufp.addEventListener('click', async function (e) {
+    //             e.preventDefault()
+    //             await showUsers()
+    //             document.getElementById('deleteUserFromPaper').textContent = translations.sidebar.delete;
+
+    //         })
+    //         hide_spinner()
+    //         toggleSidebar()
+    //     }
     })
 
     document.getElementById('joined-papers-button').addEventListener('click', async function () {
@@ -2216,47 +2398,9 @@ async function addExitListeners() {
 
         }
     })
-    // document.getElementById('your-friends-button').addEventListener('click', async function () {
-    //     show_spinner()
-    //     const response = await fetch('/api/users/1', {
-    //         method: "GET"
-    //     });
-    //     if (response.ok) {
 
-    //         const data = await response.json()
-    //         console.log(data);
-    //         let content = ''
-    //         if (data.users.length == 0) {
-    //             content = 'No friends yet'
-    //         } else {
-    //             data.users.forEach(user => {
-    //                 content += `
-
-    //             <div onclick="show_Single_conversation('${user._id}')" class="friend-info">
-    //                 <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(user).replace(/"/g, '&quot;')}')"  src="/profile_images/${user.profile_picture}" alt="Profile Picture">
-    //                 <span>
-    //                 ${user.name}
-    //                 </span>
-    //                 <span style="text-decoration:none;">-</span>
-    //                 <span>
-    //                 ${user._id}
-    //                 </span>
-    //             </div>
-
-    //     `
-
-    //             })
-    //         }
-    //         const firendsContainer = document.querySelector('.yourfriends-container')
-
-    //         mainContent.innerHTML = `<div class="yourfriends-label" id="joined">${translations.friends.dropdowns.yourfriends}</div>`
-    //         firendsContainer.innerHTML = content
-    //         mainContent.innerHTML += firendsContainer.outerHTML
-    //         toggleSidebar()
-    //         hide_spinner()
-    //     }
-    // })
     create_paper.addEventListener('click', async () => {
+
         document.querySelector('.startpapers-label').textContent = translations.newPaper.label;
         document.getElementById('paper_title').placeholder = translations.startPaper.placeholder;
         document.getElementById('project_branch').placeholder = translations.startPaper.projectBranch;
@@ -2274,6 +2418,142 @@ async function addExitListeners() {
         mainContent.innerHTML = `<div class="startpapers-label">${translations.newPaper.label}</div>`
         mainContent.innerHTML += document.querySelector('.startpaper-popup').outerHTML
         toggleSidebar()
+        const startpaper = mainContent.querySelector('.startpaper-popup')
+        const inputField = startpaper.querySelector('#tags');
+        const overlay = startpaper.querySelector('#tags-overlay');
+        const startPaper = startpaper.querySelector('#start_create')
+        dropdowns.forEach(function (dropdown) {
+            console.log('dropdown', dropdown);
+
+            const inputElement = startpaper.querySelector(`#${dropdown.inputId}`);
+            const container = startpaper.querySelector(`#${dropdown.containerid}`);
+            const optionsList = startpaper.querySelector(`#${dropdown.optionsid}`);
+            const options = optionsList.querySelectorAll('li');
+
+
+
+            // Open dropdown when input is focused
+            inputElement.addEventListener('focus', function () {
+                container.classList.add('open');
+            });
+
+
+            options.forEach(function (option) {
+                option.addEventListener('click', function () {
+
+                    inputElement.value = this.textContent;
+                    container.classList.remove('open');
+                });
+            });
+
+
+            document.addEventListener('click', function (e) {
+                if (!container.contains(e.target) && e.target !== inputElement) {
+                    container.classList.remove('open');
+                }
+            });
+        });
+
+        inputField.addEventListener('input', function () {
+            const inputValue = inputField.value;
+            console.log('inputValue', inputValue);
+            let overlayText = '';
+
+            const tagRegex = /#[a-zA-Z0-9-_\u0600-\u06FF]+(?=\s|$)/g;
+            const matches = inputValue.match(tagRegex);
+            console.log('tags', tags);
+
+            if (tags) {
+                tags.clear();
+            }
+            if (matches) {
+                matches.forEach(tag => tags.add(tag));
+            }
+
+            inputValue.split(/(\s+)/).forEach((word) => {
+                if (tags.has(word)) {
+                    overlayText += `<span class="is-tag"><strong>${word}</strong></span> `;
+                } else {
+                    overlayText += `<span><strong>${word}</strong></span> `;
+                }
+            });
+            if (inputField.value.trim() === '') {
+                // Hide or clear the overlay when input is empty
+                overlay.innerHTML = ''; // Clear content
+                overlay.style.display = 'none'; // Optionally hide the overlay
+            } else {
+                // Show and update the overlay as needed
+                overlay.style.display = 'block';
+                overlay.innerHTML = overlayText;
+            }
+            // overlay.innerHTML = overlayText;
+        });
+        startPaper.addEventListener('click', async function (e) {
+
+            const we_need = startpaper.querySelector('#we_need').value;
+            const type_of_study = startpaper.querySelector('#type_of_study').value;
+            const project_branch = startpaper.querySelector('#project_branch').value;
+            const description = startpaper.querySelector('#description').value;
+
+            const paper_title = startpaper.querySelector('#paper_title').value;
+            const language = startpaper.querySelector('#start-language-input').value;
+            tags = Array.from(tags);
+            let response
+            //    try {
+            // try {
+            response = await fetch('/api/create-paper', {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+                body: JSON.stringify({
+                    type_of_study,
+                    project_branch,
+                    title: paper_title,
+                    we_need,
+                    tags,
+                    language,
+                    description
+                }),
+            })
+            if (response.ok) {
+
+            }
+            else {
+                try {
+                    // Try to parse the response for error details
+                    const errorData = await response.json();
+                    const errorMessage = errorData.message || "An error occurred"; // Use a default message if none provided
+                    display_error(errorMessage, startpaper);
+                } catch (parseError) {
+                    display_error(parseError, startpaper);
+                }
+                return;
+            }
+
+
+            const data = await response.json()
+            if (data.paper) {
+                const form = new FormData();
+                form.append('type', 'private');
+                form.append('paper_id', data.paper._id);
+                form.append('members', Array.from(members));
+                form.append('conv_pic', 'welcome.png');
+                form.append('title', 'welcome chat');
+
+                const res = await fetch('/api/new-conversation', {
+                    method: 'POST',
+                    body: form,
+                })
+
+                if (res.ok) {
+                    display_Message(translations.sidebar.paper_added)
+                }
+            } else {
+
+            }
+
+
+
+        });
     })
     searchPapers.addEventListener('click', async () => {
 
@@ -2431,10 +2711,10 @@ async function addExitListeners() {
 }
 document.addEventListener('DOMContentLoaded', function () {
     const seen = localStorage.getItem('hasSeenWelcomePopup')
-    
-    
+
+
     const welcomePopup = document.getElementById('welcome-popup')
-    
+
     if (isMobile()) {
 
         document.getElementById('sidebar').classList.add('closed')
@@ -2447,10 +2727,10 @@ document.addEventListener('DOMContentLoaded', function () {
             button.addEventListener('click', toggleSidebar)
         })
     }
-    if (seen===null) {
+    if (seen === null) {
         console.log('null localStorage');
-        console.log('welcome popup',welcomePopup);
-        
+        console.log('welcome popup', welcomePopup);
+
         if (welcomePopup) {
             welcomePopup.style.display = 'flex'
 
@@ -3007,6 +3287,10 @@ async function edit_paper(id) {
                 update_overlay.innerHTML = overlayText;
             });
             update_overlay.innerHTML = overlayText;
+        })
+        editPaper.querySelector('#closeedit').addEventListener('click',()=>{
+            editPaper.style.display = 'none'
+
         })
     } catch (error) {
         console.log(error);
@@ -3645,12 +3929,12 @@ async function show_conversation(paper_id) {
 }
 async function load_f_messages(conversation_Id, user_id) {
     try {
-        cskip =0
+        cskip = 0
         const messagesResponse = await fetch(`/api/friend-messages/${conversation_Id}?skip=${cskip}&limit=${climit}`, { method: 'GET' });
         if (!messagesResponse.ok) throw new Error("Failed to fetch messages");
 
         const messagesData = await messagesResponse.json();
-        
+
         let message_content = "";
         const message_history = document.getElementById('message-history');
         if (messagesData.messages.length === 0) {
@@ -3900,7 +4184,7 @@ async function friend_messages(user_id) {
             // Existing conversation
             conversation_Id = data.f_conversation._id;
             document.getElementById('chats-view').innerHTML += friendChats
-            
+
             await load_f_messages(conversation_Id, user_id); // Load messages
             // await load_f_conversations(); 
 
@@ -4007,7 +4291,7 @@ async function show_Single_conversation() {
 
 async function searchFunctionality() {
     let chatsView = document.querySelector('.chats-view')
-    
+
     let chatResults = await load_f_conversations()
     let friend_search_input = chatsView.querySelector('#friend-search-input');
     const friendsChats = chatsView.querySelector('.chat')
@@ -4807,30 +5091,30 @@ async function controlEnter(value, event, id = null) {
             this.style.height = maxHeight + 'px';
             this.style.overflowY = 'auto'; // Add a scrollbar if content exceeds maxHeight
         }
-        
+
     });
 
-    if (event.key === 'Enter') { 
+    if (event.key === 'Enter') {
 
-        if(event.shiftKey){
+        if (event.shiftKey) {
             event.preventDefault()
             text.value += "\n"; // Insert a new line
             text.style.height = text.scrollHeight + "px";
-        }else{
+        } else {
             if (text.value.trim() !== "") { // Ensure there is text to send
                 value === 'friend' ? await send_to_friend(id) : await send_message(value);
                 // Clear the input field
                 sendButton.classList.remove('active'); // Reset button state
                 sendButton.style.pointerEvents = 'none';
                 text.style.height = '4vw' // Disable clicking
-                text.value =''
+                text.value = ''
             }
         }
     }
 }
 
 async function load_f_conversations() {
-    
+
     const response = await fetch('/api/get-friendconversations');
     let Chatcontent = '';
     if (response.ok) {
@@ -4845,21 +5129,21 @@ async function load_f_conversations() {
                 document.getElementById('sidebar').append(chats)
             }
         }
-        if(data.f_conversations.length===0){
-            Chatcontent ='<p>No conversations yet</p>'
+        if (data.f_conversations.length === 0) {
+            Chatcontent = '<p>No conversations yet</p>'
         }
-        else{
+        else {
             for (const conversation of data.f_conversations) {
 
 
 
                 let user = conversation.receiverInfo[0] || conversation.senderInfo[0];
-    
+
                 if (user._id === userId) {
                     user = conversation.senderInfo[0]
                 }
                 Chatcontent += `
-                    <div id="conversationItem" onclick="updateUserInfo('${JSON.stringify(user).replace(/"/g, '&quot;')}');load_f_messages('${conversation._id}','${user._id}'); ${isMobile()?toggleSidebar():""}" class="conversation-item">
+                    <div id="conversationItem" onclick="updateUserInfo('${JSON.stringify(user).replace(/"/g, '&quot;')}');load_f_messages('${conversation._id}','${user._id}'); ${isMobile() ? "toggleSidebar();" : ""}" class="conversation-item">
                         <img src="/profile_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
                         <h3>${user.name}</h3>
                         
@@ -5007,7 +5291,7 @@ function clear_convrsation() {
 }
 
 async function show_public_conversation() {
-    userMainfield ='All'
+    userMainfield = 'All'
     cskip = 0
     popups.forEach(popup => {
         popup.style.display = 'none';
