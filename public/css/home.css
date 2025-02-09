@@ -3566,9 +3566,7 @@ div:focus {
     body {
         width: 100%;
     }
-    ._525e0b73ddffb195--isAutoWidth{
-        left: -1%;
-    }
+    
     .messaging-container textarea {
         height: 44px;
     }
@@ -3737,7 +3735,10 @@ div:focus {
         width: 100%;
         left: -0.5%;
     }
-
+    ._525e0b73ddffb195--isAutoWidth{
+        left: 0%!important;
+        max-width: 93vw!important;
+    }
     .paper-settings {
         left: 149%
     }
