@@ -4774,7 +4774,6 @@ function control_sendButton(value, id = null) {
     document.addEventListener('keydown', currentHandler);
 }
 async function controlEnter(value, event, id = null) {
-    console.log('id', id, 'value', value);
 
     const text = document.getElementById('message-input');
     const sendButton = document.getElementById('send-message');
@@ -4808,16 +4807,24 @@ async function controlEnter(value, event, id = null) {
             this.style.height = maxHeight + 'px';
             this.style.overflowY = 'auto'; // Add a scrollbar if content exceeds maxHeight
         }
+        
     });
 
     if (event.key === 'Enter') { 
 
-        if (text.value.trim() !== "") { // Ensure there is text to send
-            value === 'friend' ? await send_to_friend(id) : await send_message(value);
-            // Clear the input field
-            sendButton.classList.remove('active'); // Reset button state
-            sendButton.style.pointerEvents = 'none';
-            text.style.height = '4vw' // Disable clicking
+        if(event.shiftKey){
+            event.preventDefault()
+            text.value += "\n"; // Insert a new line
+            text.style.height = text.scrollHeight + "px";
+        }else{
+            if (text.value.trim() !== "") { // Ensure there is text to send
+                value === 'friend' ? await send_to_friend(id) : await send_message(value);
+                // Clear the input field
+                sendButton.classList.remove('active'); // Reset button state
+                sendButton.style.pointerEvents = 'none';
+                text.style.height = '4vw' // Disable clicking
+                text.value =''
+            }
         }
     }
 }

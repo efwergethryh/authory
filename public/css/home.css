@@ -2581,7 +2581,7 @@ p#file-frame {
 .message-history.singleconversation {
     width: 98% !important;
     top: -37%;
-    height: 115%;
+    height: 105%;
     z-index: -6;
     overflow-y: scroll;
 }
@@ -3566,7 +3566,9 @@ div:focus {
     body {
         width: 100%;
     }
-
+    ._525e0b73ddffb195--isAutoWidth{
+        left: -1%;
+    }
     .messaging-container textarea {
         height: 44px;
     }
