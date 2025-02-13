@@ -56,7 +56,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin:"*",
+        origin:"https://scholagram.com",
         methods: ["GET", "POST","DELETE","PUT"],
         
     }   
