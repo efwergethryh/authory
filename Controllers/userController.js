@@ -33,14 +33,14 @@ const get_user = async (req, res) => {
             {
                 $lookup: {
                     from: "friendsconversations",
-                    let: { userId: { $toString: "$_id" },myId:{$toString:"$myId"} }, // Convert user _id to string
+                    let: { userId: { $toString: "$_id" }, myId: { $toString: "$myId" } }, // Convert user _id to string
                     pipeline: [
                         {
                             $match: {
                                 $expr: {
                                     $or: [
-                                        { $and: [ { $eq: ["$sender", "$$userId"] }, { $eq: ["$receiver", myId] } ] },
-                                        { $and: [ { $eq: ["$receiver", "$$userId"] }, { $eq: ["$sender", myId] } ] }
+                                        { $and: [{ $eq: ["$sender", "$$userId"] }, { $eq: ["$receiver", myId] }] },
+                                        { $and: [{ $eq: ["$receiver", "$$userId"] }, { $eq: ["$sender", myId] }] }
                                     ]
                                 }
                             }
@@ -48,7 +48,7 @@ const get_user = async (req, res) => {
                     ],
                     as: "f_conversation"
                 },
-                
+
             },
             {
                 $unwind: {
@@ -57,7 +57,7 @@ const get_user = async (req, res) => {
                 }
             }
 
-            
+
 
 
         ]);
@@ -112,7 +112,12 @@ let creationStatus = process.env.ALLOWED === 'true';
 const createOwner = async (req, res) => {
     try {
         const body = req.body;
+        const name = body.name.trim().split(" ");
+        console.log('name', name);
 
+        const firstName = name[0];
+        const lastName = name.slice(1).join(" ");
+        console.log(firstName, lastName);
         if (body.type === 'Admin') {
             const existingUser = await User.findOne({ email: body.email })
             if (existingUser) {
@@ -122,6 +127,8 @@ const createOwner = async (req, res) => {
                 const Admin = new User({
                     _id: body.phone_number,
                     name: body.name,
+                    lastName: lastName,
+                    firstName: firstName,
                     email: body.email,
                     password: hashedPassword,
                     user_type: 2
@@ -140,10 +147,13 @@ const createOwner = async (req, res) => {
                     return res.status(500).json({ message: "An owner already exists" });
                 } else {
 
+
                     const hashedPassword = await hashpassword(body.password);
                     const Owner = new User({
                         _id: body.phone_number,
                         name: body.name,
+                        lastName: lastName,
+                        firstName: firstName,
                         email: body.email,
                         password: hashedPassword,
                         user_type: 3
@@ -158,6 +168,8 @@ const createOwner = async (req, res) => {
         }
 
     } catch (error) {
+        console.log('error', error);
+
         res.status(500).json({ message: error.message })
 
     }

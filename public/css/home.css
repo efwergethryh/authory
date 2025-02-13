@@ -2157,6 +2157,7 @@ p#file-frame {
     top: 10%;
     width: fit-content;
     z-index: 10;
+    padding: 1%;
     align-items: center;
 }
 
@@ -2545,6 +2546,7 @@ p#file-frame {
     height: 4vw;
     margin-left: 10px;
     /* max-width: 80%; */
+    
     word-break: break-word;
     margin-right: 10px;
 }
@@ -2675,13 +2677,14 @@ p#file-frame {
 
 .message-history .message-info:last-child .message.sent::before {
     transform: rotateY(180deg);
-    right: -4%;
+    right: -7%;
+    top: 66% !important;
 }
 
 .message-history .message-info:last-child .message.sent::after {
     transform: rotateY(180deg);
-    right: -10% !important;
-    top: 70% !important;
+    right: -7% !important;
+    top: 52% !important;
 }
 
 .message-history .message-info:last-child .message.sent.singleconversation::after {
@@ -2717,7 +2720,7 @@ p#file-frame {
     right: 100%;
     width: 10px;
     height: 20px;
-    /* background: url("/images/Background.svg"); */
+    background-color: var(--color-background);
     background-size: contain;
     border-bottom-right-radius: 10px;
     z-index: 0;
@@ -3580,12 +3583,34 @@ div:focus {
         align-items: center;
 
     }
-
+    .plus-sign{
+        top: 4%;
+        margin-left: 55%;
+    }
     .papersContainer {
         left: 4%;
         width: 92%;
     }
-
+    .message-history .message-info:last-child .message.received::after{
+        top: 56%;
+        right: 100%;
+        
+    }
+    .message-history .message-info:last-child .message.sent.singleconversation::after {
+        right: -6% !important;
+        top: 61% !important;
+    }
+    .message-info{
+        gap: 7px;
+    }
+    .message-history .message-info:last-child .message.sent::after {
+        right: -7% !important;
+        top: 60% !important;
+    }
+    .message.sent.singleconversation::after {
+        right: -5% !important;
+        top: 56% !important;
+    }
     .openedImage img {
         width: fit-content;
         max-width: 76%;
@@ -3593,7 +3618,10 @@ div:focus {
         left: 11%;
         top: -3%;
     }
-
+    .message-history .message-info:last-child .message.sent::before{
+        right: -4%;
+        top: 72%;
+    }
     .mainContent.conversation {
         width: 100%;
         top: 5%;
@@ -3727,7 +3755,9 @@ div:focus {
         align-items: center;
         margin-bottom: 17%;
         gap: 1%;
+        position: absolute;
         width: 50%;
+        bottom: -2%;
         padding: 4vw;
     }
 
@@ -3891,7 +3921,9 @@ div:focus {
         position: relative;
         z-index: 109;
     }
-
+    #filter{
+        margin-left: 90%;
+    }
     .paper-line {
         height: fit-content;
         width: 100%;

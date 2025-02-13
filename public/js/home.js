@@ -1,4 +1,5 @@
-const API_BASE_URL = 'https://scholagram.com';
+// const API_BASE_URL = 'https://scholagram.com';
+const API_BASE_URL = 'http://145.223.34.195'
 const localhostAPI = 'http://localhost:3000';
 let messages;
 let conversation_type;
@@ -60,7 +61,7 @@ const chatContainer = document.querySelector('.chat-container');
 // const advancedSearch = document.querySelector('.advancedsearch-container');
 const toggleButton = document.getElementById('advanced_button');
 // const search_button = document.getElementById('search')
-const socket = io(localhostAPI, {
+const socket = io(API_BASE_URL, {
     transports: ['polling', 'websocket'],
     query: {
         userId: userId,
@@ -1102,11 +1103,8 @@ async function showPapers(tag) {
                                 </strong>
                             </div>
                         </div>
-                        <div class="button-container">
-                            <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
-                            <div class="divider"></div>
-                            <i id="gear" class="gear fa-solid fa-bars"></i>
-                        </div>
+                                        <button  onclick="show_conversation('${paper._id}')" class="join-button">Enter</button>
+
                     </div>`;
                 });
             }
@@ -1953,7 +1951,7 @@ async function addExitListeners() {
         </li>
         </ul>
         `
-    
+
     let sidebar = document.getElementById('sidebar')
 
     sidebar.innerHTML = sideBarContent
@@ -1996,7 +1994,7 @@ async function addExitListeners() {
 
     const cancel = document.getElementById('cancel');
     // const confirm_delete = document.getElementById('confirm-delete');
-    
+
     const create_paper = document.getElementById('start_paper_button')
     const searchPapers = document.getElementById('searchpapers-button')
     const yourPapers = document.getElementById('your-papers-button')
@@ -2046,12 +2044,12 @@ async function addExitListeners() {
         if (response.ok) {
             const data = await response.json();
             console.log('papers', data.papers.length);
-        
+
             let content = '';
             if (data.papers.length === 0) {
                 content = translations.sidebar.no_papers;
             }
-        
+
             data.papers.forEach(paper => {
                 content += `
                 <div id="${paper._id}" class="paper-line">
@@ -2087,19 +2085,19 @@ async function addExitListeners() {
                 </div>
                 `;
             });
-        
+
             let paperscontainer = document.querySelector('.yourpapers-container');
-            if (!paperscontainer){
+            if (!paperscontainer) {
                 paperscontainer = document.createElement('div')
-                paperscontainer.className ='yourpapers-container'
+                paperscontainer.className = 'yourpapers-container'
             }
             // Clear mainContent first
             mainContent.innerHTML = `<div class="yourpapers-label" id="joined">${translations.newPaper.dropdowns.yourPapers}</div>`;
-        
+
             // Insert the new papers container
             paperscontainer.innerHTML = content;
             mainContent.appendChild(paperscontainer);
-        
+
             // Re-add paper settings (prevents losing it)
             let paper_settings = document.getElementById('paper-settings');
             if (!paper_settings) {
@@ -2129,38 +2127,38 @@ async function addExitListeners() {
             document.querySelectorAll('.button-container a').forEach(button => {
                 button.textContent = translations.yourPapers.enter;
             });
-        
+
             // Fix edit/delete translations
             document.getElementById('editPaper').querySelector('p').textContent = translations.yourPapers.editPaper;
             document.getElementById('delete-user-from-paper').querySelector('p').textContent = translations.yourPapers.deleteUser;
             document.getElementById('deletePaper').querySelector('p').textContent = translations.yourPapers.deletePaper;
-        
+
             // Add event listeners for paper settings menu
             data.papers.forEach(paper => {
                 const paperLine = document.getElementById(paper._id);
                 const gear = paperLine.querySelector('.gear');
-        
+
                 gear.addEventListener('click', function () {
                     const paperLine = gear.closest('.paper-line');
                     paperId = paperLine.id;
-        
+
                     paper_settings.style.display = 'none';
-        
+
                     const rect = paperLine.getBoundingClientRect();
                     const viewportHeight = window.innerHeight;
                     let newTop = rect.top + rect.height + 10; // Position below element
-        
+
                     // Ensure the menu stays within viewport
                     const maxAllowedTop = viewportHeight - paper_settings.offsetHeight - 10;
                     if (newTop > maxAllowedTop) {
                         newTop = maxAllowedTop;
                     }
-        
+
                     paper_settings.style.display = 'flex';
-                    paper_settings.style.top = `${newTop}px`; 
+                    paper_settings.style.top = `${newTop}px`;
                 });
             });
-        
+
             // Handle delete confirmation
             document.getElementById('deletePaper').addEventListener('click', function () {
                 const confirm_delete = document.getElementById('confirm-delete');
@@ -2169,7 +2167,7 @@ async function addExitListeners() {
                 document.getElementById('cancel').textContent = translations.sidebar.cancel;
                 document.getElementById('confirm').textContent = translations.sidebar.confirm;
             });
-        
+
             // Handle edit paper
             document.getElementById('editPaper').addEventListener('click', async function () {
                 await edit_paper(paperId);
@@ -2180,173 +2178,173 @@ async function addExitListeners() {
                 document.getElementById('update-tags-container').querySelector('label').textContent = translations.startPaper.tags.label;
                 document.getElementById('update_paper').textContent = translations.startPaper.update;
             });
-        
+
             // Handle delete user from paper
             document.getElementById('delete-user-from-paper').addEventListener('click', async function (e) {
                 e.preventDefault();
                 await showUsers();
                 document.getElementById('deleteUserFromPaper').textContent = translations.sidebar.delete;
             });
-        
+
             hide_spinner();
             toggleSidebar();
         }
-        
-    //     if (response.ok) {
 
-    //         const data = await response.json()
-    //         console.log('papers', data.papers.length);
+        //     if (response.ok) {
 
-    //         let content = ''
-    //         if (data.papers.length === 0) {
-    //             content = translations.sidebar.no_papers
-    //         }
+        //         const data = await response.json()
+        //         console.log('papers', data.papers.length);
 
-    //         data.papers.forEach(paper => {
+        //         let content = ''
+        //         if (data.papers.length === 0) {
+        //             content = translations.sidebar.no_papers
+        //         }
 
-    //             content += `
-    //  <div id="${paper._id}" class="paper-line">
-    //     <div class="paperinfo">
-    //         <i id="joined-paper" class="fas fa-file"></i>
-    //         <span class="paper-title"><strong>${paper.title}</strong></span>
-    //         <span class="dash"><strong>-</strong></span>
-    //         <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
-    //         <span class="dash"><strong>-</strong></span>
-    //         <strong id="need">We Need:</strong>
-    //         <span class="dash"><strong>-</strong></span>
-    //         <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
-    //         <span class="dash"><strong>-</strong></span>
-    //         <span class="paper-branch"><strong>${paper.main_field}</strong></span>
-    //         <span class="dash"><strong>-</strong></span>
-    //         <span class="paper-branch"><strong>${paper.language}</strong></span>
-    //         <span class="dash"><strong>-</strong></span>
-    //         <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
-    //         <br>
-    //         <span style="${paper.description ? "display:block" : "display:none"}" class="description"><strong>${paper.description}</strong></span>
+        //         data.papers.forEach(paper => {
 
-    //          <div class="paper-tags">
-    //             <strong>
-    //             ${paper.tags.map(tag => `<strong><span onclick ="showPapers('${tag}'); event.stopPropagation();" class="tag">${tag}</span></strong>`).join('')}
+        //             content += `
+        //  <div id="${paper._id}" class="paper-line">
+        //     <div class="paperinfo">
+        //         <i id="joined-paper" class="fas fa-file"></i>
+        //         <span class="paper-title"><strong>${paper.title}</strong></span>
+        //         <span class="dash"><strong>-</strong></span>
+        //         <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
+        //         <span class="dash"><strong>-</strong></span>
+        //         <strong id="need">We Need:</strong>
+        //         <span class="dash"><strong>-</strong></span>
+        //         <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
+        //         <span class="dash"><strong>-</strong></span>
+        //         <span class="paper-branch"><strong>${paper.main_field}</strong></span>
+        //         <span class="dash"><strong>-</strong></span>
+        //         <span class="paper-branch"><strong>${paper.language}</strong></span>
+        //         <span class="dash"><strong>-</strong></span>
+        //         <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
+        //         <br>
+        //         <span style="${paper.description ? "display:block" : "display:none"}" class="description"><strong>${paper.description}</strong></span>
 
-    //             </strong>
-    //         </div>
-    //     </div>
-    //     <div class="button-container">
-    //         <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
-    //         <div class="divider"></div>
-    //         <i id="gear" class="gear fa-solid fa-bars"></i>
-    //     </div>
-    //     </div>
-    // `
+        //          <div class="paper-tags">
+        //             <strong>
+        //             ${paper.tags.map(tag => `<strong><span onclick ="showPapers('${tag}'); event.stopPropagation();" class="tag">${tag}</span></strong>`).join('')}
 
-    //         })
-    //         const paperscontainer = document.querySelector('.yourpapers-container')
-    //         const paper_settings = document.createElement('div');
-    //         paper_settings.innerHTML = `<ul>
-    //                 <a id="editPaper">
-    //                     <i class="fa-solid fa-pen"></i>
-    //                     <p>Edit paper</p>
-    //                 </a>
-    //                 <a id="delete-user-from-paper">
-    //                     <i class="fa-solid fa-user-xmark"></i>
-    //                     <p>Delete a user from paper</p>
-    //                 </a>
-    //                 <a id="deletePaper">
-    //                     <i class="fa-solid fa-trash" style="color: red;"></i>
-    //                     <p style="color: red;">Delete paper</p>
-    //                 </a>
-    //             </ul>`
-    //         paper_settings.id='paper-settings'
-    //         paper_settings.className='paper-settings'
-    //         mainContent.append(paper_settings)
-    //         const confirm_delete = document.getElementById('confirm-delete');
-    //         paperscontainer.innerHTML = content
-    //         mainContent.innerHTML = `<div class="yourpapers-label" id="joined">${translations.newPaper.dropdowns.yourPapers}</div>`
-    //         mainContent.innerHTML += paperscontainer.outerHTML
-    //         // mainContent.appendChild(paperscontainer);
-    //         const firstPaperLine = document.querySelector('.paper-line:first-child');
+        //             </strong>
+        //         </div>
+        //     </div>
+        //     <div class="button-container">
+        //         <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
+        //         <div class="divider"></div>
+        //         <i id="gear" class="gear fa-solid fa-bars"></i>
+        //     </div>
+        //     </div>
+        // `
 
-    //         const etnerButtons = document.querySelectorAll('.button-container a')
+        //         })
+        //         const paperscontainer = document.querySelector('.yourpapers-container')
+        //         const paper_settings = document.createElement('div');
+        //         paper_settings.innerHTML = `<ul>
+        //                 <a id="editPaper">
+        //                     <i class="fa-solid fa-pen"></i>
+        //                     <p>Edit paper</p>
+        //                 </a>
+        //                 <a id="delete-user-from-paper">
+        //                     <i class="fa-solid fa-user-xmark"></i>
+        //                     <p>Delete a user from paper</p>
+        //                 </a>
+        //                 <a id="deletePaper">
+        //                     <i class="fa-solid fa-trash" style="color: red;"></i>
+        //                     <p style="color: red;">Delete paper</p>
+        //                 </a>
+        //             </ul>`
+        //         paper_settings.id='paper-settings'
+        //         paper_settings.className='paper-settings'
+        //         mainContent.append(paper_settings)
+        //         const confirm_delete = document.getElementById('confirm-delete');
+        //         paperscontainer.innerHTML = content
+        //         mainContent.innerHTML = `<div class="yourpapers-label" id="joined">${translations.newPaper.dropdowns.yourPapers}</div>`
+        //         mainContent.innerHTML += paperscontainer.outerHTML
+        //         // mainContent.appendChild(paperscontainer);
+        //         const firstPaperLine = document.querySelector('.paper-line:first-child');
 
-    //         etnerButtons.forEach(button => {
-    //             button.textContent = translations.yourPapers.enter;
-    //         })
-    //         document.getElementById('editPaper').querySelector('p').textContent = translations.yourPapers.editPaper;
-    //         document.getElementById('delete-user-from-paper').querySelector('p').textContent = translations.yourPapers.deleteUser;
-    //         document.getElementById('deletePaper').querySelector('p').textContent = translations.yourPapers.deletePaper;
+        //         const etnerButtons = document.querySelectorAll('.button-container a')
 
-
-    //         data.papers.forEach(function (paper) {
-    //             const paperLine = paperscontainer.querySelector(`#\\3${paper._id.charAt(0)} ${paper._id.slice(1)}`);
-
-    //             const gear = paperLine.querySelector('.gear');
-    //             const parentPaperElement = document.getElementById(`${paper._id}`);
-
-    //             gear.addEventListener('click', function () {
-    //                 const paperLine = gear.closest('.paper-line');
-    //                 paperId = paperLine.id;
-
-    //                 if (paper_settings) {
-    //                     paper_settings.style.display = 'none'
-    //                 }
-    //                 if (paperLine === firstPaperLine) {
-    //                     paper_settings.style.display = 'flex';
-    //                     paper_settings.style.top = `13vw`;  // Set top for the first element
-    //                 } else {
-    //                     const rect = parentPaperElement.getBoundingClientRect();
-    //                     const viewportHeight = window.innerHeight;
-    //                     const viewportWidth = window.innerWidth;
-    //                     let newTop = ((rect.top + rect.height) / viewportWidth) * 100; // Position directly below the parent element
+        //         etnerButtons.forEach(button => {
+        //             button.textContent = translations.yourPapers.enter;
+        //         })
+        //         document.getElementById('editPaper').querySelector('p').textContent = translations.yourPapers.editPaper;
+        //         document.getElementById('delete-user-from-paper').querySelector('p').textContent = translations.yourPapers.deleteUser;
+        //         document.getElementById('deletePaper').querySelector('p').textContent = translations.yourPapers.deletePaper;
 
 
-    //                     const maxAllowedTop = viewportHeight - paper_settings.offsetHeight - 10; // 10px padding from bottom
-    //                     if (newTop > maxAllowedTop) {
-    //                         newTop = maxAllowedTop;
-    //                     }
-    //                     // Set the top value based on the index (each paper adds 6vw to the top)
-    //                     // let newTop = 13 + (index * 6);  // 13vw + 6vw per paper
-    //                     paper_settings.style.display = 'flex';
-    //                     paper_settings.style.top = `${newTop}vw`;
-    //                     // Set the new top for this paper
-    //                     console.log('boundings dimensions', rect);
+        //         data.papers.forEach(function (paper) {
+        //             const paperLine = paperscontainer.querySelector(`#\\3${paper._id.charAt(0)} ${paper._id.slice(1)}`);
 
-    //                 }
-    //             });
+        //             const gear = paperLine.querySelector('.gear');
+        //             const parentPaperElement = document.getElementById(`${paper._id}`);
+
+        //             gear.addEventListener('click', function () {
+        //                 const paperLine = gear.closest('.paper-line');
+        //                 paperId = paperLine.id;
+
+        //                 if (paper_settings) {
+        //                     paper_settings.style.display = 'none'
+        //                 }
+        //                 if (paperLine === firstPaperLine) {
+        //                     paper_settings.style.display = 'flex';
+        //                     paper_settings.style.top = `13vw`;  // Set top for the first element
+        //                 } else {
+        //                     const rect = parentPaperElement.getBoundingClientRect();
+        //                     const viewportHeight = window.innerHeight;
+        //                     const viewportWidth = window.innerWidth;
+        //                     let newTop = ((rect.top + rect.height) / viewportWidth) * 100; // Position directly below the parent element
+
+
+        //                     const maxAllowedTop = viewportHeight - paper_settings.offsetHeight - 10; // 10px padding from bottom
+        //                     if (newTop > maxAllowedTop) {
+        //                         newTop = maxAllowedTop;
+        //                     }
+        //                     // Set the top value based on the index (each paper adds 6vw to the top)
+        //                     // let newTop = 13 + (index * 6);  // 13vw + 6vw per paper
+        //                     paper_settings.style.display = 'flex';
+        //                     paper_settings.style.top = `${newTop}vw`;
+        //                     // Set the new top for this paper
+        //                     console.log('boundings dimensions', rect);
+
+        //                 }
+        //             });
 
 
 
-    //         });
-    //         const deletePaper = document.getElementById('deletePaper');
-    //         const editPaper = document.getElementById('editPaper');
-    //         const dufp = document.getElementById('delete-user-from-paper')
+        //         });
+        //         const deletePaper = document.getElementById('deletePaper');
+        //         const editPaper = document.getElementById('editPaper');
+        //         const dufp = document.getElementById('delete-user-from-paper')
 
 
-    //         deletePaper.addEventListener('click', function () {
-    //             confirm_delete.querySelector('p').textContent = translations.sidebar.confirm_delete
-    //             confirm_delete.style.display = 'flex';
-    //             document.getElementById('cancel').textContent = translations.sidebar.cancel;
-    //             document.getElementById('confirm').textContent = translations.sidebar.confirm;
+        //         deletePaper.addEventListener('click', function () {
+        //             confirm_delete.querySelector('p').textContent = translations.sidebar.confirm_delete
+        //             confirm_delete.style.display = 'flex';
+        //             document.getElementById('cancel').textContent = translations.sidebar.cancel;
+        //             document.getElementById('confirm').textContent = translations.sidebar.confirm;
 
-    //         });
-    //         editPaper.addEventListener('click', async function () {
-    //             await edit_paper(paperId)
-    //             document.getElementById('update-project-branch').querySelector('label').textContent = translations.startPaper.projectBranch;
-    //             document.getElementById('update-weneed-container').querySelector('label').textContent = translations.startPaper.we_need;
-    //             document.getElementById('update-language-container').querySelector('label').textContent = translations.startPaper.language;
-    //             document.getElementById('update-typeof-study-container').querySelector('label').textContent = translations.startPaper.type_of_study;
-    //             document.getElementById('update-tags-container').querySelector('label').textContent = translations.startPaper.tags.label;
-    //             document.getElementById('update_paper').textContent = translations.startPaper.update;
+        //         });
+        //         editPaper.addEventListener('click', async function () {
+        //             await edit_paper(paperId)
+        //             document.getElementById('update-project-branch').querySelector('label').textContent = translations.startPaper.projectBranch;
+        //             document.getElementById('update-weneed-container').querySelector('label').textContent = translations.startPaper.we_need;
+        //             document.getElementById('update-language-container').querySelector('label').textContent = translations.startPaper.language;
+        //             document.getElementById('update-typeof-study-container').querySelector('label').textContent = translations.startPaper.type_of_study;
+        //             document.getElementById('update-tags-container').querySelector('label').textContent = translations.startPaper.tags.label;
+        //             document.getElementById('update_paper').textContent = translations.startPaper.update;
 
-    //         })
-    //         dufp.addEventListener('click', async function (e) {
-    //             e.preventDefault()
-    //             await showUsers()
-    //             document.getElementById('deleteUserFromPaper').textContent = translations.sidebar.delete;
+        //         })
+        //         dufp.addEventListener('click', async function (e) {
+        //             e.preventDefault()
+        //             await showUsers()
+        //             document.getElementById('deleteUserFromPaper').textContent = translations.sidebar.delete;
 
-    //         })
-    //         hide_spinner()
-    //         toggleSidebar()
-    //     }
+        //         })
+        //         hide_spinner()
+        //         toggleSidebar()
+        //     }
     })
 
     document.getElementById('joined-papers-button').addEventListener('click', async function () {
@@ -2936,9 +2934,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const addButton = document.querySelector('.plus-sign');
 
-
                 if (addButton) {
-                    addButton.insertAdjacentHTML('beforebegin', content);
+                    addButton.insertAdjacentElement('afterbegin',content)
                 } else {
                     chats.innerHTML += content;
                 }
@@ -2952,12 +2949,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
 });
-document.addEventListener('DOMContentLoaded', function () {
 
-
-});
 async function showUsers() {
     show_spinner()
     await fetch(`/api/get-joined-users/${paperId}`, {
@@ -3288,7 +3281,7 @@ async function edit_paper(id) {
             });
             update_overlay.innerHTML = overlayText;
         })
-        editPaper.querySelector('#closeedit').addEventListener('click',()=>{
+        editPaper.querySelector('#closeedit').addEventListener('click', () => {
             editPaper.style.display = 'none'
 
         })
@@ -3756,13 +3749,30 @@ async function show_conversation(paper_id) {
         <div class="chat-container">
             ${!isMobile() ?
                 `
-                <div id="chats-view" class="chats-view">
-                    <div id="chats-container" class="chats-plus">
-                        <div id="chats" class="chat">
 
+                <div class="chats-mobile">
+                    <div id="chats-view" class="chats-view">
+                        <div id="chats-container" class="chats-plus">
+                            <div id="chats" class="chat">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div id="plus-exit" style="display:flex; flex-direction:row;">
+                        <a id="exit_conversations">
+                            <i class="fa-solid fa-arrow-left-long" style="margin-left: 8px;"></i>
+                            <p style="margin: 0;">Exit conversations</p>
+                        </a>
+                        <div class="plus-sign" onclick="add_conversation('3766'); event.preventDefault(); event.stopPropagation()" style="display: block;">
+                            <i class="fa-solid fa-plus"></i>
                         </div>
                     </div>
+
                 </div>
+                
+                
                 `: ""
             }
 
