@@ -132,7 +132,7 @@ p#user-name {
 
 /* Define the size and style of the scrollbar */
 ::-webkit-scrollbar {
-    width: 11px;
+    width: 5px;
     /* Width of the scrollbar */
 }
 
@@ -2356,6 +2356,7 @@ p#file-frame {
     overflow: scroll;
     position: relative;
     top: 9%;
+   
     border-radius: 10px;
 }
 
@@ -3596,6 +3597,9 @@ div:focus {
         right: 100%;
         
     }
+    .posts{
+        left: 3.7%;
+    }
     .message-history .message-info:last-child .message.sent.singleconversation::after {
         right: -6% !important;
         top: 61% !important;
@@ -3842,7 +3846,7 @@ div:focus {
     }
 
     .circle-button.collapsed {
-        left: -4.1vw;
+        left: -3.1vw;
     }
 
     .circle-button {

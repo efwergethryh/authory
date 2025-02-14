@@ -353,12 +353,22 @@ async function buildmessagecontent(message) {
     return messageContent;
 }
 function showProfile(user) {
-    console.log('user in show function', user);
     if (typeof user === 'string') {
         user = JSON.parse(user);
     }
+    let profilePicture = user.profile_picture;
+    let isExternal;
+    let imageSrc;
+    if (profilePicture) {
+        isExternal = profilePicture.startsWith("http");
+        imageSrc = isExternal
+            ? profilePicture
+            : `profile_images/${profilePicture}`;
+    } else {
+        imageSrc = 'profile_images/non-picture'
+    }
     const content = `
-        <img id="profile_image" src="/profile_images/${user.profile_picture ? user.profile_picture : 'non-picture.jpg'}" alt="Sender Image" class="sender-image" />
+        <img id="profile_image" src="/profile_images/${imageSrc ? imageSrc : 'non-picture.jpg'}" alt="Sender Image" class="sender-image" />
         <p id="user-name">${user.name}</p>
         <label>Phone number</label>
 
@@ -806,6 +816,8 @@ async function handleNotificationClick(notificationType, notification) {
             break;
         case "accept":
             show_Single_conversation(id);
+            break;
+        case "single":
             break;
         case "public":
             show_public_conversation()
@@ -4213,14 +4225,12 @@ async function show_Single_conversation() {
         show_spinner(); // Ensure spinner is shown at the start
         const translations = await loadTranslation()
         conversation_type = 'friend';
-        let content = "";
         const mainContent = document.querySelector('.mainContent');
         isreply = false;
         replyTo = null;
         mainContent.style.display = 'block'
         // mainContent.className +=' conversation'
         mainContent.classList.add('conversation')
-
 
         let chats = `
         ${!isMobile() ? `
