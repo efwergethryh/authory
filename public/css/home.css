@@ -2356,7 +2356,7 @@ p#file-frame {
     overflow: scroll;
     position: relative;
     top: 9%;
-   
+
     border-radius: 10px;
 }
 
@@ -2547,7 +2547,7 @@ p#file-frame {
     height: 4vw;
     margin-left: 10px;
     /* max-width: 80%; */
-    
+
     word-break: break-word;
     margin-right: 10px;
 }
@@ -2588,6 +2588,7 @@ p#file-frame {
     z-index: -6;
     overflow-y: scroll;
 }
+
 .message-history.paperconversation {
     width: 98% !important;
     top: -31%;
@@ -2595,6 +2596,7 @@ p#file-frame {
     z-index: -6;
     overflow-y: scroll;
 }
+
 .singleconv-button {
     top: 64%;
 }
@@ -2662,13 +2664,12 @@ p#file-frame {
     margin-left: auto;
 }
 
-.message-history .message-info:last-child .message.sent::before,
-.message-history .message-info:last-child .message.received::before {
+.message-history .message-info:last-child .message.sent::before, .message-history .message-info:last-child .message.received::before {
     content: "";
     position: absolute;
     z-index: 0;
     bottom: 0;
-    right: 89%;
+    right: 92%;
     height: 16px;
     width: 17px;
     background: inherit;
@@ -2717,7 +2718,7 @@ p#file-frame {
     content: "";
     position: absolute;
     z-index: 1;
-    top: 28%;
+    top: 69%;
     right: 100%;
     width: 10px;
     height: 20px;
@@ -3570,7 +3571,7 @@ div:focus {
     body {
         width: 100%;
     }
-    
+
     .messaging-container textarea {
         height: 44px;
     }
@@ -3584,37 +3585,46 @@ div:focus {
         align-items: center;
 
     }
-    .plus-sign{
+
+    .plus-sign {
         top: 4%;
         margin-left: 55%;
     }
+
     .papersContainer {
         left: 4%;
         width: 92%;
     }
-    .message-history .message-info:last-child .message.received::after{
+
+    .message-history .message-info:last-child .message.received::after {
         top: 56%;
         right: 100%;
-        
+
     }
-    .posts{
+
+    .posts {
         left: 3.7%;
     }
+
     .message-history .message-info:last-child .message.sent.singleconversation::after {
         right: -6% !important;
         top: 61% !important;
     }
-    .message-info{
+
+    .message-info {
         gap: 7px;
     }
+
     .message-history .message-info:last-child .message.sent::after {
         right: -7% !important;
         top: 60% !important;
     }
+
     .message.sent.singleconversation::after {
         right: -5% !important;
         top: 56% !important;
     }
+
     .openedImage img {
         width: fit-content;
         max-width: 76%;
@@ -3622,10 +3632,12 @@ div:focus {
         left: 11%;
         top: -3%;
     }
-    .message-history .message-info:last-child .message.sent::before{
+
+    .message-history .message-info:last-child .message.sent::before {
         right: -4%;
         top: 72%;
     }
+
     .mainContent.conversation {
         width: 100%;
         top: 5%;
@@ -3769,10 +3781,12 @@ div:focus {
         width: 100%;
         left: -0.5%;
     }
-    ._525e0b73ddffb195--isAutoWidth{
-        left: 0%!important;
-        max-width: 93vw!important;
+
+    ._525e0b73ddffb195--isAutoWidth {
+        left: 0% !important;
+        max-width: 93vw !important;
     }
+
     .paper-settings {
         left: 149%
     }
@@ -3925,9 +3939,11 @@ div:focus {
         position: relative;
         z-index: 109;
     }
-    #filter{
+
+    #filter {
         margin-left: 90%;
     }
+
     .paper-line {
         height: fit-content;
         width: 100%;
@@ -3958,11 +3974,13 @@ div:focus {
         overflow-y: auto;
         overflow-x: hidden;
         top: 13%;
-        
+
     }
-    .edit-paper{
-        left: 14%   ;
+
+    .edit-paper {
+        left: 14%;
     }
+
     .css-gkrxgl-StyledText {
         max-width: 58%;
         word-break: break-word;
@@ -5151,7 +5169,7 @@ div:focus {
 
 /*! CSS Used from: https://next.amboss.com/us/static/assets/38.1b6c2fe6663ecd9b.css */
 ._525e0b73ddffb195--modalContent {
-    
+
     background-color: #fff;
     flex-direction: column;
     flex-shrink: 0;
@@ -5162,9 +5180,10 @@ div:focus {
     position: relative;
     overflow: visible;
 }
+
 ._525e0b73ddffb195--container {
     z-index: 9;
-    background-color: rgba(47,51,65,.8);
+    background-color: rgba(47, 51, 65, .8);
     flex-direction: column;
     flex: 1 0 auto;
     justify-content: center;
@@ -5178,6 +5197,7 @@ div:focus {
     left: 0;
     overflow-x: hidden;
 }
+
 ._525e0b73ddffb195--isAutoWidth {
     border-radius: 8px;
     width: auto;
