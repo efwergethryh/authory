@@ -173,6 +173,7 @@
     "reply": " Replied to you in chat",
     "default": "You have a new notification",
     "decline_request": "Declined your request to join the paper",
-    "dufp":"kicked you out of the paper"
+    "dufp":"kicked you out of the paper",
+    "dufc":"kicked you out of the conversation"
   }
 }

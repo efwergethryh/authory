@@ -1033,6 +1033,7 @@ async function buildNotifications(notifications) {
                     : notification.type === "message" ? `${notification.sender_info.name} ${translations.notification_message.message}`
                         : notification.type === "public" ? `${notification.sender_info.name} ${translations.notification_message.public}`
                             : notification.type === "dufp" ? `${notification.sender_info.name} ${translations.notification_message.dufp} "${notification.paper_info.title}"`
+                            : notification.type === "dufc" ? `${notification.sender_info.name} ${translations.notification_message.dufc} "${notification.conversation.conv_title}"`
                                 : notification.type === "decline-request" ? `${notification.sender_info.name} ${translations.notification_message.decline_request} "${notification.paper_info.title}"`
                                     : notification.type === "new-post" ? `${notification.sender_info.name} ${translations.notification_message.newPost}`
                                         : notification.type === "join-request" ? `${notification.sender_info.name} ${translations.notification_message.join_request} "${notification.paper_info.title}"`
@@ -2947,7 +2948,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const addButton = document.querySelector('.plus-sign');
 
                 if (addButton) {
-                    addButton.insertAdjacentElement('afterbegin',content)
+                    addButton.insertAdjacentElement('afterbegin', content)
                 } else {
                     chats.innerHTML += content;
                 }
@@ -3020,6 +3021,40 @@ async function buildUsers(userIds) {
 
     return content;
 }
+async function buildConvUsers(userIds,conversation) {
+    let content = '';
+    if (userIds.length == 0) {
+        content = "No users have joined your paper yet!"
+    }
+    for (const userid of userIds) {
+        const u = await get_user(userid);
+        const user = u.users[0] // Await the async function
+        let profilePicture = user.profile_picture;
+        let isExternal;
+        let imageSrc;
+        if (profilePicture) {
+            isExternal = profilePicture.startsWith("http");
+            imageSrc = isExternal
+                ? profilePicture
+                : `/profile_images/${profilePicture}`;
+        } else {
+            imageSrc = '/profile_images/non-picture.jpg'
+        }
+        content += `
+            <div id="delete-user" class="paper-line">
+                <div class="paperinfo">
+                    <img src="${imageSrc}" alt="Profile Picture">
+                    <span class="paper-title"><strong>${user.name}</strong></span>
+                    <span class="dash"><strong>-</strong></span>
+                    <span class="paper-study"><strong>${user._id}</strong></span>
+                </div>
+                <button onclick="delete_convPaper('${user._id}', '${encodeURIComponent(JSON.stringify(conversation))}')" id="deleteUserFromPaper">Delete user</button>
+            </div>
+        `;
+    }
+
+    return content;
+}
 async function delete_userPaper(user_id) {
     show_spinner()
     await fetch(`/api/delete-user-from-paper/${paperId}`, {
@@ -3049,6 +3084,51 @@ async function delete_userPaper(user_id) {
                 user: data.user,
                 type: 'dufp',
                 paper: data.paper
+            });
+
+        })
+        hide_spinner()
+    })
+
+}
+async function delete_convPaper(userId,conversation) {
+    conversation = decodeURIComponent(conversation);
+    conversation = JSON.parse(conversation);
+        show_spinner()
+    const convId= conversation._id
+    let members
+    console.log('conversation',conversation);
+    
+    if(conversation.members.includes(userId)){
+        members = conversation.members.filter(member => member !== userId);
+    }
+    await fetch(`/api/delete-user-from-conversation/${convId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            members
+        })
+    }).then(res => res.json()).then(async data => {
+
+        await fetch(`/api/notify/${userId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                type: 'dufc',
+                conversation_id: paperId
+            })
+        }).then(res => res.json()).then(data => {
+            
+            socket.emit("send-notification", {
+
+                receiver: userId,
+                user: data.user,
+                type: 'dufc',
+                conversation: data.conversation
             });
 
         })
@@ -3682,7 +3762,17 @@ function notify_conversation(id) {
         setTimeout(() => notify_conversation(id), 100);
     }
 }
-
+async function conversationPopup(conversation){
+    const convUsers = document.getElementById('conversation-users')
+    convUsers.style.display ='flex'
+    const closeButton = document.getElementById('close-button');
+    let content = await buildConvUsers(conversation.members,conversation)
+    convUsers.innerHTML = content
+    convUsers.prepend(closeButton)
+    closeButton.addEventListener('click',()=>{
+        convUsers.style.display ='none'
+    })
+}
 async function buildConversations(paper_UserId, paper_id) {
     let conversationContent = "";
 
@@ -3691,10 +3781,8 @@ async function buildConversations(paper_UserId, paper_id) {
             method: 'GET',
         });
         const data = await response.json();
-        console.log("Conversations data:", data);
 
         if (data.conversations.length === 0) {
-            console.log("No conversations found.");
             return `<p>No matches</p>`;
         }
 
@@ -3705,6 +3793,8 @@ async function buildConversations(paper_UserId, paper_id) {
                     <h3>${conversation.conv_title}</h3>
                     <div class="new-notification" id="private-new-${conversation._id}">
                     </div>
+                    
+                    <i onclick='conversationPopup(${JSON.stringify(conversation)})' style="display: ${conversation.conv_title == 'welcome chat' ? 'none' : 'block'};" class="fa-solid fa-user-minus"></i>
                 </div>
             `;
         }

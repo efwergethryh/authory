@@ -295,7 +295,7 @@
                     <div class="sc-aXZVg dKubqp">
                         <h4 color="#acacac" font-weight="normal" class="sc-aXZVg BGRsf">Password</h4>
                     </div>
-                    <div class="sc-aXZVg hJqqiH"><button type="button" data-testid="close-button"
+                    <div class="sc-aXZVg hJqqiH"><button id="passowrd-Toggle" type="button" data-testid="close-button"
                             class="sc-aXZVg dsJYEz"><svg aria-hidden="true" focusable="false" data-prefix="far"
                                 data-icon="xmark" class="svg-inline--fa fa-xmark " role="img"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -326,17 +326,18 @@
                                         </div>
                                         <div class="sc-aXZVg sc-gEvEer gUCTPc fteAEG"><label for="newPassword"
                                                 class="css-1u8lam6">New password</label>
-                                            <div class="sc-aXZVg sc-gEvEer gRnrFl fteAEG">
+                                            <!-- <div class="sc-aXZVg sc-gEvEer gRnrFl fteAEG">
                                                 <p font-size="14px" font-weight="400" color="#acacac"
                                                     class="sc-aXZVg kXSQYv">Strength:</p>
-                                            </div>
+                                            </div> -->
                                             <div class="sc-aXZVg sc-gEvEer ebGnTZ fteAEG">
                                                 <div class="sc-aXZVg dKubqp"><input type="password"
+                                                        id="new-password"
                                                         aria-label="Type your new password" name="newPassword"
                                                         placeholder="New password"
                                                         data-testid="profile.modals.change-password.newPassword-input"
                                                         autocomplete="new-password" class="sc-aXZVg jRyLRY"></div>
-                                                <div data-testid="profile.modals.change-password.newPassword-show-password-icon"
+                                                <div id="change-Toggle" data-testid="profile.modals.change-password.newPassword-show-password-icon"
                                                     class="sc-aXZVg emjAYo"><svg aria-hidden="true" focusable="false"
                                                         data-prefix="far" data-icon="eye-slash"
                                                         class="svg-inline--fa fa-eye-slash " role="img"

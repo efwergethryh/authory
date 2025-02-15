@@ -317,26 +317,43 @@ const update_profile = async (req, res) => {
     }
 };
 const change_password = async (req, res) => {
-    const body = req.body
-    const new_password = body.new_password
-    const password = body.password
-    const user = res.locals.user
-    console.log('password', password, 'body', body);
+    try {
+        const body = req.body
+        const new_password = body.new_password
+        const password = body.password
+        const user = res.locals.user
 
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) {
-        res.status(500).json({ message: "Passowrd is incorrect" })
-    }
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            res.status(500).json({ message: "Passowrd is incorrect" })
+        }
 
-    else {
-        const hashedPassword = await hashpassword(new_password)
+        else {
+            const hashedPassword = await hashpassword(new_password)
+            // const passwordRegex = /^(?=.*[A-Z])(?=.*[\d!@#$%^&*(),.?":{}|<>]).{8,}$/;
+            const errors = [];
+            if (!new_password) errors.push("Password is required.");
+            if (new_password.length < 8) errors.push("Password must be at least 8 characters long.");
+            if (!/[A-Z]/.test(new_password)) errors.push("Password must contain at least one uppercase letter.");
+            if (!/\d/.test(new_password)) errors.push("Password must contain at least one number.");
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(new_password)) errors.push("Password must contain at least one special character.");
 
-        const userUpdated = await User.findByIdAndUpdate(user._id, {
-            $set: {
-                password: hashedPassword
+            // If errors exist, return JSON response
+            if (errors.length > 0) {
+                return res.status(400).json({ message:errors });
             }
-        })
-        res.status(200).json({ message: "Password has been changed", })
+            else {
+                const userUpdated = await User.findByIdAndUpdate(user._id, {
+                    $set: {
+                        password: hashedPassword
+                    },
+                })
+                res.status(200).json({ message: "Password has been changed", })
+            }
+        }
+    } catch (error) {
+        res.status(500).json({ message: error })
+
     }
 
 }

@@ -29,16 +29,16 @@ const get_message = async (req, res) => {
             { $unwind: "$senderDetails" },
 
             {
-                $match: filter !== "All" ? { conversation_id: new mongoose.Types.ObjectId(id), } 
-                : filter !== "All" && filter ? {
+                $match: filter !== "All" ? { conversation_id: new mongoose.Types.ObjectId(id), }
+                    : filter !== "All" && filter ? {
 
-                    $or: [
-                        { "senderDetails.main_field": filter }, // Messages from users with the specified profession
-                        // Include messages sent by the logged-in user
-                    ]
-                } : {
-                    conversation_id: new mongoose.Types.ObjectId(id)
-                }
+                        $or: [
+                            { "senderDetails.main_field": filter }, // Messages from users with the specified profession
+                            // Include messages sent by the logged-in user
+                        ]
+                    } : {
+                        conversation_id: new mongoose.Types.ObjectId(id)
+                    }
             },
 
             {
@@ -197,8 +197,30 @@ const get_conversation = async (req, res) => {
         res.json(error.message)
     }
 }
+const delete_conversationMember = async (req, res) => {
+    try {
+        const { convId } = req.params;
+        const {members} = req.body
+        console.log('members',members,'conversation',convId);
+        
+        const conversation = await Conversation.findById(convId);
+        if (!conversation) {
+            return res.status(404).json({ message: "Conversation not found" });
+        }
+
+        conversation.members = conversation.members.filter(member => !members.includes(member.toString()));
+
+        await conversation.save();
+
+        return res.status(200).json({ message: "Members removed successfully", conversation });
+    } catch (error) {
+        console.error("Error removing members:", error);
+        return res.status(500).json({ message: "Server error" });
+    }
+};
+
 module.exports = {
     add_conversation, send_message, get_conversations,
-    get_message, get_conversation
+    get_message, get_conversation, delete_conversationMember
 }
 

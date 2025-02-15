@@ -41,8 +41,15 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minlength: 6
+        minlength: 8,
+        validate: {
+            validator: function (value) {
+                return /^(?=.*[A-Z])(?=.*[\d!@#$%^&*(),.?":{}|<>]).{8,}$/.test(value);
+            },
+            message: 'Your password must include at least one capital letter, one number, and one special character.'
+        }
     },
+    
     looking_for: {
         type: String
     },

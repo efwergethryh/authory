@@ -1866,7 +1866,7 @@ button[id="send_message"] {
 
 .add-conversation {
     display: none;
-    width: 50vw;
+    width: fit-content  ;
     height: fit-content;
     background-color: white;
     position: relative;
@@ -1887,7 +1887,7 @@ button[id="send_message"] {
     border-radius: 10px;
     border: none;
     position: relative;
-    left: 80%;
+    
     background-color: rgb(4, 122, 136);
     color: white;
     font-size: 105%;
@@ -2128,6 +2128,7 @@ p#file-frame {
     position: relative;
     left: 10%;
     /* top: 10%; */
+    justify-content: space-evenly;
     transition: background-color 0.3s;
     cursor: pointer;
     border-bottom: 1px solid rgb(218, 218, 218);
@@ -3597,13 +3598,13 @@ div:focus {
     }
 
     .message-history .message-info:last-child .message.received::after {
-        top: 56%;
+        top: 67%;
         right: 100%;
 
     }
 
     .posts {
-        left: 3.7%;
+        left: 2%;
     }
 
     .message-history .message-info:last-child .message.sent.singleconversation::after {
@@ -3614,7 +3615,9 @@ div:focus {
     .message-info {
         gap: 7px;
     }
-
+    .users-to-delete{
+        top: 10%;
+    }
     .message-history .message-info:last-child .message.sent::after {
         right: -7% !important;
         top: 60% !important;

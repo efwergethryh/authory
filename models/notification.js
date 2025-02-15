@@ -13,6 +13,11 @@ const notificationSchema = new mongoose.Schema(
             
             ref: 'posts'
         },
+        conversation_id: {
+            type: String,
+            
+            ref: 'conversation'
+        },
         read:{
             type:Boolean,
             default:false

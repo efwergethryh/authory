@@ -107,6 +107,14 @@ const get_notifications = async (req, res) => {
             },
             {
                 $lookup: {
+                    from: 'conversation', // Name of the 'paper' collection
+                    localField: 'conversation_id', // Field in 'notification' collection
+                    foreignField: '_id', // Field in 'paper' collection
+                    as: 'conversation' // Name of the field to include the joined data
+                }
+            },
+            {
+                $lookup: {
                     from: 'users', // Join with 'users' collection
                     localField: 'sender', // Field in 'notification' collection (assuming 'sender_id')
                     foreignField: '_id', // Field in 'users' collection
