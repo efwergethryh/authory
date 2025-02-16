@@ -1922,7 +1922,9 @@ button[id="send_message"] {
     display: flex;
     flex-direction: column;
 }
-
+.chats-mobile{
+    height: 100%;
+}
 .options-popup {
     background-color: white;
     position: relative;
@@ -1957,11 +1959,11 @@ p#file-frame {
     display: none;
     flex-direction: column;
     overflow-y: scroll;
-    height: fit-content;
+    height: 80%;
     width: 47vw;
     position: absolute;
     left: 36.5%;
-    top: 39%;
+    top: 13%;
     background: white;
     z-index: 15;
     border-radius: 5px;
@@ -2155,7 +2157,7 @@ p#file-frame {
     color: rgb(146, 146, 146);
     margin-left: 55%;
     position: relative;
-    top: 10%;
+    /* top: 10%; */
     width: fit-content;
     z-index: 10;
     padding: 1%;
@@ -3586,12 +3588,16 @@ div:focus {
         align-items: center;
 
     }
-
+    
     .plus-sign {
         top: 4%;
         margin-left: 55%;
     }
-
+    .chat{
+        height: 54%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
     .papersContainer {
         left: 4%;
         width: 92%;
@@ -3774,9 +3780,14 @@ div:focus {
         align-items: center;
         margin-bottom: 17%;
         gap: 1%;
-        position: absolute;
+        position: fixed;
         width: 50%;
-        bottom: -2%;
+        width: 100%;
+        bottom: -9.4%;
+        align-items: center;
+        justify-content: center;
+        background-color: #ebebeb;
+        z-index: 10;
         padding: 4vw;
     }
 

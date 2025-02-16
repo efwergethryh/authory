@@ -201,16 +201,15 @@ const delete_conversationMember = async (req, res) => {
     try {
         const { convId } = req.params;
         const {members} = req.body
-        console.log('members',members,'conversation',convId);
         
-        const conversation = await Conversation.findById(convId);
-        if (!conversation) {
-            return res.status(404).json({ message: "Conversation not found" });
-        }
+        const conversation = await Conversation.findByIdAndUpdate(
+            convId,
+            { $set: { members: members } }, // Overwrite the members array
+            { new: true, runValidators: true }
+        );        
 
-        conversation.members = conversation.members.filter(member => !members.includes(member.toString()));
 
-        await conversation.save();
+        // await conversation.save();
 
         return res.status(200).json({ message: "Members removed successfully", conversation });
     } catch (error) {

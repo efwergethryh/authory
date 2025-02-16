@@ -1033,14 +1033,14 @@ async function buildNotifications(notifications) {
                     : notification.type === "message" ? `${notification.sender_info.name} ${translations.notification_message.message}`
                         : notification.type === "public" ? `${notification.sender_info.name} ${translations.notification_message.public}`
                             : notification.type === "dufp" ? `${notification.sender_info.name} ${translations.notification_message.dufp} "${notification.paper_info.title}"`
-                            : notification.type === "dufc" ? `${notification.sender_info.name} ${translations.notification_message.dufc} "${notification.conversation.conv_title}"`
-                                : notification.type === "decline-request" ? `${notification.sender_info.name} ${translations.notification_message.decline_request} "${notification.paper_info.title}"`
-                                    : notification.type === "new-post" ? `${notification.sender_info.name} ${translations.notification_message.newPost}`
-                                        : notification.type === "join-request" ? `${notification.sender_info.name} ${translations.notification_message.join_request} "${notification.paper_info.title}"`
-                                            : notification.type === "mention-in-public" ? `${notification.sender_info.name} ${translations.notification_message.mention_in_public}`
-                                                : notification.type === "mention-in-welcome" ? `${notification.sender_info.name} ${translations.notification_message.mention_in_welcome}`
-                                                    : notification.type === "reply" ? `${notification.sender_info.name} ${translations.notification_message.reply}`
-                                                        : `${translations.notification_message.default}`
+                                : notification.type === "dufc" ? `${notification.sender_info.name} ${translations.notification_message.dufc} "${notification.conversation.conv_title}"`
+                                    : notification.type === "decline-request" ? `${notification.sender_info.name} ${translations.notification_message.decline_request} "${notification.paper_info.title}"`
+                                        : notification.type === "new-post" ? `${notification.sender_info.name} ${translations.notification_message.newPost}`
+                                            : notification.type === "join-request" ? `${notification.sender_info.name} ${translations.notification_message.join_request} "${notification.paper_info.title}"`
+                                                : notification.type === "mention-in-public" ? `${notification.sender_info.name} ${translations.notification_message.mention_in_public}`
+                                                    : notification.type === "mention-in-welcome" ? `${notification.sender_info.name} ${translations.notification_message.mention_in_welcome}`
+                                                        : notification.type === "reply" ? `${notification.sender_info.name} ${translations.notification_message.reply}`
+                                                            : `${translations.notification_message.default}`
 
             }</p>
             </div>
@@ -2941,6 +2941,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="conversation-item" onclick="get_conversation('${data.conv._id}','private')">
                         <img src="/conversation_images/${data.conv.conv_pic}" alt="${data.conv.conv_title}" />
                         <h3>${data.conv.conv_title}</h3>
+                    <i onclick='event.preventDefault(); event.stopPropagation(); conversationPopup(${JSON.stringify(data.conv)})' style="display: ${data.conv.conv_title == 'welcome chat' ? 'none' : 'block'};" class="fa-solid fa-user-minus"></i>
+                    <i onclick='event.preventDefault(); event.stopPropagation(); conversationAdd(${JSON.stringify(data.conv)})' style="display: ${data.conv.conv_title == 'welcome chat' ? 'none' : 'block'};" class="fa-solid fa-user-plus"></i>
+
                     </div>
                 `;
 
@@ -3021,7 +3024,7 @@ async function buildUsers(userIds) {
 
     return content;
 }
-async function buildConvUsers(userIds,conversation) {
+async function buildConvUsers(userIds, conversation) {
     let content = '';
     if (userIds.length == 0) {
         content = "No users have joined your paper yet!"
@@ -3041,14 +3044,14 @@ async function buildConvUsers(userIds,conversation) {
             imageSrc = '/profile_images/non-picture.jpg'
         }
         content += `
-            <div id="delete-user" class="paper-line">
+            <div id="delete-user-${user._id}" class="paper-line">
                 <div class="paperinfo">
                     <img src="${imageSrc}" alt="Profile Picture">
                     <span class="paper-title"><strong>${user.name}</strong></span>
                     <span class="dash"><strong>-</strong></span>
                     <span class="paper-study"><strong>${user._id}</strong></span>
                 </div>
-                <button onclick="delete_convPaper('${user._id}', '${encodeURIComponent(JSON.stringify(conversation))}')" id="deleteUserFromPaper">Delete user</button>
+                <button onclick="delete_convUser('${user._id}', '${encodeURIComponent(JSON.stringify(conversation))}')" id="deleteUserFromPaper">Delete user</button>
             </div>
         `;
     }
@@ -3091,19 +3094,68 @@ async function delete_userPaper(user_id) {
     })
 
 }
-async function delete_convPaper(userId,conversation) {
+async function delete_convUser(userId, conversation) {
     conversation = decodeURIComponent(conversation);
     conversation = JSON.parse(conversation);
-        show_spinner()
-    const convId= conversation._id
+    show_spinner()
+    const convId = conversation._id
     let members
-    console.log('conversation',conversation);
-    
-    if(conversation.members.includes(userId)){
+    console.log('conversation', conversation);
+
+    if (conversation.members.includes(userId)) {
+
         members = conversation.members.filter(member => member !== userId);
     }
-    await fetch(`/api/delete-user-from-conversation/${convId}`, {
-        method: "DELETE",
+
+    await fetch(`/api/update-conversation-members/${convId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            members
+        })
+    }).then(res => res.json()).then(async data => {
+        console.log('data', data);
+        const user = document.getElementById(`delete-user-${userId}`)
+        user.remove()
+        await fetch(`/api/notify/${userId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                type: 'dufc',
+                conversation_id: paperId
+            })
+        }).then(res => res.json()).then(data => {
+
+            socket.emit("send-notification", {
+
+                receiver: userId,
+                user: data.user,
+                type: 'dufc',
+                conversation: data.conversation
+            });
+
+        })
+        hide_spinner()
+    })
+
+}
+async function add_convUser(userId, conversation) {
+    conversation = decodeURIComponent(conversation);
+    conversation = JSON.parse(conversation);
+    show_spinner()
+    const convId = conversation._id
+    let members
+
+    if (!conversation.members.includes(userId)) {
+        members = conversation.members
+        members.push(userId)
+    }
+    await fetch(`/api/update-conversation-members/${convId}`, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
@@ -3122,7 +3174,7 @@ async function delete_convPaper(userId,conversation) {
                 conversation_id: paperId
             })
         }).then(res => res.json()).then(data => {
-            
+
             socket.emit("send-notification", {
 
                 receiver: userId,
@@ -3133,6 +3185,8 @@ async function delete_convPaper(userId,conversation) {
 
         })
         hide_spinner()
+        display_Message('User has been added successfully')
+
     })
 
 }
@@ -3762,17 +3816,81 @@ function notify_conversation(id) {
         setTimeout(() => notify_conversation(id), 100);
     }
 }
-async function conversationPopup(conversation){
+async function conversationPopup(conversation) {
     const convUsers = document.getElementById('conversation-users')
-    convUsers.style.display ='flex'
+    convUsers.style.display = 'flex'
     const closeButton = document.getElementById('close-button');
-    let content = await buildConvUsers(conversation.members,conversation)
+    let content = await buildConvUsers(conversation.members, conversation)
     convUsers.innerHTML = content
     convUsers.prepend(closeButton)
-    closeButton.addEventListener('click',()=>{
-        convUsers.style.display ='none'
+    closeButton.addEventListener('click', () => {
+        convUsers.style.display = 'none'
     })
 }
+
+let cachedUsers = null; // Store fetched users globally
+
+async function conversationAdd(conversation) {
+    const convUsers = document.getElementById('conversation-users');
+    convUsers.style.display = 'flex';
+
+    const closeButton = document.getElementById('close-button');
+    let content = ``
+    // Check if users are already cached
+    if (!cachedUsers) {
+        try {
+            const usersResponse = await fetch('/api/users/1', { method: 'GET' });
+            const data = await usersResponse.json();
+
+            cachedUsers = data.users;
+            cachedUsers = JSON.stringify(cachedUsers)
+            cachedUsers = JSON.parse(cachedUsers)
+            // Cache users for future use
+            console.log('cachedUsers', cachedUsers);
+
+        } catch (error) {
+            console.error("Error fetching users:", error);
+            return;
+        }
+    }
+
+    let profilePicture
+    let isExternal;
+    let imageSrc;
+
+    cachedUsers.forEach(user => {
+        profilePicture = user.profile_picture;
+        isExternal;
+        imageSrc;
+        if (profilePicture) {
+            isExternal = profilePicture.startsWith("http");
+            imageSrc = isExternal
+                ? profilePicture
+                : `/profile_images/${profilePicture}`;
+        } else {
+            imageSrc = '/profile_images/non-picture.jpg'
+        }
+        content += `
+            <div id="delete-user" class="paper-line">
+                <div class="paperinfo">
+                    <img src="${imageSrc}" alt="Profile Picture">
+                    <span class="paper-title"><strong>${user.name}</strong></span>
+                    <span class="dash"><strong>-</strong></span>
+                    <span class="paper-study"><strong>${user._id}</strong></span>
+                </div>
+                <button onclick ="add_convUser('${user._id}','${encodeURIComponent(JSON.stringify(conversation))}')" id="deleteUserFromPaper">Add user</button>
+            </div>
+        `;
+
+    })
+    convUsers.innerHTML = content;
+    convUsers.prepend(closeButton);
+
+    closeButton.addEventListener('click', () => {
+        convUsers.style.display = 'none';
+    });
+}
+
 async function buildConversations(paper_UserId, paper_id) {
     let conversationContent = "";
 
@@ -3788,13 +3906,15 @@ async function buildConversations(paper_UserId, paper_id) {
 
         for (const conversation of data.conversations) {
             conversationContent += `
-                <div id="conversationItem" onclick="get_conversation('${conversation._id}','private')" class="conversation-item">
+                <div id="conversationItem" onclick="get_conversation('${conversation._id}','private');  ${isMobile() ? "toggleSidebar();" : ""}" class="conversation-item">
                     <img src="/conversation_images/${conversation.conv_pic}" alt="${conversation.conv_title}"/>
                     <h3>${conversation.conv_title}</h3>
                     <div class="new-notification" id="private-new-${conversation._id}">
                     </div>
                     
-                    <i onclick='conversationPopup(${JSON.stringify(conversation)})' style="display: ${conversation.conv_title == 'welcome chat' ? 'none' : 'block'};" class="fa-solid fa-user-minus"></i>
+                    <i onclick='event.preventDefault(); event.stopPropagation(); conversationPopup(${JSON.stringify(conversation)})' style="display: ${conversation.conv_title == 'welcome chat' ? 'none' : 'block'};" class="fa-solid fa-user-minus"></i>
+                    <i onclick='event.preventDefault(); event.stopPropagation(); conversationAdd(${JSON.stringify(conversation)})' style="display: ${conversation.conv_title == 'welcome chat' ? 'none' : 'block'};" class="fa-solid fa-user-plus"></i>
+
                 </div>
             `;
         }
@@ -3845,13 +3965,21 @@ async function show_conversation(paper_id) {
         const paperResponse = await fetch(`/api/paper/${paper_id}`);
         const paperData = await paperResponse.json();
         const paper_userId = paperData.paper.user_id;
-
+        const exit_conversations = `
+        <div id="plus-exit" style="display:flex; flex-direction:row;">
+            <a id="exit_conversations">
+                <i class="fa-solid fa-arrow-left-long" style="margin-left: 8px;"></i>
+                <p style="margin: 0;">Exit conversations</p>
+            </a>
+           
+        </div>
+        `
         const content = await buildConversations(paper_userId, paper_id); ``
         mainContent.innerHTML = `
         <div class="chat-container">
+        
             ${!isMobile() ?
                 `
-
                 <div class="chats-mobile">
                     <div id="chats-view" class="chats-view">
                         <div id="chats-container" class="chats-plus">
@@ -3861,26 +3989,16 @@ async function show_conversation(paper_id) {
                         </div>
 
                     </div>
-                    
-                    <div id="plus-exit" style="display:flex; flex-direction:row;">
-                        <a id="exit_conversations">
-                            <i class="fa-solid fa-arrow-left-long" style="margin-left: 8px;"></i>
-                            <p style="margin: 0;">Exit conversations</p>
-                        </a>
-                        <div class="plus-sign" onclick="add_conversation('3766'); event.preventDefault(); event.stopPropagation()" style="display: block;">
-                            <i class="fa-solid fa-plus"></i>
-                        </div>
-                    </div>
-
                 </div>
                 
-                
-                `: ""
+                `: `
+                `
             }
 
             <div id="chat-body" class="chat-body">
                 ${scrollbutton}
                 <div id="message-history" class="message-history"></div>
+            </div>
             </div>
         </div>
         `;
@@ -4445,7 +4563,8 @@ async function searchFunctionality() {
                         content += `
                             <div id="conversationItem" 
                                 onclick="updateUserInfo('${JSON.stringify(u).replace(/"/g, '&quot;')}'); 
-                                        ${u.f_conversation && u.f_conversation._id ? `load_f_messages('${u.f_conversation._id}', '${u._id}')` : ''}" 
+                                        ${u.f_conversation && u.f_conversation._id ? `load_f_messages('${u.f_conversation._id}', '${u._id}')` : ''}
+                                        ${isMobile() ? `toggleSidebar()` : ``}" 
                                 class="conversation-item">
                                 <img src="/profile_images/${u.profile_picture}" alt="${u.name}"/>
                                 <h3>${u.name}</h3>
