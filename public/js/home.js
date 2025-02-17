@@ -109,13 +109,17 @@ function display_Message(message) {
         const mainContent = document.getElementById('maincontent')
         const popup_message = document.createElement('div');
         popup_message.classList.add('popup-message');
-
+        
         popup_message.innerHTML = `
             <h1>${message}</h1>
         `;
 
         // Append the message to the body
-        mainContent.appendChild(popup_message);
+        // if(type==='conversation'){
+        // }else{
+        //     mainContent.appendChild(popup_message);
+        // }
+        document.body.append(popup_message)
 
         popup_message.classList.add('show');
         setTimeout(() => {
@@ -131,6 +135,7 @@ function display_Message(message) {
         console.error('Error displaying message:', error.message);
     }
 }
+
 async function get_Post(post_id) {
     try {
         const url = `/api/posts/${post_id}`;

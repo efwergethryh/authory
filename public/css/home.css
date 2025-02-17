@@ -1658,6 +1658,7 @@ button[id="join"] {
     position: absolute;
     top: 75%;
     left: 42%;
+    z-index: 20;
     transition: opacity 0.5s ease-in-out;
 }
 
@@ -3573,7 +3574,9 @@ div:focus {
     body {
         width: 100%;
     }
-
+    .popup-message{
+        left: 14%;
+    }
     .chats-plus {
         height: 84%;
     }
