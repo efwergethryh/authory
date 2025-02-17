@@ -1866,7 +1866,7 @@ button[id="send_message"] {
 
 .add-conversation {
     display: none;
-    width: fit-content  ;
+    width: fit-content;
     height: fit-content;
     background-color: white;
     position: relative;
@@ -1887,7 +1887,7 @@ button[id="send_message"] {
     border-radius: 10px;
     border: none;
     position: relative;
-    
+
     background-color: rgb(4, 122, 136);
     color: white;
     font-size: 105%;
@@ -1922,9 +1922,11 @@ button[id="send_message"] {
     display: flex;
     flex-direction: column;
 }
-.chats-mobile{
+
+.chats-mobile {
     height: 111%;
 }
+
 .options-popup {
     background-color: white;
     position: relative;
@@ -2668,7 +2670,8 @@ p#file-frame {
     margin-left: auto;
 }
 
-.message-history .message-info:last-child .message.sent::before, .message-history .message-info:last-child .message.received::before {
+.message-history .message-info:last-child .message.sent::before,
+.message-history .message-info:last-child .message.received::before {
     content: "";
     position: absolute;
     z-index: 0;
@@ -3141,6 +3144,10 @@ div:focus {
 
 .cb6958e808d5fa34--menuOptions {
     padding: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
 }
 
 .cb6958e808d5fa34--menuOption {
@@ -3148,7 +3155,8 @@ div:focus {
     cursor: pointer;
     margin-bottom: 16px;
     display: flex;
-    gap: 39%;
+    gap: 38%;
+    width: 100%;
     position: relative;
     font-weight: 400;
     font-family: Lato, -apple-system, BlinkMacSystemFont, segoe ui, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, arial, sans-serif;
@@ -3575,9 +3583,11 @@ div:focus {
     body {
         width: 100%;
     }
-    .chats-plus{
+
+    .chats-plus {
         height: 84%;
     }
+
     .messaging-container textarea {
         height: 44px;
     }
@@ -3591,16 +3601,18 @@ div:focus {
         align-items: center;
 
     }
-    
+
     .plus-sign {
         top: 4%;
         margin-left: 55%;
     }
-    .chat{
+
+    .chat {
         height: 54%;
         overflow-y: auto;
         overflow-x: hidden;
     }
+
     .papersContainer {
         left: 4%;
         width: 92%;
@@ -3624,9 +3636,11 @@ div:focus {
     .message-info {
         gap: 7px;
     }
-    .users-to-delete{
+
+    .users-to-delete {
         top: 10%;
     }
+
     .message-history .message-info:last-child .message.sent::after {
         right: -7% !important;
         top: 60% !important;
@@ -3737,9 +3751,15 @@ div:focus {
         width: 46%;
     }
 
+    /* .cb6958e808d5fa34--menuOption {
+        gap: 21vw;
+    } */
     .cb6958e808d5fa34--menuOption {
         gap: 21vw;
+        flex-wrap: wrap;
     }
+
+    
 
     .chat-filter {
         margin-top: 51%;
