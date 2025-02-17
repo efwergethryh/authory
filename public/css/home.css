@@ -1923,7 +1923,7 @@ button[id="send_message"] {
     flex-direction: column;
 }
 .chats-mobile{
-    height: 100%;
+    height: 111%;
 }
 .options-popup {
     background-color: white;
@@ -2179,9 +2179,10 @@ p#file-frame {
     font-size: larger;
     color: #212121;
     position: relative;
-    left: 10%;
+    align-self: center;
     margin-top: 1%;
-    width: 60%;
+    width: 52%;
+    max-width: 46%;
     word-wrap: break-word;
 }
 
@@ -3574,7 +3575,9 @@ div:focus {
     body {
         width: 100%;
     }
-
+    .chats-plus{
+        height: 84%;
+    }
     .messaging-container textarea {
         height: 44px;
     }
@@ -3735,7 +3738,7 @@ div:focus {
     }
 
     .cb6958e808d5fa34--menuOption {
-        gap: 27%;
+        gap: 21vw;
     }
 
     .chat-filter {
