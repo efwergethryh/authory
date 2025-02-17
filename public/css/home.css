@@ -3549,9 +3549,17 @@ div:focus {
     }
 
 }
-@media (min-width: 300px) and (max-width: 370px) {
+@media (min-width: 324px) and (max-width: 370px) {
     .cb6958e808d5fa34--menuOption{
-        gap: 21%!important;
+        gap:18%!important;
+    }
+    .d70dcff543b0a8d8--userMenuContainer{
+        width: 95%;
+    }
+}
+@media (min-width: 300px) and (max-width: 345px) {
+    .cb6958e808d5fa34--menuOption{
+        gap:10%!important;
     }
     .d70dcff543b0a8d8--userMenuContainer{
         width: 95%;
