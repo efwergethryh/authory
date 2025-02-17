@@ -3549,9 +3549,9 @@ div:focus {
     }
 
 }
-@media (min-width: 300px) and (max-width: 373px) {
+@media (min-width: 300px) and (max-width: 370px) {
     .cb6958e808d5fa34--menuOption{
-        gap: 21%;
+        gap: 21%!important;
     }
     .d70dcff543b0a8d8--userMenuContainer{
         width: 95%;
