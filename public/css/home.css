@@ -3575,7 +3575,7 @@ div:focus {
 
 }
 
-@media (max-width:425px) {
+@media (min-width: 320px) and (max-width: 425px) {
     html {
         width: 20vh;
     }
