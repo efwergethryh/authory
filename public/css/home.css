@@ -1625,7 +1625,7 @@ button[id="join"] {
     object-fit: cover;
     position: absolute;
     top: -2.2vw;
-    left: 2vw;
+    left: 2%;
 }
 
 /* Style the profile text */
@@ -3052,36 +3052,7 @@ p#message_content {
     background-color: #f0f0f0;
 }
 
-/* .profile-span {
-    display: none;
-    width: 17%;
-    flex-direction: column;
-    background-color: white;
-    position: absolute;
-    border-radius: 10px;
-    left: 82%;
-    top: 132%;
-    box-shadow: 0px 0px 5px 3px #8080803b;
-    z-index: 10;
-} */
-/* .profile-span {
-    z-index: 4322;
-    background-color: #fff;
-    border-radius: 5px;
-    width: 400px;
-    position: absolute;
-    top: 72px;
-    right: 8px;
-    box-shadow: 0 8px 64px rgba(99, 117, 138, .25);
-} */
 
-
-/* .profile-span a {
-    padding: 1vw;
-    cursor: pointer;
-    color: black;
-    text-decoration: none;
-} */
 /*! CSS Used from: https://next.amboss.com/us/static/assets/app~601b10ea.ef3ad4cda3ddbe4b.css */
 div:focus {
     outline: 0;
@@ -3187,13 +3158,17 @@ div:focus {
     z-index: 4322;
     background-color: #fff;
     border-radius: 5px;
-    width: 400px;
+    width: 30%;
     position: absolute;
     top: 72px;
-    right: 8px;
+    right: 2%;
     box-shadow: 0 8px 64px rgba(99, 117, 138, .25);
 }
-
+@media only screen and (min-width: 500px) and (max-width: 1024px) {
+    .d70dcff543b0a8d8--userMenuContainer{
+        width: 75%;
+    }
+}
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
 
     /* Styles for Retina iPads */
@@ -3207,7 +3182,7 @@ div:focus {
         font-size: x-large;
         max-width: 70%;
     }
-
+    
     tr {
         margin-top: 2.5%;
         display: flex;
@@ -3413,12 +3388,12 @@ div:focus {
 
         left: 46%;
         top: 100%;
-        width: 50%;
+        width: 95%;
     }
 
-    .cb6958e808d5fa34--menuOption {
+    /* .cb6958e808d5fa34--menuOption {
         gap: 15%;
-    }
+    } */
 
     .cb6958e808d5fa34--name {
         font-size: x-large;
@@ -3574,8 +3549,15 @@ div:focus {
     }
 
 }
-
-@media (min-width: 320px) and (max-width: 425px) {
+@media (min-width: 300px) and (max-width: 373px) {
+    .cb6958e808d5fa34--menuOption{
+        gap: 21%;
+    }
+    .d70dcff543b0a8d8--userMenuContainer{
+        width: 95%;
+    }
+}
+@media (min-width: 300px) and (max-width: 450px) {
     html {
         width: 20vh;
     }
@@ -3751,11 +3733,8 @@ div:focus {
         width: 46%;
     }
 
-    /* .cb6958e808d5fa34--menuOption {
-        gap: 21vw;
-    } */
     .cb6958e808d5fa34--menuOption {
-        gap: 21vw;
+        gap: 25%;
         flex-wrap: wrap;
     }
 
@@ -4315,17 +4294,7 @@ svg:not(:root) {
     /* src: local("Lato-Black"), local("Lato Black"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff2") format("woff2"), url("https://next.amboss.com/us/static/assets/fonts/Lato.900.normal.woff") format("woff"); */
 }
 
-/* .profile-span a {
-    color: inherit;
-    cursor: pointer;
-    margin-bottom: 16px;
-    display: flex;
-    position: relative;
-}
 
-.profile-span a:hover {
-    background-color: #dddddd;
-} */
 
 .settigns {
     display: none;
