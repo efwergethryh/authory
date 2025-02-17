@@ -159,7 +159,9 @@ async function loadPosts() {
         const response = await fetch(`/api/posts?skip=${skip}&limit=${limit}`, {
             method: "GET",
         });
-
+        document.getElementById("maincontent").innerHTML += `
+        <div class="yourpapers-label" id="joined">Home</div>
+        `
         if (response.ok) {
             const data = await response.json();
 
@@ -184,6 +186,7 @@ async function loadPosts() {
                 postsContainer.className = "posts";
                 document.getElementById("maincontent").appendChild(postsContainer);
             }
+            
             postsContainer.innerHTML += content;
 
             // Manage Load More button
