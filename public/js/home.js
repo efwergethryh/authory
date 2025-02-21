@@ -61,7 +61,7 @@ const chatContainer = document.querySelector('.chat-container');
 // const advancedSearch = document.querySelector('.advancedsearch-container');
 const toggleButton = document.getElementById('advanced_button');
 // const search_button = document.getElementById('search')
-const socket = io(API_BASE_URL, {
+const socket = io(localhostAPI, {
     transports: ['polling', 'websocket'],
     query: {
         userId: userId,
@@ -101,7 +101,6 @@ window.onload = async () => {
 }
 function display_Message(message) {
     try {
-        // Check if the message is valid
         if (!message || typeof message !== 'string') {
             throw new Error('Invalid message');
         }
@@ -109,7 +108,7 @@ function display_Message(message) {
         const mainContent = document.getElementById('maincontent')
         const popup_message = document.createElement('div');
         popup_message.classList.add('popup-message');
-        
+
         popup_message.innerHTML = `
             <h1>${message}</h1>
         `;
@@ -191,7 +190,7 @@ async function loadPosts() {
                 postsContainer.className = "posts";
                 document.getElementById("maincontent").appendChild(postsContainer);
             }
-            
+
             postsContainer.innerHTML += content;
 
             // Manage Load More button
@@ -3611,7 +3610,35 @@ async function get_conversation(id, type) {
     show_spinner();
 
     try {
+        let mainC = document.querySelector('.mainContent')
+        let chat_body = document.querySelector('.chat-body');
+        let message_history = document.querySelector('.message-history');
+        let chatContainer = document.querySelector('.chat-container');
 
+        if (!chatContainer) {
+            chatContainer = document.createElement('div')
+            chatContainer.className = 'chat-container'
+            chatContainer.id = 'chat-container'
+            mainContent.innerHTML = ''
+            isMobile() ? mainContent.appendChild(chatContainer) : ""
+        }
+        if (!chat_body) {
+
+            chat_body = document.createElement('div')
+            chat_body.className = 'chat-body'
+            chat_body.id = 'chat-body'
+            chatContainer.appendChild(chat_body)
+        }
+
+        if (!message_history) {
+            message_history = document.createElement('div')
+            message_history.className = 'message-history'
+            message_history.id = 'message-history'
+            chatContainer.appendChild(message_history)
+        }
+
+
+        console.log('mainContent', mainC, 'chatContainer', chatContainer);
 
         loadMessages(id, false)
 
@@ -3620,22 +3647,8 @@ async function get_conversation(id, type) {
         if (type === 'public') {
 
         } else {
-            // Ensure messaging-container is added only once
-            let chat_body = document.getElementById('chat-body');
-            let message_history = document.getElementById('message-history');
 
-            if (!chat_body) {
-                chat_body = document.createElement('div')
-                chat_body.className = 'chat-body'
-                chat_body.id = 'chat-body'
-                document.querySelector('.chat-container').append(chat_body)
-            }
-            if (!message_history) {
-                message_history = document.createElement('div')
-                message_history.className = 'message-history'
-                message_history.id = 'message-history'
-                chat_body.append(message_history)
-            }
+
             mainContent.classList.add('conversation')
             !isMobile() ? document.getElementById('message-history').classList.add('paperconversation') : "";
 
@@ -3654,27 +3667,39 @@ async function get_conversation(id, type) {
 
             if (response.ok) {
                 const data = await response.json();
-                const chats = document.querySelector('.chat-container');
-                message_history.innerHTML = ''
+                let chats = document.querySelector('.chat-container');
+
                 let Chatcontent = '';
+                if (!chats) {
+                    chats = document.createElement('div')
+                    chats.className = 'chat-container'
+                    mainContent.innerHTML = chats.outerHTML
+                }
+
+                message_history.innerHTML = ''
 
                 Chatcontent = `
-                        <div class="chatInfo" style="display:flex">
-                            <a onclick="close_conversation()">
-                                Close
-                            </a>
-                            <span style="font-weight:700;">
-                                ${data.conversation.conv_title}
-                            </span>
-                            <img src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
-                        </div>
+                    <div class="chatInfo" style="display:flex">
+                        <a onclick="close_p_conversation()">
+                            Close
+                        </a>
+                        <span style="font-weight:700;">
+                            ${data.conversation.conv_title}
+                        </span>
+                        <img src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
+                    </div>
                 `;
-
-                chats.innerHTML += Chatcontent;
+                let chatInfo = document.querySelector('.chatInfo')
+                if (chatInfo) {
+                    chatInfo.outerHTML = Chatcontent
+                }
+                else {
+                    chats.innerHTML += Chatcontent;
+                }
             }
         }
 
-        document.getElementById('message-history').onscroll = () => {
+        message_history.onscroll = () => {
             handleScroll()
         };
         inputListeners(`${type}`)
@@ -3914,7 +3939,7 @@ async function buildConversations(paper_UserId, paper_id) {
 
         for (const conversation of data.conversations) {
             conversationContent += `
-                <div id="conversationItem" onclick="get_conversation('${conversation._id}','private');  ${isMobile() ? "toggleSidebar();" : ""}" class="conversation-item">
+                <div id="conversationItem" onclick="get_conversation('${conversation._id}','private');" class="conversation-item">
                     <img src="/conversation_images/${conversation.conv_pic}" alt="${conversation.conv_title}"/>
                     <h3>${conversation.conv_title}</h3>
                     <div class="new-notification" id="private-new-${conversation._id}">
@@ -3961,7 +3986,7 @@ function handleScroll() {
 }
 
 async function show_conversation(paper_id) {
-
+    paperId =paper_id
     show_spinner()
     const mainContent = document.getElementById('maincontent');
     mainContent.style.display = 'block'
@@ -3973,15 +3998,7 @@ async function show_conversation(paper_id) {
         const paperResponse = await fetch(`/api/paper/${paper_id}`);
         const paperData = await paperResponse.json();
         const paper_userId = paperData.paper.user_id;
-        const exit_conversations = `
-        <div id="plus-exit" style="display:flex; flex-direction:row;">
-            <a id="exit_conversations">
-                <i class="fa-solid fa-arrow-left-long" style="margin-left: 8px;"></i>
-                <p style="margin: 0;">Exit conversations</p>
-            </a>
-           
-        </div>
-        `
+        
         const content = await buildConversations(paper_userId, paper_id); ``
         mainContent.innerHTML = `
         <div class="chat-container">
@@ -4022,7 +4039,8 @@ async function show_conversation(paper_id) {
 
         if (isMobile()) {
 
-            document.querySelector('.sidebar').innerHTML = `
+            document.querySelector('.mainContent').innerHTML = `
+            
                 <div class="chats-mobile">
                     <div id="chats-view" class="chats-view">
                         <div id="chats-container" class="chats-plus">
@@ -4032,10 +4050,7 @@ async function show_conversation(paper_id) {
                         </div>
 
                     </div>
-                    <a id="exit_conversations">
-                        <i class="fa-solid fa-arrow-left-long" style="margin-left: 8px;"></i>
-                        <p style="margin: 0;">Exit conversations</p>
-                    </a>
+                   
                 </div>
             `
 
@@ -4172,9 +4187,33 @@ async function load_f_messages(conversation_Id, user_id) {
         if (!messagesResponse.ok) throw new Error("Failed to fetch messages");
 
         const messagesData = await messagesResponse.json();
+        let chat_body = document.querySelector('.chat-body');
+        let message_history = document.querySelector('.message-history');
+        let chatContainer = document.querySelector('.chat-container');
 
+        if (!chatContainer) {
+            chatContainer = document.createElement('div')
+            chatContainer.className = 'chat-container'
+            chatContainer.id = 'chat-container'
+            mainContent.innerHTML = ''
+            isMobile() ? mainContent.appendChild(chatContainer) : ""
+        }
+        if (!chat_body) {
+
+            chat_body = document.createElement('div')
+            chat_body.className = 'chat-body'
+            chat_body.id = 'chat-body'
+            chatContainer.appendChild(chat_body)
+        }
+
+        if (!message_history) {
+            message_history = document.createElement('div')
+            message_history.className = 'message-history'
+            message_history.id = 'message-history'
+            chatContainer.appendChild(message_history)
+        }
         let message_content = "";
-        const message_history = document.getElementById('message-history');
+        // const message_history = document.getElementById('message-history');
         if (messagesData.messages.length === 0) {
             message_history.innerHTML = `<p>No Messages</p>`;
         } else {
@@ -4183,7 +4222,6 @@ async function load_f_messages(conversation_Id, user_id) {
             message_content = await buildMessageContent(messages, user_id);
             message_history.insertAdjacentHTML('afterbegin', message_content);
             document.querySelector('.mainContent').classList.add('conversation')
-
 
             const message = document.querySelector('.message-history .message-info:last-child .message.sent');
             const messagereceived = document.querySelector('.message-history .message-info:last-child .message.received');
@@ -4200,19 +4238,17 @@ async function load_f_messages(conversation_Id, user_id) {
         console.error("Error loading messages:", err);
     }
 }
-async function updateUserInfo(user) {
+async function updateUserInfo(user,type) {
     user = JSON.parse(user)
     console.log('user', user);
 
-    let content = await conversation_layout(user)
+    let content = await conversation_layout(user,type)
     mainContent.innerHTML = content;
     !isMobile() ? document.getElementById('message-history').classList.add('singleconversation') : "";
 
-    searchFunctionality()
-    load_f_conversations()
     control_sendButton('friend', user._id)
 }
-async function conversation_layout(user) {
+async function conversation_layout(user,type) {
     try {
         const translations = await loadTranslation()
         // user = JSON.parse(user)
@@ -4222,13 +4258,16 @@ async function conversation_layout(user) {
         const chats = document.getElementById('friendChats')
         content += `
             <div class="chat-container">
-                    
-                    <div class="userinfo">
-                        <img src="/profile_images/${rec_img}" alt="">
-                        <span>
-                            ${rec_name}
-                        </span>   
+                    <div class="chatInfo" style="display:flex">
+                        <a onclick="close_conversation()">
+                            Close
+                        </a>
+                        <span style="font-weight:700;">
+                             ${rec_name}
+                        </span>
+                        <img src="/conversation_images/${rec_img}" alt="Profile Picture">
                     </div>
+                    
                     ${!isMobile() ? `
                         <div id="chats-view" style="top:-10%" class="chats-view">
                             <div class="search-container">
@@ -4255,135 +4294,135 @@ async function conversation_layout(user) {
 
         if (isMobile()) {
 
-            document.querySelector('.sidebar').innerHTML = `
-                <div class="chats-mobile">
-                    <div id="chats-view" class="chats-view">
-                        <div class="search-container">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends}">
-                        </div>
-                        <div id="chats-container" class="chats-plus">
-                            <div id="friendChats" class="chat">
+            // document.querySelector('.sidebar').innerHTML = `
+            //     <div class="chats-mobile">
+            //         <div id="chats-view" class="chats-view">
+            //             <div class="search-container">
+            //                 <i class="fa-solid fa-magnifying-glass"></i>
+            //                 <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends}">
+            //             </div>
+            //             <div id="chats-container" class="chats-plus">
+            //                 <div id="friendChats" class="chat">
 
-                            </div>
-                        </div>
-                    </div>
-                    <a id="exit_conversations">
-                        <i class="fa-solid fa-arrow-left-long" style="margin-left: 8px;"></i>
-                        <p style="margin: 0;">Exit conversations</p>
-                    </a>
-                </div>
-            `
+            //                 </div>
+            //             </div>
+            //         </div>
+            //         <a id="exit_conversations">
+            //             <i class="fa-solid fa-arrow-left-long" style="margin-left: 8px;"></i>
+            //             <p style="margin: 0;">Exit conversations</p>
+            //         </a>
+            //     </div>
+            // `
             // const chatsView = document.getElementById('chats')
             // chatsView.innerHTML += content;
-            document.getElementById('exit_conversations').addEventListener('click', function () {
+            //             document.getElementById('exit_conversations').addEventListener('click', function () {
 
-                const sideBarContent = `
-                    <ul id="sidebar-content">
-        <li>
-            <a id="home" href="#">
+            //                 const sideBarContent = `
+            //                     <ul id="sidebar-content">
+            //         <li>
+            //             <a id="home" href="#">
 
-                <div id="head" class="header">
-                <i class="fas fa-home"></i>
-                <span class="text-only">Home</span>
+            //                 <div id="head" class="header">
+            //                 <i class="fas fa-home"></i>
+            //                 <span class="text-only">Home</span>
 
-                </div>
-            </a>
-        </li>
-      <li>
-         <a  class="toggle-link" id="paper-toggle" href="">
-            <div class="toggle-tab-container">
-               <div id="head" class="header">
-                  <i id="paper" class="fas fa-file"></i>
-                  <span id="new-paper" class="text toggle-item">Create paper</span>
-                  <div id="create-newNotification" class="new-notfication"></div>
-                  <span class="tab-icon">
-                     <div class="create-dropdown">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-                           stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
-                           viewBox="0 0 34 34" role="img">
-                           <path d="m15 18 6 6-6 6"></path>
-                        </svg>
-                     </div>
-                  </span>
+            //                 </div>
+            //             </a>
+            //         </li>
+            //       <li>
+            //          <a  class="toggle-link" id="paper-toggle" href="">
+            //             <div class="toggle-tab-container">
+            //                <div id="head" class="header">
+            //                   <i id="paper" class="fas fa-file"></i>
+            //                   <span id="new-paper" class="text toggle-item">Create paper</span>
+            //                   <div id="create-newNotification" class="new-notfication"></div>
+            //                   <span class="tab-icon">
+            //                      <div class="create-dropdown">
+            //                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+            //                            stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
+            //                            viewBox="0 0 34 34" role="img">
+            //                            <path d="m15 18 6 6-6 6"></path>
+            //                         </svg>
+            //                      </div>
+            //                   </span>
 
-               </div>
-               <ul class="sublist">
-                  <li id="start_paper_button">Start a paper</li>
-                  <li id="your-papers-button">Your papers</li>
-               </ul>
-            </div>
-         </a>
-      </li>
-      <li>
-         <a class="toggle-link" id="paper-toggle-2" href="">
-            <div class="toggle-tab-container-2">
-               <div id="head" class="header">
-                  <i id="paper-2" class="fa-solid fa-handshake"></i>
-                  <span id="join-paper" class="text toggle-item">Join papers</span>
-                  <div id="join-paperNotification" class="new-notfication"></div>
+            //                </div>
+            //                <ul class="sublist">
+            //                   <li id="start_paper_button">Start a paper</li>
+            //                   <li id="your-papers-button">Your papers</li>
+            //                </ul>
+            //             </div>
+            //          </a>
+            //       </li>
+            //       <li>
+            //          <a class="toggle-link" id="paper-toggle-2" href="">
+            //             <div class="toggle-tab-container-2">
+            //                <div id="head" class="header">
+            //                   <i id="paper-2" class="fa-solid fa-handshake"></i>
+            //                   <span id="join-paper" class="text toggle-item">Join papers</span>
+            //                   <div id="join-paperNotification" class="new-notfication"></div>
 
-                  <span class="tab-icon">
-                     <div class="create-dropdown">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-                           stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
-                           viewBox="0 0 34 34" role="img">
-                           <path d="m15 18 6 6-6 6"></path>
-                        </svg>
-                     </div>
-                  </span>
-               </div>
-               <ul class="sublist-2">
-                  <li id="searchpapers-button">Search </li>
-                  <li id="joined-papers-button">already joined</li>
-               </ul>
-            </div>
-         </a>
-      </li>
-      <li>
-         <a class="toggle-link" onclick="show_Single_conversation()" id="paper-toggle-4" href="">
-            <div class="toggle-tab-container-4">
-               <div id="head" class="header">
-                  <i id="paper-3" class="fa-solid fa-user-group"></i>
-                  <span id="friends-tab" class="text toggle-item">friends</span>
-                  
-               </div>
-               
-            </div>
-         </a>
-      <li>
-         <a onclick="show_public_conversation()" href="#" id="chat">
-            <!-- <i class="fa-solid fa-comment"></i>
-            <span class="text-only">Public chat</span> -->
-            <div id="head" class="header">
-               <!-- <i id="paper-3" class="fa-solid fa-user-group"></i> -->
-               <i class="fa-solid fa-comment"></i>
-               <span id="chat-tab" class="text toggle-item">Public chat</span>
+            //                   <span class="tab-icon">
+            //                      <div class="create-dropdown">
+            //                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+            //                            stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
+            //                            viewBox="0 0 34 34" role="img">
+            //                            <path d="m15 18 6 6-6 6"></path>
+            //                         </svg>
+            //                      </div>
+            //                   </span>
+            //                </div>
+            //                <ul class="sublist-2">
+            //                   <li id="searchpapers-button">Search </li>
+            //                   <li id="joined-papers-button">already joined</li>
+            //                </ul>
+            //             </div>
+            //          </a>
+            //       </li>
+            //       <li>
+            //          <a class="toggle-link" onclick="show_Single_conversation()" id="paper-toggle-4" href="">
+            //             <div class="toggle-tab-container-4">
+            //                <div id="head" class="header">
+            //                   <i id="paper-3" class="fa-solid fa-user-group"></i>
+            //                   <span id="friends-tab" class="text toggle-item">friends</span>
 
-            </div>
-         </a>
-      </li>
-      <li id="notifications-button">
-         <a href="#">
-            <!-- <i class="fa-solid fa-bell"></i>
-            <span class="text-only">Notifications</span> -->
-            <div id="head" class="header">
-               <i class="fa-solid fa-bell"></i>
-               <span id="notifications" class="text-only">Notifications</span>
+            //                </div>
 
-               </span>
-            </div>
-            <div id="newNotification" class="new-notfication"></div>
-         </a>
-      </li>
-   </ul>
-                `
+            //             </div>
+            //          </a>
+            //       <li>
+            //          <a onclick="show_public_conversation()" href="#" id="chat">
+            //             <!-- <i class="fa-solid fa-comment"></i>
+            //             <span class="text-only">Public chat</span> -->
+            //             <div id="head" class="header">
+            //                <!-- <i id="paper-3" class="fa-solid fa-user-group"></i> -->
+            //                <i class="fa-solid fa-comment"></i>
+            //                <span id="chat-tab" class="text toggle-item">Public chat</span>
 
-                let sidebar = document.getElementById('sidebar')
+            //             </div>
+            //          </a>
+            //       </li>
+            //       <li id="notifications-button">
+            //          <a href="#">
+            //             <!-- <i class="fa-solid fa-bell"></i>
+            //             <span class="text-only">Notifications</span> -->
+            //             <div id="head" class="header">
+            //                <i class="fa-solid fa-bell"></i>
+            //                <span id="notifications" class="text-only">Notifications</span>
 
-                sidebar.innerHTML = sideBarContent
+            //                </span>
+            //             </div>
+            //             <div id="newNotification" class="new-notfication"></div>
+            //          </a>
+            //       </li>
+            //    </ul>
+            //                 `
 
-            })
+            //                 let sidebar = document.getElementById('sidebar')
+
+            //                 sidebar.innerHTML = sideBarContent
+
+            //             })
         } else {
             // toggleSidebar();
         }
@@ -4460,26 +4499,6 @@ async function show_Single_conversation() {
                 </div>
             </div>
             `: `
-            <div class="chats-mobile">
-                
-                <div id="chats-view" class="chats-view">
-                    <div class="search-container">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends} ">
-                    </div>
-                    <div id="chats-container" class="chats-plus">
-                        <div id="friendChats" class="chat">
-
-                        </div>
-                    </div>
-
-                </div>
-                <a id="exit_conversations" onclick="addExitListeners()">
-                    <i class="fa-solid fa-arrow-left-long" style="margin-left: 8px;"></i>
-                    <p style="margin: 0;">Exit conversations</p>
-                </a>
-            </div>
-            
             `}
         `
         let chatContent = `
@@ -4489,21 +4508,36 @@ async function show_Single_conversation() {
         `
 
         if (isMobile()) {
-            mainContent.innerHTML = `
-            <div class="chat-container">
-             
+            // mainContent.innerHTML = `
+            // <div class="chat-container">
+
+            // </div>
+            // `
+            document.querySelector('.mainContent').innerHTML = `
+            
+            <div class="chats-mobile">
+                
+                <div id="chats-view" class="chats-view">
+                    <div class="search-container">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends} ">
+                    </div>
+                    <div id="chats-container" class="chats-plus">
+                        <div id="friendChats" class="chat">
+                          
+                        </div>
+                    </div>
+                </div>
+                
             </div>
-            `
-            document.getElementById('sidebar').innerHTML = chats
-            document.getElementById('sidebar').addEventListener('click', async function (event) {
-                const exitConversations = event.target.closest('#exit_conversations');
-
-                // console.log('target', target.id);
-
-                if (exitConversations) {
-                    await addExitListeners()
-                }
-            })
+        `
+            // document.getElementById('sidebar').innerHTML = chats
+            // document.getElementById('sidebar').addEventListener('click', async function (event) {
+            //     const exitConversations = event.target.closest('#exit_conversations');
+            //     if (exitConversations) {
+            //         await addExitListeners()
+            //     }
+            // })
         }
         else {
             mainContent.innerHTML = chatContent
@@ -5362,6 +5396,7 @@ async function load_f_conversations() {
             chats.id = 'friendChats'
             chats.className = 'chat'
             chats.style.top = '-9%'
+            mainContent.appendChild(chats)
             if (document.getElementById('chats-view')) {
                 document.getElementById('sidebar').append(chats)
             }
@@ -5372,22 +5407,28 @@ async function load_f_conversations() {
         else {
             for (const conversation of data.f_conversations) {
 
-
-
                 let user = conversation.receiverInfo[0] || conversation.senderInfo[0];
 
                 if (user._id === userId) {
                     user = conversation.senderInfo[0]
                 }
                 Chatcontent += `
-                    <div id="conversationItem" onclick="updateUserInfo('${JSON.stringify(user).replace(/"/g, '&quot;')}');load_f_messages('${conversation._id}','${user._id}'); ${isMobile() ? "toggleSidebar();" : ""}" class="conversation-item">
+                    <div id="conversationItem" onclick="load_f_messages('${conversation._id}','${user._id}'); updateUserInfo('${JSON.stringify(user).replace(/"/g, '&quot;')}');" class="conversation-item">
                         <img src="/profile_images/${user.profile_picture}" alt="${conversation.conv_title}"/>
                         <h3>${user.name}</h3>
                         
                     </div>
                     `;
             }
-            chats.innerHTML = Chatcontent;
+            if (isMobile()) {
+                chats = document.getElementById('friendChats')
+                console.log('chats', chats);
+
+
+            } else {
+
+            }
+            chats.innerHTML = Chatcontent
         }
 
 
@@ -5407,21 +5448,47 @@ async function load_conversation(id) {
     }
 }
 
-function close_conversation() {
-    const message_history = document.getElementById('message-history');
-    const message_container = document.getElementById('messaging-container');
-    const chatInfo = document.querySelector('.chatInfo');
-    const chatContainer = document.querySelector('.chat-container')
-    const chatsView = document.getElementById('chats-view')
-    chatContainer.innerHTML = ''
+async function close_conversation() {
 
-    if (!isMobile()) {
-        chatContainer.appendChild(chatsView)
-
-    }
-
+    const translations = await loadTranslation()
+    document.querySelector('.mainContent').innerHTML = `
+            
+    <div class="chats-mobile">
+        
+        <div id="chats-view" class="chats-view">
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="friend-search-input" class="search-input" type="text" placeholder=" ${translations.friends.searchFriends} ">
+            </div>
+            <div id="chats-container" class="chats-plus">
+                <div id="friendChats" class="chat">
+                  
+                </div>
+            </div>
+        </div>
+        
+    </div>
+`
+    await load_f_conversations()
+    addExitListeners()
 }
+async function close_p_conversation() {
+    document.querySelector('.mainContent').innerHTML = `
+            
+                <div class="chats-mobile">
+                    <div id="chats-view" class="chats-view">
+                        <div id="chats-container" class="chats-plus">
+                            <div id="chats" class="chat">
 
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+            `
+    await show_conversation(paperId)
+}
 function toggleSidebar() {
     const circleButton = document.querySelector('.circle-button');
     const sidebar = document.getElementById('sidebar');

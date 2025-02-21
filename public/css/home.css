@@ -861,6 +861,7 @@ i[id="icon"] {
     margin-top: 5%;
     height: fit-content;
     position: relative;
+    left: 2.5%; 
 }
 
 .yourfriends-container {
@@ -1026,12 +1027,17 @@ a#cancel {
     color: #3078D8;
     font-weight: 600;
     /* Text color */
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    word-break: break-word;
 }
 
 .paper-line span strong {
     cursor: pointer;
     text-decoration: none;
     color: grey;
+ 
 }
 
 .input-container {
@@ -1106,8 +1112,12 @@ a#cancel {
 }
 
 .paperinfo {
-    text-overflow: ellipsis;
-    width: 100%;
+    max-width: 93%;
+    width: 100%; /* Ensures responsiveness */
+    overflow-wrap: break-word; /* Allows words to wrap properly */
+    word-break: break-word; /* Ensures long words break */
+    white-space: normal; /* Allows text to wrap to the next line */
+    overflow: hidden; /* Prevents scrollbars */
 }
 
 .paperinfo img {
@@ -3578,7 +3588,7 @@ div:focus {
         left: 14%;
     }
     .chats-plus {
-        height: 84%;
+        height: 90%;
     }
 
     .messaging-container textarea {
@@ -3594,7 +3604,7 @@ div:focus {
         align-items: center;
 
     }
-
+    
     .plus-sign {
         top: 4%;
         margin-left: 55%;
@@ -3829,6 +3839,7 @@ div:focus {
 
     .chats-view {
         width: 100%;
+        top: 5%;    
     }
 
     .message-history {
