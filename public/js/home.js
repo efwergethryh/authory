@@ -1558,7 +1558,12 @@ async function addListeners() {
             }
             data.papers.forEach(paper => {
                 content += `
-             <div id="${paper._id}" class="paper-line">
+             <div 
+     id="${paper._id}" 
+     class="paper-line"
+     onclick="show_conversation(&quot;${encodeURIComponent(JSON.stringify(paper))}&quot;)">
+
+                <i id="gear" onclick="event.stopProbagation();event.preventDefault()" class="gear fa-solid fa-ellipsis-vertical"></i>
                 <div class="paperinfo">
                     <i id="joined-paper" class="fas fa-file"></i>
                     <span class="paper-title"><strong>${paper.title}</strong></span>
@@ -1584,11 +1589,7 @@ async function addListeners() {
                         </strong>
                     </div>
                 </div>
-                <div class="button-container">
-                    <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
-                    <div class="divider"></div>
-                    <i id="gear" class="gear fa-solid fa-bars"></i>
-                </div>
+                
         </div>
             `
 
@@ -2398,7 +2399,7 @@ async function addExitListeners() {
                 <span class="dash"><strong>-</strong></span>
                 <span class="paper-tags" id="${paper._id}"><strong>${paper._id}</strong></span>
             </div>
-            <a id="enter" onclick="show_conversation('${paper._id}')">Enter</a>
+            <a id="enter" onclick="show_conversation('${JSON.stringify(paper)}')">Enter</a>
 
     </div>
         `
@@ -3033,6 +3034,8 @@ async function buildUsers(userIds) {
 }
 async function buildConvUsers(userIds, conversation) {
     let content = '';
+    console.log('userIDs',userIds);
+    
     if (userIds.length == 0) {
         content = "No users have joined your paper yet!"
     }
@@ -3604,13 +3607,12 @@ async function loadMessages(id, is_filter = false) {
 
 
 
-async function get_conversation(id, type) {
+async function get_conversation(id, type,paper) {
     conv_id = id;
     cskip = 0
     show_spinner();
 
     try {
-        let mainC = document.querySelector('.mainContent')
         let chat_body = document.querySelector('.chat-body');
         let message_history = document.querySelector('.message-history');
         let chatContainer = document.querySelector('.chat-container');
@@ -3622,7 +3624,7 @@ async function get_conversation(id, type) {
             mainContent.innerHTML = ''
             isMobile() ? mainContent.appendChild(chatContainer) : ""
         }
-        if (!chat_body) {
+        if (!chat_body) {  
 
             chat_body = document.createElement('div')
             chat_body.className = 'chat-body'
@@ -3638,7 +3640,6 @@ async function get_conversation(id, type) {
         }
 
 
-        console.log('mainContent', mainC, 'chatContainer', chatContainer);
 
         loadMessages(id, false)
 
@@ -3686,7 +3687,7 @@ async function get_conversation(id, type) {
                         <span style="font-weight:700;">
                             ${data.conversation.conv_title}
                         </span>
-                        <img src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
+                        <img onclick="conversationDetails(&quot;${encodeURIComponent(JSON.stringify(paper))}&quot;,&quot;${encodeURIComponent(JSON.stringify(data.conversation))}&quot;)" src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
                     </div>
                 `;
                 let chatInfo = document.querySelector('.chatInfo')
@@ -3850,6 +3851,8 @@ function notify_conversation(id) {
     }
 }
 async function conversationPopup(conversation) {
+    conversation = decodeURIComponent(conversation)
+    conversation = JSON.parse(conversation)
     const convUsers = document.getElementById('conversation-users')
     convUsers.style.display = 'flex'
     const closeButton = document.getElementById('close-button');
@@ -3861,15 +3864,15 @@ async function conversationPopup(conversation) {
     })
 }
 
-let cachedUsers = null; // Store fetched users globally
-
+let cachedUsers = null; 
 async function conversationAdd(conversation) {
+    conversation = decodeURIComponent(conversation)
+    conversation = JSON.parse(conversation)
     const convUsers = document.getElementById('conversation-users');
     convUsers.style.display = 'flex';
 
     const closeButton = document.getElementById('close-button');
     let content = ``
-    // Check if users are already cached
     if (!cachedUsers) {
         try {
             const usersResponse = await fetch('/api/users/1', { method: 'GET' });
@@ -3923,12 +3926,41 @@ async function conversationAdd(conversation) {
         convUsers.style.display = 'none';
     });
 }
-
-async function buildConversations(paper_UserId, paper_id) {
+async function conversationDetails(paper,conversation) {
+    console.log('paper',paper,'conversation',conversation);
+    conversation = decodeURIComponent(conversation)
+    conversation = JSON.parse(conversation)
+    let conversationInfo= document.getElementById('conversation-info')
+    conversationInfo.style.display ='flex'
+    let content =`
+        <i id="close" style="align-self:end; position:relative; top:-2vw;" class="fa-solid fa-xmark"></i>
+        <img class="convImage" src="/conversation_images/${conversation.conv_pic}">
+        <p>${conversation.conv_title}</p>
+        <a onclick="conversationAdd(&quot;${encodeURIComponent(JSON.stringify(conversation))}&quot;)" >
+            <i class="fa-solid fa-user-plus"></i>
+            <p>Add members</p>
+        
+        </a>
+        <a onclick ="conversationPopup(&quot;${encodeURIComponent(JSON.stringify(conversation))}&quot;)"> 
+            <i class="fa-solid fa-user-minus"></i>
+            <p>Remove members</p>
+        </a>
+        <a> 
+          <i class="fa-solid fa-trash"></i>
+            <p>Delete chat</p>
+        </a>
+    `
+    
+    conversationInfo.innerHTML =content
+    document.getElementById('close').addEventListener('click',()=>{
+        conversationInfo.style.display ='none'
+    })  
+}
+async function buildConversations(paper_UserId, paper) {
     let conversationContent = "";
-
+    
     try {
-        const response = await fetch(`/api/conversations/${paper_id}`, {
+        const response = await fetch(`/api/conversations/${paper._id}`, {
             method: 'GET',
         });
         const data = await response.json();
@@ -3939,24 +3971,19 @@ async function buildConversations(paper_UserId, paper_id) {
 
         for (const conversation of data.conversations) {
             conversationContent += `
-                <div id="conversationItem" onclick="get_conversation('${conversation._id}','private');" class="conversation-item">
+                <div id="conversationItem" onclick="get_conversation('${conversation._id}', 'private', &quot;${encodeURIComponent(JSON.stringify(paper))}&quot;)" class="conversation-item">
                     <img src="/conversation_images/${conversation.conv_pic}" alt="${conversation.conv_title}"/>
-                    <h3>${conversation.conv_title}</h3>
-                    <div class="new-notification" id="private-new-${conversation._id}">
-                    </div>
-                    
-                    <i onclick='event.preventDefault(); event.stopPropagation(); conversationPopup(${JSON.stringify(conversation)})' style="display: ${conversation.conv_title == 'welcome chat' ? 'none' : 'block'};" class="fa-solid fa-user-minus"></i>
-                    <i onclick='event.preventDefault(); event.stopPropagation(); conversationAdd(${JSON.stringify(conversation)})' style="display: ${conversation.conv_title == 'welcome chat' ? 'none' : 'block'};" class="fa-solid fa-user-plus"></i>
-
+                        <h3>${conversation.conv_title}</h3>
+                        <div class="new-notification" id="private-new-${conversation._id}">
+                        </div>
                 </div>
             `;
         }
 
 
-        console.log('queue', notificationQueue);
         conversationContent += `
             <div class="plus-sign"
-                onclick="add_conversation('${paper_id}'); event.preventDefault(); event.stopPropagation()"
+                onclick="add_conversation('${paper._id}'); event.preventDefault(); event.stopPropagation()"
                 style="${String(paper_UserId) === String(userId) ? 'display: block;' : 'display: none;'}">
                 <i class="fa-solid fa-plus"></i>
             </div>
@@ -3985,8 +4012,10 @@ function handleScroll() {
     }
 }
 
-async function show_conversation(paper_id) {
-    paperId =paper_id
+async function show_conversation(paper) {
+    paper = decodeURIComponent(paper)
+    paper = JSON.parse(paper)
+    paperId =paper._id
     show_spinner()
     const mainContent = document.getElementById('maincontent');
     mainContent.style.display = 'block'
@@ -3995,11 +4024,11 @@ async function show_conversation(paper_id) {
         popup.style.display = 'none';
     });
     try {
-        const paperResponse = await fetch(`/api/paper/${paper_id}`);
+        const paperResponse = await fetch(`/api/paper/${paperId}`);
         const paperData = await paperResponse.json();
         const paper_userId = paperData.paper.user_id;
         
-        const content = await buildConversations(paper_userId, paper_id); ``
+        const content = await buildConversations(paper_userId, paper); 
         mainContent.innerHTML = `
         <div class="chat-container">
         
@@ -4056,113 +4085,7 @@ async function show_conversation(paper_id) {
 
             const chatsView = document.getElementById('chats')
             chatsView.innerHTML += content;
-            document.getElementById('exit_conversations').addEventListener('click', function () {
 
-                const sideBarContent = `
-                    <ul id="sidebar-content">
-        <li>
-            <a id="home" href="#">
-
-                <div id="head" class="header">
-                <i class="fas fa-home"></i>
-                <span class="text-only">Home</span>
-
-                </div>
-            </a>
-        </li>
-      <li>
-         <a  class="toggle-link" id="paper-toggle" href="">
-            <div class="toggle-tab-container">
-               <div id="head" class="header">
-                  <i id="paper" class="fas fa-file"></i>
-                  <span id="new-paper" class="text toggle-item">Create paper</span>
-                  <div id="create-newNotification" class="new-notfication"></div>
-                  <span class="tab-icon">
-                     <div class="create-dropdown">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-                           stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
-                           viewBox="0 0 34 34" role="img">
-                           <path d="m15 18 6 6-6 6"></path>
-                        </svg>
-                     </div>
-                  </span>
-
-               </div>
-               <ul class="sublist">
-                  <li id="start_paper_button">Start a paper</li>
-                  <li id="your-papers-button">Your papers</li>
-               </ul>
-            </div>
-         </a>
-      </li>
-      <li>
-         <a class="toggle-link" id="paper-toggle-2" href="">
-            <div class="toggle-tab-container-2">
-               <div id="head" class="header">
-                  <i id="paper-2" class="fa-solid fa-handshake"></i>
-                  <span id="join-paper" class="text toggle-item">Join papers</span>
-                  <div id="join-paperNotification" class="new-notfication"></div>
-
-                  <span class="tab-icon">
-                     <div class="create-dropdown">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-                           stroke-linejoin="round" stroke-width="2" class="feather feather-chevron-down"
-                           viewBox="0 0 34 34" role="img">
-                           <path d="m15 18 6 6-6 6"></path>
-                        </svg>
-                     </div>
-                  </span>
-               </div>
-               <ul class="sublist-2">
-                  <li id="searchpapers-button">Search </li>
-                  <li id="joined-papers-button">already joined</li>
-               </ul>
-            </div>
-         </a>
-      </li>
-      <li>
-         <a class="toggle-link" onclick="show_Single_conversation()" id="paper-toggle-4" href="">
-            <div class="toggle-tab-container-4">
-               <div id="head" class="header">
-                  <i id="paper-3" class="fa-solid fa-user-group"></i>
-                  <span id="friends-tab" class="text toggle-item">friends</span>
-                  
-               </div>
-               
-            </div>
-         </a>
-      <li>
-         <a onclick="show_public_conversation()" href="#" id="chat">
-            <!-- <i class="fa-solid fa-comment"></i>
-            <span class="text-only">Public chat</span> -->
-            <div id="head" class="header">
-               <!-- <i id="paper-3" class="fa-solid fa-user-group"></i> -->
-               <i class="fa-solid fa-comment"></i>
-               <span id="chat-tab" class="text toggle-item">Public chat</span>
-
-            </div>
-         </a>
-      </li>
-      <li id="notifications-button">
-         <a href="#">
-            <!-- <i class="fa-solid fa-bell"></i>
-            <span class="text-only">Notifications</span> -->
-            <div id="head" class="header">
-               <i class="fa-solid fa-bell"></i>
-               <span id="notifications" class="text-only">Notifications</span>
-
-               </span>
-            </div>
-            <div id="newNotification" class="new-notfication"></div>
-         </a>
-      </li>
-   </ul>
-                `
-
-                let sidebar = document.getElementById('sidebar')
-
-                sidebar.innerHTML = sideBarContent
-            })
         } else {
             toggleSidebar();
         }
@@ -4178,7 +4101,7 @@ async function show_conversation(paper_id) {
         popup.style.display = 'none';
     });
     control_sendButton('private', null)
-    document.querySelector('.scroll-button').style.top = '64%'
+    // document.querySelector('.scroll-button').style.top = '64%'
 }
 async function load_f_messages(conversation_Id, user_id) {
     try {
@@ -4240,7 +4163,6 @@ async function load_f_messages(conversation_Id, user_id) {
 }
 async function updateUserInfo(user,type) {
     user = JSON.parse(user)
-    console.log('user', user);
 
     let content = await conversation_layout(user,type)
     mainContent.innerHTML = content;
@@ -4248,10 +4170,9 @@ async function updateUserInfo(user,type) {
 
     control_sendButton('friend', user._id)
 }
-async function conversation_layout(user,type) {
+async function conversation_layout(user,paper) {
     try {
         const translations = await loadTranslation()
-        // user = JSON.parse(user)
         let content = '';
         const rec_name = user.name;
         const rec_img = user.profile_picture;
@@ -4265,7 +4186,7 @@ async function conversation_layout(user,type) {
                         <span style="font-weight:700;">
                              ${rec_name}
                         </span>
-                        <img src="/conversation_images/${rec_img}" alt="Profile Picture">
+                        <img onclick="conversationDetails(&quot;${encodeURIComponent(JSON.stringify(paper))}&quot;)" src="/conversation_images/${rec_img}" alt="Profile Picture">
                     </div>
                     
                     ${!isMobile() ? `
@@ -4450,7 +4371,6 @@ async function friend_messages(user_id) {
             </div>
             `
         if (!data.f_conversation) {
-            // No conversation exists
             content = await conversation_layout(user_id);
             mainContent.innerHTML = content;
 

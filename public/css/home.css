@@ -861,7 +861,7 @@ i[id="icon"] {
     margin-top: 5%;
     height: fit-content;
     position: relative;
-    left: 2.5%; 
+    left: 2.5%;
 }
 
 .yourfriends-container {
@@ -878,11 +878,12 @@ i[id="icon"] {
 
 #gear {
     position: relative;
-    top: 0vh;
+    top: -2vw;
     box-shadow: none;
-    left: -6%;
+    left: 97%;
     cursor: pointer;
-    color: white;
+    padding: 1vw;
+    color: grey;
 }
 
 .paper-settings {
@@ -1019,25 +1020,23 @@ a#cancel {
 .paper-line span,
 .paper-line .dash {
     margin: 0;
-    /* Remove any margin */
     padding: 0;
-    /* Remove any padding */
     font-size: 90%;
-    /* Font size for readability */
     color: #3078D8;
     font-weight: 600;
-    /* Text color */
     display: inline-block;
-    max-width: 100%;
-    overflow: hidden;
+    max-width: 596px;
+    text-overflow: ellipsis;
     word-break: break-word;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .paper-line span strong {
     cursor: pointer;
     text-decoration: none;
     color: grey;
- 
+
 }
 
 .input-container {
@@ -1046,10 +1045,16 @@ a#cancel {
 
 }
 
-.input-container input {
+.input-container textarea{
     caret-color: #000000;
+    border-color: rgb(163, 178, 189);
+    border-radius: 4px;
 }
-
+.max-limit{
+    margin-left: 48%;
+    color: grey;
+    font-size: small;
+}
 .tags-overlay {
     position: absolute;
     top: 0;
@@ -1082,6 +1087,7 @@ a#cancel {
 
 #description {
     color: black;
+    
 }
 
 .is-tag {
@@ -1113,11 +1119,11 @@ a#cancel {
 
 .paperinfo {
     max-width: 93%;
-    width: 100%; /* Ensures responsiveness */
-    overflow-wrap: break-word; /* Allows words to wrap properly */
-    word-break: break-word; /* Ensures long words break */
-    white-space: normal; /* Allows text to wrap to the next line */
-    overflow: hidden; /* Prevents scrollbars */
+    width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    overflow: hidden;
 }
 
 .paperinfo img {
@@ -1411,7 +1417,7 @@ table td {
     height: 20px;
     color: #666;
     position: relative;
-    left: -30px;
+    left: 15vw;
 }
 
 #title {
@@ -1487,7 +1493,7 @@ a#enter,
 
 a#enter:hover,
 #gear:hover {
-    color: gainsboro;
+    background: gainsboro;
 }
 
 .join-button,
@@ -1746,8 +1752,8 @@ button[id="send_message"] {
     flex-direction: row;
     gap: 39%;
     align-items: center;
-    position: absolute;
-    top: -0.5%;
+    position: fixed;
+    top: 8.5%;
     left: 31.6%;
     width: 69%;
     background-color: #f7f7f7;
@@ -2063,13 +2069,14 @@ p#file-frame {
 }
 
 .chat {
-
     background-color: transparent;
     display: flex;
     flex-direction: column;
     position: relative;
     left: -10%;
-    height: 100%;
+    height: 42vw;
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 109%;
     margin: 0;
     padding: 0;
@@ -2580,7 +2587,7 @@ p#file-frame {
     background-color: transparent;
     top: -70%;
     left: 30%;
-    z-index: -10;
+    z-index: 0;
     padding-bottom: 10px;
 
 }
@@ -2608,7 +2615,7 @@ p#file-frame {
 
 .message-history.paperconversation {
     width: 98% !important;
-    top: -31%;
+    top: -44%;
     height: 115%;
     z-index: -6;
     overflow-y: scroll;
@@ -3175,11 +3182,49 @@ div:focus {
     right: 2%;
     box-shadow: 0 8px 64px rgba(99, 117, 138, .25);
 }
+
+.conversation-info {
+    position: relative;
+    display: none;
+    flex-direction: column;
+    left: 31%;
+    top: 7vw;
+    width: 40%;
+    padding: 2% 0% 0% 0%;
+    background: white;
+    border-radius: 4px;
+    align-items: center;
+    box-shadow: #80808033 0px 0px 7px 5px;
+}
+
+.conversation-info a {
+    display: flex;
+    width: 100%;
+    color: #808080 !important;
+    gap: 5%;
+    padding: 1%;
+}
+
+.conversation-info a:hover {
+    background-color: rgb(201 201 201 / 48%);
+}
+
+.convImage {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+}
+
+.conversation-info p {
+    font-weight: bold;
+}
+
 @media only screen and (min-width: 500px) and (max-width: 1024px) {
-    .d70dcff543b0a8d8--userMenuContainer{
+    .d70dcff543b0a8d8--userMenuContainer {
         width: 75%;
     }
 }
+
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
 
     /* Styles for Retina iPads */
@@ -3193,7 +3238,7 @@ div:focus {
         font-size: x-large;
         max-width: 70%;
     }
-    
+
     tr {
         margin-top: 2.5%;
         display: flex;
@@ -3560,22 +3605,27 @@ div:focus {
     }
 
 }
+
 @media (min-width: 324px) and (max-width: 370px) {
-    .cb6958e808d5fa34--menuOption{
-        gap:18%!important;
+    .cb6958e808d5fa34--menuOption {
+        gap: 18% !important;
     }
-    .d70dcff543b0a8d8--userMenuContainer{
+
+    .d70dcff543b0a8d8--userMenuContainer {
         width: 95%;
     }
 }
+
 @media (min-width: 300px) and (max-width: 345px) {
-    .cb6958e808d5fa34--menuOption{
-        gap:10%!important;
+    .cb6958e808d5fa34--menuOption {
+        gap: 10% !important;
     }
-    .d70dcff543b0a8d8--userMenuContainer{
+
+    .d70dcff543b0a8d8--userMenuContainer {
         width: 95%;
     }
 }
+
 @media (min-width: 300px) and (max-width: 450px) {
     html {
         width: 20vh;
@@ -3584,15 +3634,55 @@ div:focus {
     body {
         width: 100%;
     }
-    .popup-message{
+
+    .popup-message {
         left: 14%;
     }
+
     .chats-plus {
         height: 90%;
     }
 
+    .conversation-info p {
+        font-size: small;
+    }
+
     .messaging-container textarea {
         height: 44px;
+    }
+
+    .paper-line span,
+    .paper-line .dash {
+        max-width: 200px;
+    }
+    #description{
+        height: 23vw;
+    }
+    .conversation-info {
+        left: 67%;
+        top: 29vw;
+        width: 145%;
+        gap: 2vw;
+        padding: 5% 0 0 0;
+    }
+
+    .conversation-info a {
+        width: 100%;
+        gap: 9%;
+        padding: 4%;
+        gap: 4vw;
+    }
+
+    .education-dropdown-options,
+    .institute-dropdown-options,
+    .university-dropdown-options ,.input-container,.input-group input{
+        width: 122%;
+    }
+   
+    #gear {
+        top: -11vw;
+        left: 96%;
+        padding: 2vw;
     }
 
     .openedImage {
@@ -3604,7 +3694,7 @@ div:focus {
         align-items: center;
 
     }
-    
+
     .plus-sign {
         top: 4%;
         margin-left: 55%;
@@ -3759,7 +3849,7 @@ div:focus {
         flex-wrap: wrap;
     }
 
-    
+
 
     .chat-filter {
         margin-top: 51%;
@@ -3839,13 +3929,13 @@ div:focus {
 
     .chats-view {
         width: 100%;
-        top: 5%;    
+        top: 5%;
     }
 
     .message-history {
         height: 126%;
-        top: 117%;
-        left: -42%;
+        top: 13%;
+        left: -37%;
     }
 
     .filter-select {
@@ -3854,7 +3944,7 @@ div:focus {
     }
 
     .chatInfo {
-        top: 0.8%;
+        top: 8.8%;
         left: 0.6%;
         width: 100%;
         gap: 22%;
