@@ -45,11 +45,11 @@ module.exports = (io) => {
             }
         })
         socket.on('notify-conversation', (data) => {
-            console.log('data', data);
+            console.log('users',users,'data', users[data.receiver]);
 
-            if (data.receiver) {
-                socket.to(users[data.receiver].socketId).emit('receive-notification-fromconversation', { data })
-
+            if (users[data.receiver]) {
+                io.to(users[data.receiver].socketId).emit('receive-notification-fromconversation', { data })
+                
             } else {
 
             }

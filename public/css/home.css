@@ -3781,7 +3781,7 @@ div:focus {
     }
 
     .isfile {
-        max-width: 62.5%;
+        /* max-width: 62.5%; */
     }
 
     .userProfile {
@@ -3933,7 +3933,7 @@ div:focus {
     }
 
     .message-history {
-        height: 126%;
+        height: 81%;
         top: 13%;
         left: -37%;
     }

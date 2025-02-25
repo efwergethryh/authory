@@ -266,13 +266,13 @@ async function buildmessagecontent(message) {
             console.log('image');
 
             img = `
-                <img id="sent_image" src='conversation_files/${fileUrl}' alt="sent image" />
+                <img id="sent_image" src='/conversation_files/${fileUrl}' alt="sent image" />
             `;
         }
         else {
 
             img = `
-                    <a id="sent_file" href='conversation_files/${fileUrl}' target="_blank" download>
+                    <a id="sent_file" href='/conversation_files/${fileUrl}' target="_blank" download>
                         <div class="file" >
                             <i class="fa-regular fa-file"></i>
                         </div>
@@ -327,7 +327,8 @@ async function buildmessagecontent(message) {
                 : `
                                 <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>
                                 <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
-                    `}
+                    `
+                    }
 
                 </div>
                 <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.profile_picture ? sender.profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
