@@ -1946,8 +1946,8 @@ button[id="send_message"] {
 
 .options-popup {
     background-color: white;
-    position: relative;
-    top: 35vw;
+    position: absolute;
+    top: 74%;
     width: fit-content;
     left: 31.5%;
     /* padding-top: 1vw; */
@@ -3859,7 +3859,7 @@ div:focus {
 
     .options-popup {
         left: 2%;
-        top: 136vw;
+        
     }
 
     .paper-settings {

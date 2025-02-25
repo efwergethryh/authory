@@ -2909,7 +2909,6 @@ async function send_message(type) {
     } catch (error) {
         console.log(error);
 
-        // alert("Message not sent")
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
@@ -3034,8 +3033,8 @@ async function buildUsers(userIds) {
 }
 async function buildConvUsers(userIds, conversation) {
     let content = '';
-    console.log('userIDs',userIds);
-    
+    console.log('userIDs', userIds);
+
     if (userIds.length == 0) {
         content = "No users have joined your paper yet!"
     }
@@ -3607,7 +3606,7 @@ async function loadMessages(id, is_filter = false) {
 
 
 
-async function get_conversation(id, type,paper) {
+async function get_conversation(id, type, paper) {
     conv_id = id;
     cskip = 0
     show_spinner();
@@ -3624,7 +3623,7 @@ async function get_conversation(id, type,paper) {
             mainContent.innerHTML = ''
             isMobile() ? mainContent.appendChild(chatContainer) : ""
         }
-        if (!chat_body) {  
+        if (!chat_body) {
 
             chat_body = document.createElement('div')
             chat_body.className = 'chat-body'
@@ -3681,7 +3680,7 @@ async function get_conversation(id, type,paper) {
 
                 Chatcontent = `
                     <div class="chatInfo" style="display:flex">
-                        <a onclick="close_p_conversation()">
+                        <a onclick="close_p_conversation(&quot;${paper}&quot;)">
                             Close
                         </a>
                         <span style="font-weight:700;">
@@ -3864,7 +3863,7 @@ async function conversationPopup(conversation) {
     })
 }
 
-let cachedUsers = null; 
+let cachedUsers = null;
 async function conversationAdd(conversation) {
     conversation = decodeURIComponent(conversation)
     conversation = JSON.parse(conversation)
@@ -3926,13 +3925,12 @@ async function conversationAdd(conversation) {
         convUsers.style.display = 'none';
     });
 }
-async function conversationDetails(paper,conversation) {
-    console.log('paper',paper,'conversation',conversation);
+async function conversationDetails(paper, conversation) {
     conversation = decodeURIComponent(conversation)
     conversation = JSON.parse(conversation)
-    let conversationInfo= document.getElementById('conversation-info')
-    conversationInfo.style.display ='flex'
-    let content =`
+    let conversationInfo = document.getElementById('conversation-info')
+    conversationInfo.style.display = 'flex'
+    let content = `
         <i id="close" style="align-self:end; position:relative; top:-2vw;" class="fa-solid fa-xmark"></i>
         <img class="convImage" src="/conversation_images/${conversation.conv_pic}">
         <p>${conversation.conv_title}</p>
@@ -3950,15 +3948,20 @@ async function conversationDetails(paper,conversation) {
             <p>Delete chat</p>
         </a>
     `
-    
-    conversationInfo.innerHTML =content
-    document.getElementById('close').addEventListener('click',()=>{
-        conversationInfo.style.display ='none'
-    })  
+
+    conversationInfo.innerHTML = content
+    document.getElementById('close').addEventListener('click', () => {
+        conversationInfo.style.display = 'none'
+    })
 }
-async function buildConversations(paper_UserId, paper) {
+async function buildConversations(paper) {
     let conversationContent = "";
-    
+    paper = decodeURIComponent(paper)
+    paper = decodeURIComponent(paper)
+    paper = paper.replace(/^[^{[]+/, "")
+
+    paper = JSON.parse(paper)
+
     try {
         const response = await fetch(`/api/conversations/${paper._id}`, {
             method: 'GET',
@@ -3984,7 +3987,7 @@ async function buildConversations(paper_UserId, paper) {
         conversationContent += `
             <div class="plus-sign"
                 onclick="add_conversation('${paper._id}'); event.preventDefault(); event.stopPropagation()"
-                style="${String(paper_UserId) === String(userId) ? 'display: block;' : 'display: none;'}">
+                style="${String(paper.user_id) === String(userId) ? 'display: block;' : 'display: none;'}">
                 <i class="fa-solid fa-plus"></i>
             </div>
         `;
@@ -4011,11 +4014,10 @@ function handleScroll() {
         scrollButton.style.display = 'none';
     }
 }
-
 async function show_conversation(paper) {
-    paper = decodeURIComponent(paper)
-    paper = JSON.parse(paper)
-    paperId =paper._id
+
+    paperId = paper._id
+    let content = ``
     show_spinner()
     const mainContent = document.getElementById('maincontent');
     mainContent.style.display = 'block'
@@ -4024,11 +4026,9 @@ async function show_conversation(paper) {
         popup.style.display = 'none';
     });
     try {
-        const paperResponse = await fetch(`/api/paper/${paperId}`);
-        const paperData = await paperResponse.json();
-        const paper_userId = paperData.paper.user_id;
-        
-        const content = await buildConversations(paper_userId, paper); 
+
+        content = await buildConversations(paper);
+
         mainContent.innerHTML = `
         <div class="chat-container">
         
@@ -4161,16 +4161,16 @@ async function load_f_messages(conversation_Id, user_id) {
         console.error("Error loading messages:", err);
     }
 }
-async function updateUserInfo(user,type) {
+async function updateUserInfo(user, type) {
     user = JSON.parse(user)
 
-    let content = await conversation_layout(user,type)
+    let content = await conversation_layout(user, type)
     mainContent.innerHTML = content;
     !isMobile() ? document.getElementById('message-history').classList.add('singleconversation') : "";
 
     control_sendButton('friend', user._id)
 }
-async function conversation_layout(user,paper) {
+async function conversation_layout(user, paper) {
     try {
         const translations = await loadTranslation()
         let content = '';
@@ -5392,22 +5392,33 @@ async function close_conversation() {
     await load_f_conversations()
     addExitListeners()
 }
-async function close_p_conversation() {
-    document.querySelector('.mainContent').innerHTML = `
+async function close_p_conversation(paper) {
+
+    if (isMobile()) {
+        document.querySelector('.mainContent').innerHTML = `
             
-                <div class="chats-mobile">
-                    <div id="chats-view" class="chats-view">
-                        <div id="chats-container" class="chats-plus">
-                            <div id="chats" class="chat">
+    <div class="chats-mobile">
+        <div id="chats-view" class="chats-view">
+            <div id="chats-container" class="chats-plus">
+                <div id="chats" class="chat">
 
-                            </div>
-                        </div>
-
-                    </div>
-                    
                 </div>
-            `
-    await show_conversation(paperId)
+            </div>
+
+        </div>
+        
+    </div>
+`
+        await show_conversation(paper)
+    } else {
+        const message_history = document.getElementById('message-history')
+        const messaging_content = document.getElementById('messaging-container')
+        const chatInfo = document.querySelector('.chatInfo')
+        message_history.remove()
+        messaging_content.remove()
+        chatInfo.remove()
+    }
+
 }
 function toggleSidebar() {
     const circleButton = document.querySelector('.circle-button');
