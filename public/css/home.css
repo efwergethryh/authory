@@ -2546,7 +2546,8 @@ p#file-frame {
     cursor: pointer;
     font-size: x-large;
     position: relative;
-    top: 12px;
+    top: -2px;
+    padding: 3%;
 }
 
 #clip {
