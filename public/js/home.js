@@ -1568,17 +1568,11 @@ async function addListeners() {
                 <div class="paperinfo">
                     <i id="joined-paper" class="fas fa-file"></i>
                     <span class="paper-title"><strong>${paper.title}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
                     <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
                     <strong id="need">We Need:</strong>
-                    <span class="dash"><strong>-</strong></span>
                     <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
                     <span class="paper-branch"><strong>${paper.main_field}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
                     <span class="paper-branch"><strong>${paper.language}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
                     <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
                     <br>
                     <span style="${paper.description ? "display:block" : "display:none"}" class="description"><strong>${paper.description}</strong></span>
@@ -1604,9 +1598,46 @@ async function addListeners() {
             const confirm_delete = document.getElementById('confirm-delete');
             const paperLines = document.querySelectorAll('.paper-line');
             const firstPaperLine = document.querySelector('.paper-line:first-child');
-
+            const paperSpans = document.querySelectorAll('.paper-line span')
             const etnerButtons = document.querySelectorAll('.button-container a')
-
+            paperSpans.forEach(span=>{
+                // span.addEventListener('click',(event)=>{
+                //     event.preventDefault()
+                //     event.stopPropagation();
+                    
+                //     console.log('title',span);
+                    
+                //     if(span.style.webkitLineClamp  =='2'){
+                //         // span.style.overflow ='hidden'
+                //         span.style.webkitLineClamp ='unset'
+                //     }else{
+                //         // span.style.overflow ='visible'
+                //         span.style.webkitLineClamp  =='2'
+                //     }
+                // })
+                span.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                
+                    console.log("title", span);
+                
+                    // Get computed styles to check the current line clamp value
+                    const computedStyle = window.getComputedStyle(span);
+                    const currentClamp = computedStyle.webkitLineClamp;
+                
+                    if (currentClamp === "2") {
+                        span.style.display = "block"; // Ensure full visibility
+                        span.style.webkitLineClamp = "unset";
+                        span.style.overflow = "visible"; // Allow full text
+                    } else {
+                        span.style.display = "-webkit-box"; // Enable multi-line truncation
+                        span.style.webkitLineClamp = "2";
+                        span.style.overflow = "hidden";
+                    }
+                });
+                
+            })
+            
             etnerButtons.forEach(button => {
                 button.textContent = translations.yourPapers.enter;
             })

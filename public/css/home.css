@@ -1024,12 +1024,15 @@ a#cancel {
     font-size: 90%;
     color: #3078D8;
     font-weight: 600;
-    display: inline-block;
-    max-width: 596px;
+    /* display: inline; */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    /* max-width: 596px; */
     text-overflow: ellipsis;
     word-break: break-word;
     overflow: hidden;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .paper-line span strong {
@@ -2546,7 +2549,8 @@ p#file-frame {
     cursor: pointer;
     font-size: x-large;
     position: relative;
-    
+    top: -2px;
+    padding: 3%;
 }
 
 #clip {
