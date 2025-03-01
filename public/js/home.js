@@ -3464,7 +3464,7 @@ async function get_conversation(id, type, paper) {
             message_history.id = 'message-history'
             chatContainer.appendChild(message_history)
         } 
-
+        isMobile()&&type!=="public"?message_history.style.height ='78%':"";
 
 
         loadMessages(id, false)
@@ -3969,6 +3969,7 @@ async function load_f_messages(conversation_Id, user_id) {
             chatContainer.appendChild(message_history)
         }
         message_history.style.top="100%";
+        message_history.style.height ='100%'
         let message_content = "";
         if (messagesData.messages.length === 0) {
             message_history.innerHTML = `<p>No Messages</p>`;
@@ -5400,6 +5401,7 @@ async function show_public_conversation() {
     messagingContainer.style.left = "0%"
     chatHistory.style.left = '-40%'
     chatHistory.style.top = '100%'
+    chatHistory.style.height = '100%!important'
     input.style.width = '94%'
     await get_conversation(conv_id, 'public')
     document.getElementById('filter').addEventListener('click', function (e) {
@@ -5419,7 +5421,6 @@ async function show_public_conversation() {
         selectionPan.style.display = 'block'
 
         const filterOptions = document.querySelectorAll(".filter-select li")
-        console.log('filter options', filterOptions);
 
         filterOptions.forEach(filter => {
             filter.addEventListener('click', async () => {
