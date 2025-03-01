@@ -1564,7 +1564,7 @@ async function addListeners() {
      class="paper-line"
      onclick="show_conversation(&quot;${encodeURIComponent(JSON.stringify(paper))}&quot;)">
 
-                <i id="gear" onclick="event.stopProbagation();event.preventDefault()" class="gear fa-solid fa-ellipsis-vertical"></i>
+                <i id="gear"  class="gear fa-solid fa-ellipsis-vertical"></i>
                 <div class="paperinfo">
                     <i id="joined-paper" class="fas fa-file"></i>
                     <span class="paper-title"><strong>${paper.title}</strong></span>
@@ -1653,7 +1653,9 @@ async function addListeners() {
 
 
 
-                gear.addEventListener('click', function () {
+                gear.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     const paperLine = gear.closest('.paper-line');
                     paperId = paperLine.id;
 
@@ -1662,22 +1664,21 @@ async function addListeners() {
                     }
                     if (paperLine === firstPaperLine) {
                         paper_settings.style.display = 'flex';
-                        paper_settings.style.top = `13vw`;  // Set top for the first element
+                        paper_settings.style.top = `${isMobile()?'55vw':'13vw'}`;  // Set top for the first element
                     } else {
                         const rect = parentPaperElement.getBoundingClientRect();
-                        const viewportHeight = window.innerHeight;
-                        const viewportWidth = window.innerWidth;
-                        let newTop = ((rect.top + rect.height) / viewportWidth) * 100; // Position directly below the parent element
+                        const viewportHeight = document.documentElement.clientHeight;
+                        const viewportWidth = document.documentElement.clientHeight;
+                        console.log('view port',viewportHeight);
+                        
+                        let newTop = ((rect.top + rect.height) / viewportWidth) * isMobile()?130:100; // Position directly below the parent element
 
-                        // Calculate how many elements are before the clicked paperLine
-                        // const allPapers = document.querySelectorAll('.paper-line');
-                        // const index = Array.from(allPapers).indexOf(paperLine);  // Get the index of the clicked paper
+                       
                         const maxAllowedTop = viewportHeight - paper_settings.offsetHeight - 10; // 10px padding from bottom
                         if (newTop > maxAllowedTop) {
                             newTop = maxAllowedTop;
                         }
-                        // Set the top value based on the index (each paper adds 6vw to the top)
-                        // let newTop = 13 + (index * 6);  // 13vw + 6vw per paper
+                        
                         paper_settings.style.display = 'flex';
                         paper_settings.style.top = `${newTop}vw`;
                         // Set the new top for this paper
@@ -1739,21 +1740,20 @@ async function addListeners() {
 
                     } else {
                         content += `
-             <div id="${paper._id}" class="paper-line">
+
+<div 
+     id="${paper._id}" 
+     class="paper-line"
+     onclick="show_conversation(&quot;${encodeURIComponent(JSON.stringify(paper))}&quot;)">
+
                 <div class="paperinfo">
                     <i id="joined-paper" class="fas fa-file"></i>
                     <span class="paper-title"><strong>${paper.title}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
                     <span class="paper-study"><strong>${paper.type_of_study}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
                     <strong id="need">We Need:</strong>
-                    <span class="dash"><strong>-</strong></span>
                     <span class="paper-we-need"><strong>${paper.we_need}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
                     <span class="paper-branch"><strong>${paper.main_field}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
                     <span class="paper-branch"><strong>${paper.language}</strong></span>
-                    <span class="dash"><strong>-</strong></span>
                     <span id="${paper._id}"class="paper-branch"><strong>${paper._id}</strong></span>
                     <br>
                     <span style="${paper.description ? "display:block" : "display:none"}" class="description"><strong>${paper.description}</strong></span>
@@ -1765,8 +1765,10 @@ async function addListeners() {
                         </strong>
                     </div>
                 </div>
-                <button  onclick="show_conversation('${paper._id}')" class="join-button">Enter</button>
+                
         </div>
+
+             
             `
                     }
 
@@ -3461,7 +3463,7 @@ async function get_conversation(id, type, paper) {
             message_history.className = 'message-history'
             message_history.id = 'message-history'
             chatContainer.appendChild(message_history)
-        }
+        } 
 
 
 
@@ -3508,10 +3510,11 @@ async function get_conversation(id, type, paper) {
                         <a onclick="close_p_conversation(&quot;${paper}&quot;)">
                             Close
                         </a>
+                        <img onclick="conversationDetails(&quot;${encodeURIComponent(JSON.stringify(paper))}&quot;,&quot;${encodeURIComponent(JSON.stringify(data.conversation))}&quot;)" src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
+
                         <span style="font-weight:700;">
                             ${data.conversation.conv_title}
                         </span>
-                        <img onclick="conversationDetails(&quot;${encodeURIComponent(JSON.stringify(paper))}&quot;,&quot;${encodeURIComponent(JSON.stringify(data.conversation))}&quot;)" src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
                     </div>
                 `;
                 let chatInfo = document.querySelector('.chatInfo')
@@ -3962,10 +3965,11 @@ async function load_f_messages(conversation_Id, user_id) {
             message_history = document.createElement('div')
             message_history.className = 'message-history'
             message_history.id = 'message-history'
+            
             chatContainer.appendChild(message_history)
         }
+        message_history.style.top="100%";
         let message_content = "";
-        // const message_history = document.getElementById('message-history');
         if (messagesData.messages.length === 0) {
             message_history.innerHTML = `<p>No Messages</p>`;
         } else {

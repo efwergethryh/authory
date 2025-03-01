@@ -2218,6 +2218,8 @@ svg:not(:root).svg-inline--fa {
     justify-content: space-between;
     -webkit-box-align: center;
     align-items: center;
+    position: relative;
+    left: 23%;
     padding-bottom: 10px;
 }
 
@@ -2233,6 +2235,8 @@ svg:not(:root).svg-inline--fa {
     margin: 0px 0px 10px;
     min-width: 0px;
     font-size: 16px;
+    position: relative;
+    left: 8%;
     font-weight: 700;
     color: rgb(121, 121, 121);
 }

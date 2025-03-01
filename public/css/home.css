@@ -180,21 +180,20 @@ p#user-name {
 
 
 
-/* .header {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 10px;
-    
-} */
+
 .header {
     display: flex;
     align-items: center;
-    width: 100%;
+    justify-content: flex-start; /* Ensures left alignment */
+    gap: 10px;
     padding: 10px;
-    gap: 4%;
+    min-width: 150px; /* Adjust as needed */
 }
-
+.header i {
+    font-size: 16px; /* Ensure all icons are the same size */
+    min-width: 20px; /* Prevent icon size from changing */
+    text-align: center;
+}
 .text {
     color: #607585;
     width: 50%;
@@ -803,11 +802,12 @@ i[id="icon"] {
 
 .notifications-container {
     background-color: transparent;
-    margin-top: 7%;
     margin-left: 0.5%;
     gap: 0;
     height: fit-content;
     padding: 0;
+    top: 12%;
+    position: relative;
 }
 
 .request-buttons {
@@ -858,7 +858,7 @@ i[id="icon"] {
     border-bottom: 1px;
     background-color: transparent;
     box-shadow: none;
-    margin-top: 5%;
+    top: 12%;
     height: fit-content;
     position: relative;
     left: 2.5%;
@@ -2382,7 +2382,7 @@ p#file-frame {
 
     overflow: scroll;
     position: relative;
-    top: 9%;
+    top: 12%;
 
     border-radius: 10px;
 }
@@ -2541,6 +2541,7 @@ p#file-frame {
     display: flex;
     flex-direction: row;
     width: 100%;
+    height: 50px;
     z-index: 50;
 }
 
@@ -3652,7 +3653,10 @@ div:focus {
     .conversation-info p {
         font-size: small;
     }
-
+    .chat-body {
+        height: 89%;
+        top: -87%;
+    }
     .messaging-container textarea {
         height: 44px;
     }
@@ -3780,9 +3784,9 @@ div:focus {
     }
 
     .sidebar {
-        overflow: hidden;
+        overflow-y: scroll;
         width: 100%;
-        height: 100%;
+        height: 96%;
         top: 54px;
     }
 
@@ -3939,9 +3943,10 @@ div:focus {
     }
 
     .message-history {
-        height: 81%;
+        height: 100%;
         top: 13%;
         left: -37%;
+        Z-INDEX: -1;
     }
 
     .filter-select {
@@ -3953,7 +3958,7 @@ div:focus {
         top: 8.8%;
         left: 0.6%;
         width: 100%;
-        gap: 22%;
+        gap: 6%;
     }
 
     .messaging-container {
@@ -4149,7 +4154,7 @@ div:focus {
     .joinedpapers-container,
     .yourpapers-container,
     .yourfriends-container {
-        margin-top: 16%;
+        /* margin-top: 16%; */
         width: 100%;
         overflow-x: hidden;
 
