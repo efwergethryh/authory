@@ -328,7 +328,7 @@ async function buildmessagecontent(message) {
                                 <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>
                                 <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
                     `
-                    }
+            }
 
                 </div>
                 <img  onclick="event.stopPropagation(); showProfile('${JSON.stringify(sender).replace(/"/g, '&quot;')}')" src="/profile_images/${sender.profile_picture ? sender.profile_picture : 'non-picture.jpg'}" alt=""  class="sender-image" />
@@ -1600,13 +1600,13 @@ async function addListeners() {
             const firstPaperLine = document.querySelector('.paper-line:first-child');
             const paperSpans = document.querySelectorAll('.paper-line span')
             const etnerButtons = document.querySelectorAll('.button-container a')
-            paperSpans.forEach(span=>{
+            paperSpans.forEach(span => {
                 // span.addEventListener('click',(event)=>{
                 //     event.preventDefault()
                 //     event.stopPropagation();
-                    
+
                 //     console.log('title',span);
-                    
+
                 //     if(span.style.webkitLineClamp  =='2'){
                 //         // span.style.overflow ='hidden'
                 //         span.style.webkitLineClamp ='unset'
@@ -1618,13 +1618,13 @@ async function addListeners() {
                 span.addEventListener("click", (event) => {
                     event.preventDefault();
                     event.stopPropagation();
-                
+
                     console.log("title", span);
-                
+
                     // Get computed styles to check the current line clamp value
                     const computedStyle = window.getComputedStyle(span);
                     const currentClamp = computedStyle.webkitLineClamp;
-                
+
                     if (currentClamp === "2") {
                         span.style.display = "block"; // Ensure full visibility
                         span.style.webkitLineClamp = "unset";
@@ -1635,9 +1635,9 @@ async function addListeners() {
                         span.style.overflow = "hidden";
                     }
                 });
-                
+
             })
-            
+
             etnerButtons.forEach(button => {
                 button.textContent = translations.yourPapers.enter;
             })
@@ -1664,21 +1664,21 @@ async function addListeners() {
                     }
                     if (paperLine === firstPaperLine) {
                         paper_settings.style.display = 'flex';
-                        paper_settings.style.top = `${isMobile()?'55vw':'13vw'}`;  // Set top for the first element
+                        paper_settings.style.top = `${isMobile() ? '55vw' : '13vw'}`;  // Set top for the first element
                     } else {
                         const rect = parentPaperElement.getBoundingClientRect();
                         const viewportHeight = document.documentElement.clientHeight;
                         const viewportWidth = document.documentElement.clientHeight;
-                        console.log('view port',viewportHeight);
-                        
-                        let newTop = ((rect.top + rect.height) / viewportWidth) * isMobile()?130:100; // Position directly below the parent element
+                        console.log('view port', viewportHeight);
 
-                       
+                        let newTop = ((rect.top + rect.height) / viewportWidth) * isMobile() ? 130 : 100; // Position directly below the parent element
+
+
                         const maxAllowedTop = viewportHeight - paper_settings.offsetHeight - 10; // 10px padding from bottom
                         if (newTop > maxAllowedTop) {
                             newTop = maxAllowedTop;
                         }
-                        
+
                         paper_settings.style.display = 'flex';
                         paper_settings.style.top = `${newTop}vw`;
                         // Set the new top for this paper
@@ -1903,7 +1903,7 @@ async function addListeners() {
 
 }
 async function addExitListeners() {
-  
+
     // const translations = await loadTranslation()
     // const sideBarContent = `
     //         <ul id="sidebar-content">
@@ -1973,7 +1973,7 @@ async function addExitListeners() {
     //     <div id="head" class="header">
     //     <i id="paper-3" class="fa-solid fa-user-group"></i>
     //     <span id="friends-tab" class="text toggle-item">friends</span>
-        
+
     //     </div>
 
     //     </div>
@@ -2009,7 +2009,7 @@ async function addExitListeners() {
     // let sidebar = document.getElementById('sidebar')
 
     // sidebar.innerHTML = sideBarContent
-    
+
     // document.getElementById('home').addEventListener('click', async function () {
     //     skip = 0;
     //     let mainContent = document.getElementById('maincontent')
@@ -2104,7 +2104,7 @@ async function addExitListeners() {
     //                     <span id="${paper._id}" class="paper-branch"><strong>${paper._id}</strong></span>
     //                     <br>
     //                     <span style="${paper.description ? "display:block" : "display:none"}" class="description"><strong>${paper.description}</strong></span>
-        
+
     //                     <div class="paper-tags">
     //                         <strong>
     //                         ${paper.tags.map(tag => `<strong><span onclick ="showPapers('${tag}'); event.stopPropagation();" class="tag">${tag}</span></strong>`).join('')}
@@ -2224,7 +2224,7 @@ async function addExitListeners() {
     //         toggleSidebar();
     //     }
 
-        
+
     // })
 
     // document.getElementById('joined-papers-button').addEventListener('click', async function () {
@@ -2543,16 +2543,16 @@ async function addExitListeners() {
     // joinedPapers.addEventListener('click', async () => {
     //     document.querySelector('.joined-label').textContent = translations.joinPaper.dropdowns.joinedPapers;
     // })
-   
+
     // cancel.addEventListener('click', function () {
     //     confirm_delete.style.display = 'none';
     // });
     // document.addEventListener('click', function (event) {
 
-      
+
     // });
     // document.addEventListener('click', function (event) {
-       
+
     // });
     toggleSidebar();
 }
@@ -3457,15 +3457,13 @@ async function get_conversation(id, type, paper) {
             chat_body.id = 'chat-body'
             chatContainer.appendChild(chat_body)
         }
-
         if (!message_history) {
             message_history = document.createElement('div')
             message_history.className = 'message-history'
             message_history.id = 'message-history'
             chatContainer.appendChild(message_history)
-        } 
-        isMobile()&&type!=="public"?message_history.style.height ='78%':"";
-
+        }
+        isMobile() && type !== "public" ? message_history.style.height = '78%' : "";
 
         loadMessages(id, false)
 
@@ -3510,11 +3508,11 @@ async function get_conversation(id, type, paper) {
                         <a onclick="close_p_conversation(&quot;${paper}&quot;)">
                             Close
                         </a>
-                        <img onclick="conversationDetails(&quot;${encodeURIComponent(JSON.stringify(paper))}&quot;,&quot;${encodeURIComponent(JSON.stringify(data.conversation))}&quot;)" src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
-
                         <span style="font-weight:700;">
                             ${data.conversation.conv_title}
                         </span>
+                        <img onclick="conversationDetails(&quot;${encodeURIComponent(JSON.stringify(paper))}&quot;,&quot;${encodeURIComponent(JSON.stringify(data.conversation))}&quot;)" src="/conversation_images/${data.conversation.conv_pic}" alt="Profile Picture">
+
                     </div>
                 `;
                 let chatInfo = document.querySelector('.chatInfo')
@@ -3965,11 +3963,11 @@ async function load_f_messages(conversation_Id, user_id) {
             message_history = document.createElement('div')
             message_history.className = 'message-history'
             message_history.id = 'message-history'
-            
+
             chatContainer.appendChild(message_history)
         }
-        message_history.style.top="100%";
-        message_history.style.height ='100%'
+        message_history.style.top = "100%";
+        message_history.style.height = '100%'
         let message_content = "";
         if (messagesData.messages.length === 0) {
             message_history.innerHTML = `<p>No Messages</p>`;
@@ -4262,7 +4260,7 @@ async function show_Single_conversation() {
         `
 
         if (isMobile()) {
-            
+
             document.querySelector('.mainContent').innerHTML = `
             
             <div class="chats-mobile">
@@ -4284,7 +4282,7 @@ async function show_Single_conversation() {
                 </a>
             </div>
         `
-           addExitListeners()
+            addExitListeners()
         }
         else {
             mainContent.innerHTML = chatContent
@@ -4836,19 +4834,12 @@ async function loadTranslation() {
         friendsTabElement.textContent = translations?.friends?.label || 'Default Friends';
     }
 
-    // document.getElementById('home')?.querySelector('.header span')?.textContent = translations?.topBar?.home || 'Default Home';
-    // document.getElementById('new-paper')?.textContent = translations?.newPaper?.label || 'Default New Paper';
-    // document.getElementById('join-paper')?.textContent = translations?.joinPaper?.label || 'Default Join Paper';
-    // document.getElementById('notifications')?.textContent = translations?.sidebar?.notifications || 'Default Notifications';
-    // document.getElementById('chat-tab')?.textContent = translations?.sidebar?.publicChat || 'Default Chat';
-    // document.getElementById('friends-tab')?.textContent = translations?.friends?.label || 'Default Friends';
 
     const postButtons = document.querySelectorAll('.css-1k7990c-StyledButton')
     postButtons.forEach(button => {
         button.textContent = translations.sidebar.goTopost
     })
     document.getElementById('sign-out').textContent = translations.topBar.signOut
-    // document.getElementById('settings').textContent = translations.topBar.settings
     document.getElementById('home-setting').textContent = translations.topBar.home
 
     const startPaperButton = document.getElementById('start_paper_button');
@@ -5220,7 +5211,7 @@ async function close_conversation() {
     </div>
 `
     await load_f_conversations()
-    
+
 }
 async function close_p_conversation(paper) {
 
@@ -5243,7 +5234,7 @@ async function close_p_conversation(paper) {
     </div>
 `
         await show_conversation(paper)
-        
+
     } else {
         const message_history = document.getElementById('message-history')
         const messaging_content = document.getElementById('messaging-container')
@@ -5387,7 +5378,6 @@ async function show_public_conversation() {
         `;
 
     mainContent.innerHTML = content
-    // inputListeners('public')
     mainContent.style.display = 'block'
     control_sendButton('public')
     const messagingContainer = document.getElementById('messaging-container');
@@ -5395,6 +5385,8 @@ async function show_public_conversation() {
     const input = document.getElementById('message-input')
     const options_popup = document.getElementById('options-popup')
     const userProfile = document.getElementById('userProfile')
+    const apply = document.querySelector('#apply');
+    const cancel = document.querySelector('#cancel-filter')
     options_popup.style.left = '1%'
     userProfile.style.left = '36%'
     messagingContainer.style.width = "100%"
@@ -5403,43 +5395,64 @@ async function show_public_conversation() {
     chatHistory.style.top = '100%'
     chatHistory.style.height = '100%!important'
     input.style.width = '94%'
+    const chatFilter = document.querySelector('.chat-filter')
+    
     await get_conversation(conv_id, 'public')
-    document.getElementById('filter').addEventListener('click', function (e) {
+
+    document.getElementById('filter').addEventListener('click', async function (e) {
         e.preventDefault();
         e.stopPropagation()
+        
+        
+        let translations = await loadTranslation();
+       
+        cancel.textContent = translations.sidebar.cancel
+        apply.textContent = translations.sidebar.apply
+        document.querySelector('.chat-filter p').textContent = translations.sidebar.instructions
         document.getElementById('filter-input').placeholder = userMainfield
-        document.getElementById('chat-filter').style.display = 'flex'
-    })
 
+        chatFilter.style.display = 'flex'
+        
+
+    })
+    
     document.getElementById('filter-input').addEventListener('click', async function (event) {
         event.preventDefault()
         event.stopPropagation()
-        console.log('filter input');
         const selectionPan = document.querySelector('.filter-select')
-        console.log('selection pan', selectionPan);
 
-        selectionPan.style.display = 'block'
+        selectionPan.style.display = 'flex'
 
         const filterOptions = document.querySelectorAll(".filter-select li")
-
+        const filterSelect = document.getElementById('filter-select')
+        // const filterInput = document.getElementById('filter-input')
         filterOptions.forEach(filter => {
+
             filter.addEventListener('click', async () => {
                 event.preventDefault()
                 event.stopPropagation()
-                document.getElementById('filter-select').style.display = 'none'
-                document.getElementById('filter-input').textContent = filter.textContent
+                console.log('self',this);
+                
+                filterSelect.style.display = 'none'
+                this.value = filter.textContent
                 userMainfield = filter.textContent
-                await loadMessages(conv_id, true)
             })
         })
 
 
 
     })
-    document.addEventListener('click', function () {
-        document.getElementById('chat-filter').style.display = 'none'
-        document.getElementById('filter-select').style.display = 'none'
+    apply.addEventListener('click', async () => {
+        
+        await loadMessages(conv_id, true)
+        chatFilter.style.display = 'none'
+
     })
+    cancel.addEventListener('click', () => {
+
+        chatFilter.style.display = 'none'
+    })
+
     toggleSidebar()
     scrollToBottom()
 

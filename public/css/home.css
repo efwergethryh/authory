@@ -301,9 +301,7 @@ p#user-name {
     color: #a3b2bd;
     display: flex;
     justify-content: center;
-    /* Center horizontally */
     align-items: center;
-    /* Center vertically */
     text-decoration: none;
     width: 100%;
     height: 100%;
@@ -360,11 +358,18 @@ i[id="icon"] {
 }
 
 .chat-filter input {
-    padding: 0.5%;
-    border: none;
-    border-radius: 5px;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "segoe ui", "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
     width: 90%;
-    box-shadow: 0px 0px 5px 0px grey;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    color: rgb(26, 28, 28);
+    border-color: rgb(163, 178, 189);
+    background-color: rgb(255, 255, 255);
 }
 
 .chat-filter input:focus {
@@ -380,8 +385,9 @@ i[id="icon"] {
     background: white;
     border-radius: 5px;
     box-shadow: 0px 0px 5px 0px grey;
-    max-height: 15%;
+    max-height: 23%;
     overflow-y: auto;
+    flex-direction: column;
 }
 
 .filter-select li {
@@ -403,13 +409,21 @@ i[id="icon"] {
     gap: 10%;
     padding: 0% 1% 0% 1%;
     background: white;
+    flex-direction: column;
+    padding: 10%;
 }
 
 .chat-filter p {
     margin-top: 5%;
-    font-weight: 600;
+    font-weight: 500;
+}
+html[dir="rtl"] .chat-filter p {
+    text-align: right;
 }
 
+html[dir="ltr"] .chat-filter p {
+    text-align: left;
+}
 .create-dropdown {
     display: inline-block;
     margin-left: 8px;
@@ -1767,12 +1781,14 @@ button[id="send_message"] {
     z-index: 1;
 }
 
-.chatInfo img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-}
 
+.chatInfo img {
+    width: 41px;
+    height: 41px;
+    border-radius: 50px;
+    position: fixed;
+    left: 83%;
+}
 .chatInfo a {
     text-decoration: none;
     color: #2d8fd8 !important;
@@ -2783,25 +2799,9 @@ p#file-frame {
     border-radius: 100%;
 }
 
-/* .scroll-button {
-    width: 40%;
-    display: none;
+#filter-input{
 
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    transition: opacity .2s ease;
-    -webkit-user-select: none;
-    user-select: none;
-    pointer-events: auto;
-    right: -93%;
-    top: 66%;
-    background: #f4f4f4;
-    z-index: 9;
-    width: 6%;
-    border-radius: 100%;
-} */
-
+}
 .Button {
     outline: none !important;
     display: flex;
@@ -3862,9 +3862,12 @@ div:focus {
 
 
     .chat-filter {
-        margin-top: 51%;
-        width: 107%;
-        left: 50%;
+        margin-top: 78%;
+        width: 264%;
+        height: fit-content;
+        left: -69%;
+        padding: 10%;
+    
     }
 
     .options-popup {
@@ -3950,8 +3953,9 @@ div:focus {
     }
 
     .filter-select {
-        width: 39%;
-        left: 54%;
+        width: 79%;
+        left: 11%;
+        top: 41%;
     }
 
     .chatInfo {
@@ -3977,7 +3981,7 @@ div:focus {
     }
 
     .filter-select li {
-        padding: 6.5% 2.5% 6.5% 2.5%;
+        padding: 4.5% 2.5% 4.5% 2.5%;
     }
 
     #advanced {
