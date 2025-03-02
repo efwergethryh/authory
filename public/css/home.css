@@ -378,9 +378,10 @@ i[id="icon"] {
 
 .filter-select {
     display: none;
-    width: 15%;
+    width: 28%;
     position: absolute;
-    left: 79%;
+    left: 66%;
+    top: 51%;
     border: none;
     background: white;
     border-radius: 5px;
@@ -402,15 +403,15 @@ i[id="icon"] {
     display: none;
     align-items: center;
     position: relative;
-    margin-top: 6%;
-    width: 15%;
-    margin-left: 79%;
+    margin-top: 8%;
+    width: 36%;
+    margin-left: 62%;
     border-radius: 9px;
     gap: 10%;
     padding: 0% 1% 0% 1%;
     background: white;
     flex-direction: column;
-    padding: 10%;
+    padding: 3%;
 }
 
 .chat-filter p {
@@ -1767,7 +1768,7 @@ button[id="send_message"] {
     height: 10%;
     display: flex;
     flex-direction: row;
-    gap: 39%;
+    gap: 6%;
     align-items: center;
     position: fixed;
     top: 8.5%;
@@ -1787,7 +1788,7 @@ button[id="send_message"] {
     height: 41px;
     border-radius: 50px;
     position: fixed;
-    left: 83%;
+    left: 95%;
 }
 .chatInfo a {
     text-decoration: none;
@@ -3634,14 +3635,11 @@ div:focus {
 }
 
 @media (min-width: 300px) and (max-width: 450px) {
-    html {
-        width: 20vh;
+    * {
+        max-width: 100%;
+        box-sizing: border-box;
     }
-
-    body {
-        width: 100%;
-    }
-
+   
     .popup-message {
         left: 14%;
     }
@@ -3652,6 +3650,9 @@ div:focus {
 
     .conversation-info p {
         font-size: small;
+    }
+    .chatInfo img{
+        left:83%;
     }
     .chat-body {
         height: 89%;

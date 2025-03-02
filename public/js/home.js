@@ -5360,7 +5360,7 @@ async function show_public_conversation() {
     const mainContent = document.getElementById('maincontent');
     content = `
         <div class="chat-container">
-        <i id="filter" class="fa-solid fa-filter"></i>
+        <i id="filter" class="fa-solid fa-sliders"></i>
             <div id="chat-body" class="chat-body">
                 ${scrollbutton}
                 <div id="message-history" class="message-history">
