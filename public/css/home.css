@@ -184,16 +184,22 @@ p#user-name {
 .header {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Ensures left alignment */
+    justify-content: flex-start;
+    /* Ensures left alignment */
     gap: 10px;
     padding: 10px;
-    min-width: 150px; /* Adjust as needed */
+    min-width: 150px;
+    /* Adjust as needed */
 }
+
 .header i {
-    font-size: 16px; /* Ensure all icons are the same size */
-    min-width: 20px; /* Prevent icon size from changing */
+    font-size: 16px;
+    /* Ensure all icons are the same size */
+    min-width: 20px;
+    /* Prevent icon size from changing */
     text-align: center;
 }
+
 .text {
     color: #607585;
     width: 50%;
@@ -418,6 +424,7 @@ i[id="icon"] {
     margin-top: 5%;
     font-weight: 500;
 }
+
 html[dir="rtl"] .chat-filter p {
     text-align: right;
 }
@@ -425,6 +432,7 @@ html[dir="rtl"] .chat-filter p {
 html[dir="ltr"] .chat-filter p {
     text-align: left;
 }
+
 .create-dropdown {
     display: inline-block;
     margin-left: 8px;
@@ -1063,16 +1071,18 @@ a#cancel {
 
 }
 
-.input-container textarea{
+.input-container textarea {
     caret-color: #000000;
     border-color: rgb(163, 178, 189);
     border-radius: 4px;
 }
-.max-limit{
+
+.max-limit {
     margin-left: 48%;
     color: grey;
     font-size: small;
 }
+
 .tags-overlay {
     position: absolute;
     top: 0;
@@ -1105,7 +1115,7 @@ a#cancel {
 
 #description {
     color: black;
-    
+
 }
 
 .is-tag {
@@ -1790,6 +1800,7 @@ button[id="send_message"] {
     position: fixed;
     left: 95%;
 }
+
 .chatInfo a {
     text-decoration: none;
     color: #2d8fd8 !important;
@@ -2144,11 +2155,14 @@ p#file-frame {
 
 }
 
-.frame-buttons input {
+.frame-buttons textarea {
+    width: 60%;
     border: none;
+    height: 56%;
+    max-height: 91%;
 }
 
-.frame-buttons input:focus {
+.frame-buttons textarea:focus {
     outline-color: transparent;
 }
 
@@ -2800,9 +2814,8 @@ p#file-frame {
     border-radius: 100%;
 }
 
-#filter-input{
+#filter-input {}
 
-}
 .Button {
     outline: none !important;
     display: flex;
@@ -3639,7 +3652,7 @@ div:focus {
         max-width: 100%;
         box-sizing: border-box;
     }
-   
+
     .popup-message {
         left: 14%;
     }
@@ -3651,13 +3664,16 @@ div:focus {
     .conversation-info p {
         font-size: small;
     }
-    .chatInfo img{
-        left:83%;
+
+    .chatInfo img {
+        left: 83%;
     }
+
     .chat-body {
         height: 89%;
         top: -87%;
     }
+
     .messaging-container textarea {
         height: 44px;
     }
@@ -3666,9 +3682,11 @@ div:focus {
     .paper-line .dash {
         max-width: 200px;
     }
-    #description{
+
+    #description {
         height: 23vw;
     }
+
     .conversation-info {
         left: 67%;
         top: 29vw;
@@ -3686,10 +3704,12 @@ div:focus {
 
     .education-dropdown-options,
     .institute-dropdown-options,
-    .university-dropdown-options ,.input-container,.input-group input{
+    .university-dropdown-options,
+    .input-container,
+    .input-group input {
         width: 122%;
     }
-   
+
     #gear {
         top: -11vw;
         left: 96%;
@@ -3822,6 +3842,9 @@ div:focus {
 
     .frame-buttons input {
         width: 60%;
+        border: none;
+        height: 56%;
+        max-height: 91%;
     }
 
     .frame-buttons {
@@ -3868,7 +3891,7 @@ div:focus {
         height: fit-content;
         left: -69%;
         padding: 10%;
-    
+
     }
 
     .options-popup {

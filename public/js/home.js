@@ -1218,7 +1218,6 @@ async function addListeners() {
 
             mainContent.innerHTML = popups[index].innerHTML;
             popups[index].style.display = 'none';
-            // popups[index].remove()
 
             if (popups[index].id === 'startpaper-popup') {
                 const startpaper = mainContent.querySelector('.startpaper-popup')
@@ -1229,9 +1228,6 @@ async function addListeners() {
                     const optionsList = startpaper.querySelector(`#${dropdown.optionsid}`);
                     const options = optionsList.querySelectorAll('li');
 
-
-
-                    // Open dropdown when input is focused
                     inputElement.addEventListener('focus', function () {
                         container.classList.add('open');
                     });
@@ -4657,7 +4653,7 @@ function initializeFile(value) {
         <div class="photo-frame"></div>
         <div class="frame-buttons">
             <a id="cancel-frame">Cancel</a>
-            <input id="captions" placeholder="Add caption">
+            <textarea id="captions" placeholder="Add caption"></textarea>
             <button onclick="send_message('${value}')">Send</button>
         </div>
     `;
