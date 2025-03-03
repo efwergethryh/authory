@@ -3893,12 +3893,11 @@ div:focus {
 
 
     .chat-filter {
-        margin-top: 78%;
-        width: 264%;
+        margin-top: 28%;
+        width: 94%;
         height: fit-content;
-        left: -69%;
+        left: -58%;
         padding: 10%;
-
     }
 
     .options-popup {
