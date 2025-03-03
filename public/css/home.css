@@ -2581,15 +2581,14 @@ p#file-frame {
     cursor: pointer;
     font-size: x-large;
     position: relative;
-    top: -2px;
-    padding: 3%;
+    top: 0;
+    padding: 1%;
 }
 
 #clip {
     margin-right: 1%;
     margin-left: 2%;
-    top: -2px;
-    padding: 3%
+   
 }
 
 #clip:hover,
@@ -3672,6 +3671,14 @@ div:focus {
     .chat-body {
         height: 89%;
         top: -87%;
+        width: 100%;
+        left: 40%;
+    }
+
+    #clip,
+    #send-message {
+        top: -2px;
+        padding: 3%;
     }
 
     .messaging-container textarea {
