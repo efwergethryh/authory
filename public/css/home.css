@@ -3804,7 +3804,7 @@ div:focus {
     .notifications-container {
         position: relative;
         left: 1.7%;
-        width: 100%;
+        width: 98%;
     }
 
     .d70dcff543b0a8d8--userMenuContainer {
@@ -4005,7 +4005,7 @@ div:focus {
     }
 
     .notifications-container {
-        margin-top: 20%;
+        margin-top: 2%;
     }
 
     .filter-select li {
@@ -4189,7 +4189,7 @@ div:focus {
         /* margin-top: 16%; */
         width: 100%;
         overflow-x: hidden;
-
+        left: 1.5%;
     }
 
     .conversation-item {
