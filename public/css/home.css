@@ -3829,15 +3829,13 @@ div:focus {
 
     .file-frame {
         background: white;
-        width: 200%;
-        height: 84vw;
-
-        left: 31%;
+        width: 96%;
+        height: 106vw;
+        left: 2%;
         top: 36vw;
         padding: 11%;
         gap: 0;
         z-index: 400;
-
     }
 
     .photo-frame {

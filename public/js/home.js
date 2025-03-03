@@ -2639,8 +2639,8 @@ async function send_message(type) {
             formData.append('replyTo', replyTo); // Append only valid ObjectId
         } else {
         }
-        const fileInput = document.getElementById('image-input');
-        const imageInput = document.getElementById('file-input');
+        const imageInput = document.getElementById('image-input');
+        const fileInput = document.getElementById('file-input');
 
         if (fileInput && fileInput.files.length > 0) {
             formData.append('file', fileInput.files[0]);
@@ -4633,16 +4633,14 @@ function inputListeners(value) {
 
     // Remove previous event listeners and log the action
     console.log("Removing previous event listeners...");
-    imageInput.removeEventListener('change', imageInputHandler);
-    fileInput.removeEventListener('change', fileInputHandler);
+    imageInput.removeEventListener('change', (event) => { imageInputHandler(event, value) });
+    fileInput.removeEventListener('change', (event) => { fileInputHandler(event, value) });
 
     // Add new event listeners
     console.log("Adding new event listeners...");
     imageInput.addEventListener('change', (event) => { imageInputHandler(event, value) });
     fileInput.addEventListener('change', (event) => { fileInputHandler(event, value) });
 
-    // Verify that event listeners were added correctly
-    console.log("Event listeners added!");
 }
 
 function initializeFile(value) {
@@ -4713,84 +4711,7 @@ function processImage(event) {
     document.getElementById('options-popup').style.display = 'none';
     // document.body.append(fileFrame);
 }
-// function show_options() {
-//     const fileFrame = document.createElement('div')
 
-//     fileFrame.className = 'file-frame'
-//     fileFrame.innerHTML =`
-//     <p></p>
-//     <div id class="photo-frame">
-//     </div>
-//     <div class="frame-buttons">
-
-//         <a id="cancel-frame">cancel</a>
-//         <input placeholder="Add caption">
-//         <button onclick="">Send</button>
-//     </div>
-//     `
-//     document.getElementById('options-popup').style.display = 'block'
-//     console.log(document.getElementById('options-popup'));
-//     // document.getElementById('image-input').removeEventListener('change', processImage)
-//     document.getElementById('image-input').addEventListener('change', processImage)
-
-//     // document.getElementById('file-input').removeEventListener('change', processFile)
-//     document.getElementById('file-input').addEventListener('change', processFile)
-//     function processFile(event) {
-//         event.preventDefault()
-//         const files = event.target.files;
-//         const p = fileFrame.querySelector('p')
-//         p.textContent ='Send a file'
-//         const frame = document.createElement('p')
-
-//         frame.textContent = files[0].name
-//         frame.id = 'file-frame'
-//         // fileFrame.append(p)
-//         photoFrame.append(frame)
-//         document.getElementById('options-popup').style.display = 'none'
-//         document.body.append(fileFrame)
-//     }
-//     function processImage (event) {
-//         event.preventDefault()
-//         const files = event.target.files;
-//         const frame = document.createElement('img')
-//         const p = fileFrame.querySelector('p')
-//         p.textContent ='Send a picutre'
-//         frame.src = URL.createObjectURL(files[0])
-//         frame.id = 'img-frame'
-//         const photoFrame = fileFrame.querySelector('.photo-frame')
-//         photoFrame.className ='photo-frame'
-//         // fileFrame.prepend(p)
-//         photoFrame.append(frame)
-//         // fileFrame.appendChild(photoFrame)
-//         document.getElementById('options-popup').style.display = 'none'
-
-//         document.body.append(fileFrame)
-//     }
-//     fileFrame.querySelector('#cancel-frame').addEventListener('click',function () {
-
-//         // image-input
-//         // file-input
-//         const photoFrame = fileFrame.querySelector('.photo-frame')
-//         photoFrame.innerHTML = ''
-//         const ImageInput = document.getElementById('image-input')
-//         const fileInput = document.getElementById('file-input')
-//         ImageInput.value = '';
-//         fileInput.value = '';
-//         fileFrame.remove()
-//     })
-//     document.addEventListener('click', function (event) {
-//         const popup = document.getElementById('options-popup')
-//         const clip = document.getElementById('clip');
-
-//         if (popup && popup.style.display === 'block') {
-//             // Check if the clicked element is inside the popup or is the clip icon
-//             if (!popup.contains(event.target) && event.target !== clip) {
-//                 popup.style.display = 'none'; // Hide the popup if clicked outside
-//             }
-//         }
-//     });
-
-// }
 async function loadTranslation() {
     const response = await fetch(`/translations/${currentlang}`, {
         method: "GET"
