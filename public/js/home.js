@@ -2470,6 +2470,16 @@ async function edit_paper(id) {
                     </div>
                 </div>
                </td>
+               <td>
+                  <div class="input-group" id="tags-container">
+                     <label for="description">Description</label>
+                     <div class="input-container">
+                        <textarea type="text" id="description" maxlength="200" value="${data.description}" name="description" placeholder="Describe your paper briefly ..."></textarea>
+                     </div>
+                     <p class ="max-limit">Max limit 200 characters</p>
+                  </div>
+                 
+               </td>
                <td><button onclick="update_paper('${data.paper._id}')" id="update_paper">update</button></td>
             </tr>
          </tbody>
