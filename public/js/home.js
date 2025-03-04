@@ -37,7 +37,6 @@ const popups = [
     document.getElementById('yourpapers-popup'),
     document.getElementById('searchpapers-popup'),
     document.getElementById('joinedpapers-popup'),
-    document.getElementById(''),
     document.getElementById('notifications_popup')
 ];
 const popup_buttons = [
@@ -45,7 +44,6 @@ const popup_buttons = [
     document.getElementById('your-papers-button'),
     document.getElementById('searchpapers-button'),
     document.getElementById('joined-papers-button'),
-    document.getElementById('paper-toggle-4'),
     document.getElementById('notifications-button'),
 ];
 const dropdowns = [
@@ -60,9 +58,7 @@ const friend_search = document.getElementById('friend-search')
 let notificationQueue = [];
 let conversationsLoaded = false;
 const chatContainer = document.querySelector('.chat-container');
-// const advancedSearch = document.querySelector('.advancedsearch-container');
 const toggleButton = document.getElementById('advanced_button');
-// const search_button = document.getElementById('search')
 const socket = io(localhostAPI, {
     transports: ['polling', 'websocket'],
     query: {
@@ -1863,7 +1859,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('maincontent').classList.remove('shifted')
         document.querySelector('.circle-button').classList.add('collapsed')
         document.getElementById('home').addEventListener('click', toggleSidebar)
-        // document.getElementById('notifications-button').addEventListener('click', toggleSidebar)
+        document.getElementById('paper-toggle-4').addEventListener('click', toggleSidebar)
+
         popup_buttons.forEach((button) => {
             button.addEventListener('click', toggleSidebar)
         })
@@ -4044,7 +4041,6 @@ async function applyTranslations() {
     document.getElementById('chat-tab').textContent = translations.sidebar.publicChat;
     document.getElementById('friends-tab').textContent = translations.friends.label;
     const postButtons = document.querySelectorAll('.css-1k7990c-StyledButton')
-``
     postButtons.forEach(button => {
         button.textContent = translations.sidebar.goTopost
     })
