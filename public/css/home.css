@@ -1621,35 +1621,6 @@ button[id="join"] {
 .message i {
     cursor: pointer;
 }
-
-
-/* .topBar ul li[id="profile"] {
-    margin: 0 190vh;
-    margin-top: -2vh;
-    padding: 0;
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    left: -4%;
-    top: 1.5vw;
-} */
-
-/* #profile img {
-    width: 50px;
-    height: 50px; 
-    border-radius: 50%;
-    align-self: flex-end;
-}
-
-#profile p {
-    font-weight: 600;
-    margin: 0; 
-    text-align: left; 
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-} */
-/* Ensure profile list item is a flex container */
 .topBar ul li[id="profile"] {
     display: flex;
     align-items: center;
@@ -1661,18 +1632,16 @@ button[id="join"] {
     width: fit-content;
 }
 
-/* Style the profile image */
 #profile img {
     width: 41px;
     height: 41px;
     border-radius: 50%;
     object-fit: cover;
-    position: absolute;
-    top: -2.2vw;
+    position: relative;
+    top: -.5vw;
     left: 2%;
 }
 
-/* Style the profile text */
 #profile p {
     margin: 0;
     position: relative;
@@ -3432,6 +3401,7 @@ div:focus {
         width: 70px;
         height: 70px;
         left: -6vw;
+        top: 3.5vw!important;
     }
 
     .topBar {
@@ -3695,9 +3665,9 @@ div:focus {
     }
 
     .conversation-info {
-        left: 67%;
+        left: 2%;
         top: 29vw;
-        width: 145%;
+        width: 95%;
         gap: 2vw;
         padding: 5% 0 0 0;
     }
@@ -3810,7 +3780,7 @@ div:focus {
     }
 
     .d70dcff543b0a8d8--userMenuContainer {
-        margin-right: 2% !important;
+        margin-right: 3% !important;
     }
 
     .sidebar {
@@ -3826,7 +3796,8 @@ div:focus {
 
     .userProfile {
         top: 34vw;
-        width: 177%;
+        width: 95%;
+        left: 2%;
     }
 
     .file-frame {
@@ -3948,8 +3919,8 @@ div:focus {
     }
 
     .users-to-delete {
-        width: 100%;
-        left: -0.5%;
+        width: 95%;
+        left: 1.5%;
     }
 
     ._525e0b73ddffb195--isAutoWidth {
@@ -3958,7 +3929,8 @@ div:focus {
     }
 
     .paper-settings {
-        left: 149%
+        left: 42%;
+        width: 44%;
     }
 
     #exit_conversations p,
@@ -4043,7 +4015,7 @@ div:focus {
     .topBar ul li[id="profile"] {
 
         left: 63vw;
-        top: -6vw;
+        top: -2vw;
 
     }
 
@@ -4151,7 +4123,9 @@ div:focus {
     }
 
     .edit-paper {
-        left: 14%;
+        left: 2%;
+        top: 5%;
+        width: 95%;
     }
 
     .css-gkrxgl-StyledText {
