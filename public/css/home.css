@@ -3742,6 +3742,8 @@ div:focus {
         height: 54%;
         overflow-y: auto;
         overflow-x: hidden;
+        left: -7%;
+        width: 100%;
     }
 
     .papersContainer {
