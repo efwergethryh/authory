@@ -4183,11 +4183,8 @@ div:focus {
         gap: 1.5vw;
     }
 
-    .joinedpapers-container,
-    .yourpapers-container,
-    .yourfriends-container {
-        /* margin-top: 16%; */
-        width: 100%;
+    .joinedpapers-container, .yourpapers-container, .yourfriends-container {
+        width: 97%;
         overflow-x: hidden;
         left: 1.5%;
     }
