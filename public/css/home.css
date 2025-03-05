@@ -1101,19 +1101,17 @@ a#cancel {
 
 #tags,
 #update-tags,
-#description {
+#description,#update-description {
     background: transparent;
-    /* Make input transparent */
     position: relative;
     width: 100%;
     padding: 8px;
     z-index: 1;
-    /* Put input above overlay */
     outline: none;
     color: transparent;
 }
 
-#description {
+#description,#update-description {
     color: black;
 
 }
@@ -1621,6 +1619,7 @@ button[id="join"] {
 .message i {
     cursor: pointer;
 }
+
 .topBar ul li[id="profile"] {
     display: flex;
     align-items: center;
@@ -2557,7 +2556,7 @@ p#file-frame {
 #clip {
     margin-right: 1%;
     margin-left: 2%;
-   
+
 }
 
 #clip:hover,
@@ -3401,7 +3400,7 @@ div:focus {
         width: 70px;
         height: 70px;
         left: -6vw;
-        top: 3.5vw!important;
+        top: 3.5vw !important;
     }
 
     .topBar {
@@ -3855,10 +3854,12 @@ div:focus {
     table td {
         width: 96%;
     }
-    .icon-container{
+
+    .icon-container {
         top: 50%;
         right: 65px;
     }
+
     .cb6958e808d5fa34--menuOption {
         gap: 25%;
         flex-wrap: wrap;
@@ -4117,6 +4118,10 @@ div:focus {
         height: 79vw;
     }
 
+    .startpaper-popup tr {
+        margin-top: 9%;
+    }
+
     .startpaper-popup,
     .edit-paper {
         height: fit-content;
@@ -4163,7 +4168,9 @@ div:focus {
         gap: 1.5vw;
     }
 
-    .joinedpapers-container, .yourpapers-container, .yourfriends-container {
+    .joinedpapers-container,
+    .yourpapers-container,
+    .yourfriends-container {
         width: 97%;
         overflow-x: hidden;
         left: 1.5%;

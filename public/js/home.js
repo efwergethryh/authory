@@ -2474,7 +2474,7 @@ async function edit_paper(id) {
                   <div class="input-group" id="tags-container">
                      <label for="description">Description</label>
                      <div class="input-container">
-                        <textarea type="text" id="description" maxlength="200" value="${data.description}" name="description" placeholder="Describe your paper briefly ..."></textarea>
+                        <textarea type="text" id="update-description" maxlength="200" value="${data.paper.description}" name="description" placeholder="Describe your paper briefly ..."></textarea>
                      </div>
                      <p class ="max-limit">Max limit 200 characters</p>
                   </div>
@@ -2587,6 +2587,8 @@ async function update_paper(id) {
     const project_branch = document.getElementById('update_project_branch').value;
     const paper_title = document.getElementById('update_paper_title').value;
     const language = document.getElementById('update_language_input').value;
+    const description = document.getElementById('update-description').value;
+    
     tags = Array.from(tags)
     await fetch(`/api/update-paper/${id}`, {
 
@@ -2600,7 +2602,8 @@ async function update_paper(id) {
             we_need,
             paper_title,
             tags,
-            language
+            language,
+            description
         })
     }).then(res => res.json()).then(data => {
         const paper = document.getElementById(`${id}`)
@@ -2609,6 +2612,7 @@ async function update_paper(id) {
         paper.querySelector('.paper-branch strong').textContent = project_branch
         paper.querySelector('.paper-we-need strong').textContent = we_need
         paper.querySelector('.paper-tags strong').textContent = language
+        document.getElementById('description').textContent = description
         hide_spinner()
     })
 }

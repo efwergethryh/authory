@@ -291,8 +291,9 @@ const delete_paper = async (req, res) => {
 const update_paper = async (req, res) => {
     try {
         const { id } = req.params; // Get paper ID from the route parameters
-        const { project_branch, type_of_study, we_need, paper_title, tags, language } = req.body;
+        const { project_branch, type_of_study, we_need, paper_title, tags, language,description } = req.body;
         // Validate if the paper exists
+        
         const paper = await Paper.findById(id);
         if (!paper) {
             return res.status(404).json({ error: 'Paper not found' });
@@ -305,7 +306,8 @@ const update_paper = async (req, res) => {
             we_need,
             title: paper_title,
             tags,
-            language
+            language,
+            description
         }, {
             new: true,
 
