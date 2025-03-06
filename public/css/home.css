@@ -3829,7 +3829,7 @@ div:focus {
     }
 
     #img-frame {
-        max-width: 60%;
+        max-width: 42%;
     }
 
     #sent_image {
@@ -3954,7 +3954,7 @@ div:focus {
     .message-history {
         height: 100%;
         top: 13%;
-        left: -37%;
+        left: -1%;
         Z-INDEX: -1;
     }
 

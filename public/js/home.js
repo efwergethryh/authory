@@ -2321,7 +2321,6 @@ async function edit_paper(id) {
         await fetch(`/api/paper/${id}`, {
             method: 'GET'
         }).then(res => res.json()).then(async data => {
-            console.log('data', data);
             content = `
         <i id="closeedit" class="fas fa-times"></i>
       <div id="title" class="input-group">
@@ -2354,7 +2353,6 @@ async function edit_paper(id) {
                            <li data-value="Endocrinology">Endocrinology</li>
                            <li data-value="Neurology">Neurology</li>
                            <li data-value="Critical Care Medicine">Critical Care Medicine</li>
-
                            <li class="unselectable">Surgery Medicine</li>
                            <li data-value="General Surgery">General Surgery</li>
                            <li data-value="Cardiothoracic Surgery">Cardiothoracic Surgery</li>
@@ -2365,15 +2363,13 @@ async function edit_paper(id) {
                            <li data-value="Vascular Surgery">Vascular Surgery</li>
                            <li data-value="Pediatric Surgery">Pediatric Surgery</li>
                            <li data-value="Trauma Surgery">Trauma Surgery</li>
-
                            <li class="unselectable">Gynecology medicine</li>
-                           <li data-value="Trauma Surgery">General gynecology</li>
-                           <li data-value="Trauma Surgery">Obstetrics</li>
-                           <li data-value="Trauma Surgery">Gynecology oncology</li>
-                           <li data-value="Trauma Surgery">Infertility</li>
+                           <li data-value="General gynecology">General gynecology</li>
+                           <li data-value="Obstetrics">Obstetrics</li>
+                           <li data-value="Gynecology oncology">Gynecology oncology</li>
+                           <li data-value="Infertility">Infertility</li>
                            <li class="unselectable">Pediatric medicine</li>
                            <li class="unselectable">Pediatric medicine</li>
-
                            <div class="unselectable">Emergency medicine</div>
                            <div class="unselectable">Dermatology</div>
                            <div class="unselectable">Ophthalmology</div>
@@ -2504,7 +2500,7 @@ async function edit_paper(id) {
                 const options = optionsList.querySelectorAll('li');
 
                 inputElement.addEventListener('click', function () {
-                    container.classList.toggle('open'); // Toggle the open class
+                    container.classList.toggle('open'); 
                 });
 
                 options.forEach(function (option) {
