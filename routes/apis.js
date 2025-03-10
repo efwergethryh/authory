@@ -135,6 +135,7 @@ router.get('/posts/:post_id', postController.get_post)
 router.delete('/delete-paper/:paper_id', paperController.delete_paper);
 router.delete('/delete-user-from-paper/:paper_id', paperController.delete_user_from_paper);
 router.delete('/delete-notification/:n_id', notificationController.delete_notification);
+router.delete('/delete-conversation/:id',conversationController.delete_conversation);
 router.put('/update-conversation-members/:convId', conversationController.delete_conversationMember);
 
 //Put routes

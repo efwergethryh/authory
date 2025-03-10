@@ -217,9 +217,26 @@ const delete_conversationMember = async (req, res) => {
         return res.status(500).json({ message: "Server error" });
     }
 };
-
+const delete_conversation = async(req,res)=>{
+    try {
+        console.log('conversation id',req.params.id);
+        
+        const conversation = await Conversation.findByIdAndDelete(req.params.id);
+        
+        if (!conversation) {
+          return res.status(404).json({ message: 'Chat not found' });
+        }
+    
+        res.json({ message: 'Chat deleted successfully' });
+      } catch (error) {
+        console.log('error',error);
+        
+        res.status(500).json({ message: 'Server error', error });
+      }
+}
 module.exports = {
     add_conversation, send_message, get_conversations,
-    get_message, get_conversation, delete_conversationMember
+    get_message, get_conversation, delete_conversationMember,
+    delete_conversation
 }
 

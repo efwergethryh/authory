@@ -59,7 +59,7 @@ let notificationQueue = [];
 let conversationsLoaded = false;
 const chatContainer = document.querySelector('.chat-container');
 const toggleButton = document.getElementById('advanced_button');
-const socket = io(localhostAPI, {
+const socket = io(API_BASE_URL, {
     transports: ['polling', 'websocket'],
     query: {
         userId: userId,
@@ -1818,7 +1818,7 @@ async function addListeners() {
     joinedPapers.addEventListener('click', async () => {
         document.querySelector('.joined-label').textContent = translations.joinPaper.dropdowns.joinedPapers;
     })
-    
+
     cancel.addEventListener('click', function () {
         confirm_delete.style.display = 'none';
     });
@@ -1840,7 +1840,7 @@ async function addListeners() {
 
 
     });
-    
+
 
 }
 async function addExitListeners() {
@@ -2500,7 +2500,7 @@ async function edit_paper(id) {
                 const options = optionsList.querySelectorAll('li');
 
                 inputElement.addEventListener('click', function () {
-                    container.classList.toggle('open'); 
+                    container.classList.toggle('open');
                 });
 
                 options.forEach(function (option) {
@@ -2584,7 +2584,7 @@ async function update_paper(id) {
     const paper_title = document.getElementById('update_paper_title').value;
     const language = document.getElementById('update_language_input').value;
     const description = document.getElementById('update-description').value;
-    
+
     tags = Array.from(tags)
     await fetch(`/api/update-paper/${id}`, {
 
@@ -3050,6 +3050,13 @@ async function conversationAdd(conversation) {
     });
 }
 async function conversationDetails(paper, conversation) {
+    console.log('paper',paper);
+    paper = decodeURIComponent(paper)
+    paper = decodeURIComponent(paper)
+
+    console.log('paper',paper);
+
+    // paper = JSON.parse(paper)
     conversation = decodeURIComponent(conversation)
     conversation = JSON.parse(conversation)
     let conversationInfo = document.getElementById('conversation-info')
@@ -3061,13 +3068,12 @@ async function conversationDetails(paper, conversation) {
         <a onclick="conversationAdd(&quot;${encodeURIComponent(JSON.stringify(conversation))}&quot;)" >
             <i class="fa-solid fa-user-plus"></i>
             <p>Add members</p>
-        
         </a>
         <a onclick ="conversationPopup(&quot;${encodeURIComponent(JSON.stringify(conversation))}&quot;)"> 
             <i class="fa-solid fa-user-minus"></i>
             <p>Remove members</p>
         </a>
-        <a> 
+        <a onclick="deleteConversation(&quot;${encodeURIComponent(JSON.stringify(paper))}&quot;,'${conversation._id}')" > 
           <i class="fa-solid fa-trash"></i>
             <p>Delete chat</p>
         </a>
@@ -3078,13 +3084,30 @@ async function conversationDetails(paper, conversation) {
         conversationInfo.style.display = 'none'
     })
 }
+async function deleteConversation(paper, id) {
+
+    paper = decodeURIComponent(paper)
+    paper = JSON.parse(paper) 
+    const response = await fetch(`/api/delete-conversation/${id}`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    if (response.ok) {
+        show_conversation(paper)
+        document.getElementById('conversation-info').style.display = "none";
+    }
+
+}
 async function buildConversations(paper) {
     let conversationContent = "";
-    paper = decodeURIComponent(paper)
-    paper = decodeURIComponent(paper)
-    paper = paper.replace(/^[^{[]+/, "")
-
-    paper = JSON.parse(paper)
+    console.log('paper',paper);
+    
+    paper = decodeURIComponent(paper);
+    paper = decodeURIComponent(paper);
+    paper = paper.replace(/^[^{[]+/, "").replace(/[^}\]]+$/, "").trim();    
+    paper = JSON.parse(paper);
 
     try {
         const response = await fetch(`/api/conversations/${paper._id}`, {
@@ -3229,7 +3252,6 @@ async function show_conversation(paper) {
         popup.style.display = 'none';
     });
     control_sendButton('private', null)
-    // document.querySelector('.scroll-button').style.top = '64%'
 }
 async function load_f_messages(conversation_Id, user_id) {
     try {
@@ -3343,7 +3365,7 @@ async function conversation_layout(user, paper) {
             </div>
         `;
 
-        
+
         return content;
     } catch (error) {
         console.error("Error in conversation_layout:", error);
@@ -3994,7 +4016,7 @@ async function loadTranslation() {
     if (topBar) {
         topBar.textContent = translations.topBar.dashboard
     }
-   
+
     const searchFriendsLabel = document.querySelector('.searchfriends-label');
     if (searchFriendsLabel) {
         searchFriendsLabel.textContent = translations?.friends?.searchfriends || 'Search Friends';
@@ -4056,7 +4078,7 @@ async function applyTranslations() {
     })
     document.getElementById('sign-out').textContent = translations.topBar.signOut
     document.getElementById('home-setting').textContent = translations.topBar.home
-  
+
 
     document.getElementById('start_paper_button').textContent = translations.newPaper.dropdowns.startPaper;
     document.getElementById('your-papers-button').textContent = translations.newPaper.dropdowns.yourPapers;
@@ -4420,7 +4442,10 @@ async function show_public_conversation() {
     const mainContent = document.getElementById('maincontent');
     content = `
         <div class="chat-container">
-        <i id="filter" class="fa-solid fa-sliders"></i>
+           <a class="filter-a">
+            <i id="filter" class="fa-solid fa-sliders"></i>
+           </a>
+
             <div id="chat-body" class="chat-body">
                 ${scrollbutton}
                 <div id="message-history" class="message-history">
@@ -4456,26 +4481,26 @@ async function show_public_conversation() {
     chatHistory.style.height = '100%!important'
     input.style.width = '94%'
     const chatFilter = document.querySelector('.chat-filter')
-    
+
     await get_conversation(conv_id, 'public')
 
     document.getElementById('filter').addEventListener('click', async function (e) {
         e.preventDefault();
         e.stopPropagation()
-        
-        
+
+
         let translations = await loadTranslation();
-       
+
         cancel.textContent = translations.sidebar.cancel
         apply.textContent = translations.sidebar.apply
         document.querySelector('.chat-filter p').textContent = translations.sidebar.instructions
         document.getElementById('filter-input').placeholder = userMainfield
 
         chatFilter.style.display = 'flex'
-        
+
 
     })
-    
+
     document.getElementById('filter-input').addEventListener('click', async function (event) {
         event.preventDefault()
         event.stopPropagation()
@@ -4491,8 +4516,8 @@ async function show_public_conversation() {
             filter.addEventListener('click', async () => {
                 event.preventDefault()
                 event.stopPropagation()
-                console.log('self',this);
-                
+                console.log('self', this);
+
                 filterSelect.style.display = 'none'
                 this.value = filter.textContent
                 userMainfield = filter.textContent
@@ -4503,7 +4528,7 @@ async function show_public_conversation() {
 
     })
     apply.addEventListener('click', async () => {
-        
+
         await loadMessages(conv_id, true)
         chatFilter.style.display = 'none'
 

@@ -1101,7 +1101,8 @@ a#cancel {
 
 #tags,
 #update-tags,
-#description,#update-description {
+#description,
+#update-description {
     background: transparent;
     position: relative;
     width: 100%;
@@ -1111,7 +1112,8 @@ a#cancel {
     color: transparent;
 }
 
-#description,#update-description {
+#description,
+#update-description {
     color: black;
 
 }
@@ -4206,12 +4208,17 @@ div:focus {
     }
 
     .add-conversation {
-
-        width: 223%;
-
+        width: 90%;
         top: 34VW;
-        left: 24%;
+        left: 4%;
+    }
 
+    .filter-a {
+        background: white !important;
+        position: relative;
+        left: 91%;
+        top: 4%;
+        color: black;
     }
 
     /* 34.5% */
@@ -4225,7 +4232,11 @@ div:focus {
     top: -20px;
     right: 10px;
 }
+.filter-a {
+    background: white !important;
 
+    color: black;
+}
 /*! CSS Used from: Embedded */
 input {
     overflow: visible;
