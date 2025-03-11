@@ -1123,13 +1123,6 @@ a#cancel {
     cursor: pointer;
 }
 
-#filter {
-    position: absolute;
-    margin-left: 97%;
-    top: 4%;
-    z-index: 20;
-}
-
 .paper-title,
 .paper-study,
 .paper-we-need,
@@ -4213,13 +4206,13 @@ div:focus {
         left: 4%;
     }
 
-    .filter-a {
+    /* .filter-a {
         background: white !important;
         position: relative;
         left: 91%;
         top: 4%;
         color: black;
-    }
+    } */
 
     /* 34.5% */
 }
@@ -4234,8 +4227,14 @@ div:focus {
 }
 .filter-a {
     background: white !important;
-
     color: black;
+    padding: 1%;
+    margin-left: 96%;
+    top: 4%;
+    position: relative;
+    border-radius: 5px;
+    border-color: rgb(163, 178, 189);
+    z-index: 20;
 }
 /*! CSS Used from: Embedded */
 input {
