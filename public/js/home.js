@@ -4478,7 +4478,8 @@ async function show_public_conversation() {
     messagingContainer.style.left = "0%"
     chatHistory.style.left = '-40%'
     chatHistory.style.top = '100%'
-    chatHistory.style.height = '100%!important'
+     isMobile()?chatHistory.style.height ="95%":chatHistory.style.height ="100%"
+
     input.style.width = '94%'
     const chatFilter = document.querySelector('.chat-filter')
 

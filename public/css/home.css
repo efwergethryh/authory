@@ -4084,9 +4084,7 @@ div:focus {
         z-index: 109;
     }
 
-    #filter {
-        margin-left: 90%;
-    }
+    
 
     .paper-line {
         height: fit-content;
@@ -4206,13 +4204,10 @@ div:focus {
         left: 4%;
     }
 
-    /* .filter-a {
-        background: white !important;
-        position: relative;
-        left: 91%;
-        top: 4%;
-        color: black;
-    } */
+    .filter-a {
+        padding: 3%!important;
+        margin-left: 87%!important;
+    }
 
     /* 34.5% */
 }
