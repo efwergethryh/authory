@@ -4464,6 +4464,7 @@ async function show_public_conversation() {
 
     mainContent.innerHTML = content
     mainContent.style.display = 'block'
+    mainContent.style.overflowY = 'hidden'
     control_sendButton('public')
     const messagingContainer = document.getElementById('messaging-container');
     const chatHistory = document.getElementById('message-history')
@@ -4473,7 +4474,7 @@ async function show_public_conversation() {
     const apply = document.querySelector('#apply');
     const cancel = document.querySelector('#cancel-filter')
     options_popup.style.left = '1%'
-    userProfile.style.left = '36%'
+    userProfile.style.left = isMobile()?'2%':'36%'
     messagingContainer.style.width = "100%"
     messagingContainer.style.left = "0%"
     chatHistory.style.left = '-40%'
