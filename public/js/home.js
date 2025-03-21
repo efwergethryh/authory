@@ -3728,7 +3728,7 @@ async function buildMessageContent(messages) {
         let messageInfo = `
         <div id="message-info-${message._id}"
              class="${isfile ? "message-info isfile" : "message-info"}"
-             style="${isImage ? "margin-bottom:1%;margin-top: 2%;" : "margin: 10px"}"
+             style="${isImage ? "margin-bottom:1%;margin-top: 2%; margin-right:2%" : "margin: 10px"}"
              ondblclick="reply(&quot;${encodeURIComponent(JSON.stringify(message))}&quot;)"
 
              >
