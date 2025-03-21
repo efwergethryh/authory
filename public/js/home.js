@@ -261,7 +261,6 @@ async function buildmessagecontent(message) {
         fileUrl = message.m.fileUrl;
         fileExtension = fileUrl.split('.').pop().toLowerCase();
         if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
-            console.log('image');
 
             img = `
                 <img id="sent_image" src='/conversation_files/${fileUrl}' alt="sent image" />
@@ -320,11 +319,11 @@ async function buildmessagecontent(message) {
                     ${replyContent}
                     ${isImage
                 ? `<span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
-                                <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>`
+                    <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>`
 
                 : `
-                                <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>
-                                <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
+                <span class='${message.m.isreply ? "message-text reply" : "message-text"}'>${message.m.text}</span>
+                <span class="${isImage ? "imageTime" : "time"}">${formattedDate}</span>
                     `
             }
 
@@ -3749,7 +3748,7 @@ async function buildMessageContent(messages) {
                         </span>
                     `}
                     ${replyContent}
-                    <span class="time">${formattedDate}</span>
+                    ${!isImage?`<span class="time">${formattedDate}</span>`:''}
 
                 </div>
                 <img onclick="event.stopPropagation(); showProfile('${JSON.stringify(message.senderDetails).replace(/"/g, '&quot;')}')"
